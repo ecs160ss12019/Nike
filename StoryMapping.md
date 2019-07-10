@@ -7,7 +7,7 @@ User Stories:
     all the objects and my score.
 
 
-missile: (Zhiyuan Guo)
+Missile: (Zhiyuan Guo)
 1. Moveable missiles   
 2. missiles with different shape, sound effect, and animation effect
 3. missiles with AOE, "debris" effect
