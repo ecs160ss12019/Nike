@@ -14,6 +14,8 @@ A link to [Repo](https://github.com/ecs160ss12019/Nike)
 
 A link to [Story Mapping](https://github.com/ecs160ss12019/Nike/blob/master/StoryMapping.md)
 
+A link to [CRC](https://github.com/ecs160ss12019/Nike/blob/master/CRC.md)
+
 ## Team members
 
 *Format: Name, Github Username*
