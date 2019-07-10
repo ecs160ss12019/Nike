@@ -31,7 +31,7 @@ class SpaceGame extends SurfaceView implements Runnable {
     // Objects in our game
     private LaserBase mLaserBase;
     private Invader mInvader;
-    private Missle mMissle;
+    private Missile mMissile;
     private BaseShelter mBaseShelter;
 
     // How many lives remaining for laserbase
