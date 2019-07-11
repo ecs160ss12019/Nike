@@ -30,7 +30,9 @@ class SpaceGame extends SurfaceView implements Runnable {
 
     // Objects in our game
     private LaserBase mLaserBase;
-    private Invader mInvader;
+    private Invader[] mInvaders;
+    // The number of invaders in this game
+    private int numInvaders = 55;
     private Missile mMissile;
     private BaseShelter mBaseShelter;
 
@@ -73,7 +75,7 @@ class SpaceGame extends SurfaceView implements Runnable {
 
             // calculate how much time this frame takes
             long timeThisFrame = System.currentTimeMillis() - frameStartTime;
-            // if timethisFrame is longer than 1 millisecond
+            // if timeThisFrame is longer than 1 millisecond
             if(timeThisFrame >= 1){
                 mFPS = MILLIS_IN_SECOND / timeThisFrame;
             }
@@ -83,7 +85,15 @@ class SpaceGame extends SurfaceView implements Runnable {
 
     // Update all the game objects
     private void update(){
-
+        // mMissile.update();
+        // mBaseShelter.update();
+        // update all the invaders that are still alive
+        for(int i = 0; i < numInvaders; i++)
+        {
+            // if this invader alive
+            //mInvaders[i].update();
+        }
+        // mLaserBase.update();
     }
 
 
