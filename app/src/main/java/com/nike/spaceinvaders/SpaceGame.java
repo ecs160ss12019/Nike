@@ -55,13 +55,42 @@ class SpaceGame extends SurfaceView implements Runnable {
     }
 
 
+    // Android's game loop
+    // Continuously called by Android after mGameThread.start()
     @Override
     public void run(){
+        while(mPlaying) {
+
+            long frameStartTime = System.currentTimeMillis();
+
+            if(!mPaused){
+                // update all the game objects if not paused
+                update();
+            }
+
+            // draw all the game objects and scores
+            draw();
+
+            // calculate how much time this frame takes
+            long timeThisFrame = System.currentTimeMillis() - frameStartTime;
+            // if timethisFrame is longer than 1 millisecond
+            if(timeThisFrame >= 1){
+                mFPS = MILLIS_IN_SECOND / timeThisFrame;
+            }
+        }
+    }
+
+
+    // Update all the game objects
+    private void update(){
 
     }
 
 
+    // Draw all the game objects and scores
+    private void draw(){
 
+    }
 
     // Called by SpaceActivity when
     // the player quits the game
