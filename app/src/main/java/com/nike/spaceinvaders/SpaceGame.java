@@ -5,6 +5,7 @@ package com.nike.spaceinvaders;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -30,7 +31,9 @@ class SpaceGame extends SurfaceView implements Runnable {
 
     // Objects in our game
     private LaserBase mLaserBase;
-    private Invader mInvader;
+    private Invader[] mInvaders;
+    // The number of invaders in this game
+    private int numInvaders = 55;
     private Missile mMissile;
     private BaseShelter mBaseShelter;
 
@@ -55,23 +58,69 @@ class SpaceGame extends SurfaceView implements Runnable {
     }
 
 
+    // Android's game loop
+    // Continuously called by Android after mGameThread.start()
     @Override
     public void run(){
+        while(mPlaying) {
 
+            long frameStartTime = System.currentTimeMillis();
+
+            if(!mPaused){
+                // update all the game objects if not paused
+                update();
+            }
+
+            // draw all the game objects and scores
+            draw();
+
+            // calculate how much time this frame takes
+            long timeThisFrame = System.currentTimeMillis() - frameStartTime;
+            // if timeThisFrame is longer than 1 millisecond
+            if(timeThisFrame >= 1){
+                mFPS = MILLIS_IN_SECOND / timeThisFrame;
+            }
+        }
     }
 
 
+    // Update all the game objects
+    private void update(){
+        // mMissile.update();
+        // mBaseShelter.update();
+        // update all the invaders that are still alive
+        for(int i = 0; i < numInvaders; i++)
+        {
+            // if this invader alive
+            //mInvaders[i].update();
+        }
+        // mLaserBase.update();
+    }
 
+
+    // Draw all the game objects and scores
+    private void draw(){
+
+    }
 
     // Called by SpaceActivity when
     // the player quits the game
     public void pause(){
-
+        mPlaying = false;
+        try{
+            // stop the running game thread
+            mGameThread.join();
+        }catch (InterruptedException e){
+            Log.e("Error:", "joining thread");
+        }
     }
+
 
     // Called by SpaceActivity when
     // the player begins the game
     public void resume(){
-
+        mPlaying = true;
+        mGameThread = new Thread(this);
+        mGameThread.start();
     }
 }
