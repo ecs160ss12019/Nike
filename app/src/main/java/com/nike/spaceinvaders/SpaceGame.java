@@ -5,6 +5,7 @@ package com.nike.spaceinvaders;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -105,12 +106,21 @@ class SpaceGame extends SurfaceView implements Runnable {
     // Called by SpaceActivity when
     // the player quits the game
     public void pause(){
-
+        mPlaying = false;
+        try{
+            // stop the running game thread
+            mGameThread.join();
+        }catch (InterruptedException e){
+            Log.e("Error:", "joining thread");
+        }
     }
+
 
     // Called by SpaceActivity when
     // the player begins the game
     public void resume(){
-
+        mPlaying = true;
+        mGameThread = new Thread(this);
+        mGameThread.start();
     }
 }
