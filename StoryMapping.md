@@ -1,3 +1,9 @@
+## BHAG:
+
+You control a laserbase to defend the earth and try to score as much as possible
+under the screen of four base shelters by hitting invaders with missiles.
+
+
 ## User Stories:
 
 -   As a player, I want to shoot with missiles.
