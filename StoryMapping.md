@@ -13,7 +13,7 @@
 3. missiles with AOE, "debris" effect
 
 ### LaserBase: (Henry Yi)
-1. I want to move my laserbase with 3 lives.
+1. Able to move my laserbase with 3 lives.
 2. laserbase can shoot missiles, and will die if hit by invaders or resurrected if it still has lives.
 3. laserbase can move faster under certain circumstances(combos or VIP), and has cool shapes(images).
 
@@ -41,3 +41,9 @@ Sprint 1|Move my laserbase with 3 lives|Invaders move from left to right and mov
 Sprint 2|LaserBase can shoot missiles, and will die if hit by invaders or resurrected if it still has lives|Invaders can shoot missiles, and increase their speed as their number reduces. Have some mystery invaders that move super fast with bonus reward.|Missile with different shapes, sound effects,  and animation effects.|Base Shelters will shrink if hit by invaders.|UI displays scores and all the objects.
 Sprint 3|LaserBase can move faster under certain circumstances, and has cool images|Invaders have cool images|Missiles with AOE and debris effect.|Baser shelter has cool images.| 
 
+
+### Acceptance test/criteria
+
+**User Stories Sprint 1**|**Able to move my laserbase with 3 lives**|**Invaders move from left to right and move down once it reaches the wall**|**Moveable Missiles**|**Four Base Shelters**|**UI has a black universe background**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
+Acceptance Criteria|User is able to see and move the laserbase left or right|User can see the movement of invaders on the screen|User can see that missile is moving up or down depending on who shoot it|User can see there are four base shelters located between invaders and laserbase|User is able to see it
