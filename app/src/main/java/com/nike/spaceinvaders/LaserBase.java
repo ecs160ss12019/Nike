@@ -13,9 +13,8 @@ import java.util.HashMap;
 class LaserBase extends AnimatedObject{
 
 
-    LaserBase(PointF position, ValueAnimator animator, ImageView imageView, HashMap<String, Resources> resources) {
-        super(position, animator, imageView, resources);
-        animator.getAnimatedFraction();
+    LaserBase(PointF position, Size size, ValueAnimator animator, ImageView imageView, HashMap<String, Resources> resources) {
+        super(position, size, animator, imageView, resources);
     }
 
     @Override

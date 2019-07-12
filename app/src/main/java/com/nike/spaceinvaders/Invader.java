@@ -13,8 +13,8 @@ import java.util.HashMap;
 class Invader extends AnimatedObject {
 
 
-    Invader(PointF position, ValueAnimator animator, ImageView imageView, HashMap<String, Resources> resources) {
-        super(position, animator, imageView, resources);
+    Invader(PointF position, Size size, ValueAnimator animator, ImageView imageView, HashMap<String, Resources> resources) {
+        super(position, size, animator, imageView, resources);
     }
 
     @Override
