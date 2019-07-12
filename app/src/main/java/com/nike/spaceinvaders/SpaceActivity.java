@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.MotionEvent;
 
 public class SpaceActivity extends Activity {
     private SpaceGame mSpaceGame;
