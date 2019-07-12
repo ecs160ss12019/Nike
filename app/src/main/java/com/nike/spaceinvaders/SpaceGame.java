@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -97,6 +98,27 @@ class SpaceGame extends SurfaceView implements Runnable {
         // mLaserBase.update();
     }
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent){
+        switch(motionEvent.getAction() & MotionEvent.ACTION_MASK){
+
+            // player's hand touches the screen
+            case MotionEvent.ACTION_DOWN:
+                // get the y-coordinate of where player touches
+                // check if it is beneath the top of laserbase
+                // if so, the player is not shooting and only moving
+                // the laserbase. Then check whether x-coordinate to see
+                // whether player touches the left or right part of screen
+                // else,(the player touches above laserbase) the player is shooting
+
+            // player has lifted his fingers from the screen
+            case MotionEvent.ACTION_UP:
+                // stop the movement of laserbase
+
+
+        }
+    }
 
     // Draw all the game objects and scores
     private void draw(){
