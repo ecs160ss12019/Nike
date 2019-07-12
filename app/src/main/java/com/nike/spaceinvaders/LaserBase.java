@@ -10,6 +10,8 @@ import java.util.HashMap;
  * Developer Henry Yi
  */
 class LaserBase extends AnimatedObject{
+
+
     LaserBase(ValueAnimator animator, ImageView imageView, HashMap<String, Resources> resources) {
         super(animator, imageView, resources);
     }
