@@ -1,12 +1,12 @@
 | LaserBase | |
 |---|---|
-|  - Able to move right or left when user touches the left/right part of the screen <br> - Has 3 lives <br> - Able to shoot missle when user moves up fingers on the screen |  Missle <br> SpaceGame |
+|  - Able to move right or left when user touches the left/right part of the screen <br> - Has 3 lives <br> - Able to shoot missle when user touch the middle screen on the screen |  Missle <br> SpaceGame |
 
 
 
 | Invader | |
 |---|---|
-|  - Controls the movement and size of invaders <br> - Detect the collision with missiles <br> - Spawns at the top of interface |  Missle <br> SpaceGame |
+|  - Generates and Manages the movement and size of invaders <br> - Detect the collision with missiles <br> - Spawns at the top of interface |  Missle <br> SpaceGame |
 
 
 
