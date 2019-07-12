@@ -11,11 +11,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class AnimatedObject {
+    PointF position;
+    Size size;
+
     ValueAnimator animator;
     ImageView imageView;
     HashMap<String, Resources> resources;
 
-    AnimatedObject(ValueAnimator animator,ImageView imageView, HashMap<String, Resources> resources){
+    AnimatedObject(PointF position,Size size,ValueAnimator animator,ImageView imageView, HashMap<String, Resources> resources){
+        this.position=position;
+        this.size=size;
         this.animator=animator;
         this.imageView=imageView;
         this.resources=resources;
@@ -45,6 +50,14 @@ public abstract class AnimatedObject {
         return resources;
     }
 
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
     abstract protected void handle (Actions actions);
 
     /**
@@ -58,25 +71,49 @@ public abstract class AnimatedObject {
      */
     abstract ValueAnimator.AnimatorUpdateListener animatorListenerConfigure();
 
+    class Size{
+        private int height;
+        private int width;
+        Size(int height,int width){
+            this.height=height;
+            this.width=width;
+        }
+
+        public void setHeight(int height) {
+            this.height = height;
+        }
+
+        public void setWidth(int width) {
+            this.width = width;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+    }
     class Actions{
-        private PointF point;
+        private PointF position;
         private HashMap<String,Pair<AnimatedObject,ArrayList<Float>>> actionSet;
 
-        Actions(PointF point,HashMap<String,Pair<AnimatedObject,ArrayList<Float>>> actionSet){
-            this.point=point;
+        Actions(PointF position,HashMap<String,Pair<AnimatedObject,ArrayList<Float>>> actionSet){
+            this.position=position;
             this.actionSet=actionSet;
         }
 
-        public void setPoint(PointF point) {
-            this.point = point;
+        public void setPosition(PointF position) {
+            this.position = position;
         }
 
         public void setActionSet(HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet) {
             this.actionSet = actionSet;
         }
 
-        public PointF getPoint() {
-            return point;
+        public PointF getPosition() {
+            return position;
         }
 
         public HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> getActionSet() {
