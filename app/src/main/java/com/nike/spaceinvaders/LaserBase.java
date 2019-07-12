@@ -18,4 +18,9 @@ class LaserBase extends AnimatedObject{
     protected void handle(Actions actions) {
 
     }
+
+    @Override
+    ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
+        return null;
+    }
 }

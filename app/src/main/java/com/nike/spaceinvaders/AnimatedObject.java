@@ -6,13 +6,14 @@ import android.graphics.PointF;
 import android.util.Pair;
 import android.widget.ImageView;
 
+import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class AnimatedObject {
-    private ValueAnimator animator;
-    private ImageView imageView;
-    private HashMap<String, Resources> resources;
+    ValueAnimator animator;
+    ImageView imageView;
+    HashMap<String, Resources> resources;
 
     AnimatedObject(ValueAnimator animator,ImageView imageView, HashMap<String, Resources> resources){
         this.animator=animator;
@@ -45,6 +46,17 @@ public abstract class AnimatedObject {
     }
 
     abstract protected void handle (Actions actions);
+
+    /**
+     * {@inheritDoc}
+     *
+     * This is just an example method to configure animatorUpdateListener
+     * If the class doesn't need to use animator, you should just leave the body empty.
+     * If you have multiple different listeners, you should make another configuration methods like this
+     * to configure and initiate the listener and make comments to explain the function of the listener.
+     * Don't do it using a anonymous inner class.
+     */
+    abstract ValueAnimator.AnimatorUpdateListener animatorListenerConfigure();
 
     class Actions{
         private PointF point;
