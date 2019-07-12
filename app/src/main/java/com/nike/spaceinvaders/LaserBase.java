@@ -2,6 +2,7 @@ package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
+import android.graphics.PointF;
 import android.widget.ImageView;
 
 import java.util.HashMap;
@@ -12,13 +13,13 @@ import java.util.HashMap;
 class LaserBase extends AnimatedObject{
 
 
-    LaserBase(ValueAnimator animator, ImageView imageView, HashMap<String, Resources> resources) {
-        super(animator, imageView, resources);
+    LaserBase(PointF position, ValueAnimator animator, ImageView imageView, HashMap<String, Resources> resources) {
+        super(position, animator, imageView, resources);
+        animator.getAnimatedFraction();
     }
 
     @Override
     protected void handle(Actions actions) {
-
     }
 
     @Override
