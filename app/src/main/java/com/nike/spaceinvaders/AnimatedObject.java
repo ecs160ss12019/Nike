@@ -9,21 +9,37 @@ import android.widget.ImageView;
 import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Handler;
 
 public abstract class AnimatedObject {
+    SpaceGame spaceGame;
     PointF position;
     Size size;
+    Handler mainHandler;
+    Handler processHandler;
 
     ValueAnimator animator;
     ImageView imageView;
     HashMap<String, Resources> resources;
 
-    AnimatedObject(PointF position,Size size,ValueAnimator animator,ImageView imageView, HashMap<String, Resources> resources){
+    AnimatedObject(PointF position,Size size,ValueAnimator animator,ImageView imageView, HashMap<String, Resources> resources,SpaceGame spaceGame,
+                   Handler mainHandler, Handler processHandler){
         this.position=position;
         this.size=size;
         this.animator=animator;
         this.imageView=imageView;
         this.resources=resources;
+        this.spaceGame=spaceGame;
+        this.mainHandler=mainHandler;
+        this.processHandler=processHandler;
+    }
+
+    public void setSpaceGame(SpaceGame spaceGame) {
+        this.spaceGame = spaceGame;
+    }
+
+    public SpaceGame getSpaceGame() {
+        return spaceGame;
     }
 
     public void setAnimator(ValueAnimator animater) {
