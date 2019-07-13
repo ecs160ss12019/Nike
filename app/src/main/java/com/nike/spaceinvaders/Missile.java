@@ -4,6 +4,7 @@ package com.nike.spaceinvaders;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.RectF;
 
 
@@ -44,6 +45,20 @@ class Missile {
 
     RectF getmRect(){
         return mRect;
+    }
+
+
+    // Set the starting position of missile as the
+    // top of laserBase or bottom of invader
+    // Set how fast the missile moves
+    void setRectandSpeed(Point pt){
+
+        mRect.left = pt.x - mMissileWidth / 2;
+        mRect.right = mRect.left + mMissileWidth;
+        mRect.top = pt.y;
+        mRect.bottom = mRect.top - mMissileHeight;
+
+        mYVelocity = 200; // may be changed
     }
 
 
