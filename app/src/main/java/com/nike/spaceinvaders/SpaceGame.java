@@ -109,18 +109,36 @@ class SpaceGame extends SurfaceView implements Runnable {
             // player's hand touches the screen
             case MotionEvent.ACTION_DOWN:
                 // get the y-coordinate of where player touches
-                // check if it is beneath the top of laserbase
-                // if so, the player is not shooting and only moving
-                // the laserbase. Then check whether x-coordinate to see
-                // whether player touches the left or right part of screen
-                // else,(the player touches above laserbase) the player is shooting
+                // check if it is beneath the laserbase
+                if(motionEvent.getY() < mLaserBase.getY()){
+                    // player is moving the laserbase
+
+                    if(motionEvent.getX() < mScreenX / 2){
+                        // on the left side
+                        mLaserBase.setMovementState(mLaserBase.LEFT);
+                    }
+                    else {
+                        // on the right side
+                        mLaserBase.setMovementState(mLaserBase.RIGHT);
+                    }
+                }
+                else{
+                    // player touches above the laserbase
+                    // player is shooting
+
+                    mLaserBase.setMovementState(mLaserBase.SHOOT);
+                }
+
+                break;
+
 
             // player has lifted his fingers from the screen
             case MotionEvent.ACTION_UP:
                 // stop the movement of laserbase
-
-
+                mLaserBase.setMovementState(mLaserBase.STOP);
+                break;
         }
+        return true;
     }
 
     // Draw all the game objects and scores

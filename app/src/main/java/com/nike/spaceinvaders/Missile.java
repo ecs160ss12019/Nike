@@ -23,6 +23,9 @@ class Missile {
     private float mMissileWidth;
     private float mMissileHeight;
 
+    // Has missile been spawned and not disappeared?
+    private boolean exist;
+
     // Missile's image
     private Bitmap mBitmapMissile;
 
@@ -47,11 +50,14 @@ class Missile {
         return mRect;
     }
 
+    boolean IsMissileExisted() { return exist; }
+
 
     // Set the starting position of missile as the
     // top of laserBase or bottom of invader
     // Set how fast the missile moves
-    void setRectandSpeed(Point pt){
+    void spawn(Point pt){
+        exist = true;
 
         mRect.left = pt.x - mMissileWidth / 2;
         mRect.right = mRect.left + mMissileWidth;
