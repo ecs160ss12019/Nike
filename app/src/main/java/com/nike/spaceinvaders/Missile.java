@@ -50,7 +50,15 @@ class Missile {
         return mRect;
     }
 
-    boolean IsMissileExisted() { return exist; }
+
+    Bitmap getBitmap(){
+        return mBitmapMissile;
+    }
+
+
+    boolean IsMissileExisted() {
+        return exist;
+    }
 
 
     // Set the starting position of missile as the

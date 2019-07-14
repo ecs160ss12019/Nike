@@ -15,7 +15,7 @@ import android.view.SurfaceView;
 
 class SpaceGame extends SurfaceView implements Runnable {
     // The following three objects are for drawing and display
-    private SurfaceHolder mMyHolder;
+    private SurfaceHolder mHolder;
     private Canvas mCanvas;
     private Paint mPaint;
 
@@ -35,11 +35,11 @@ class SpaceGame extends SurfaceView implements Runnable {
 
     // Objects in our game
     private LaserBase mLaserBase;
-    private Invader[] mInvaders;
     // The number of invaders in this game
     private int numInvaders = 55;
+    private Invader[] mInvaders;
     private Missile mMissile;
-    private BaseShelter mBaseShelter;
+    private BaseShelter[] mBaseShelters = new BaseShelter[4];
 
     // How many lives remaining for laserbase
     private int mLaserLives;
@@ -58,6 +58,8 @@ class SpaceGame extends SurfaceView implements Runnable {
 
     public SpaceGame(Context context, int x, int y){
         super(context);
+
+        mInvaders = new Invader[numInvaders];
 
     }
 
@@ -144,6 +146,45 @@ class SpaceGame extends SurfaceView implements Runnable {
     // Draw all the game objects and scores
     private void draw(){
 
+        if(mHolder.getSurface().isValid()) {
+            mCanvas = mHolder.lockCanvas();
+            // set the background color as black
+            mCanvas.drawColor(Color.argb(255, 0, 0, 0));
+            // set the paint color as white (objects painted white)
+            mPaint.setColor(Color.argb(255, 255, 255, 255));
+
+            // draw the laserBase
+            mCanvas.drawBitmap(mLaserBase.getBitmap(), mLaserBase.getRect().left,
+                    mLaserBase.getRect().top, mPaint);
+            // draw the baseShelters
+            for(int i = 0; i < 4; i++)
+            {
+                mCanvas.drawBitmap(mBaseShelters.getBitmap(),
+                        mBaseShelters.getRect().left, mBaseShelters.getRect().right,
+                        mPaint);
+            }
+
+            // draw the invaders if alive
+            for(int i = 0; i < numInvaders; i++)
+            {
+                // if invaders alive
+                mCanvas.drawBitmap(mInvaders.getBitmap(),
+                        mInvaders.getRect().left, mInvaders.getRect().right,
+                        mPaint);
+            }
+
+            // draw the player's missile
+            // if the player's missile is active
+            mCanvas.drawBitmap(mMissile.getBitmap(), mMissile.getmRect().left,
+                    mMissile.getmRect().right, mPaint);
+
+            // draw the invader's missile
+
+
+            // draw the HUD
+
+            mHolder.unlockCanvasAndPost(mCanvas);
+        }
     }
 
     // Called by SpaceActivity when
