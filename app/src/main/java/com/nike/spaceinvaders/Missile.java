@@ -26,8 +26,12 @@ class Missile {
     // Has missile been spawned and not disappeared?
     private boolean exist;
 
+    /*
+        For now, don't use image
+        just draw the rect
+     */
     // Missile's image
-    private Bitmap mBitmapMissile;
+    // private Bitmap mBitmapMissile;
 
 
     // Missile constructor

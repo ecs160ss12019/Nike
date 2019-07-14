@@ -74,6 +74,8 @@ class SpaceGame extends SurfaceView implements Runnable {
         mHolder = getHolder();
         mPaint = new Paint();
 
+        mLaserBase = new LaserBase(context, mScreenX, mScreenY);
+
         mInvaders = new Invader[55]; // 55 invaders in total
         for(int row = 0; row < 5; row++){
             for(int col = 0; col < 11; col++){
@@ -207,7 +209,7 @@ class SpaceGame extends SurfaceView implements Runnable {
                     mMissile.getmRect().right, mPaint);
 
             // draw the invader's missile
-
+            mCanvas.drawRect(mMissile.getmRect(), mPaint);
 
             // draw the HUD
 
