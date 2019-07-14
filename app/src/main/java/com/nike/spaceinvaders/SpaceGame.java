@@ -7,15 +7,21 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
-import android.support.annotation.MainThread;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-class SpaceGame extends SurfaceView implements SurfaceHolder.Callback,Runnable {\
+class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
+
+    //TODO:Test only
     private MainThread mthread;
+    private UHD uhd;
+    private Point playerPoint;
+
+
     // The following three objects are for drawing and display
     private SurfaceHolder mMyHolder;
     private Canvas mCanvas;
@@ -49,7 +55,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback,Runnable {
     private int mScore;
 
     // Our game thread and relevant variables
-    private Thread mGameThread = null;
+ //   private Thread mGameThread = null;
     private volatile boolean mPlaying;
     private boolean mPaused = true;
 
@@ -58,18 +64,20 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback,Runnable {
     private final boolean DEBUGGING = false;
 
 
-    public SpaceGame(Context context, int x, int y){
+    public SpaceGame(Context context){
         super(context);
 
         getHolder().addCallback(this);
         mthread = new MainThread(getHolder(),this);
+        uhd = new UHD(new Rect(0,0,100,100));
+        playerPoint = new Point(50,50);
         setFocusable(true);
     }
 
 
     // Android's game loop
     // Continuously called by Android after mGameThread.start()
-    @Override
+    /*@Override
     public void run(){
         while(mPlaying) {
 
@@ -90,11 +98,12 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback,Runnable {
                 mFPS = MILLIS_IN_SECOND / timeThisFrame;
             }
         }
-    }
+    }*/
 
 
     // Update all the game objects
     public void update(){
+        uhd.update(playerPoint);
         // mMissile.update();
         // mBaseShelter.update();
         // update all the invaders that are still alive
@@ -120,23 +129,32 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback,Runnable {
                 // whether player touches the left or right part of screen
                 // else,(the player touches above laserbase) the player is shooting
 
+            case MotionEvent.ACTION_MOVE:
+                playerPoint.set((int)motionEvent.getX(),(int)motionEvent.getY());
+
+
             // player has lifted his fingers from the screen
             case MotionEvent.ACTION_UP:
                 // stop the movement of laserbase
 
 
         }
-        return super.onTouchEvent(motionEvent);
+        return true;
+        //return super.onTouchEvent(motionEvent);
     }
 
     // Draw all the game objects and scores
     public void draw(Canvas canvas){
         super.draw(canvas);
+
+        canvas.drawColor(Color.WHITE);
+
+        uhd.draw(canvas);
     }
 
-    // Called by SpaceActivity when
+    // Called by SpaceActivity when TODO:Modified pasue and resume
     // the player quits the game
-    public void pause(){
+   /* public void pause(){
         mPlaying = false;
         try{
             // stop the running game thread
@@ -154,7 +172,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback,Runnable {
         mGameThread = new Thread(this);
         mGameThread.start();
     }
-
+*/
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mthread=new MainThread(getHolder(),this);
@@ -172,7 +190,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback,Runnable {
         boolean retry = false;
         while(true){
             try {
-                mthread.setRuning(false);
+                mthread.setRunning(false);
                 mthread.join();
             }catch(Exception e){ e.printStackTrace(); }
             retry = false;
