@@ -133,7 +133,6 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
             case MotionEvent.ACTION_MOVE:
 
 
-
             // player has lifted his fingers from the screen
             case MotionEvent.ACTION_UP:
                 // stop the movement of laserbase
