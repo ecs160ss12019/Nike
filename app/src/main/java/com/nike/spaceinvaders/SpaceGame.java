@@ -8,12 +8,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.MainThread;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-class SpaceGame extends SurfaceView implements Runnable {
+class SpaceGame extends SurfaceView implements SurfaceHolder.Callback,Runnable {\
+    private MainThread mthread;
     // The following three objects are for drawing and display
     private SurfaceHolder mMyHolder;
     private Canvas mCanvas;
@@ -59,6 +61,9 @@ class SpaceGame extends SurfaceView implements Runnable {
     public SpaceGame(Context context, int x, int y){
         super(context);
 
+        getHolder().addCallback(this);
+        mthread = new MainThread(getHolder(),this);
+        setFocusable(true);
     }
 
 
@@ -76,7 +81,7 @@ class SpaceGame extends SurfaceView implements Runnable {
             }
 
             // draw all the game objects and scores
-            draw();
+            draw(mCanvas);
 
             // calculate how much time this frame takes
             long timeThisFrame = System.currentTimeMillis() - frameStartTime;
@@ -89,7 +94,7 @@ class SpaceGame extends SurfaceView implements Runnable {
 
 
     // Update all the game objects
-    private void update(){
+    public void update(){
         // mMissile.update();
         // mBaseShelter.update();
         // update all the invaders that are still alive
@@ -121,11 +126,12 @@ class SpaceGame extends SurfaceView implements Runnable {
 
 
         }
+        return super.onTouchEvent(motionEvent);
     }
 
     // Draw all the game objects and scores
-    private void draw(){
-
+    public void draw(Canvas canvas){
+        super.draw(canvas);
     }
 
     // Called by SpaceActivity when
@@ -147,5 +153,29 @@ class SpaceGame extends SurfaceView implements Runnable {
         mPlaying = true;
         mGameThread = new Thread(this);
         mGameThread.start();
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        mthread=new MainThread(getHolder(),this);
+        mthread.setRunning(true);
+        mthread.start();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        boolean retry = false;
+        while(true){
+            try {
+                mthread.setRuning(false);
+                mthread.join();
+            }catch(Exception e){ e.printStackTrace(); }
+            retry = false;
+        }
     }
 }
