@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -18,8 +19,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
 
     //TODO:Test only
     private MainThread mthread;
-    private UHD uhd;
-    private Point playerPoint;
+    private UHD uhd; //display info
 
 
     // The following three objects are for drawing and display
@@ -64,13 +64,14 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
     private final boolean DEBUGGING = false;
 
 
-    public SpaceGame(Context context){
+    public SpaceGame(Context context,int x, int y){
         super(context);
-
+        mScreenX=x;
+        mScreenY=y;
         getHolder().addCallback(this);
         mthread = new MainThread(getHolder(),this);
-        uhd = new UHD(new Rect(0,0,100,100));
-        playerPoint = new Point(50,50);
+
+        uhd = new UHD(x,y);
         setFocusable(true);
     }
 
@@ -103,7 +104,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
 
     // Update all the game objects
     public void update(){
-        uhd.update(playerPoint);
+        uhd.update();
         // mMissile.update();
         // mBaseShelter.update();
         // update all the invaders that are still alive
@@ -130,7 +131,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
                 // else,(the player touches above laserbase) the player is shooting
 
             case MotionEvent.ACTION_MOVE:
-                playerPoint.set((int)motionEvent.getX(),(int)motionEvent.getY());
+
 
 
             // player has lifted his fingers from the screen
@@ -147,6 +148,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
     public void draw(Canvas canvas){
         super.draw(canvas);
 
+        //It's white background
         canvas.drawColor(Color.WHITE);
 
         uhd.draw(canvas);

@@ -7,27 +7,29 @@ import android.graphics.Point;
 import android.graphics.Rect;
 
 public class UHD implements GameObject{
-    public Rect rectangle;
+    private int mScreenX;
+    private int mScreenY;
     private int score;
     private int level;
 
-    public UHD(Rect rec){
-        this.rectangle=rec;
+    public UHD(int x,int y){
+        //init
+        this.mScreenX = x;
+        this.mScreenY = y;
+        score=0;
+        level=1;
     }
     @Override
     public void draw(Canvas canvas) {
         Paint paint=new Paint();
         paint.setColor(Color.RED);
-        canvas.drawRect(rectangle,paint);
+        paint.setTextSize(50);
+        canvas.drawText("Score: "+score,mScreenX/2,50,paint);
     }
 
     @Override
     public void update() {
-
-    }
-    //TODO: Just test
-    public void update(Point point){
-        rectangle.set(point.x-rectangle.width()/2,point.y-rectangle.height()/2,point.x+rectangle.width()/2,point.y+rectangle.height()/2);
+        //score++;
     }
 
 
