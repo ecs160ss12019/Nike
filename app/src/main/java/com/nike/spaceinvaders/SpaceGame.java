@@ -31,7 +31,7 @@ class SpaceGame extends SurfaceView implements Runnable {
 
     // Objects in our game
     private LaserBase mLaserBase;
-    private Invader[] mInvaders;
+    private InvaderGroup[] mInvaders;
     // The number of invaders in this game
     private int numInvaders = 55;
     private Missile mMissile;

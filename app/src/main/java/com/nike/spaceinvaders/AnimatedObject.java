@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Handler;
 
-public abstract class AnimatedObject {
+public abstract class  AnimatedObject {
     SpaceGame spaceGame;
     PointF position;
     Size size;
