@@ -78,7 +78,7 @@ class SpaceGame extends SurfaceView implements Runnable {
 
         mInvaders = new Invader[55]; // 55 invaders in total
         for(int row = 0; row < 5; row++){
-            for(int col = 0; col < 11; col++){
+            for(int col = 0; col < 6; col++){
                 mInvaders[numInvaders] = new Invader(context, row, col, mScreenX, mScreenY);
                 numInvaders++;
             }
