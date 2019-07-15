@@ -6,12 +6,13 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class SpaceActivity extends Activity {
+public class SpaceActivity extends AppCompatActivity {
     private SpaceGame mSpaceGame;
     private Handler mainHandler;
     private Handler processHandler;
@@ -39,8 +40,8 @@ public class SpaceActivity extends Activity {
 
         //Get layout file and inflate it into the screen and get the View object.
 
-//        LayoutInflater mInflater = LayoutInflater.from(this);
-//        View contentView  = mInflater.inflate(R.layout.space_activity,null);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        View contentView  = mInflater.inflate(R.layout.space_activity,null);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -48,7 +49,7 @@ public class SpaceActivity extends Activity {
 
 //        mSpaceGame = new SpaceGame(this, size.x, size.y);
 //
-        setContentView(R.layout.space_activity);
+        setContentView(contentView);
     }
 
 
