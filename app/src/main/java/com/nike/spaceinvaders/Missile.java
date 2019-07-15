@@ -56,7 +56,8 @@ class Missile {
 
 
     Bitmap getBitmap(){
-        return mBitmapMissile;
+//        return mBitmapMissile;
+        return null;
     }
 
 
