@@ -13,20 +13,15 @@ import java.util.logging.Handler;
 /**
  * Developer Henry Yi & Xuanchen Zhou
  */
-class InvaderGroup extends AnimatedObject {
-    private ConstraintLayout layout;
+class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
-    InvaderGroup(PointF position, Size size, ValueAnimator animator, ImageView imageView, HashMap<String, Resources> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler, ConstraintLayout layout) {
-        super(position, size, animator, imageView, resources, spaceGame, mainHandler, processHandler);
-        this.layout=layout;
+    InvaderGroup(PointF position, Size size, ValueAnimator animator, ConstraintLayout view, HashMap<String, Resources> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
+        super(position, size, animator, view, resources, spaceGame, mainHandler, processHandler);
 
     }
 
     @Override
     protected void handle(Actions actions) {
-        for (int i=0;i<this.layout.getChildCount();i++){
-
-        }
     }
 
     @Override
