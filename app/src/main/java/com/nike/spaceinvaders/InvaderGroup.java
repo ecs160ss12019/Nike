@@ -24,11 +24,13 @@ class InvaderGroup extends AnimatedObject {
 
     @Override
     protected void handle(Actions actions) {
-        CoordinatorLayout
+        for (int i=0;i<this.layout.getChildCount();i++){
+
+        }
     }
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
-
+        return null;
     }
 }
