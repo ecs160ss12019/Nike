@@ -15,14 +15,15 @@ under the screen of four base shelters by hitting invaders with missiles.
 
 ### Missile: (Zhiyuan Guo)
 
-### LaserBase: (Henry Yi)
+### LaserBase: (Xuanchen Zhou)
 
-### Invader: (Xuanchen Zhou, Henry Yi)
+### Invader: (Henry Yi)
 
-### Base Shelter: (Roberto Lozano, Weili Yin)
+### Base Shelter: (Roberto Lozano)
 
-### UI: (Zhiyuan Guo, Roberto Lozano)
+### UI: (Zhiyuan Guo)
 
+### HUD: (Weili Yin)
 
 ### Sprint Chart
 

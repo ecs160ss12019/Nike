@@ -4,6 +4,7 @@ package com.nike.spaceinvaders;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.RectF;
 
 
@@ -22,8 +23,15 @@ class Missile {
     private float mMissileWidth;
     private float mMissileHeight;
 
+    // Has missile been spawned and not disappeared?
+    private boolean exist;
+
+    /*
+        For now, don't use image
+        just draw the rect
+     */
     // Missile's image
-    private Bitmap mBitmapMissile;
+    // private Bitmap mBitmapMissile;
 
 
     // Missile constructor
@@ -44,6 +52,31 @@ class Missile {
 
     RectF getmRect(){
         return mRect;
+    }
+
+
+    Bitmap getBitmap(){
+        return mBitmapMissile;
+    }
+
+
+    boolean IsMissileExisted() {
+        return exist;
+    }
+
+
+    // Set the starting position of missile as the
+    // top of laserBase or bottom of invader
+    // Set how fast the missile moves
+    void spawn(Point pt){
+        exist = true;
+
+        mRect.left = pt.x - mMissileWidth / 2;
+        mRect.right = mRect.left + mMissileWidth;
+        mRect.top = pt.y;
+        mRect.bottom = mRect.top - mMissileHeight;
+
+        mYVelocity = 200; // may be changed
     }
 
 
