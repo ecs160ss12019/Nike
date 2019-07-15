@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
 
 public class SpaceActivity extends Activity {
     private SpaceGame mSpaceGame;
@@ -35,6 +37,10 @@ public class SpaceActivity extends Activity {
         this.processThread=new Thread(this.threadInitiation);
         this.processThread.start();
 
+        //Get layout file and inflate it into the screen and get the View object.
+
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        View contentView  = mInflater.inflate(R.layout.space_activity,null);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
