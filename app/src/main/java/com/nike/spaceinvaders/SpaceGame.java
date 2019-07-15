@@ -3,14 +3,10 @@
 package com.nike.spaceinvaders;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -19,7 +15,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
 
     //TODO:Test only
     private MainThread mthread;
-    private UHD uhd; //display info
+    private HUD hud; //display info
 
 
     // The following three objects are for drawing and display
@@ -71,7 +67,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
         getHolder().addCallback(this);
         mthread = new MainThread(getHolder(),this);
 
-        uhd = new UHD(x,y);
+        hud = new HUD(x,y);
         setFocusable(true);
     }
 
@@ -104,7 +100,7 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
 
     // Update all the game objects
     public void update(){
-        uhd.update();
+        hud.update();
         // mMissile.update();
         // mBaseShelter.update();
         // update all the invaders that are still alive
@@ -148,18 +144,18 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
         super.draw(canvas);
 
         //It's white background
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(Color.BLACK);
 
-        uhd.draw(canvas);
+        hud.draw(canvas);
     }
 
     // Called by SpaceActivity when TODO:Modified pasue and resume
     // the player quits the game
-   /* public void pause(){
+    public void pause(){
         mPlaying = false;
         try{
             // stop the running game thread
-            mGameThread.join();
+            mthread.join();
         }catch (InterruptedException e){
             Log.e("Error:", "joining thread");
         }
@@ -170,10 +166,10 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
     // the player begins the game
     public void resume(){
         mPlaying = true;
-        mGameThread = new Thread(this);
-        mGameThread.start();
+        mthread = new MainThread(getHolder(),this);
+        mthread.start();
     }
-*/
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mthread=new MainThread(getHolder(),this);

@@ -29,7 +29,7 @@ public class SpaceActivity extends Activity {
         setContentView(mSpaceGame);
     }
 
-/*
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -40,5 +40,5 @@ public class SpaceActivity extends Activity {
     protected void onPause(){
         super.onPause();
         mSpaceGame.pause();
-    }*/
+    }
 }
