@@ -35,6 +35,8 @@ public class SpaceActivity extends Activity {
         this.processThread=new Thread(this.threadInitiation);
         this.processThread.start();
 
+
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
