@@ -4,14 +4,12 @@ import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.util.Pair;
-import android.widget.ImageView;
 
-import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Handler;
 
-public abstract class AnimatedObject {
+public abstract class  AnimatedObject <View extends android.view.View>{
     SpaceGame spaceGame;
     PointF position;
     Size size;
@@ -19,15 +17,15 @@ public abstract class AnimatedObject {
     Handler processHandler;
 
     ValueAnimator animator;
-    ImageView imageView;
+    View view;
     HashMap<String, Resources> resources;
 
-    AnimatedObject(PointF position,Size size,ValueAnimator animator,ImageView imageView, HashMap<String, Resources> resources,SpaceGame spaceGame,
+    AnimatedObject(PointF position, Size size, ValueAnimator animator, View view, HashMap<String, Resources> resources, SpaceGame spaceGame,
                    Handler mainHandler, Handler processHandler){
         this.position=position;
         this.size=size;
         this.animator=animator;
-        this.imageView=imageView;
+        this.view = view;
         this.resources=resources;
         this.spaceGame=spaceGame;
         this.mainHandler=mainHandler;
@@ -46,16 +44,16 @@ public abstract class AnimatedObject {
         this.animator = animater;
     }
 
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
+    public void setView(View view) {
+        this.view = view;
     }
 
     public ValueAnimator getAnimator() {
         return animator;
     }
 
-    public ImageView getImageView() {
-        return imageView;
+    public View getView() {
+        return view;
     }
 
     public void setResources(HashMap<String, Resources> resources) {

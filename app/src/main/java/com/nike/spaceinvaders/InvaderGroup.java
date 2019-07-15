@@ -3,20 +3,21 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.PointF;
-import android.view.View;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.widget.ImageView;
 
 import java.util.HashMap;
 import java.util.logging.Handler;
 
 /**
- * Developer Henry Yi
+ * Developer Henry Yi & Xuanchen Zhou
  */
-class LaserBase extends AnimatedObject <ImageView>{
+class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
-
-    LaserBase(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<String, Resources> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
+    InvaderGroup(PointF position, Size size, ValueAnimator animator, ConstraintLayout view, HashMap<String, Resources> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
         super(position, size, animator, view, resources, spaceGame, mainHandler, processHandler);
+
     }
 
     @Override
