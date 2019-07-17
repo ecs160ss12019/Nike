@@ -65,7 +65,7 @@ class Missile {
         mRect.top = pt.y;
         mRect.bottom = mRect.top + mMissileHeight;
 
-        mYVelocity = 400; // may be changed
+        mYVelocity = 600; // may be changed
     }
 
 

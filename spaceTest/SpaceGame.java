@@ -152,7 +152,8 @@ class SpaceGame extends SurfaceView implements Runnable {
         // move all invaders down
         if(boundary){
             for(int i = 0; i < numInvaders; i++){
-                mInvaders[i].changeDirection();
+                if(mInvaders[i].isAlive)
+                    mInvaders[i].changeDirection();
             }
         }
     }
