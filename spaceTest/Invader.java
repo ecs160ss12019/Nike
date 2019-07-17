@@ -1,16 +1,10 @@
 package com.nike.spaceinvaders;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.PointF;
 import android.graphics.RectF;
-import android.widget.ImageView;
 
-import java.util.HashMap;
 
 
 class Invader {
@@ -49,7 +43,7 @@ class Invader {
         point.x = col * (width + interval * 2);
         point.y = row * (width + interval);
 
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.myinvader);
+      //  bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.myinvader);
 
     }
 
