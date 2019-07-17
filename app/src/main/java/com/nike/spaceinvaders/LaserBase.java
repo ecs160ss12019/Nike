@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import java.util.HashMap;
-import java.util.logging.Handler;
+import android.os.Handler;
 
 /**
  * Developer Henry Yi
@@ -15,7 +15,7 @@ import java.util.logging.Handler;
 class LaserBase extends AnimatedObject <ImageView>{
 
 
-    LaserBase(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<String, Resources> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
+    LaserBase(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<String, Object> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
         super(position, size, animator, view, resources, spaceGame, mainHandler, processHandler);
     }
 

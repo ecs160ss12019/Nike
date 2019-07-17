@@ -6,11 +6,11 @@ import android.graphics.PointF;
 import android.widget.ImageView;
 
 import java.util.HashMap;
-import java.util.logging.Handler;
+import android.os.Handler;
 
 public class Invader extends AnimatedObject <ImageView> {
     private boolean status=true;
-    Invader(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<String, Resources> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
+    Invader(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<String, Object> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
         super(position, size, animator, view, resources, spaceGame, mainHandler, processHandler);
 
     }
