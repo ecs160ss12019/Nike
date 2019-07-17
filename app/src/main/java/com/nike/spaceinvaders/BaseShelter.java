@@ -1,25 +1,25 @@
-/* Weili Yin, Roberto Lozano */
-
 package com.nike.spaceinvaders;
 
 import android.graphics.RectF;
 
 class BaseShelter {
-    int ShelterNum;
-    int ShelterMaxNum = 4;
-    RectF mRectF[];
+    ShelterBlock[] mBaseShelter;
 
-    BaseShelter(){
-        mRectF = new RectF[10];
-
+    BaseShelter(int screenX){
+        mBaseShelter = new ShelterBlock[10];
+        for (int i = 0; i < 10; i++) {
+            mBaseShelter[i] = new ShelterBlock(screenX);
+        }
     }
-    //TODO: just frame, need work on that
-    //collision on invader
+
+
+    //collision with invader
     public boolean isCollision(Invader invader) {
-        //sound and visual effects
         return false;
     }
-    //collision on missile
+
+
+    //collision with missile
     public boolean isCollision(Missile missile) {
         return false;
     }
