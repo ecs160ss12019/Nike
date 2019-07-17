@@ -2,10 +2,17 @@
 
 package com.nike.spaceinvaders;
 
+import android.graphics.RectF;
+
 class BaseShelter {
     int ShelterNum;
-    int ShelterMaxNum=3;
+    int ShelterMaxNum = 4;
+    RectF mRectF[];
 
+    BaseShelter(){
+        mRectF = new RectF[10];
+
+    }
     //TODO: just frame, need work on that
     //collision on invader
     public boolean isCollision(Invader invader) {
