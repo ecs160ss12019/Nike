@@ -9,8 +9,18 @@ import java.util.HashMap;
 import java.util.logging.Handler;
 
 public class Invader extends AnimatedObject <ImageView> {
+    private boolean status=true;
     Invader(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<String, Resources> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
         super(position, size, animator, view, resources, spaceGame, mainHandler, processHandler);
+
+    }
+
+    public void kill(){
+        this.status=false;
+    }
+
+    public boolean diagnose(){
+        return this.status;
     }
 
     @Override

@@ -85,7 +85,7 @@ public abstract class  AnimatedObject <View extends android.view.View>{
      */
     abstract ValueAnimator.AnimatorUpdateListener animatorListenerConfigure();
 
-    class Size{
+    static class Size{
         private int height;
         private int width;
         Size(int height,int width){
@@ -109,7 +109,7 @@ public abstract class  AnimatedObject <View extends android.view.View>{
             return width;
         }
     }
-    class Actions{
+    static class Actions{
         private PointF position;
         private HashMap<String,Pair<AnimatedObject,ArrayList<Float>>> actionSet;
 
