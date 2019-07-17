@@ -65,7 +65,7 @@ class Missile {
         mRect.top = pt.y;
         mRect.bottom = mRect.top + mMissileHeight;
 
-        mYVelocity = 200; // may be changed
+        mYVelocity = 400; // may be changed
     }
 
 
@@ -75,8 +75,9 @@ class Missile {
         // Missile from invaders will move down
         // with velocity defined in mYVelocity
 
-        mRect.top += mYVelocity / fps;
-        mRect.bottom = mRect.top - mMissileHeight;
+        // this only works for laserbase's missile
+        mRect.top -= mYVelocity / fps;
+        mRect.bottom = mRect.top + mMissileHeight;
     }
 
 }
