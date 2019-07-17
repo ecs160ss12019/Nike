@@ -20,27 +20,68 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="kllas"
-            android:textSize="40dp"
+            android:layout_width="92dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center"
+            android:text="LIVES"
             android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lives"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/lives"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/live1"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintEnd_toStartOf="@+id/live2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/mylaserbase" />
+
+            <ImageView
+                android:id="@+id/live2"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintEnd_toStartOf="@+id/live3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/mylaserbase" />
+
+            <ImageView
+                android:id="@+id/live3"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/mylaserbase" />
+        </android.support.constraint.ConstraintLayout>
         <TextView
             android:id="@+id/textView3"
             android:layout_width="79dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            android:text="ooooo"
+            android:gravity="center"
+            android:text="170"
+            android:textColor="@color/green"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent" />
@@ -50,8 +91,13 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
             android:layout_marginEnd="8dp"
-            android:text="Henry Yi"
+            android:layout_marginBottom="2dp"
+            android:text="@string/score"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView3"
             app:layout_constraintStart_toStartOf="parent"
@@ -472,7 +518,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/invader_layout">
+        app:layout_constraintTop_toBottomOf="@+id/invader_layout"
+        android:id="@+id/shelters">
 
         <ImageView
             android:id="@+id/shelter1"
