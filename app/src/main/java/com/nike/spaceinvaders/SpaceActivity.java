@@ -15,6 +15,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,26 +51,26 @@ public class SpaceActivity extends AppCompatActivity {
         LayoutInflater mInflater = LayoutInflater.from(this);
         View contentView  = mInflater.inflate(R.layout.space_activity,null);
         setContentView(contentView);
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
 
-        ConstraintLayout invaderLayout = findViewById(R.id.invader_layout);
 
-        HashMap<String, Object> resources=new HashMap<>();
-        resources.put("WindowSize",size);
 
-        InvaderGroup invaderGroup=new InvaderGroup(invaderLayout,resources,null,mainHandler,processHandler);
-        HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet=new HashMap<>();
-        actionSet.put("start",new Pair<AnimatedObject, ArrayList<Float>>(null,null));
-        AnimatedObject.Actions actions=new AnimatedObject.Actions(new PointF(0,0),actionSet);
-        invaderGroup.handle(actions);
 //        mSpaceGame = new SpaceGame(this, size.x, size.y);
 //
 
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        HashMap<String, Object> resources=new HashMap<>();
+        resources.put("WindowSize",size);
+        mSpaceGame=new SpaceGame((ImageView) findViewById(R.id.laserBase),(ConstraintLayout) findViewById(R.id.shelters),(ConstraintLayout) findViewById(R.id.invader_layout),null,resources,mainHandler,processHandler);
+    }
 
     @Override
     protected void onResume(){

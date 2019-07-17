@@ -1,18 +1,14 @@
-/* Weili Yin, Roberto Lozano */
-
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
 import android.graphics.PointF;
 import android.os.Handler;
-import android.widget.ImageView;
+import android.support.constraint.ConstraintLayout;
 
 import java.util.HashMap;
 
-class BaseShelter extends AnimatedObject<ImageView> {
-
-
-    BaseShelter(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<String, Object> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
+public class HUD extends AnimatedObject <ConstraintLayout> {
+    HUD(PointF position, Size size, ValueAnimator animator, ConstraintLayout view, HashMap<String, Object> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
         super(position, size, animator, view, resources, spaceGame, mainHandler, processHandler);
     }
 
