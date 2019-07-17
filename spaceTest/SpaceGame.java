@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -37,10 +38,10 @@ class SpaceGame extends SurfaceView implements Runnable {
     private LaserBase mLaserBase;
     // The number of invaders in this game
     private int numInvaders = 0;
-   // private Invader[] mInvaders;
+    private Invader[] mInvaders;
     //private Missile mMissile;
     private final int numBaseShelters = 4;
-   // private BaseShelter[] mBaseShelters;
+    // private BaseShelter[] mBaseShelters;
 
     // How many lives remaining for laserbase
     private int mLaserLives;
@@ -73,14 +74,14 @@ class SpaceGame extends SurfaceView implements Runnable {
         mPaint = new Paint();
 
         mLaserBase = new LaserBase(context, mScreenX, mScreenY);
-//
-//        mInvaders = new Invader[55]; // 55 invaders in total
-//        for(int row = 0; row < 5; row++){
-//            for(int col = 0; col < 6; col++){
-//                mInvaders[numInvaders] = new Invader(context, row, col, mScreenX, mScreenY);
-//                numInvaders++;
-//            }
-//        }
+
+        mInvaders = new Invader[55]; // 55 invaders in total
+        for(int row = 0; row < 5; row++){
+            for(int col = 0; col < 6; col++){
+                mInvaders[numInvaders] = new Invader(context, row, col, mScreenX, mScreenY);
+                numInvaders++;
+            }
+        }
 
 //        mBaseShelters = new BaseShelter[numBaseShelters];
 //        for(int i = 0; i < numBaseShelters; i++)
@@ -122,18 +123,18 @@ class SpaceGame extends SurfaceView implements Runnable {
     private void update(){
         // mBaseShelter.update();
         // update all the invaders that are still alive
-        /*
+
         for(int i = 0; i < numInvaders; i++)
         {
             if(mInvaders[i].isAlive)
                 mInvaders[i].update(mFPS);
         }
         checkInvaderBoundaries();
-        checkPlayerMissile();*/
+        checkPlayerMissile();
         mLaserBase.update(mFPS);
     }
 
-    /*
+
 
     public void checkInvaderBoundaries(){
         boolean boundary = false;
@@ -174,7 +175,7 @@ class SpaceGame extends SurfaceView implements Runnable {
         }
     }
 
-*/
+
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent){
@@ -183,12 +184,12 @@ class SpaceGame extends SurfaceView implements Runnable {
             // player's hand touches the screen
             case MotionEvent.ACTION_DOWN:
 
-                //mPaused = false;
+                mPaused = false;
 
-                /*
+
                 // get the y-coordinate of where player touches
                 // check if it is beneath the laserbase
-                if(motionEvent.getY() < mLaserBase.getPoint().y){
+                if(motionEvent.getY() > mLaserBase.getPoint().y){
                     // player is moving the laserbase
 
                     if(motionEvent.getX() < mScreenX / 2){
@@ -206,7 +207,7 @@ class SpaceGame extends SurfaceView implements Runnable {
 
                     mLaserBase.setMovementState(LaserBase.Moving.SHOOT);
                 }
-                */
+
 
                 break;
 
@@ -215,7 +216,7 @@ class SpaceGame extends SurfaceView implements Runnable {
             case MotionEvent.ACTION_UP:
                 // stop the movement of laserBase
 
-              //  mLaserBase.setMovementState(LaserBase.Moving.STOP);
+                mLaserBase.setMovementState(LaserBase.Moving.STOP);
                 break;
         }
         return true;
@@ -227,17 +228,17 @@ class SpaceGame extends SurfaceView implements Runnable {
         if(mHolder.getSurface().isValid()) {
             mCanvas = mHolder.lockCanvas();
             // set the background color as black
-          //  mCanvas.drawColor(Color.argb(255, 0, 0, 0));
-            mCanvas.drawColor(Color.argb(255, 26, 128, 182));
+            mCanvas.drawColor(Color.argb(255, 0, 0, 0));
+           // mCanvas.drawColor(Color.argb(255, 26, 128, 182));
             // set the paint color as white (objects painted white)
             mPaint.setColor(Color.argb(255, 255, 255, 255));
 
 
             // draw the laserBase
             mCanvas.drawBitmap(mLaserBase.getBitmap(), mLaserBase.getPoint().x,
-                    mLaserBase.getPoint().y, mPaint);
+            mLaserBase.getPoint().y, mPaint);
 
-            /*
+
 //            // draw the baseShelters
 //            for(int i = 0; i < 4; i++)
 //            {
@@ -264,10 +265,9 @@ class SpaceGame extends SurfaceView implements Runnable {
 
             // draw the invader's missile in blue
             // change paint's color
-            // mCanvas.drawRect(mMissile.getmRect(), mPaint);
 
             // draw the HUD
-*/
+
             mHolder.unlockCanvasAndPost(mCanvas);
         }
     }

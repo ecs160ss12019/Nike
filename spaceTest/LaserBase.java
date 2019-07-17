@@ -42,22 +42,24 @@ class LaserBase {
 
     public LaserBase(Context context, int screenX, int screenY) {
 
+
         isAlive = true;
-        velocity = 200;
+        velocity = 0.1f;
         mRect = new RectF();
 
-        point.x = screenX / 2;
-        point.y = screenY - 20;
+        width = screenX / 8;
+        height = screenX / 8;
 
-        width = screenX / 10;
-        height = screenX / 10;
+        point = new PointFloat();
+        point.x = screenX / 2 - width / 2;
+        point.y = screenY - 400;
+
 
         movementState = Moving.STOP;
 
         missile = new Missile(context, screenX, screenY);
 
-
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.playership);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.mylaserbase);
         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
     }
 
@@ -95,7 +97,10 @@ class LaserBase {
 
 
     public void onShoot(){
-       missile.spawn(point);
+        PointFloat missilePoint = new PointFloat();
+        missilePoint.x = point.x + width / 2;
+        missilePoint.y = point.y;
+        missile.spawn(missilePoint);
     }
 
 

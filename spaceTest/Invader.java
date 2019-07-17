@@ -20,7 +20,7 @@ class Invader {
         LEFT, RIGHT
     }
 
-    private Moving moving = Moving.LEFT;
+    private Moving moving = Moving.RIGHT;
     private float velocity;
 
     boolean isAlive = false;
@@ -31,19 +31,22 @@ class Invader {
 
     public Invader(Context context, int row, int col, int screenX, int screenY){
         isAlive = true;
-        velocity = 20;
+        velocity = 0.1f;
 
         mRect = new RectF();
 
-        width = screenX / 10;
-        height = screenY / 10;
+        width = screenX / 15;
+        height = screenY / 15;
+
+        point = new PointFloat();
 
         // distance between consecutive invaders
         int interval = screenX / 40;
         point.x = col * (width + interval * 2);
         point.y = row * (width + interval);
 
-      //  bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.myinvader);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.myinvader);
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
 
     }
 
@@ -55,6 +58,7 @@ class Invader {
                 break;
             case RIGHT:
                 point.x = point.x + velocity * fps;
+                break;
         }
 
         mRect.left = point.x;
@@ -68,13 +72,15 @@ class Invader {
         switch(moving){
             case LEFT:
                 moving = Moving.RIGHT;
+                break;
             case RIGHT:
                 moving = Moving.LEFT;
+                break;
         }
 
-        point.y = point.y + height;
+        point.y = point.y + height * 2;
         //update()
-        velocity = velocity * (float)1.2;
+        //velocity = velocity * (float)1.2;
     }
 
 
