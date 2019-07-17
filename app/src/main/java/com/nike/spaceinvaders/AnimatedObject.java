@@ -3,11 +3,11 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.PointF;
+import android.os.Handler;
 import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Handler;
 
 public abstract class  AnimatedObject <View extends android.view.View>{
     SpaceGame spaceGame;
@@ -18,13 +18,12 @@ public abstract class  AnimatedObject <View extends android.view.View>{
 
     ValueAnimator animator;
     View view;
-    HashMap<String, Resources> resources;
+    HashMap<String, Object> resources;
 
-    AnimatedObject(PointF position, Size size, ValueAnimator animator, View view, HashMap<String, Resources> resources, SpaceGame spaceGame,
+    AnimatedObject(PointF position, Size size, ValueAnimator animator, View view, HashMap<String, Object> resources, SpaceGame spaceGame,
                    Handler mainHandler, Handler processHandler){
         this.position=position;
         this.size=size;
-        this.animator=animator;
         this.view = view;
         this.resources=resources;
         this.spaceGame=spaceGame;
@@ -56,11 +55,11 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         return view;
     }
 
-    public void setResources(HashMap<String, Resources> resources) {
+    public void setResources(HashMap<String, Object> resources) {
         this.resources = resources;
     }
 
-    public HashMap<String, Resources> getResources() {
+    public HashMap<String, Object> getResources() {
         return resources;
     }
 
@@ -85,7 +84,7 @@ public abstract class  AnimatedObject <View extends android.view.View>{
      */
     abstract ValueAnimator.AnimatorUpdateListener animatorListenerConfigure();
 
-    class Size{
+    static class Size{
         private int height;
         private int width;
         Size(int height,int width){
@@ -109,7 +108,7 @@ public abstract class  AnimatedObject <View extends android.view.View>{
             return width;
         }
     }
-    class Actions{
+    static class Actions{
         private PointF position;
         private HashMap<String,Pair<AnimatedObject,ArrayList<Float>>> actionSet;
 
