@@ -9,12 +9,16 @@ public class ShelterBlock {
     private float blockWidth;
     private float blockHeight;
 
-    ShelterBlock(int screenX) {
+    ShelterBlock(int screenX, int screenY, int xCord, int yCord) {
+        mRectF = new RectF();
         health = 4;
         alive = true;
-        blockHeight = screenX/10;
-        blockWidth = screenX/10;
-        mRectF = new RectF();
+        blockHeight = screenX/20;   //FIXME play with these values
+        blockWidth = screenX/20;
+        mRectF.top = yCord;
+        mRectF.left = xCord;
+        mRectF.bottom = mRectF.top + blockHeight;
+        mRectF.right = mRectF.left + blockWidth;
     }
 
     //GETTERS
@@ -35,7 +39,6 @@ public class ShelterBlock {
     }
 
 
-
     //Reduces health when block is hit
     public void reduceHealth(){
         health--;
@@ -52,11 +55,14 @@ public class ShelterBlock {
         health = 4;
     }
 
+    /* Done by Constructor now
     //Sets up the RectF of
     public void update(int x, int y){
         mRectF.left = x;
         mRectF.top = y;
         mRectF.right = x + blockWidth;
         mRectF.bottom = y + blockHeight;
-    }
+    }*/
+
+
 }
