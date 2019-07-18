@@ -28,13 +28,15 @@ class SpaceGame  {
     private BaseShelterGroup baseShelterGroup;
     private InvaderGroup invaderGroup;
     private  Missile missile;
+    private HUD hud;
     private HashMap<String, Object> resources;
 
-    public SpaceGame (ImageView laserBaseView, ConstraintLayout baseShelterGroupView, ConstraintLayout invaderGroupView, ImageView missileView, HashMap<String, Object> resources, Handler mainHandler, Handler processThread){
+    public SpaceGame (ImageView laserBaseView, ConstraintLayout baseShelterGroupView, ConstraintLayout invaderGroupView, ImageView missileView,ConstraintLayout hudView, HashMap<String, Object> resources, Handler mainHandler, Handler processThread){
         this.laserBase=new LaserBase(null,laserBaseView,resources,this,mainHandler,processThread);
         this.baseShelterGroup=new BaseShelterGroup(null,baseShelterGroupView,resources,this,mainHandler,processThread);
         this.invaderGroup=new InvaderGroup(invaderGroupView,resources,this,mainHandler,processThread);
         this.missile=new Missile(missileView,resources,this,mainHandler,processThread);
+        this.hud=new HUD(hudView,resources,this,mainHandler,processThread);
         HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet=new HashMap<>();
         actionSet.put("start",new Pair<AnimatedObject, ArrayList<Float>>(null,null));
         AnimatedObject.Actions actions=new AnimatedObject.Actions(new PointF(0,0),actionSet);
