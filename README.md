@@ -16,6 +16,9 @@ A link to [Story Mapping(Acceptance test included)](https://github.com/ecs160ss1
 
 A link to [CRC](https://github.com/ecs160ss12019/Nike/blob/master/CRC.md)
 
+A link to our [design track (including updates)](https://github.com/ecs160ss12019/Nike/blob/master/DesignTrack.md)
+
+
 ## Team members
 
 *Format: Name, Github Username*
