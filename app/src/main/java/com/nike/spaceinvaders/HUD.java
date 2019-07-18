@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 
 
 public class HUD implements GameObject{
@@ -53,6 +54,8 @@ public class HUD implements GameObject{
             Rect templete = new Rect(50+60*i,mScreenY-90,100+60*i,mScreenY-40);
             canvas.drawRect(templete,paint);
         }
+
+
         //draw Credit
         //drawRGB(canvas,"CREDIT: "+score,);
     }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -143,10 +144,13 @@ class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
     public void draw(Canvas canvas){
         super.draw(canvas);
 
-        //It's white background
-        canvas.drawColor(Color.BLACK);
-
+        //Usage of draw drawable file
+        Drawable d = getResources().getDrawable(R.drawable.space_background300x300, null);
+        d.setBounds(0 , 0, mScreenX, mScreenY);
+        d.draw(canvas);
         hud.draw(canvas);
+
+
     }
 
     // Called by SpaceActivity when TODO:Modified pasue and resume
