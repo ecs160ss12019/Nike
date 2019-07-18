@@ -9,6 +9,10 @@
 |  - Generates and Manages the movement and size of invaders <br> - Detect the collision with missiles <br> - Spawns at the top of interface |  Missle <br> SpaceGame |
 
 
+| InvaderGroup | |
+|---|---|
+|  - Manage a group of invaders|  Invader |
+
 
 | BaseShelter | |
 |---|---|
