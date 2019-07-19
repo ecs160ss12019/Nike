@@ -1,3 +1,5 @@
+## For Sprint 1
+
 | LaserBase | |
 |---|---|
 |  - Able to move right or left when user touches the left/right part of the screen <br> - Has 3 lives <br> - Able to shoot missle when user touch the middle screen on the screen |  Missle <br> SpaceGame |
@@ -9,19 +11,10 @@
 |  - Generates and Manages the movement and size of invaders <br> - Detect the collision with missiles <br> - Spawns at the top of interface |  Missle <br> SpaceGame |
 
 
-| InvaderGroup | |
-|---|---|
-|  - Manage a group of invaders|  Invader |
-
 
 | BaseShelter | |
 |---|---|
-|  - Has an array of ShelterBlocks that make up a baseShelter  <br> - Detect the collision with missiles <br> - Spawns at between invader and laserbase |  Missle <br> SpaceGame |
-
-
-| ShelterBlock | |
-|---|---|
-|  - Make up each baseShelter  <br> - Each block should have height and width <br> - Detect whether a block is dead or not | BaseShelter |
+|  - Has the size of the baseShelter as well as how many pixels it has  <br> - Detect the collision with missiles <br> - Spawns at between invader and laserbase |  Missle <br> SpaceGame |
 
 
 | Missile | |
@@ -32,6 +25,30 @@
 | SpaceGame | |
 |---|---|
 |  - UI of this game  <br> - Shows the graphical background of the game, which is the universe <br> - Contains a list of objects in the game |  BaseShelter <br> Invader <br> LaserBase <br> Missile |
+
+
+
+## Updates for Sprint 2
+
+### Modified:
+
+| BaseShelter | |
+|---|---|
+|  - Has an array of ShelterBlocks that make up a baseShelter  <br> - Detect the collision with missiles <br> - Spawns at between invader and laserbase |  Missle <br> SpaceGame |
+
+
+
+### Added:
+
+| InvaderGroup | |
+|---|---|
+|  - Manage a group of invaders|  Invader |
+
+
+
+| ShelterBlock | |
+|---|---|
+|  - Make up each baseShelter  <br> - Each block should have height and width <br> - Detect whether a block is dead or not | BaseShelter |
 
 
 
