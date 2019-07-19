@@ -16,11 +16,6 @@ public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
     }
 
     @Override
-    protected void handle(Actions actions) {
-
-    }
-
-    @Override
     protected void handle(Actions actions, Set keys) {
         Set<Integer> oldKeys=actions.keySet();
         for (Integer key:oldKeys){
