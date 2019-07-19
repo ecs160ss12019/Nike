@@ -15,8 +15,6 @@ import java.util.Set;
 
 public abstract class  AnimatedObject <View extends android.view.View>{
     private SpaceGame spaceGame;
-    private PointF position;
-    private Size size;
     private Handler mainHandler;
     private Handler processHandler;
 
@@ -26,10 +24,9 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     private View view;
     private HashMap<Integer, Object> resources;
 
-    AnimatedObject(PointF position, Size size, ValueAnimator animator, View view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status,
+    AnimatedObject( ValueAnimator animator, View view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status,
                    Handler mainHandler, Handler processHandler){
-        this.position=position;
-        this.size=size;
+
         this.view = view;
         this.resources=resources;
         this.spaceGame=spaceGame;
@@ -39,12 +36,10 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     }
 
     public void setX(float x){
-        this.position.x=x;
         this.view.setX(x);
     }
 
     public void setY(float y){
-        this.position.y=y;
         this.view.setY(y);
     }
 
@@ -85,21 +80,17 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     }
 
     public void setHeight(int height){
-        this.size.height=height;
-        view.layout((int)this.position.x,(int)this.position.y,(int)(this.position.x+this.size.width),(int)(this.position.y+this.size.height));
+        view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+this.getWidth()),(int)(this.getY()+height));
 
     }
 
     public void setWidth(int width){
-        this.size.width=width;
-        view.layout((int)this.position.x,(int)this.position.y,(int)(this.position.x+this.size.width),(int)(this.position.y+this.size.height));
+        view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+width),(int)(this.getY()+this.getHeight()));
 
     }
 
     public void setSize(int height,int width){
-        this.size.width=width;
-        this.size.height=height;
-        view.layout((int)this.position.x,(int)this.position.y,(int)(this.position.x+this.size.width),(int)(this.position.y+this.size.height));
+        view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+width),(int)(this.getY()+height));
     }
 
     public void setSpaceGame(SpaceGame spaceGame) {
@@ -130,10 +121,6 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         return resources;
     }
 
-    public Size getSize() {
-        return size;
-    }
-
     protected void handle(Actions actions){
         handle(actions,null);
     }
@@ -150,10 +137,6 @@ public abstract class  AnimatedObject <View extends android.view.View>{
      * Don't do it using a anonymous inner class.
      */
     abstract ValueAnimator.AnimatorUpdateListener animatorListenerConfigure();
-
-    public PointF getPosition() {
-        return position;
-    }
 
     public Handler getMainHandler() {
         return mainHandler;
@@ -172,19 +155,19 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     }
 
     public float getX() {
-        return this.position.x;
+        return this.view.getX();
     }
 
     public float getY() {
-        return this.position.y;
+        return this.view.getY();
     }
 
     public int getWidth(){
-        return this.size.width;
+        return this.view.getWidth();
     }
 
     public int getHeight(){
-        return this.size.height;
+        return this.view.getHeight();
     }
 
     static class Size{

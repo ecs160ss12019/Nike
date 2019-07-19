@@ -16,15 +16,15 @@ import android.os.Handler;
 public class Invader extends AnimatedObject <ImageView> {
     private boolean status=true;
     private Missile missile;
-    Invader(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super(position, size, animator, view, resources, spaceGame, status,mainHandler, processHandler);
+    Invader(ValueAnimator animator, ImageView view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+        super(animator, view, resources, spaceGame, status,mainHandler, processHandler);
 
     }
 
     private void kill(Pair<AnimatedObject, ArrayList<Float>> strike){
         Missile missile= (Missile) strike.first;
-        PointF position= missile.getPosition();
-        Size size=missile.getSize();
+        PointF position= new PointF(missile.getX(),missile.getY());
+        Size size=new Size(missile.getHeight(),missile.getWidth());
 
         float groupX=strike.second.get(0);
         float groupY=strike.second.get(1);

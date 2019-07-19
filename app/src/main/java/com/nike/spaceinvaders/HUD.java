@@ -21,7 +21,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
 
 
     HUD(ConstraintLayout view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super(new PointF(view.getX(),view.getY()), new Size(view.getHeight(),view.getWidth()),null, view, resources, spaceGame,status, mainHandler, processHandler);
+        super(null, view, resources, spaceGame,status, mainHandler, processHandler);
         this.score=view.findViewById(scoreId);
         this.lives=view.findViewById(livesId);
     }
