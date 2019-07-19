@@ -357,56 +357,28 @@
             android:id="@+id/shelter2"
             android:layout_width="63dp"
             android:layout_height="63dp"
+            android:layout_marginStart="68dp"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/shelter1"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/shelter" />
 
         <ImageView
             android:id="@+id/shelter3"
             android:layout_width="63dp"
             android:layout_height="63dp"
+            android:layout_marginStart="68dp"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/shelter2"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/shelter" />
 
-        <ImageView
-            android:id="@+id/shelter4"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/shelter3"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shelter" />
-
-        <ImageView
-            android:id="@+id/shelter5"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/shelter4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shelter" />
-
-        <ImageView
-            android:id="@+id/shelter6"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/shelter5"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shelter" />
     </android.support.constraint.ConstraintLayout>
 
     <ImageView

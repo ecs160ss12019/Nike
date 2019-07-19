@@ -12,11 +12,12 @@ import java.util.Set;
 
 import android.os.Handler;
 
+
 public class Invader extends AnimatedObject <ImageView> {
     private boolean status=true;
     private Missile missile;
-    Invader(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<String, Object> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
-        super(position, size, animator, view, resources, spaceGame, mainHandler, processHandler);
+    Invader(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+        super(position, size, animator, view, resources, spaceGame, status,mainHandler, processHandler);
 
     }
 
@@ -27,13 +28,13 @@ public class Invader extends AnimatedObject <ImageView> {
 
         float groupX=strike.second.get(0);
         float groupY=strike.second.get(1);
-        float realX=groupX+this.getView().getX();
-        float realY=groupY+this.getView().getY();
+        float realX=groupX+this.getX();
+        float realY=groupY+this.getY();
 
-        if (position.x>=realX&&position.x<=realX+this.getView().getWidth()
-                &&position.y>=realY&&position.y<=realY+this.getView().getHeight()){
+        if (position.x>=realX&&position.x<=realX+this.getWidth()
+                &&position.y>=realY&&position.y<=realY+this.getHeight()){
             this.status=false;
-            this.getView().setImageAlpha(0);
+            this.setAlpha(0);
         }
         notifySpaceGame();
     }
@@ -50,13 +51,12 @@ public class Invader extends AnimatedObject <ImageView> {
 
     @Override
     protected void handle(Actions actions) {
-        HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet=actions.getActionSet();
-        Set<String> keys=actionSet.keySet();
-        for (String key: keys){
-            Pair<AnimatedObject, ArrayList<Float>> value=actionSet.get(key);
-            actionSet.entrySet();
+        Set<Integer> keys=actions.keySet();
+        for (Integer key: keys){
+            Pair<AnimatedObject, ArrayList<Float>> value=actions.get(key);
+
             switch (key){
-                case "strike":
+                case SpaceGame.STRIKE:
                     assert value != null;
                     kill(value);
             }
