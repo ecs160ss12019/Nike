@@ -58,12 +58,18 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     this.getAnimator().addUpdateListener(animatorListenerConfigure());
                     this.getAnimator().start();
 //                    this.animator.cancel();
+
                     break;
                 case "strike":
                     assert value != null;
                     strikeInvaders(value,actions.getPosition());
             }
         }
+    }
+
+    @Override
+    protected void handle(Actions actions, Set keys) {
+
     }
 
     private void strikeInvaders(Pair<AnimatedObject, ArrayList<Float>> value, PointF position){

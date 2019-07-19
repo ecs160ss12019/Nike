@@ -23,6 +23,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 class SpaceGame  {
+    //Action Flags
+    public static final int GAMESTART=0b000001;
+    public static final int STRIKE=0b000010;
+    public static final int TOUCH=0b000100;
 
     private LaserBase laserBase;
     private BaseShelterGroup baseShelterGroup;
@@ -35,7 +39,7 @@ class SpaceGame  {
         this.laserBase=new LaserBase(null,laserBaseView,resources,this,mainHandler,processThread);
         this.baseShelterGroup=new BaseShelterGroup(null,baseShelterGroupView,resources,this,mainHandler,processThread);
         this.invaderGroup=new InvaderGroup(invaderGroupView,resources,this,mainHandler,processThread);
-        this.missile=new Missile(missileView,resources,this,mainHandler,processThread);
+//        this.missile=new Missile(missileView,resources,this,mainHandler,processThread);
         this.hud=new HUD(hudView,resources,this,mainHandler,processThread);
         HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet=new HashMap<>();
         actionSet.put("start",new Pair<AnimatedObject, ArrayList<Float>>(null,null));

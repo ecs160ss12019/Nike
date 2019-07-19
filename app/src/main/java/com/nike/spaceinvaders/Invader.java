@@ -64,6 +64,11 @@ public class Invader extends AnimatedObject <ImageView> {
     }
 
     @Override
+    protected void handle(Actions actions, Set keys) {
+
+    }
+
+    @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         return null;
     }

@@ -8,6 +8,7 @@ import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public abstract class  AnimatedObject <View extends android.view.View>{
     private SpaceGame spaceGame;
@@ -71,7 +72,11 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         return size;
     }
 
-    abstract protected void handle (Actions actions);
+    protected void handle(Actions actions){
+        handle(actions,null);
+    }
+
+    abstract protected void handle (Actions actions, Set keys);
 
     /**
      * {@inheritDoc}

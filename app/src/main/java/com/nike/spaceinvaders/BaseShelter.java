@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.widget.ImageView;
 
 import java.util.HashMap;
+import java.util.Set;
 
 class BaseShelter extends AnimatedObject<ImageView> {
 
@@ -18,6 +19,11 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     @Override
     protected void handle(Actions actions) {
+
+    }
+
+    @Override
+    protected void handle(Actions actions, Set keys) {
 
     }
 

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
     BaseShelterGroup(ValueAnimator animator, ConstraintLayout view, HashMap<String, Object> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
@@ -14,6 +15,11 @@ public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
 
     @Override
     protected void handle(Actions actions) {
+
+    }
+
+    @Override
+    protected void handle(Actions actions, Set keys) {
 
     }
 

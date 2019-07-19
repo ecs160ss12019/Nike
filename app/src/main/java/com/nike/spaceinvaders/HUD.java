@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class HUD extends AnimatedObject <ConstraintLayout> {
     private TextView score;
@@ -27,6 +28,11 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
 
     @Override
     protected void handle(Actions actions) {
+
+    }
+
+    @Override
+    protected void handle(Actions actions, Set keys) {
 
     }
 
