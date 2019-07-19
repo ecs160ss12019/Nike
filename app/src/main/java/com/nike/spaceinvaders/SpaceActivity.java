@@ -70,7 +70,7 @@ public class SpaceActivity extends AppCompatActivity {
         Point size = new Point();
         display.getSize(size);
 
-        resources.put(SpaceGame.RESOURCES,size);
+        resources.put(SpaceGame.WINDOW_SIZE,size);
 
         mSpaceGame=new SpaceGame((ImageView) findViewById(R.id.laserBase),(ConstraintLayout) findViewById(R.id.shelters),(ConstraintLayout) findViewById(R.id.invader_layout),null,(ConstraintLayout)findViewById(R.id.HUD),resources,mainHandler,processHandler);
     }

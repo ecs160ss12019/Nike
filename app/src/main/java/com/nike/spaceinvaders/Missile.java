@@ -26,8 +26,8 @@ import java.util.Set;
 class Missile extends AnimatedObject <ImageView>{
     private boolean type;
 
-    Missile(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super(position, size, animator, view, resources, spaceGame, status, mainHandler, processHandler);
+    Missile(ValueAnimator animator, ImageView view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+        super( animator, view, resources, spaceGame, status, mainHandler, processHandler);
     }
 
 

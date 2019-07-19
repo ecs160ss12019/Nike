@@ -25,14 +25,14 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
     InvaderGroup(ConstraintLayout view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
 
-        super(new PointF(view.getX(),view.getY()), new Size(view.getHeight(),view.getWidth()), new ValueAnimator(), view, resources, spaceGame,status, mainHandler, processHandler);
+        super( new ValueAnimator(), view, resources, spaceGame,status, mainHandler, processHandler);
 
         this.aliveInvaders=this.getChildCount();
         invaders=new ArrayList<>(this.getChildCount());
 
         for (int i=0;i<this.getChildCount();i++){
             ImageView invaderView= (ImageView) this.getChildAt(i);
-            invaders.add(new Invader(new PointF(invaderView.getX(),invaderView.getY()),new Size(invaderView.getHeight(),invaderView.getWidth()),this.getAnimator(),invaderView,this.getResources(),this.getSpaceGame(),this.getStatus(),this.getMainHandler(),this.getProcessHandler()));
+            invaders.add(new Invader(this.getAnimator(),invaderView,this.getResources(),this.getSpaceGame(),this.getStatus(),this.getMainHandler(),this.getProcessHandler()));
         }
 
 
