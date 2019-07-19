@@ -25,16 +25,14 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
     InvaderGroup(ConstraintLayout view, HashMap<String, Object> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
 
-        super(null, null, null, view, resources, spaceGame, mainHandler, processHandler);
+        super(new PointF(view.getX(),view.getY()), new Size(view.getHeight(),view.getWidth()), new ValueAnimator(), view, resources, spaceGame, mainHandler, processHandler);
 
-        this.position=new PointF(this.view.getX(),this.view.getY());
-        this.size=new Size(this.view.getHeight(),this.view.getWidth());
-        this.aliveInvaders=this.view.getChildCount();
-        invaders=new ArrayList<>(this.view.getChildCount());
+        this.aliveInvaders=this.getView().getChildCount();
+        invaders=new ArrayList<>(this.getView().getChildCount());
 
-        for (int i=0;i<this.view.getChildCount();i++){
-            ImageView invaderView= (ImageView) this.view.getChildAt(i);
-            invaders.add(new Invader(new PointF(invaderView.getX(),invaderView.getY()),new Size(invaderView.getHeight(),invaderView.getWidth()),this.animator,invaderView,this.resources,this.spaceGame,this.mainHandler,this.processHandler));
+        for (int i=0;i<this.getView().getChildCount();i++){
+            ImageView invaderView= (ImageView) this.getView().getChildAt(i);
+            invaders.add(new Invader(new PointF(invaderView.getX(),invaderView.getY()),new Size(invaderView.getHeight(),invaderView.getWidth()),this.getAnimator(),invaderView,this.getResources(),this.getSpaceGame(),this.getMainHandler(),this.getProcessHandler()));
         }
 
 
@@ -44,24 +42,42 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
     protected void handle(Actions actions) {
         HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet=actions.getActionSet();
         Set<String> keys=actionSet.keySet();
-        Log.d("infod","oaoaooa");
         for (String key: keys){
             Pair<AnimatedObject, ArrayList<Float>> value=actionSet.get(key);
+            actionSet.entrySet();
             switch (key){
                 case "start":
-                    if (this.animator==null){
-                        this.animator=new ValueAnimator();
+                    if (this.getAnimator()==null){
+                        this.setAnimator(new ValueAnimator());
                     }
 
-                    this.animator.setIntValues(1,100);
-                    this.animator.setDuration(this.duration);
-                    this.animator.setRepeatCount(ValueAnimator.INFINITE);
-                    this.animator.setRepeatMode(ValueAnimator.REVERSE);
-                    this.animator.addUpdateListener(animatorListenerConfigure());
-                    this.animator.start();
+                    this.getAnimator().setIntValues(1,100);
+                    this.getAnimator().setDuration(this.duration);
+                    this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
+                    this.getAnimator().setRepeatMode(ValueAnimator.REVERSE);
+                    this.getAnimator().addUpdateListener(animatorListenerConfigure());
+                    this.getAnimator().start();
 //                    this.animator.cancel();
+
                     break;
+                case "strike":
+                    assert value != null;
+                    strikeInvaders(value,actions.getPosition());
             }
+        }
+    }
+
+    @Override
+    protected void handle(Actions actions, Set keys) {
+
+    }
+
+    private void strikeInvaders(Pair<AnimatedObject, ArrayList<Float>> value, PointF position){
+        HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet=new HashMap<>();
+        actionSet.put("strike",value);
+        Actions actions=new Actions(position,actionSet);
+        for (Invader invader:this.invaders){
+            invader.handle(actions);
         }
     }
 
@@ -72,13 +88,13 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction=animation.getAnimatedFraction();
-                Point size= (Point) that.resources.get("WindowSize");
+                Point size= (Point) that.getResources().get("WindowSize");
 //                float processedFraction= (float) (fraction-0.5)*2;
                 assert size != null;
                 int deltaX=-100;
-                int length=size.x-(view.getWidth()-100)-deltaX;
+                int length=size.x-(that.getView().getWidth()-100)-deltaX;
 
-                that.view.setX(deltaX+length*fraction);
+                that.getView().setX(deltaX+length*fraction);
 
             }
         };

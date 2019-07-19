@@ -8,17 +8,18 @@ import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public abstract class  AnimatedObject <View extends android.view.View>{
-    SpaceGame spaceGame;
-    PointF position;
-    Size size;
-    Handler mainHandler;
-    Handler processHandler;
+    private SpaceGame spaceGame;
+    private PointF position;
+    private Size size;
+    private Handler mainHandler;
+    private Handler processHandler;
 
-    ValueAnimator animator;
-    View view;
-    HashMap<String, Object> resources;
+    private ValueAnimator animator;
+    private View view;
+    private HashMap<String, Object> resources;
 
     AnimatedObject(PointF position, Size size, ValueAnimator animator, View view, HashMap<String, Object> resources, SpaceGame spaceGame,
                    Handler mainHandler, Handler processHandler){
@@ -71,7 +72,11 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         return size;
     }
 
-    abstract protected void handle (Actions actions);
+    protected void handle(Actions actions){
+        handle(actions,null);
+    }
+
+    abstract protected void handle (Actions actions, Set keys);
 
     /**
      * {@inheritDoc}
@@ -83,6 +88,22 @@ public abstract class  AnimatedObject <View extends android.view.View>{
      * Don't do it using a anonymous inner class.
      */
     abstract ValueAnimator.AnimatorUpdateListener animatorListenerConfigure();
+
+    public PointF getPosition() {
+        return position;
+    }
+
+    public void setPosition(PointF position) {
+        this.position = position;
+    }
+
+    public Handler getMainHandler() {
+        return mainHandler;
+    }
+
+    public Handler getProcessHandler() {
+        return processHandler;
+    }
 
     static class Size{
         private int height;
