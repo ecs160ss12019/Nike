@@ -1,5 +1,3 @@
-/* Weili Yin, Roberto Lozano */
-
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
