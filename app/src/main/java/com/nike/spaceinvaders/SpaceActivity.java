@@ -63,12 +63,15 @@ public class SpaceActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        HashMap<Integer, Object> resources=new HashMap<>();
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
 
-        HashMap<String, Object> resources=new HashMap<>();
-        resources.put("WindowSize",size);
+        resources.put(SpaceGame.RESOURCES,size);
+
         mSpaceGame=new SpaceGame((ImageView) findViewById(R.id.laserBase),(ConstraintLayout) findViewById(R.id.shelters),(ConstraintLayout) findViewById(R.id.invader_layout),null,(ConstraintLayout)findViewById(R.id.HUD),resources,mainHandler,processHandler);
     }
 

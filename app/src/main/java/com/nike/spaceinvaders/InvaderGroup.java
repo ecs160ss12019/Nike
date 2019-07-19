@@ -23,16 +23,16 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
     private ArrayList<Invader> invaders;
     private int duration=3000;
 
-    InvaderGroup(ConstraintLayout view, HashMap<String, Object> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
+    InvaderGroup(ConstraintLayout view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
 
-        super(new PointF(view.getX(),view.getY()), new Size(view.getHeight(),view.getWidth()), new ValueAnimator(), view, resources, spaceGame, mainHandler, processHandler);
+        super(new PointF(view.getX(),view.getY()), new Size(view.getHeight(),view.getWidth()), new ValueAnimator(), view, resources, spaceGame,status, mainHandler, processHandler);
 
-        this.aliveInvaders=this.getView().getChildCount();
-        invaders=new ArrayList<>(this.getView().getChildCount());
+        this.aliveInvaders=this.getChildCount();
+        invaders=new ArrayList<>(this.getChildCount());
 
-        for (int i=0;i<this.getView().getChildCount();i++){
-            ImageView invaderView= (ImageView) this.getView().getChildAt(i);
-            invaders.add(new Invader(new PointF(invaderView.getX(),invaderView.getY()),new Size(invaderView.getHeight(),invaderView.getWidth()),this.getAnimator(),invaderView,this.getResources(),this.getSpaceGame(),this.getMainHandler(),this.getProcessHandler()));
+        for (int i=0;i<this.getChildCount();i++){
+            ImageView invaderView= (ImageView) this.getChildAt(i);
+            invaders.add(new Invader(new PointF(invaderView.getX(),invaderView.getY()),new Size(invaderView.getHeight(),invaderView.getWidth()),this.getAnimator(),invaderView,this.getResources(),this.getSpaceGame(),this.getStatus(),this.getMainHandler(),this.getProcessHandler()));
         }
 
 
@@ -40,13 +40,11 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
     @Override
     protected void handle(Actions actions) {
-        HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet=actions.getActionSet();
-        Set<String> keys=actionSet.keySet();
-        for (String key: keys){
-            Pair<AnimatedObject, ArrayList<Float>> value=actionSet.get(key);
-            actionSet.entrySet();
+        Set<Integer> keys=actions.keySet();
+        for (Integer key: keys){
+            Pair<AnimatedObject, ArrayList<Float>> value=actions.get(key);
             switch (key){
-                case "start":
+                case SpaceGame.GAMESTART:
                     if (this.getAnimator()==null){
                         this.setAnimator(new ValueAnimator());
                     }
@@ -60,9 +58,8 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 //                    this.animator.cancel();
 
                     break;
-                case "strike":
+                case SpaceGame.STRIKE:
                     assert value != null;
-                    strikeInvaders(value,actions.getPosition());
             }
         }
     }
@@ -73,12 +70,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
     }
 
     private void strikeInvaders(Pair<AnimatedObject, ArrayList<Float>> value, PointF position){
-        HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet=new HashMap<>();
-        actionSet.put("strike",value);
-        Actions actions=new Actions(position,actionSet);
-        for (Invader invader:this.invaders){
-            invader.handle(actions);
-        }
+
     }
 
     @Override
@@ -88,13 +80,14 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction=animation.getAnimatedFraction();
-                Point size= (Point) that.getResources().get("WindowSize");
+                Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
 //                float processedFraction= (float) (fraction-0.5)*2;
                 assert size != null;
                 int deltaX=-100;
-                int length=size.x-(that.getView().getWidth()-100)-deltaX;
+                int length=size.x-(that.getWidth()-100)-deltaX;
 
-                that.getView().setX(deltaX+length*fraction);
+                that.setX(deltaX+length*fraction);
+
 
             }
         };

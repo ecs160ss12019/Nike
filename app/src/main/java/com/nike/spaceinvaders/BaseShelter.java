@@ -11,10 +11,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 class BaseShelter extends AnimatedObject<ImageView> {
+    boolean[][] hitBox=new boolean[2][3];
 
-
-    BaseShelter(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<String, Object> resources, SpaceGame spaceGame, Handler mainHandler, Handler processHandler) {
-        super(position, size, animator, view, resources, spaceGame, mainHandler, processHandler);
+    BaseShelter(PointF position, Size size, ValueAnimator animator, ImageView view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+        super(position, size, animator, view, resources, spaceGame,status, mainHandler, processHandler);
     }
 
     @Override
