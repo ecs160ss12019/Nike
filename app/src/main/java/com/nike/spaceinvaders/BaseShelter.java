@@ -16,11 +16,6 @@ class BaseShelter extends AnimatedObject<ImageView> {
     }
 
     @Override
-    protected void handle(Actions actions) {
-
-    }
-
-    @Override
     protected void handle(Actions actions, Set keys) {
 
     }
