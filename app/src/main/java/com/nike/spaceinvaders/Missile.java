@@ -78,7 +78,6 @@ class Missile extends AnimatedObject <ImageView>  {
 
 
     public void initialize() {
-
     }
 
     public int getKey() {

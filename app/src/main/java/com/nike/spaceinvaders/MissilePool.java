@@ -26,6 +26,7 @@ public class MissilePool {
     private ArrayList<Missile> excessiveMissiles;
 
     private int checkCount=0;
+    private boolean availability=false;
 
     MissilePool(ViewGroup layout, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, int numberOfMissile, Handler mainHandler, Handler processHandler){
         this.layout=layout;
@@ -91,22 +92,51 @@ public class MissilePool {
         }
 
         this.numberOfMissile=numberOfMissile;
+        instantiate(numberOfMissile);
     }
+
+    private void instantiate(final int numberOfMissile){
+        final MissilePool that=this;
+        processHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (that.freshMissiles){
+                    for (int index=0;index<numberOfMissile;index++){
+                        Context context= (Context) that.resources.get(SpaceGame.CONTEXT);
+                        ImageView missileView=new ImageView(context);
+                        Missile missile=new Missile(index,true,that,missileView,resources,spaceGame,status,mainHandler,processHandler);
+                        that.freshMissiles.put(index,missile);
+                        missile.initialize();
+                        missile.attachTo(that.layout);
+                    }
+                }
+                that.availability=true;
+            }
+        });
+    }
+
     /*
-        Recycle missileQuiver into freshArray
+        Recycle missile into freshArray
      */
     public void recycle( Missile missile) throws Exception {
+        if (!this.availability){
+            return;
+        }
         if (missile.getPool()!=this){
 
             throw new Exception("This Missile is not in this pool");
         }
         if (!missile.isRecyclable()){
             synchronized (this.excessiveMissiles){
+                missile.initialize();
+                missile.detachFrom(layout);
                 this.excessiveMissiles.remove(missile);
             }
         }else{
             missile.setStatus(true);
             synchronized (this.gloriousMissiles){
+                missile.initialize();
+                missile.detachFrom(layout);
                 this.gloriousMissiles.remove(missile.getKey());
             }
             synchronized (this.freshMissiles){
@@ -118,12 +148,16 @@ public class MissilePool {
 
     // Get a vacant Missile
     public Missile getMissile(){
+        if (!this.availability){
+            return null;
+        }
         synchronized (freshMissiles){
             if (freshMissiles.size()>0){
                 this.checkCount++;
                 Missile missile=freshMissiles.get(freshMissiles.keyAt(freshMissiles.size()-1));
                 missile.setStatus(false);
                 missile.setTime(System.currentTimeMillis());
+                missile.attachTo(layout);
                 gc();
                 return missile;
             }
@@ -134,7 +168,7 @@ public class MissilePool {
             Missile missile=new Missile(-1,false,this,missileView,resources,spaceGame,status,mainHandler,processHandler);
             excessiveMissiles.add(missile);
             missile.initialize();
-            this.layout.addView(missileView);
+            missile.attachTo(layout);
             this.checkCount++;
             gc();
             return missile;
@@ -152,9 +186,11 @@ public class MissilePool {
                         for (int index=excessiveMissiles.size()-1;index>=0;index--){
                             Missile missile=excessiveMissiles.get(index);
                             if (System.currentTimeMillis()-missile.getTime()>20000){
-                                missile.initialize();
-                                missile.detachFrom(layout);
-                                excessiveMissiles.remove(index);
+                                try {
+                                    recycle(missile);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -162,9 +198,11 @@ public class MissilePool {
                         for (int index=gloriousMissiles.size()-1;index>=0;index--){
                             Missile missile=gloriousMissiles.get(index);
                             if (System.currentTimeMillis()-missile.getTime()>20000){
-                                missile.initialize();
-                                missile.detachFrom(layout);
-                                gloriousMissiles.remove(gloriousMissiles.keyAt(index));
+                                try {
+                                    recycle(missile);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
