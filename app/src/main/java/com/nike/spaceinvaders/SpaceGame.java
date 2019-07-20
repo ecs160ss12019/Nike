@@ -45,11 +45,11 @@ class SpaceGame  {
     public static final int LEVEL=0b0010000;
     public static final int PERKS_OF_LASERBASE=0b0100000;
 
-    final LaserBase laserBase;
-    final BaseShelterGroup baseShelterGroup;
-    final InvaderGroup invaderGroup;
-    final   Missile missile=null;
-    final HUD hud;
+    final AnimatedObject laserBase;
+    final AnimatedObject baseShelterGroup;
+    final AnimatedObject invaderGroup;
+    final AnimatedObject missile=null;
+    final AnimatedObject hud;
     final HashMap<Integer, Object> resources;
 
     private Status status;
