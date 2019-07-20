@@ -36,11 +36,11 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
 
     @Override
     protected void handle(Actions actions, Set keys) {
-/*        switch(actions) {
-            case :
+/*        switch(actions.get()) {
+            case getSpaceGame().LIFE_ADD:
                 // code block
                 break;
-            case :
+            case getSpaceGame().LIFE_GONE:
                 // code block
                 break;
             default:
