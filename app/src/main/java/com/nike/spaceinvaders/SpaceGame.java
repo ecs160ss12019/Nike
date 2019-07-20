@@ -23,8 +23,9 @@ import java.util.HashMap;
 import java.util.Set;
 
 class SpaceGame  {
-    //Action Flags
+    /* Action Flags */
     public static final int GAMESTART=0b0000001;
+    // Missile has been released and is moving(striking)
     public static final int STRIKE=0b0000010;
     public static final int TOUCH=0b0000100;
     public static final int MISSILE_GONE=0b0001000;
@@ -33,12 +34,13 @@ class SpaceGame  {
     public static final int LIFE_ADD=0b1000000;
     public static final int LIFE_GONE=0b10000000;
     public static final int RESURRECTION=0b100000000;
+    // The moment at which laserBase or invader fires the missile
     public static final int FIRE=0b1000000000;
-    //Resource Flags
+    /* Resource Flags */
     public static final int WINDOW_SIZE=0b0000001;
     public static final int RESOURCES=0b0000010;
     public static final int CONTEXT=0b0000100;
-    //Status Flags
+    /* Status Flags */
     public static final int NUM_INVADER=0b0000001;
     public static final int NUM_LIVES=0b0000010;
     public static final int INTEGRITY_OF_SHELTER=0b0000100;

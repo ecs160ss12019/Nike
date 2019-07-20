@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -59,13 +60,26 @@ class Missile extends AnimatedObject <ImageView>  {
      * than one PropertyValuesHolder object, this method will set the values for the first
      * of those objects.</p>
      *
-     * @param actions The actions to be handled by MissIle:
+     * @param actions The actions to be handled by Missile:
      *                "#MISSILE_GONE" indicates the missile was collided with other object, and gone.
      *                "#FIRE" indicates the missile needs to move and strike objects.
      * @param keys The keys that we need to iterate through.
      */
     @Override
     protected void handle(Actions actions, Set keys) {
+        Set<Integer> oldKeys = actions.keySet();
+        for(Integer key:oldKeys){
+            switch(key){
+                case SpaceGame.FIRE:
+                    // get the starting position of missile
+                    ArrayList<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
+                    float startX = startPts.get(0);
+                    float startY = startPts.get(1);
+
+                    // load the missile
+                    // set up trajectory for missile
+            }
+        }
         AnimatedObject baseShelterGroup=getSpaceGame().baseShelterGroup;
 
         Actions newActions=new Actions();
