@@ -25,9 +25,17 @@ import java.util.Set;
  */
 class Missile extends AnimatedObject <ImageView>  {
     private boolean type;
+    private long time;
+    private boolean recyclable;
+    private boolean status=true;
+    private int key;
+    private MissilePool pool;
 
-    Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    Missile(int key, boolean recyclable, MissilePool pool,ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
+        this.key=key;
+        this.recyclable=recyclable;
+        this.pool=pool;
     }
 
 
@@ -69,5 +77,50 @@ class Missile extends AnimatedObject <ImageView>  {
 
     public void initialize() {
 
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void recycle() throws Exception {
+        initialize();
+        this.pool.recycle(this);
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public boolean isRecyclable() {
+        return recyclable;
+    }
+
+    public void setRecyclable(boolean recyclable) {
+        this.recyclable = recyclable;
+    }
+
+    public void setPool(MissilePool pool) {
+        this.pool = pool;
+    }
+
+    public MissilePool getPool() {
+        return pool;
     }
 }
