@@ -76,6 +76,10 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         }
     }
 
+    public void setVisibility( int visibility){
+        view.setVisibility(visibility);
+    }
+
     public void setAlpha(float alpha){
         view.setAlpha(alpha);
     }
@@ -224,6 +228,9 @@ public abstract class  AnimatedObject <View extends android.view.View>{
 
 
     }
+
+
+
     static class Actions extends  HashMap<Integer,Pair<AnimatedObject,ArrayList<Float>>>{
 
     }
