@@ -22,9 +22,9 @@ public abstract class  AnimatedObject <View extends android.view.View>{
 
     private ValueAnimator animator;
     private View view;
-    private HashMap<Integer, Object> resources;
+    private SpaceGame.Resources resources;
 
-    AnimatedObject( ValueAnimator animator, View view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status,
+    AnimatedObject( ValueAnimator animator, View view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status,
                    Handler mainHandler, Handler processHandler){
 
         this.view = view;
@@ -113,11 +113,11 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         return animator;
     }
 
-    public void setResources(HashMap<Integer, Object> resources) {
+    public void setResources(SpaceGame.Resources resources) {
         this.resources = resources;
     }
 
-    public HashMap<Integer, Object> getResources() {
+    public SpaceGame.Resources getResources() {
         return resources;
     }
 
@@ -170,6 +170,8 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         return this.view.getHeight();
     }
 
+    public View getView(){return this.view;}
+
     static class Size{
         private int height;
         private int width;
@@ -193,6 +195,8 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         public int getWidth() {
             return width;
         }
+
+
     }
     static class Actions extends  HashMap<Integer,Pair<AnimatedObject,ArrayList<Float>>>{
 

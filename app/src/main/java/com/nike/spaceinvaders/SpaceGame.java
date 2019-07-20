@@ -37,6 +37,7 @@ class SpaceGame  {
     //Resource Flags
     public static final int WINDOW_SIZE=0b0000001;
     public static final int RESOURCES=0b0000010;
+    public static final int CONTEXT=0b0000100;
     //Status Flags
     public static final int NUM_INVADER=0b0000001;
     public static final int NUM_LIVES=0b0000010;
@@ -50,11 +51,11 @@ class SpaceGame  {
     final AnimatedObject invaderGroup;
     final AnimatedObject missile=null;
     final AnimatedObject hud;
-    final HashMap<Integer, Object> resources;
+    final Resources resources;
 
     private Status status;
 
-    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile,AnimatedObject hud, HashMap<Integer, Object> resources,Status status, Handler mainHandler, Handler processThread){
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile,AnimatedObject hud, Resources resources,Status status, Handler mainHandler, Handler processThread){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
@@ -79,6 +80,10 @@ class SpaceGame  {
     }
 
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{
+
+    }
+
+    static class Resources extends  HashMap<Integer, Object>{
 
     }
 

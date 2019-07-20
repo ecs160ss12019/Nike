@@ -23,7 +23,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
     private ArrayList<Invader> invaders;
     private int duration=3000;
 
-    InvaderGroup(ConstraintLayout view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    InvaderGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
 
         super( new ValueAnimator(), view, resources, spaceGame,status, mainHandler, processHandler);
 

@@ -64,7 +64,7 @@ public class SpaceActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        HashMap<Integer, Object> resources=new HashMap<>();
+        SpaceGame.Resources resources=new SpaceGame.Resources();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();

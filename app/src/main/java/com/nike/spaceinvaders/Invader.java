@@ -16,7 +16,7 @@ import android.os.Handler;
 public class Invader extends AnimatedObject <ImageView> {
     private boolean status=true;
     private Missile missile;
-    Invader(ValueAnimator animator, ImageView view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    Invader(ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(animator, view, resources, spaceGame, status,mainHandler, processHandler);
 
     }

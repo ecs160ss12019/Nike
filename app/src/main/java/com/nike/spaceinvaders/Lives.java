@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Lives extends AnimatedObject<ConstraintLayout> {
     private int lives;
-    Lives(ConstraintLayout view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives) {
+    Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives) {
         super(null, view, resources, spaceGame,status, mainHandler, processHandler);
         this.lives=lives;
     }
