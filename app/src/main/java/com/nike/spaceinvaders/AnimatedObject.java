@@ -6,6 +6,7 @@ import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Pair;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -170,7 +171,28 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         return this.view.getHeight();
     }
 
-    public View getView(){return this.view;}
+    public void addView(android.view.View view){
+        if (this.view instanceof ViewGroup){
+            ViewGroup viewGroup=(ViewGroup) this.view;
+            viewGroup.addView(view);
+        }
+    }
+
+    public void removeView(android.view.View view){
+        if (this.view instanceof ViewGroup){
+            ViewGroup viewGroup=(ViewGroup) this.view;
+            viewGroup.removeView(view);
+        }
+    }
+
+    public void attachTo(ViewGroup layout){
+        layout.addView(this.view);
+    }
+
+    public void detachFrom(ViewGroup layout){
+        layout.removeView(this.view);
+    }
+
 
     static class Size{
         private int height;
