@@ -139,12 +139,13 @@ public class MissilePool {
             processHandler.post(new Runnable() {
                 @Override
                 public void run() {
+                    checkCount=0;
                     synchronized (excessiveMissiles){
                         for (int index=excessiveMissiles.size()-1;index>=0;index--){
                             MissileQuiver missileQuiver=excessiveMissiles.get(index);
                             if (System.currentTimeMillis()-missileQuiver.time>20000){
                                 missileQuiver.missile.initialize();
-                                layout.removeView(missileQuiver.missile.getView());
+                                missileQuiver.missile.detachFrom(layout);
                                 excessiveMissiles.remove(index);
                             }
                         }
@@ -154,7 +155,7 @@ public class MissilePool {
                             MissileQuiver missileQuiver=gloriousMissiles.get(index);
                             if (System.currentTimeMillis()-missileQuiver.time>20000){
                                 missileQuiver.missile.initialize();
-                                layout.removeView(missileQuiver.missile.getView());
+                                missileQuiver.missile.detachFrom(layout);
                                 gloriousMissiles.remove(gloriousMissiles.keyAt(index));
                             }
                         }
