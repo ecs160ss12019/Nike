@@ -37,6 +37,7 @@ class Missile extends AnimatedObject <ImageView>  {
     // The width and height of missile
     private float width;
     private float height;
+    private float speed;
 
     Missile(int key, boolean recyclable, MissilePool pool,ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
@@ -75,19 +76,44 @@ class Missile extends AnimatedObject <ImageView>  {
                     ArrayList<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
                     float startX = startPts.get(0);
                     float startY = startPts.get(1);
+                    float endY = findEndYPos();
 
                     // load the missile
-                    // set up trajectory for missile
-            }
-        }
-        AnimatedObject baseShelterGroup=getSpaceGame().baseShelterGroup;
+                    this.setVisibility(View.VISIBLE);
+                    // set starting x position
 
-        Actions newActions=new Actions();
-        ArrayList<Float> coordinates=new ArrayList<>(2);
-        coordinates.add(1f);
-        coordinates.add(2f);
-        newActions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, ArrayList<Float>>(this,coordinates));
-        baseShelterGroup.handle(newActions);
+                    
+                    // set up trajectory for missile
+
+                    // do we really need to check null?
+                    if (this.getAnimator() == null){
+                        this.setAnimator(new ValueAnimator());
+                    }
+
+                    this.getAnimator().setFloatValues(startY, endY);
+                    this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)));
+                    // repeat?
+                  //  this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
+                    this.getAnimator().addUpdateListener(animatorListenerConfigure());
+                    this.getAnimator().start();
+                    break;
+
+
+                case SpaceGame.STRIKE:
+                    AnimatedObject baseShelterGroup=getSpaceGame().baseShelterGroup;
+
+                    Actions newActions=new Actions();
+                    ArrayList<Float> coordinates=new ArrayList<>(2);
+                    coordinates.add(1f);
+                    coordinates.add(2f);
+                    newActions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, ArrayList<Float>>(this,coordinates));
+                    baseShelterGroup.handle(newActions);
+                    break;
+
+            }
+
+
+        }
     }
 
     @Override
@@ -97,17 +123,38 @@ class Missile extends AnimatedObject <ImageView>  {
 
 
     public void initialize() {
+        // set the missile to be invisible
+        this.setVisibility(View.INVISIBLE);
 
-        // should have a setVisibility in AnimatedObject
-        // or have a getView()
-        // the statement below is not allowed
-        // this.view.setVisibility(View.INVISIBLE);
         Point screenPt = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
         // The width of missile will be 1 percent of the screen width
         width = screenPt.x / 100;
         // the height of missile will be 1/25 of the screen height
         height = screenPt.y / 25;
+
+        speed = 600;
     }
+
+
+    /*
+        Find where the missile should end if there is no collision;
+        It should end at the top of screen if it is going up,
+        and end at the bottom of screen otherwise.
+     */
+    private float findEndYPos()
+    {
+        if(up)
+            return 0;
+        else
+            return ((Point)this.getResources().get(SpaceGame.WINDOW_SIZE)).y;
+    }
+
+
+
+
+
+
+
 
     public int getKey() {
         return key;
