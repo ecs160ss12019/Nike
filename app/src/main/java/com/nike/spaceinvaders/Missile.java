@@ -24,10 +24,13 @@ import java.util.Set;
     it.
  */
 class Missile extends AnimatedObject <ImageView>  {
-    private boolean type;
+    // whether the missile is moving up or down
+    private boolean up;
 
-    Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
+    Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
+            SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+        super( new ValueAnimator(), view, resources, spaceGame, status,
+                mainHandler, processHandler);
     }
 
 

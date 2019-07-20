@@ -19,7 +19,9 @@ public class MissilePool {
     private SpaceGame spaceGame;
     private SpaceGame.Status status;
 
+    // Missiles that are available
     private SparseArray<MissileQuiver> freshMissiles;
+    // Missiles that are now used by others
     private SparseArray<MissileQuiver> gloriousMissiles;
     private ArrayList<MissileQuiver> excessiveMissiles;
 
@@ -35,6 +37,9 @@ public class MissilePool {
         configureCapacity(numberOfMissile);
     }
 
+    /*
+
+     */
     public void configureCapacity(int numberOfMissile){
         for (int k=0;k<2;k++){
             final SparseArray<MissileQuiver> missileArray;
@@ -88,6 +93,10 @@ public class MissilePool {
         this.numberOfMissile=numberOfMissile;
     }
 
+
+    /*
+        Recycle missileQuiver into freshArray
+     */
     private void recycle( MissileQuiver missileQuiver) throws Exception {
         if (missileQuiver.pool!=this){
             throw new Exception("This Missile is not in this pool");
@@ -108,6 +117,8 @@ public class MissilePool {
         }
     }
 
+
+    // Get a vacant Missile
     public MissileQuiver getMissile(){
 
         synchronized (freshMissiles){
@@ -134,6 +145,7 @@ public class MissilePool {
         }
     }
 
+    // A garbage collector
     private void gc(){
         if (checkCount>5){
             processHandler.post(new Runnable() {
