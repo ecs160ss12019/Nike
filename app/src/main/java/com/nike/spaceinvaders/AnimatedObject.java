@@ -110,7 +110,7 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         this.animator = animater;
     }
 
-    public void setView(int view) {
+    public void setView(View view) {
         this.view = view;
     }
 
