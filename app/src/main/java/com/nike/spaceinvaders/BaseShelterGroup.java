@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
-    BaseShelterGroup(ConstraintLayout view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    BaseShelterGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( null, view, resources, spaceGame,status, mainHandler, processHandler);
     }
 
