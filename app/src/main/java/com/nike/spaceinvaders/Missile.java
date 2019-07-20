@@ -23,12 +23,13 @@ import java.util.Set;
     Missile moves straight up/down once attacker releases
     it.
  */
-class Missile extends AnimatedObject <ImageView>{
+class Missile extends AnimatedObject <ImageView>  {
     private boolean type;
 
     Missile(ValueAnimator animator, ImageView view, HashMap<Integer, Object> resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( animator, view, resources, spaceGame, status, mainHandler, processHandler);
     }
+
 
 
     /**
@@ -50,7 +51,7 @@ class Missile extends AnimatedObject <ImageView>{
      */
     @Override
     protected void handle(Actions actions, Set keys) {
-        BaseShelterGroup baseShelterGroup=getSpaceGame().baseShelterGroup;
+        AnimatedObject baseShelterGroup=getSpaceGame().baseShelterGroup;
 
         Actions newActions=new Actions();
         ArrayList<Float> coordinates=new ArrayList<>(2);
@@ -63,5 +64,10 @@ class Missile extends AnimatedObject <ImageView>{
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         return null;
+    }
+
+
+    public void initialize() {
+
     }
 }
