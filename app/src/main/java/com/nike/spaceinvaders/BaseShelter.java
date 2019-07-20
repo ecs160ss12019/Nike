@@ -32,4 +32,12 @@ class BaseShelter extends AnimatedObject<ImageView> {
         float newY=y/this.abstractionLevel;
         return new PointF(newX,newY);
     }
+
+    private boolean hitDetection(PointF position,Size size){
+        int minX= (int) Math.floor(position.x);
+        int maxX= (int) Math.ceil(position.x+size.getWidth());
+        int minY= (int) Math.floor(position.y);
+        int maxY= (int) Math.ceil(position.y+size.getHeight());
+        return hitBox[minX][minY] || hitBox[maxX][maxY];
+    }
 }
