@@ -10,6 +10,7 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.util.Pair;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -24,14 +25,18 @@ import java.util.Set;
     it.
  */
 class Missile extends AnimatedObject <ImageView>  {
-  // whether the missile is moving up or down
-    private boolean type;
     private long time;
     private boolean recyclable;
     private boolean status=true;
     private int key;
     private MissilePool pool;
+
+    // whether the missile is moving up or down
     private boolean up;
+    // The width and height of missile
+    private float width;
+    private float height;
+
     Missile(int key, boolean recyclable, MissilePool pool,ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
         this.key=key;
@@ -78,6 +83,13 @@ class Missile extends AnimatedObject <ImageView>  {
 
 
     public void initialize() {
+
+        this.setView(View.INVISIBLE);
+        Point screenPt = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
+        // The width of missile will be 1 percent of the screen width
+        width = screenPt.x / 100;
+        // the height of missile will be 1/25 of the screen height
+        height = screenPt.y / 25;
     }
 
     public int getKey() {
