@@ -36,6 +36,16 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
 
     @Override
     protected void handle(Actions actions, Set keys) {
+/*        switch(actions) {
+            case :
+                // code block
+                break;
+            case :
+                // code block
+                break;
+            default:
+                // code block
+        }*/
 
     }
 

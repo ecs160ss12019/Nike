@@ -24,18 +24,20 @@ import java.util.Set;
     it.
  */
 class Missile extends AnimatedObject <ImageView>  {
+  // whether the missile is moving up or down
     private boolean type;
     private long time;
     private boolean recyclable;
     private boolean status=true;
     private int key;
     private MissilePool pool;
-
+    private boolean up;
     Missile(int key, boolean recyclable, MissilePool pool,ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
         this.key=key;
         this.recyclable=recyclable;
         this.pool=pool;
+    
     }
 
 
