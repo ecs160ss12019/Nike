@@ -36,25 +36,50 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
 
     @Override
     protected void handle(Actions actions, Set keys) {
-/*        switch(actions.get()) {
-            case getSpaceGame().LIFE_ADD:
-                // code block
+        switch(keys.toArray()[0]) {
+            case SpaceGame.LIFE_ADD:
+                regen();
                 break;
-            case getSpaceGame().LIFE_GONE:
-                // code block
+            case SpaceGame.LIFE_GONE:
+                hurt();
                 break;
             default:
-                // code block
-        }*/
+                return;
+        }
 
     }
 
     private void hurt(){
         this.lives--;
+        updateLives();
+        if(lives==0){
+            //pass GAMEOVER to Game
+        }
+
+    }
+    private void regen(){
+        if(lives<3) {
+            this.lives++;
+            updateLives();
+        }
     }
 
     public int getLives() {
         return lives;
+    }
+
+    public void updateLives(){
+        switch(this.lives) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+
+                break;
+            default:
+                return;
+        }
     }
 
 
