@@ -84,7 +84,10 @@ class Missile extends AnimatedObject <ImageView>  {
 
     public void initialize() {
 
-        this.setView(View.INVISIBLE);
+        // should have a setVisibility in AnimatedObject
+        // or have a getView()
+        // the statement below is not allowed
+        // this.view.setVisibility(View.INVISIBLE);
         Point screenPt = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
         // The width of missile will be 1 percent of the screen width
         width = screenPt.x / 100;
