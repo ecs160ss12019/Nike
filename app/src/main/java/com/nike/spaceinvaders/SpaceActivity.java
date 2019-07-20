@@ -71,8 +71,12 @@ public class SpaceActivity extends AppCompatActivity {
         display.getSize(size);
 
         resources.put(SpaceGame.WINDOW_SIZE,size);
-
-        mSpaceGame=new SpaceGame((ImageView) findViewById(R.id.laserBase),(ConstraintLayout) findViewById(R.id.shelters),(ConstraintLayout) findViewById(R.id.invader_layout),null,(ConstraintLayout)findViewById(R.id.HUD),resources,mainHandler,processHandler);
+        View laserBase= findViewById(R.id.laserBase);
+        View baseShelterGroup= findViewById(R.id.shelters);
+        View invaderGroup= findViewById(R.id.invader_layout);
+        View hud=findViewById(R.id.HUD);
+        SpaceGame.Status status=new SpaceGame.Status();
+        mSpaceGame=new SpaceGame(new LaserBase((ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler),null,new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler),resources,status,mainHandler,processHandler);
     }
 
     @Override

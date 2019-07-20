@@ -45,22 +45,22 @@ class SpaceGame  {
     public static final int LEVEL=0b0010000;
     public static final int PERKS_OF_LASERBASE=0b0100000;
 
-    final LaserBase laserBase;
-    final BaseShelterGroup baseShelterGroup;
-    final InvaderGroup invaderGroup;
-    final   Missile missile=null;
-    final HUD hud;
+    final AnimatedObject laserBase;
+    final AnimatedObject baseShelterGroup;
+    final AnimatedObject invaderGroup;
+    final AnimatedObject missile=null;
+    final AnimatedObject hud;
     final HashMap<Integer, Object> resources;
 
     private Status status;
 
-    public SpaceGame (ImageView laserBaseView, ConstraintLayout baseShelterGroupView, ConstraintLayout invaderGroupView, ImageView missileView,ConstraintLayout hudView, HashMap<Integer, Object> resources, Handler mainHandler, Handler processThread){
-        this.laserBase=new LaserBase(laserBaseView,resources,this,status,mainHandler,processThread);
-        this.baseShelterGroup=new BaseShelterGroup(baseShelterGroupView,resources,this,status,mainHandler,processThread);
-        this.invaderGroup=new InvaderGroup(invaderGroupView,resources,this,status,mainHandler,processThread);
-//        this.missile=new Missile(missileView,resources,this,mainHandler,processThread);
-        this.hud=new HUD(hudView,resources,this,status,mainHandler,processThread);
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile,AnimatedObject hud, HashMap<Integer, Object> resources,Status status, Handler mainHandler, Handler processThread){
+        this.laserBase=laserBase;
+        this.baseShelterGroup=baseShelterGroup;
+        this.invaderGroup=invaderGroup;
+        this.hud=hud;
         this.resources=resources;
+        this.status=status;
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
         actions.put(GAMESTART,new Pair<AnimatedObject, ArrayList<Float>>(null,null));
         invaderGroup.handle(actions);
