@@ -19,9 +19,11 @@ public class MissilePool {
     private SpaceGame spaceGame;
     private SpaceGame.Status status;
 
-    private SparseArray<MissileQuiver> freshMissiles;
-    private SparseArray<MissileQuiver> gloriousMissiles;
-    private ArrayList<MissileQuiver> excessiveMissiles;
+  // Missiles that are available
+    private SparseArray<Missile> freshMissiles;
+  // Missiles that are now used by others
+    private SparseArray<Missile> gloriousMissiles;
+    private ArrayList<Missile> excessiveMissiles;
 
     private int checkCount=0;
 
@@ -35,9 +37,12 @@ public class MissilePool {
         configureCapacity(numberOfMissile);
     }
 
+    /*
+
+     */
     public void configureCapacity(int numberOfMissile){
         for (int k=0;k<2;k++){
-            final SparseArray<MissileQuiver> missileArray;
+            final SparseArray<Missile> missileArray;
             if (k==0){
                 if (this.freshMissiles==null){
                     this.freshMissiles=new SparseArray<>(numberOfMissile);
@@ -67,12 +72,12 @@ public class MissilePool {
                     synchronized (excessiveMissiles){
                         if (excessiveMissiles.size()>0){
                             for (int index=excessiveMissiles.size()-1;index>=0&&index>=missileArray.size()-difference;index--){
-                                MissileQuiver missileQuiver=excessiveMissiles.get(index);
+                                Missile missile=excessiveMissiles.get(index);
                                 boolean status=k==0;
-                                if (missileQuiver.status==status){
-                                    missileQuiver.recyclable=true;
-                                    missileQuiver.key=missileArray.size();
-                                    missileArray.put(missileArray.size(),missileQuiver);
+                                if (missile.isStatus()==status){
+                                    missile.setRecyclable(true);
+                                    missile.setKey(missileArray.size());
+                                    missileArray.put(missileArray.size(),missile);
                                     excessiveMissiles.remove(index);
                                 }else {
                                     difference++;
@@ -87,53 +92,56 @@ public class MissilePool {
 
         this.numberOfMissile=numberOfMissile;
     }
+    /*
+        Recycle missileQuiver into freshArray
+     */
+    public void recycle( Missile missile) throws Exception {
+        if (missile.getPool()!=this){
 
-    private void recycle( MissileQuiver missileQuiver) throws Exception {
-        if (missileQuiver.pool!=this){
             throw new Exception("This Missile is not in this pool");
         }
-        if (!missileQuiver.recyclable){
+        if (!missile.isRecyclable()){
             synchronized (this.excessiveMissiles){
-                this.excessiveMissiles.remove(missileQuiver);
+                this.excessiveMissiles.remove(missile);
             }
         }else{
-            missileQuiver.status=true;
+            missile.setStatus(true);
             synchronized (this.gloriousMissiles){
-                this.gloriousMissiles.remove(missileQuiver.key);
+                this.gloriousMissiles.remove(missile.getKey());
             }
             synchronized (this.freshMissiles){
-                this.freshMissiles.put(missileQuiver.key,missileQuiver);
+                this.freshMissiles.put(missile.getKey(),missile);
             }
 
         }
     }
 
-    public MissileQuiver getMissile(){
-
+    // Get a vacant Missile
+    public Missile getMissile(){
         synchronized (freshMissiles){
             if (freshMissiles.size()>0){
                 this.checkCount++;
-                MissileQuiver missileQuiver=freshMissiles.get(freshMissiles.keyAt(freshMissiles.size()-1));
-                missileQuiver.status=false;
-                missileQuiver.time=System.currentTimeMillis();
+                Missile missile=freshMissiles.get(freshMissiles.keyAt(freshMissiles.size()-1));
+                missile.setStatus(false);
+                missile.setTime(System.currentTimeMillis());
                 gc();
-                return missileQuiver;
+                return missile;
             }
         }
         synchronized (excessiveMissiles){
             Context context= (Context) this.resources.get(SpaceGame.CONTEXT);
             ImageView missileView=new ImageView(context);
-            Missile missile=new Missile(missileView,resources,spaceGame,status,mainHandler,processHandler);
-            MissileQuiver missileQuiver=new MissileQuiver(-1,missile ,false,this);
-            excessiveMissiles.add(missileQuiver);
+            Missile missile=new Missile(-1,false,this,missileView,resources,spaceGame,status,mainHandler,processHandler);
+            excessiveMissiles.add(missile);
             missile.initialize();
             this.layout.addView(missileView);
             this.checkCount++;
             gc();
-            return missileQuiver;
+            return missile;
         }
     }
 
+    // A garbage collector
     private void gc(){
         if (checkCount>5){
             processHandler.post(new Runnable() {
@@ -142,20 +150,20 @@ public class MissilePool {
                     checkCount=0;
                     synchronized (excessiveMissiles){
                         for (int index=excessiveMissiles.size()-1;index>=0;index--){
-                            MissileQuiver missileQuiver=excessiveMissiles.get(index);
-                            if (System.currentTimeMillis()-missileQuiver.time>20000){
-                                missileQuiver.missile.initialize();
-                                missileQuiver.missile.detachFrom(layout);
+                            Missile missile=excessiveMissiles.get(index);
+                            if (System.currentTimeMillis()-missile.getTime()>20000){
+                                missile.initialize();
+                                missile.detachFrom(layout);
                                 excessiveMissiles.remove(index);
                             }
                         }
                     }
                     synchronized (gloriousMissiles){
                         for (int index=gloriousMissiles.size()-1;index>=0;index--){
-                            MissileQuiver missileQuiver=gloriousMissiles.get(index);
-                            if (System.currentTimeMillis()-missileQuiver.time>20000){
-                                missileQuiver.missile.initialize();
-                                missileQuiver.missile.detachFrom(layout);
+                            Missile missile=gloriousMissiles.get(index);
+                            if (System.currentTimeMillis()-missile.getTime()>20000){
+                                missile.initialize();
+                                missile.detachFrom(layout);
                                 gloriousMissiles.remove(gloriousMissiles.keyAt(index));
                             }
                         }
@@ -164,52 +172,6 @@ public class MissilePool {
             });
         }
 
-    }
-
-    private class MissileQuiver {
-        private long time;
-        private boolean recyclable;
-        private boolean status=true;
-        private int key;
-        private Missile missile;
-        private MissilePool pool;
-
-        MissileQuiver(int key, Missile missile, boolean recyclable, MissilePool pool){
-            this.key = key;
-            this.missile=missile;
-            this.recyclable=recyclable;
-            this.pool=pool;
-            this.time=System.currentTimeMillis();
-        }
-
-        public int getKey() {
-            return key;
-        }
-
-        public Missile getMissile() {
-            return missile;
-        }
-
-        public void recycle() throws Exception {
-            this.missile.initialize();
-            this.pool.recycle(this);
-        }
-
-        public boolean isStatus() {
-            return status;
-        }
-
-        public void setStatus(boolean status) {
-            this.status = status;
-        }
-
-        public long getTime() {
-            return time;
-        }
-
-        public void setTime(long time) {
-            this.time = time;
-        }
     }
 
 }

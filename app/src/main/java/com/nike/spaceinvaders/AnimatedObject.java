@@ -76,6 +76,10 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         }
     }
 
+    public void setVisibility( int visibility){
+        view.setVisibility(visibility);
+    }
+
     public void setAlpha(float alpha){
         view.setAlpha(alpha);
     }
@@ -123,10 +127,14 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     }
 
     protected void handle(Actions actions){
-        handle(actions,null);
+        Set<Integer> keys=null;
+        if (actions!=null){
+            keys=actions.keySet();
+        }
+        handle(actions,keys);
     }
 
-    abstract protected void handle (Actions actions, Set keys);
+    abstract protected void handle (Actions actions, Set<Integer> keys);
 
     /**
      * {@inheritDoc}
@@ -220,6 +228,9 @@ public abstract class  AnimatedObject <View extends android.view.View>{
 
 
     }
+
+
+
     static class Actions extends  HashMap<Integer,Pair<AnimatedObject,ArrayList<Float>>>{
 
     }
