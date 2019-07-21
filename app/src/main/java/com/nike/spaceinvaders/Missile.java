@@ -72,6 +72,10 @@ class Missile extends AnimatedObject <ImageView>  {
         for(Integer key:oldKeys){
             switch(key){
                 case SpaceGame.FIRE:
+                    /*
+                        Missile has just been fired
+                     */
+
                     // get the starting position of missile
                     ArrayList<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
                     float startX = startPts.get(0);
@@ -82,7 +86,7 @@ class Missile extends AnimatedObject <ImageView>  {
                     this.setVisibility(View.VISIBLE);
                     // set starting x position
 
-                    
+
                     // set up trajectory for missile
 
                     // do we really need to check null?
@@ -100,14 +104,16 @@ class Missile extends AnimatedObject <ImageView>  {
 
 
                 case SpaceGame.STRIKE:
-                    AnimatedObject baseShelterGroup=getSpaceGame().baseShelterGroup;
-
+                    /*
+                        Missile is moving and may hit an object
+                     */
                     Actions newActions=new Actions();
                     ArrayList<Float> coordinates=new ArrayList<>(2);
-                    coordinates.add(1f);
-                    coordinates.add(2f);
-                    newActions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, ArrayList<Float>>(this,coordinates));
-                    baseShelterGroup.handle(newActions);
+                    coordinates.add(getX());
+                    coordinates.add(getY());
+                    newActions.put(SpaceGame.STRIKE,
+                            new Pair<AnimatedObject, ArrayList<Float>>(this,coordinates));
+                    getSpaceGame().baseShelterGroup.handle(newActions);
                     break;
 
             }
