@@ -116,6 +116,18 @@ class Missile extends AnimatedObject <ImageView>  {
                     getSpaceGame().baseShelterGroup.handle(newActions);
                     break;
 
+
+                case SpaceGame.MISSILE_GONE:
+                    /*
+                        Missile hit an object and should disappear;
+                        Called by whom missile collides with
+                     */
+
+                    try {
+                        recycle();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
             }
 
 
