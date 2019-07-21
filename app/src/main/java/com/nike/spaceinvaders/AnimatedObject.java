@@ -163,13 +163,43 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         this.status = status;
     }
 
+    /*
+    Get the relative X coordinate to its parent view and/or its initial location
+    if the "View" has been moved
+     */
     public float getX() {
         return this.view.getX();
     }
 
+    /*
+    Get the relative Y coordinate to its parent view and/or its initial location
+    if the "View" has been moved
+    */
     public float getY() {
         return this.view.getY();
     }
+
+
+    /*
+    Get the absolute X coordinate on the screen
+     */
+    public int getAbsoluteX(){
+        int[] coordinates = new int[2];
+        this.view.getLocationOnScreen(coordinates);
+        int x = coordinates[0];
+        return x;
+    }
+
+    /*
+    Get the absolute Y coordinate on the screen
+     */
+    public int getAbsoluteY(){
+        int[] coordinates = new int[2];
+        this.view.getLocationOnScreen(coordinates);
+        int y = coordinates[1];
+        return y;
+    }
+
 
     public int getWidth(){
         return this.view.getWidth();
