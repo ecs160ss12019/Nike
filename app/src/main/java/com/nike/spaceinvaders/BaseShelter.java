@@ -6,7 +6,9 @@ import android.graphics.PointF;
 import android.os.Handler;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 class BaseShelter extends AnimatedObject<ImageView> {
@@ -18,8 +20,17 @@ class BaseShelter extends AnimatedObject<ImageView> {
         super(null, view, resources, spaceGame,status, mainHandler, processHandler);
     }
 
+
+    /*
+    Only need to handle the strike case
+     */
     @Override
     protected void handle(Actions actions, Set keys) {
+        ArrayList<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
+        float missileX = data.get(0);
+        float missileY = data.get(1);
+
+        // hit detection
 
     }
 
@@ -34,6 +45,11 @@ class BaseShelter extends AnimatedObject<ImageView> {
         return new PointF(newX,newY);
     }
 
+
+    /*
+    Return the hitting point location if it hits
+    Otherwise return null
+     */
     private boolean hitDetection(PointF position,Size size){
         int minX= (int) Math.floor(position.x);
         int maxX= (int) Math.ceil(position.x+size.getWidth());
