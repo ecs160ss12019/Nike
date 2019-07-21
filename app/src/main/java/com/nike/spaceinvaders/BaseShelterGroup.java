@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,9 +12,23 @@ import java.util.Objects;
 import java.util.Set;
 
 public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
-    BaseShelterGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+
+    private ArrayList<BaseShelter> shelters;
+
+    BaseShelterGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame,
+                     SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( null, view, resources, spaceGame,status, mainHandler, processHandler);
+
+        shelters = new ArrayList<>(this.getChildCount());
+
+        for (int i=0;i<this.getChildCount();i++){
+            ImageView sheltersView= (ImageView) this.getChildAt(i);
+            shelters.add(new BaseShelter(this.getAnimator(), sheltersView,
+                    this.getResources(),this.getSpaceGame(),this.getStatus(),
+                    this.getMainHandler(),this.getProcessHandler()));
+        }
     }
+
 
     @Override
     protected void handle(Actions actions, Set keys) {
