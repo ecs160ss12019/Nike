@@ -23,6 +23,7 @@ class LaserBase extends AnimatedObject <ImageView>{
     private float delta= 10f;
     private boolean direction;
 
+
     LaserBase(  ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler);
 
@@ -79,6 +80,9 @@ class LaserBase extends AnimatedObject <ImageView>{
             }
         }
     }
+
+
+
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {

@@ -20,7 +20,9 @@ import android.view.SurfaceView;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 class SpaceGame  {
@@ -36,6 +38,8 @@ class SpaceGame  {
     public static final int LIFE_GONE=0b10000000;
     public static final int RESURRECTION=0b100000000;
     public static final int MOVE_STOP=0b10000000000;
+    //TEST only
+    public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
     public static final int FIRE=0b1000000000;
     /* Resource Flags */
@@ -72,10 +76,14 @@ class SpaceGame  {
 
         this.resources=resources;
         this.status=status;
+
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
         actions.put(GAMESTART,new Pair<AnimatedObject, ArrayList<Float>>(null,null));
         invaderGroup.handle(actions);
 
+        AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
+        actions2.put(LIFE_ADD,new Pair<AnimatedObject, ArrayList<Float>>(null,null));
+        hud.handle(actions2);
     }
 
     public void updateStatus(Status status){
