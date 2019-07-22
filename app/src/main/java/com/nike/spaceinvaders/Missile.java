@@ -147,6 +147,9 @@ class Missile extends AnimatedObject <ImageView>  {
                 float fraction=animation.getAnimatedFraction();
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
+                int lengthY= (int) (size.y-(((Missile) that).startY));
+                that.setY(((Missile) that).startY+fraction*lengthY);
+                that.setX(((Missile) that).startX);
             }
         };
     }
