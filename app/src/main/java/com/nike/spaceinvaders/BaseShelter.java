@@ -15,7 +15,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
     boolean[][] hitBox;
     // number of cols and rows of hitBoxes
     private int numRow, numCol;
-    private int abstractionLevel=5;
+    // Each hit box is 10 by 10 in pixels
+    private int boxSize = 10;
 
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
@@ -23,8 +24,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
         // initialize hitBox
         // Each hit box is 10 by 10 in pixels
-        numRow = this.getHeight() / 10;
-        numCol = this.getWidth() / 10;
+        numRow = this.getHeight() / boxSize;
+        numCol = this.getWidth() / boxSize;
         hitBox = new boolean[numRow][numCol];
 
     }
@@ -39,6 +40,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         float missileX = data.get(0);
         float missileY = data.get(1);
 
+        // change the absolute missile coordinates to coordinates relative to shelter
         // hit detection
 
     }
@@ -48,9 +50,12 @@ class BaseShelter extends AnimatedObject<ImageView> {
         return null;
     }
 
-    private PointF getCoordinate(float x,float y){
-        float newX=x/this.abstractionLevel;
-        float newY=y/this.abstractionLevel;
+    /*
+    Get the coordinate in terms of box
+     */
+    private PointF getBoxCoordinate(float x,float y){
+        float newX = x / this.boxSize;
+        float newY = y / this.boxSize;
         return new PointF(newX,newY);
     }
 
