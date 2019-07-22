@@ -28,17 +28,17 @@ import java.util.Set;
 
 class SpaceGame  implements StatusManager{
     /* Action Flags */
-    public static final int GAMESTART=0b0000001;
+    public static final int GAMESTART=0b00000001;
     // Missile has been released and is moving(striking)
-    public static final int STRIKE=0b0000010;
-    public static final int TOUCH=0b0000100;
-    public static final int MISSILE_GONE=0b0001000;
-    public static final int MOVE_LEFT=0b0010000;
-    public static final int MOVE_RIGHT=0b0100000;
-    public static final int LIFE_ADD=0b1000000;
-    public static final int LIFE_GONE=0b10000000;
-    public static final int RESURRECTION=0b100000000;
-    public static final int MOVE_STOP=0b10000000000;
+    public static final int STRIKE=0b00000010;
+    public static final int TOUCH=0b00000100;
+    public static final int MISSILE_GONE=0b00001000;
+    public static final int MOVE_LEFT=0b00010000;
+    public static final int MOVE_RIGHT=0b00100000;
+    public static final int LIFE_ADD=0b01000000;
+    public static final int LIFE_GONE=0b010000000;
+    public static final int RESURRECTION=0b0100000000;
+    public static final int MOVE_STOP=0b010000000000;
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
@@ -88,7 +88,7 @@ class SpaceGame  implements StatusManager{
         invaderGroup.handle(actions);
 
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
-        actions2.put(LIFE_ADD,new Pair<AnimatedObject, ArrayList<Float>>(null,null));
+        actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         hud.handle(actions2);
     }
 
