@@ -38,12 +38,22 @@ class BaseShelter extends AnimatedObject<ImageView> {
     @Override
     protected void handle(Actions actions, Set keys) {
         SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
-        float missileX = data.get(0);
-        float missileY = data.get(1);
+        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
+        float missileAbsY = data.get(SpaceGame.Y_COORDINATE);
+
 
         // change the absolute missile coordinates to coordinates relative to shelter
+        float missileRelX = getRelativeX(missileAbsX);
+        float missileRelY = getRelativeY(missileAbsY);
+
         // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
-        // hit detection
+        if(0 < missileRelX && missileRelX < numCol && 0 < missileRelY && missileRelY < numRow)
+        {
+          // hit detection
+            // draw the hitting effect using bitmap
+        }
+        // else return
+
 
     }
 
