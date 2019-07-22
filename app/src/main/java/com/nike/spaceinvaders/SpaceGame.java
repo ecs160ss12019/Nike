@@ -80,7 +80,7 @@ class SpaceGame  {
         invaderGroup.handle(actions);
 
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
-        actions2.put(LIFE_GONE,new Pair<AnimatedObject, ArrayList<Float>>(null,null));
+        actions2.put(LIFE_ADD,new Pair<AnimatedObject, ArrayList<Float>>(null,null));
         hud.handle(actions2);
     }
 

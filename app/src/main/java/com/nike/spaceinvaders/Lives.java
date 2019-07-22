@@ -55,12 +55,10 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         if(lives==0){
             //pass GAMEOVER to Game
         }
-        getSpaceGame().hud.handle(actions);//change HUD
     }
     private void regen(Actions actions){
         if(lives<3) {
             this.lives++;
-            getSpaceGame().hud.handle(actions);//change HUD
         }
     }
 
