@@ -15,7 +15,7 @@ import android.os.Handler;
  * Developer Henry Yi
  */
 class LaserBase extends AnimatedObject <ImageView>{
-    private int velocity;
+    private int velocity=1;
 
     LaserBase(  ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler);
@@ -41,9 +41,26 @@ class LaserBase extends AnimatedObject <ImageView>{
      */
 
     @Override
-    protected void handle(Actions actions, Set keys) {
+    protected void handle(Actions actions) {
 
     }
+
+    @Override
+    protected void handle(Actions actions, Set keys) {
+        Set<Integer> oldKeys = actions.keySet();
+        for(Integer key:oldKeys){
+            switch(key){
+                case SpaceGame.MOVE_LEFT:
+                    this.setX(this.getX()-this.velocity);
+                case SpaceGame.MOVE_RIGHT:
+                    this.setX(this.getX()+this.velocity);
+                case SpaceGame.FIRE:
+            }
+        }
+    }
+
+
+
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
