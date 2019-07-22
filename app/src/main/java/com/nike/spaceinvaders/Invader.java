@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class Invader extends AnimatedObject <ImageView> {
 
     }
 
-    private void kill(Pair<AnimatedObject, ArrayList<Float>> strike){
+    private void kill(Pair<AnimatedObject, SparseArray<Float>> strike){
         Missile missile= (Missile) strike.first;
         PointF position= new PointF(missile.getX(),missile.getY());
         Size size=new Size(missile.getHeight(),missile.getWidth());
@@ -56,7 +57,7 @@ public class Invader extends AnimatedObject <ImageView> {
     protected void handle(Actions actions) {
         Set<Integer> keys=actions.keySet();
         for (Integer key: keys){
-            Pair<AnimatedObject, ArrayList<Float>> value=actions.get(key);
+            Pair<AnimatedObject, SparseArray<Float>> value=actions.get(key);
 
             switch (key){
                 case SpaceGame.STRIKE:

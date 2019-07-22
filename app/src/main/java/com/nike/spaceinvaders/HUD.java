@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Set;
 
-public class HUD extends AnimatedObject <ConstraintLayout> {
+public class HUD extends AnimatedObject <ConstraintLayout> implements StatusManager {
     private TextView score;
     private ConstraintLayout lives;
 
@@ -27,12 +27,17 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
     }
 
     @Override
-    protected void handle(Actions actions, Set keys) {
+    protected void handle(Actions actions, Set<Integer> keys) {
 
     }
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         return null;
+    }
+
+    @Override
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }

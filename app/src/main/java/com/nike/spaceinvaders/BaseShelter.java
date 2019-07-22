@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
+import android.util.SparseArray;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
      */
     @Override
     protected void handle(Actions actions, Set keys) {
-        ArrayList<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
+        SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
         float missileX = data.get(0);
         float missileY = data.get(1);
 

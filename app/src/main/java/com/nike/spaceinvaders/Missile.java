@@ -10,6 +10,7 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -80,9 +81,9 @@ class Missile extends AnimatedObject <ImageView>  {
                      */
 
                     // get the starting position of missile
-                    ArrayList<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
-                    this.startX = startPts.get(0);
-                    this.startY = startPts.get(1);
+                    SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
+                    this.startX = startPts.get(SpaceGame.X_COORDINATE);
+                    this.startY = startPts.get(SpaceGame.Y_COORDINATE);
                     float endY = findEndYPos();
 
                     // load the missile
@@ -111,12 +112,12 @@ class Missile extends AnimatedObject <ImageView>  {
                         Missile is moving and may hit an object
                      */
                     Actions newActions=new Actions();
-                    ArrayList<Float> coordinates=new ArrayList<>(2);
+                    SparseArray<Float> coordinates=new SparseArray<>(2);
                     // Add the missile's absolute coordinates
-                    coordinates.add(getAbsoluteX());
-                    coordinates.add(getAbsoluteY());
+                    coordinates.put(SpaceGame.X_COORDINATE,getAbsoluteX());
+                    coordinates.put(SpaceGame.Y_COORDINATE,getAbsoluteY());
                     newActions.put(SpaceGame.STRIKE,
-                            new Pair<AnimatedObject, ArrayList<Float>>(this,coordinates));
+                            new Pair<AnimatedObject, SparseArray<Float>>(this,coordinates));
                     getSpaceGame().baseShelterGroup.handle(newActions);
                     break;
 

@@ -10,6 +10,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.Log;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.view.animation.BaseInterpolator;
 import android.widget.ImageView;
 
@@ -47,7 +48,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
     protected void handle(Actions actions) {
         Set<Integer> keys=actions.keySet();
         for (Integer key: keys){
-            Pair<AnimatedObject, ArrayList<Float>> value=actions.get(key);
+            Pair<AnimatedObject, SparseArray<Float>> value=actions.get(key);
             switch (key){
                 case SpaceGame.GAMESTART:
                     if (this.getAnimator()==null){
@@ -102,7 +103,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 }
                 that.setYRaw(that.initialCoordinates.y+lengthY*fraction);
                 Actions actions=new Actions();
-                actions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, ArrayList<Float>>(that,null));
+                actions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
                 that.getSpaceGame().laserBase.handle(actions);
 
             }

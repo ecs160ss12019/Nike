@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -87,7 +88,7 @@ public class SpaceActivity extends AppCompatActivity {
 
             }
         },0);
-        }
+    }
 
     @Override
     protected void onResume(){
