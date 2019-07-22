@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.Log;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -62,7 +63,7 @@ class LaserBase extends AnimatedObject <ImageView>{
 
 
         for (Integer key: keys) {
-            Pair<AnimatedObject, ArrayList<Float>> value = actions.get(key);
+            Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
             switch (key) {
                 case SpaceGame.MOVE_LEFT:
                     this.direction=false;

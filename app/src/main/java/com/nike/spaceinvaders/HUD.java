@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.constraint.ConstraintLayout;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-public class HUD extends AnimatedObject <ConstraintLayout> {
+public class HUD extends AnimatedObject <ConstraintLayout> implements StatusManager {
     private TextView score;
     private ConstraintLayout LiveLayout;
     private ImageView live1,live2,live3;
@@ -46,9 +47,10 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
     }
 
     @Override
+
     protected void handle(Actions actions,Set<Integer> keys) {
         for (Integer key: keys){
-            Pair<AnimatedObject, ArrayList<Float>> value=actions.get(key);
+            Pair<AnimatedObject, SparseArray<Float>> value=actions.get(key);
             switch (key){
                 case SpaceGame.TEST: //Test only
                     score.setText("Test");
@@ -97,5 +99,10 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         return null;
+    }
+
+    @Override
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }
