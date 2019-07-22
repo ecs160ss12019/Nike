@@ -74,6 +74,7 @@ class SpaceGame  {
 
         this.resources=resources;
         this.status=status;
+
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
         actions.put(GAMESTART,new Pair<AnimatedObject, ArrayList<Float>>(null,null));
         invaderGroup.handle(actions);
