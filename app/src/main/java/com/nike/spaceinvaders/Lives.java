@@ -35,17 +35,20 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
      */
 
     @Override
-    protected void handle(Actions actions, Set keys) {
-        switch(keys.toArray()[0]) {
-            case SpaceGame.LIFE_ADD:
-                regen();
-                break;
-            case SpaceGame.LIFE_GONE:
-                hurt();
-                break;
-            default:
-                return;
+    protected void handle(Actions actions, Set<Integer> keys) {
+        for(Integer key:keys){
+            switch(key) {
+                case SpaceGame.LIFE_ADD:
+                    regen();
+                    break;
+                case SpaceGame.LIFE_GONE:
+                    hurt();
+                    break;
+                default:
+                    return;
+            }
         }
+
 
     }
 
