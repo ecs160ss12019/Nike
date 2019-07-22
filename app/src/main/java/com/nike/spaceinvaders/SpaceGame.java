@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -84,6 +85,26 @@ class SpaceGame  {
                     break;
                 case SpaceGame.NUM_LIVES:
             }
+        }
+    }
+
+    public void onTouch(MotionEvent event){
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                AnimatedObject.Actions actions=new AnimatedObject.Actions();
+                Point size= (Point) this.resources.get(SpaceGame.WINDOW_SIZE);
+                assert size != null;
+                int motion;
+                if (event.getRawX()>size.x/2&&event.getRawY()>laserBase.getY()){
+                    motion=SpaceGame.MOVE_LEFT;
+                }else if (event.getRawX()>size.x/2&&event.getRawY()>laserBase.getY()){
+                    motion=SpaceGame.MOVE_RIGHT;
+                }else {
+                    motion=SpaceGame.FIRE;
+                }
+                actions.put(motion, null);
+                this.laserBase.handle(actions);
+            break;
         }
     }
 

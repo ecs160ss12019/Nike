@@ -39,6 +39,9 @@ class Missile extends AnimatedObject <ImageView>  {
     private float height;
     private float speed;
 
+    private float startX;
+    private float startY;
+
     Missile(int key, boolean recyclable, MissilePool pool,ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
         this.key=key;
@@ -78,8 +81,8 @@ class Missile extends AnimatedObject <ImageView>  {
 
                     // get the starting position of missile
                     ArrayList<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
-                    float startX = startPts.get(0);
-                    float startY = startPts.get(1);
+                    this.startX = startPts.get(0);
+                    this.startY = startPts.get(1);
                     float endY = findEndYPos();
 
                     // load the missile
@@ -137,7 +140,15 @@ class Missile extends AnimatedObject <ImageView>  {
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
-        return null;
+        final AnimatedObject that=this;
+        return new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float fraction=animation.getAnimatedFraction();
+                Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
+                assert size != null;
+            }
+        };
     }
 
 
