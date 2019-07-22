@@ -79,8 +79,7 @@ class SpaceGame  {
         invaderGroup.handle(actions);
 
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
-        Pair <AnimatedObject, ArrayList<Float>> keys = new Pair<AnimatedObject, ArrayList<Float>>(this.hud, Arrays.asList((float)TEST))
-        actions.put(TEST,keys);
+        actions2.put(LIFE_GONE,new Pair<AnimatedObject, ArrayList<Float>>(null,null));
         hud.handle(actions2);
     }
 

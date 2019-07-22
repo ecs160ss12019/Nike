@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.constraint.ConstraintLayout;
 import android.util.Pair;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,8 +34,14 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
         for (Integer key: keys){
             Pair<AnimatedObject, ArrayList<Float>> value=actions.get(key);
             switch (key){
-                case SpaceGame.TEST: //when we get some point
-                    score.setText("1000");
+
+                case SpaceGame.TEST: //Test only
+                    score.setText("Test");
+                    break;
+                case SpaceGame.LIFE_ADD: //when we get some point
+                    break;
+                case SpaceGame.LIFE_GONE: //when we get some point
+                    lives.setVisibility(View.INVISIBLE);
                     break;
                 default: return;
             }
