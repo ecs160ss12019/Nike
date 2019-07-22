@@ -1,64 +1,143 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
-import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.Pair;
+import android.util.SparseArray;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
-public abstract class AnimatedObject {
-    PointF position;
-    Size size;
+public abstract class  AnimatedObject <View extends android.view.View>{
+    private SpaceGame spaceGame;
+    private Handler mainHandler;
+    private Handler processHandler;
 
-    ValueAnimator animator;
-    ImageView imageView;
-    HashMap<String, Resources> resources;
+    private SpaceGame.Status status;
 
-    AnimatedObject(PointF position,Size size,ValueAnimator animator,ImageView imageView, HashMap<String, Resources> resources){
-        this.position=position;
-        this.size=size;
-        this.animator=animator;
-        this.imageView=imageView;
+    private ValueAnimator animator;
+    private View view;
+    private SpaceGame.Resources resources;
+
+    private PointF parentCoordinates;
+
+    AnimatedObject( ValueAnimator animator, View view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status,
+                   Handler mainHandler, Handler processHandler){
+
+        this.view = view;
         this.resources=resources;
+        this.spaceGame=spaceGame;
+        this.status=status;
+        this.mainHandler=mainHandler;
+        this.processHandler=processHandler;
+    }
+
+    public void setX(float x){
+        this.view.setX(x);
+    }
+
+    public void setY(float y){
+        this.view.setY(y);
+    }
+
+    public void setBitmap(Bitmap bitmap){
+        if (this.view instanceof ImageView){
+            ImageView imageView=(ImageView)this.view;
+            imageView.setImageBitmap(bitmap);
+        }
+    }
+
+    public void setDrawable(Drawable drawable){
+        if (this.view instanceof ImageView){
+            ImageView imageView=(ImageView)this.view;
+            imageView.setImageDrawable(drawable);
+        }
+    }
+
+    public int getChildCount(){
+        if (this.view instanceof ViewGroup){
+            ViewGroup viewGroup=(ViewGroup)this.view;
+            return viewGroup.getChildCount();
+        }else {
+            return 0;
+        }
+    }
+
+    public android.view.View getChildAt(int index){
+        if (this.view instanceof ViewGroup){
+            ViewGroup viewGroup=(ViewGroup)this.view;
+            return viewGroup.getChildAt(index);
+        }else {
+            return null;
+        }
+    }
+
+    public void setVisibility( int visibility){
+        view.setVisibility(visibility);
+    }
+
+    public void setAlpha(float alpha){
+        view.setAlpha(alpha);
+    }
+
+    public void setHeight(int height){
+        view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+this.getWidth()),(int)(this.getY()+height));
+
+    }
+
+    public void setWidth(int width){
+        view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+width),(int)(this.getY()+this.getHeight()));
+
+    }
+
+    public void setSize(int height,int width){
+        view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+width),(int)(this.getY()+height));
+    }
+
+    public void setSpaceGame(SpaceGame spaceGame) {
+        this.spaceGame = spaceGame;
+    }
+
+    public SpaceGame getSpaceGame() {
+        return spaceGame;
     }
 
     public void setAnimator(ValueAnimator animater) {
         this.animator = animater;
     }
 
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
+    public void setView(View view) {
+        this.view = view;
     }
 
     public ValueAnimator getAnimator() {
         return animator;
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setResources(HashMap<String, Resources> resources) {
+    public void setResources(SpaceGame.Resources resources) {
         this.resources = resources;
     }
 
-    public HashMap<String, Resources> getResources() {
+    public SpaceGame.Resources getResources() {
         return resources;
     }
 
-    public void setSize(Size size) {
-        this.size = size;
+    protected void handle(Actions actions){
+        Set<Integer> keys=null;
+        if (actions!=null){
+            keys=actions.keySet();
+        }
+        handle(actions,keys);
     }
 
-    public Size getSize() {
-        return size;
-    }
-
-    abstract protected void handle (Actions actions);
+    abstract protected void handle (Actions actions, Set<Integer> keys);
 
     /**
      * {@inheritDoc}
@@ -71,7 +150,129 @@ public abstract class AnimatedObject {
      */
     abstract ValueAnimator.AnimatorUpdateListener animatorListenerConfigure();
 
-    class Size{
+    public Handler getMainHandler() {
+        return mainHandler;
+    }
+
+    public Handler getProcessHandler() {
+        return processHandler;
+    }
+
+    public SpaceGame.Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(SpaceGame.Status status) {
+        this.status = status;
+    }
+
+    /*
+    Get the relative X coordinate to its parent view and/or its initial location
+    if the "View" has been moved
+     */
+    public float getX() {
+        return this.view.getX();
+    }
+
+    /*
+    Get the relative Y coordinate to its parent view and/or its initial location
+    if the "View" has been moved
+    */
+    public float getY() {
+        return this.view.getY();
+    }
+
+
+    /*
+    Get the absolute X coordinate on the screen,
+    given its relative X pos
+     */
+    public float getAbsoluteX(){
+//        int[] coordinates = new int[2];
+//        this.view.getLocationOnScreen(coordinates);
+//        int x = coordinates[0];
+//        return x;
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return this.getX() + this.parentCoordinates.x;
+    }
+
+    /*
+    Get the absolute Y coordinate on the screen
+     */
+    public float getAbsoluteY(){
+//        int[] coordinates = new int[2];
+//        this.view.getLocationOnScreen(coordinates);
+//        int y = coordinates[1];
+//        return y;
+
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return this.getY() + this.parentCoordinates.y;
+    }
+
+    /*
+    Get the relative X coordinate of its image, given its
+    absolute X on the screen
+     */
+    public float getRelativeX(float absX){
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return absX - this.parentCoordinates.x;
+    }
+
+
+    /*
+    Get the relative Y coordinate of its image, given its
+    absolute Y on the screen
+     */
+    public float getRelativeY(float absY){
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return absY - this.parentCoordinates.y;
+    }
+
+
+    public int getWidth(){
+        return this.view.getWidth();
+    }
+
+    public int getHeight(){
+        return this.view.getHeight();
+    }
+
+    public void addView(android.view.View view){
+        if (this.view instanceof ViewGroup){
+            ViewGroup viewGroup=(ViewGroup) this.view;
+            viewGroup.addView(view);
+        }
+    }
+
+    public void removeView(android.view.View view){
+        if (this.view instanceof ViewGroup){
+            ViewGroup viewGroup=(ViewGroup) this.view;
+            viewGroup.removeView(view);
+        }
+    }
+
+    public void attachTo(ViewGroup layout){
+        layout.addView(this.view);
+    }
+
+    public void detachFrom(ViewGroup layout){
+        layout.removeView(this.view);
+    }
+
+
+    static class Size{
         private int height;
         private int width;
         Size(int height,int width){
@@ -79,11 +280,11 @@ public abstract class AnimatedObject {
             this.width=width;
         }
 
-        public void setHeight(int height) {
+        private void setHeight(int height) {
             this.height = height;
         }
 
-        public void setWidth(int width) {
+        private void setWidth(int width) {
             this.width = width;
         }
 
@@ -94,30 +295,13 @@ public abstract class AnimatedObject {
         public int getWidth() {
             return width;
         }
+
+
     }
-    class Actions{
-        private PointF position;
-        private HashMap<String,Pair<AnimatedObject,ArrayList<Float>>> actionSet;
 
-        Actions(PointF position,HashMap<String,Pair<AnimatedObject,ArrayList<Float>>> actionSet){
-            this.position=position;
-            this.actionSet=actionSet;
-        }
 
-        public void setPosition(PointF position) {
-            this.position = position;
-        }
 
-        public void setActionSet(HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> actionSet) {
-            this.actionSet = actionSet;
-        }
+    static class Actions extends  HashMap<Integer,Pair<AnimatedObject, SparseArray<Float>>>{
 
-        public PointF getPosition() {
-            return position;
-        }
-
-        public HashMap<String, Pair<AnimatedObject, ArrayList<Float>>> getActionSet() {
-            return actionSet;
-        }
     }
 }

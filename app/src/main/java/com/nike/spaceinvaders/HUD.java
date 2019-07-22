@@ -1,86 +1,108 @@
 package com.nike.spaceinvaders;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
+import android.animation.ValueAnimator;
+import android.graphics.PointF;
+import android.os.Handler;
+import android.support.annotation.IdRes;
+import android.support.constraint.ConstraintLayout;
+import android.util.Pair;
+import android.util.SparseArray;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
+public class HUD extends AnimatedObject <ConstraintLayout> implements StatusManager {
+    private TextView score;
+    private ConstraintLayout LiveLayout;
+    private ImageView live1,live2,live3;
+    private Lives lives;
+    private static int LIVEMAX=3;
 
 
-public class HUD implements GameObject{
-    private int mScreenX;
-    private int mScreenY;
-    public int score;
-    private int level;
-    private int Lifes;
+    @IdRes
+    private final int scoreId=R.id.score;
+    @IdRes
+    private final int livesId=R.id.lives;
+    @IdRes
+    private final int live1Id=R.id.live1;
+    @IdRes
+    private final int live2Id=R.id.live2;
+    @IdRes
+    private final int live3Id=R.id.live3;
 
-    public HUD(int x, int y){
+
+    HUD(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+        super(null, view, resources, spaceGame,status, mainHandler, processHandler);
         //init
-        this.mScreenX = x;
-        this.mScreenY = y;
-        score=0;
-        level=1;
-        Lifes=3;
+        lives = new Lives(view,resources,spaceGame,status,mainHandler,processHandler,LIVEMAX);
+        this.score=view.findViewById(scoreId);
+        this.LiveLayout=view.findViewById(livesId);
+        this.live1=view.findViewById(live1Id);
+        this.live2=view.findViewById(live2Id);
+        this.live3=view.findViewById(live3Id);
     }
+
     @Override
-    public void draw(Canvas canvas) {
 
-        //draw RGB
-        Paint paint=new Paint();
-        paint.setTextSize(50);
+    protected void handle(Actions actions,Set<Integer> keys) {
+        for (Integer key: keys){
+            Pair<AnimatedObject, SparseArray<Float>> value=actions.get(key);
+            switch (key){
+                case SpaceGame.TEST: //Test only
+                    score.setText("Test");
+                    updateLives();
+                    break;
+                case SpaceGame.LIFE_ADD: //when we gain live
+                    lives.handle(actions,keys);
+                    updateLives();
+                    break;
+                case SpaceGame.LIFE_GONE: //when we lose live
+                    lives.handle(actions,keys);
+                    updateLives();
+                    break;
+                case SpaceGame.SCORES:
 
-/*        paint.setColor(Color.argb(200,199,21,133));
-        canvas.drawText("Score: "+score+" Level: "+level,15,50,paint);
-        paint.setColor(Color.argb(200,0,0,205));
-        canvas.drawText("Score: "+score+" Level: "+level,5,50,paint);
-        paint.setColor(Color.argb(255,255,255,255));
-        canvas.drawText("Score: "+score+" Level: "+level,10,50,paint);*/
-        drawRGB(canvas,"Score: "+score+" Level: "+level,10,50);
-
-
-        //draw Pause
-        //canvas.drawText("PAUSE",mScreenX-200,50,paint);
-
-        //draw Line
-        paint.setColor(Color.GREEN);
-        canvas.drawLine(0, mScreenY-100, mScreenX, mScreenY-100, paint);
-        paint.setColor(Color.WHITE);
-        canvas.drawText(""+Lifes,10, mScreenY-50,paint);
-        drawRGB(canvas,""+Lifes,10,mScreenY-50);
-        //draw Lifes
-        paint.setColor(Color.GREEN);
-        for(int i = 0;i<Lifes;i++){ //TODO: Should be Laserbase shape not Rect, it just a test
-            Rect templete = new Rect(50+60*i,mScreenY-90,100+60*i,mScreenY-40);
-            canvas.drawRect(templete,paint);
+                    //score.setText();
+                    break;
+                default: return;
+            }
         }
-        //draw Credit
-        //drawRGB(canvas,"CREDIT: "+score,);
+    }
+
+    private void updateLives() {
+        int livenum = lives.getLives();
+        switch (livenum){
+            case 1:
+                live1.setVisibility(TextView.VISIBLE);
+                live2.setVisibility(TextView.INVISIBLE);
+                live3.setVisibility(TextView.INVISIBLE);
+                break;
+            case 2:
+                live1.setVisibility(TextView.VISIBLE);
+                live2.setVisibility(TextView.VISIBLE);
+                live3.setVisibility(TextView.INVISIBLE);
+                break;
+            case 3:
+                live1.setVisibility(TextView.VISIBLE);
+                live2.setVisibility(TextView.VISIBLE);
+                live3.setVisibility(TextView.VISIBLE);
+                break;
+                default: return;
+        }
+    }
+
+
+    @Override
+    ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
+        return null;
     }
 
     @Override
-    public void update() {
+    public void updateStatus(SpaceGame.Status status) {
 
-        //score++;
     }
-
-
-    //used when reset game
-    public void reset(){
-        score=0;
-        level=1;
-        Lifes=3;
-    }
-    //Draw RGB Effect
-    public void drawRGB(Canvas canvas,String str,int x,int y){
-        Paint paint;
-        paint = new Paint();
-        paint.setTextSize(50);
-        paint.setColor(Color.argb(200,199,21,133));
-        canvas.drawText(str,x+5,y,paint);
-        paint.setColor(Color.argb(200,0,0,205));
-        canvas.drawText(str,x-5,y,paint);
-        paint.setColor(Color.argb(255,255,255,255));
-        canvas.drawText(str,x,y,paint);
-    }
-
 }

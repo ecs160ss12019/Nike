@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/space_background300x300"
+    android:fitsSystemWindows="true"
+    tools:context="com.nike.spaceinvaders.SpaceActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/HUD"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/invader_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/livePrompt"
+
+            android:layout_width="wrap_content"
+            android:layout_height="51dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="10sp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/arcadeclassic"
+            android:gravity="center"
+            android:text="@string/lives"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lives"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/lives"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/live1"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintEnd_toStartOf="@+id/live2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/mylaserbase" />
+
+            <ImageView
+                android:id="@+id/live2"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintEnd_toStartOf="@+id/live3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/mylaserbase" />
+
+            <ImageView
+                android:id="@+id/live3"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/mylaserbase" />
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/arcadeclassic"
+            android:gravity="center"
+            android:text="170"
+            android:textColor="@color/green"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/scorePrompt"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/scorePrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/arcadeclassic"
+            android:gravity="center"
+            android:text="@string/score"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/score"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/invader_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/invader31"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/invader25"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader32"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader"
+            app:layout_constraintTop_toBottomOf="@+id/invader26"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader33"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader4"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader2"
+            app:layout_constraintTop_toBottomOf="@+id/invader27"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader34"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader3"
+            app:layout_constraintTop_toBottomOf="@+id/invader28"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader35"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/invader4"
+            app:layout_constraintTop_toBottomOf="@+id/invader29"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader25"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/invader10"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader26"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader"
+            app:layout_constraintTop_toBottomOf="@+id/invader7"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader27"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader4"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader2"
+            app:layout_constraintTop_toBottomOf="@+id/invader9"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader28"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader3"
+            app:layout_constraintTop_toBottomOf="@+id/invader11"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader29"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/invader4"
+            app:layout_constraintTop_toBottomOf="@+id/invader12"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader7"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader"
+            app:layout_constraintTop_toBottomOf="@+id/invader2"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader9"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader4"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader2"
+            app:layout_constraintTop_toBottomOf="@+id/invader3"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader10"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/invader"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader11"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader3"
+            app:layout_constraintTop_toBottomOf="@+id/invader4"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader12"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/invader4"
+            app:layout_constraintTop_toBottomOf="@+id/invader5"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="17dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader2"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader3"
+            app:layout_constraintStart_toEndOf="@+id/invader"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader3"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader4"
+            app:layout_constraintStart_toEndOf="@+id/invader2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader4"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader5"
+            app:layout_constraintStart_toEndOf="@+id/invader3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/myinvader" />
+
+        <ImageView
+            android:id="@+id/invader5"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginEnd="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/invader4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/myinvader" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/shelters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/laserBase"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/invader_layout">
+
+        <ImageView
+            android:id="@+id/shelter1"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/shelter" />
+
+        <ImageView
+            android:id="@+id/shelter2"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shelter1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/shelter" />
+
+        <ImageView
+            android:id="@+id/shelter3"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shelter2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/shelter" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/laserBase"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginEnd="181dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/mylaserbase">
+
+    </ImageView>
+</android.support.constraint.ConstraintLayout>

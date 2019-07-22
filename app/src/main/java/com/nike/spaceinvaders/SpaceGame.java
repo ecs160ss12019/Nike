@@ -3,194 +3,137 @@
 package com.nike.spaceinvaders;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.PointF;
+import android.graphics.Rect;
+import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
+import android.util.Pair;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.ImageView;
 
-class SpaceGame extends SurfaceView implements SurfaceHolder.Callback{
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-    //TODO:Test only
-    private MainThread mthread;
-    private HUD hud; //display info
+class SpaceGame  implements StatusManager{
+    /* Action Flags */
+    public static final int GAMESTART=0b00000001;
+    // Missile has been released and is moving(striking)
+    public static final int STRIKE=0b00000010;
+    public static final int TOUCH=0b00000100;
+    public static final int MISSILE_GONE=0b00001000;
+    public static final int MOVE_LEFT=0b00010000;
+    public static final int MOVE_RIGHT=0b00100000;
+    public static final int LIFE_ADD=0b01000000;
+    public static final int LIFE_GONE=0b010000000;
+    public static final int RESURRECTION=0b0100000000;
+    public static final int MOVE_STOP=0b010000000000;
+    //TEST only
+    public static final int TEST=0b0100001;
+    // The moment at which laserBase or invader fires the missile
+    public static final int FIRE=0b1000000000;
+    /* Resource Flags */
+    public static final int WINDOW_SIZE=0b0000001;
+    public static final int RESOURCES=0b0000010;
+    public static final int CONTEXT=0b0000100;
+    public static final int X_COORDINATE=0b0001000;
+    public static final int Y_COORDINATE=0b0010000;
+    public static final int X_WIDTH=0b0100000;
+    public static final int Y_HEIGHT=0b1000000;
 
+    /* Status Flags */
+    public static final int NUM_INVADER=0b0000001;
+    public static final int NUM_LIVES=0b0000010;
+    public static final int INTEGRITY_OF_SHELTER=0b0000100;
+    public static final int SCORES=0b0001000;
+    public static final int LEVEL=0b0010000;
+    public static final int PERKS_OF_LASERBASE=0b0100000;
 
-    // The following three objects are for drawing and display
-    private SurfaceHolder mMyHolder;
-    private Canvas mCanvas;
-    private Paint mPaint;
+    final AnimatedObject laserBase;
+    final AnimatedObject baseShelterGroup;
+    final AnimatedObject invaderGroup;
+    final AnimatedObject missile=null;
+    final AnimatedObject hud;
+    final Resources resources;
 
-    // The following two give the resolution of the screen
-    private int mScreenX;
-    private int mScreenY;
-    // Size and Margin of the font
-    // for displaying scores
-    private int mFontSize;
-    private int mFontMargin;
+    private Status status;
 
-    // Frames per second
-    // Use this to make sure objects move as they should
-    private long mFPS;
-    // How many milliseconds in a second
-    private final int MILLIS_IN_SECOND = 1000;
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile,AnimatedObject hud, Resources resources,Status status, Handler mainHandler, Handler processThread){
+        this.laserBase=laserBase;
+        this.baseShelterGroup=baseShelterGroup;
+        this.invaderGroup=invaderGroup;
+        this.hud=hud;
 
-    // Objects in our game
-    private LaserBase mLaserBase;
-    private Invader[] mInvaders;
-    // The number of invaders in this game
-    private int numInvaders = 55;
-    private Missile mMissile;
-    private BaseShelter mBaseShelter;
+        this.laserBase.setSpaceGame(this);
+        this.baseShelterGroup.setSpaceGame(this);
+        this.invaderGroup.setSpaceGame(this);
+        this.hud.setSpaceGame(this);
 
-    // How many lives remaining for laserbase
-    private int mLaserLives;
-    // How high the score the player has got
-    private int mScore;
+        this.resources=resources;
+        this.status=status;
 
-    // Our game thread and relevant variables
- //   private Thread mGameThread = null;
-    private volatile boolean mPlaying;
-    private boolean mPaused = true;
+        AnimatedObject.Actions actions=new AnimatedObject.Actions();
+        actions.put(GAMESTART,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
+        invaderGroup.handle(actions);
 
-
-    // in debugging mode or not
-    private final boolean DEBUGGING = false;
-
-
-    public SpaceGame(Context context,int x, int y){
-        super(context);
-        mScreenX=x;
-        mScreenY=y;
-        getHolder().addCallback(this);
-        mthread = new MainThread(getHolder(),this);
-
-        hud = new HUD(x,y);
-        setFocusable(true);
+        AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
+        actions2.put(TEST,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
+        hud.handle(actions2);
     }
-
-
-    // Android's game loop
-    // Continuously called by Android after mGameThread.start()
-    /*@Override
-    public void run(){
-        while(mPlaying) {
-
-            long frameStartTime = System.currentTimeMillis();
-
-            if(!mPaused){
-                // update all the game objects if not paused
-                update();
-            }
-
-            // draw all the game objects and scores
-            draw(mCanvas);
-
-            // calculate how much time this frame takes
-            long timeThisFrame = System.currentTimeMillis() - frameStartTime;
-            // if timeThisFrame is longer than 1 millisecond
-            if(timeThisFrame >= 1){
-                mFPS = MILLIS_IN_SECOND / timeThisFrame;
-            }
-        }
-    }*/
-
-
-    // Update all the game objects
-    public void update(){
-        hud.update();
-        // mMissile.update();
-        // mBaseShelter.update();
-        // update all the invaders that are still alive
-        for(int i = 0; i < numInvaders; i++)
-        {
-            // if this invader alive
-            //mInvaders[i].update();
-        }
-        // mLaserBase.update();
-    }
-
 
     @Override
-    public boolean onTouchEvent(MotionEvent motionEvent){
-        switch(motionEvent.getAction() & MotionEvent.ACTION_MASK){
+    public void updateStatus(Status status){
+        Set<Integer> keys=status.keySet();
+        for (Integer key:keys){
+            switch (key){
+                case SpaceGame.NUM_INVADER:
+                    break;
+                case SpaceGame.NUM_LIVES:
+            }
+        }
+    }
 
-            // player's hand touches the screen
+    public void onTouch(MotionEvent event){
+        AnimatedObject.Actions actions=new AnimatedObject.Actions();
+        switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                // get the y-coordinate of where player touches
-                // check if it is beneath the top of laserbase
-                // if so, the player is not shooting and only moving
-                // the laserbase. Then check whether x-coordinate to see
-                // whether player touches the left or right part of screen
-                // else,(the player touches above laserbase) the player is shooting
 
-            case MotionEvent.ACTION_MOVE:
-
-
-            // player has lifted his fingers from the screen
+                Point size= (Point) this.resources.get(SpaceGame.WINDOW_SIZE);
+                assert size != null;
+                int motion;
+                if (event.getRawX()>size.x/2&&event.getRawY()>laserBase.getY()){
+                    motion=SpaceGame.MOVE_RIGHT;
+                }else if (event.getRawX()<size.x/2&&event.getRawY()>laserBase.getY()){
+                    motion=SpaceGame.MOVE_LEFT;
+                }else {
+                    motion=SpaceGame.FIRE;
+                }
+                actions.put(motion, null);
+                this.laserBase.handle(actions);
+            break;
             case MotionEvent.ACTION_UP:
-                // stop the movement of laserbase
-
-
-        }
-        return true;
-        //return super.onTouchEvent(motionEvent);
-    }
-
-    // Draw all the game objects and scores
-    public void draw(Canvas canvas){
-        super.draw(canvas);
-
-        //It's white background
-        canvas.drawColor(Color.BLACK);
-
-        hud.draw(canvas);
-    }
-
-    // Called by SpaceActivity when TODO:Modified pasue and resume
-    // the player quits the game
-    public void pause(){
-        mPlaying = false;
-        try{
-            // stop the running game thread
-            mthread.join();
-        }catch (InterruptedException e){
-            Log.e("Error:", "joining thread");
+                actions.put(SpaceGame.MOVE_STOP,null);
+                this.laserBase.handle(actions);
         }
     }
 
-
-    // Called by SpaceActivity when
-    // the player begins the game
-    public void resume(){
-        mPlaying = true;
-        mthread = new MainThread(getHolder(),this);
-        mthread.start();
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        mthread=new MainThread(getHolder(),this);
-        mthread.setRunning(true);
-        mthread.start();
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    static class Status extends  HashMap<Integer, Pair<Float,Float>>{
 
     }
 
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        boolean retry = false;
-        while(true){
-            try {
-                mthread.setRunning(false);
-                mthread.join();
-            }catch(Exception e){ e.printStackTrace(); }
-            retry = false;
-        }
+    static class Resources extends  HashMap<Integer, Object>{
+
     }
+
 }
