@@ -1,6 +1,7 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
@@ -17,6 +18,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
     private int numRow, numCol;
     // Each hit box is 10 by 10 in pixels
     private int boxSize = 10;
+
+    private Bitmap hitPic;
 
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
@@ -44,11 +47,19 @@ class BaseShelter extends AnimatedObject<ImageView> {
         float missileRelX = getRelativeX(missileAbsX);
         float missileRelY = getRelativeY(missileAbsY);
 
+        PointF missileBoxXY = getBoxCoordinate(missileRelX, missileRelY);
+        float missileBoxX = missileBoxXY.x;
+        float missileBoxY = missileBoxXY.y;
+
         // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
-        if(0 < missileRelX && missileRelX < numCol && 0 < missileRelY && missileRelY < numRow)
+        if(0 < missileBoxX && missileBoxX < numCol && 0 < missileBoxY && missileBoxY < numRow)
         {
-          // hit detection
-            // draw the hitting effect using bitmap
+            // hit detection
+            if(hitDetection(missileBoxXY, new Size(boxSize, boxSize)))
+            {
+                // draw the hitting effect using bitmap
+                // notify the missile handler to be gone
+            }
         }
         // else return
 

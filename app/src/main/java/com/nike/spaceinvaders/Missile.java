@@ -118,6 +118,9 @@ class Missile extends AnimatedObject <ImageView>  {
                     newActions.put(SpaceGame.STRIKE,
                             new Pair<AnimatedObject, ArrayList<Float>>(this,coordinates));
                     getSpaceGame().baseShelterGroup.handle(newActions);
+                    getSpaceGame().laserBase.handle(newActions);
+                    getSpaceGame().baseShelterGroup.handle(newActions);
+                    // handle missile collides with each other
                     break;
 
 
