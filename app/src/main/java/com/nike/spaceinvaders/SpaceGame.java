@@ -35,6 +35,7 @@ class SpaceGame  {
     public static final int LIFE_ADD=0b1000000;
     public static final int LIFE_GONE=0b10000000;
     public static final int RESURRECTION=0b100000000;
+    public static final int MOVE_STOP=0b10000000000;
     // The moment at which laserBase or invader fires the missile
     public static final int FIRE=0b1000000000;
     /* Resource Flags */
@@ -89,22 +90,26 @@ class SpaceGame  {
     }
 
     public void onTouch(MotionEvent event){
+        AnimatedObject.Actions actions=new AnimatedObject.Actions();
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                AnimatedObject.Actions actions=new AnimatedObject.Actions();
+
                 Point size= (Point) this.resources.get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
                 int motion;
                 if (event.getRawX()>size.x/2&&event.getRawY()>laserBase.getY()){
-                    motion=SpaceGame.MOVE_LEFT;
-                }else if (event.getRawX()>size.x/2&&event.getRawY()>laserBase.getY()){
                     motion=SpaceGame.MOVE_RIGHT;
+                }else if (event.getRawX()<size.x/2&&event.getRawY()>laserBase.getY()){
+                    motion=SpaceGame.MOVE_LEFT;
                 }else {
                     motion=SpaceGame.FIRE;
                 }
                 actions.put(motion, null);
                 this.laserBase.handle(actions);
             break;
+            case MotionEvent.ACTION_UP:
+                actions.put(SpaceGame.MOVE_STOP,null);
+                this.laserBase.handle(actions);
         }
     }
 

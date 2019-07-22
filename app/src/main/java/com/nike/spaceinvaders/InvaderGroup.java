@@ -30,7 +30,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
     InvaderGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
 
-        super( new ValueAnimator(), view, resources, spaceGame,status, mainHandler, processHandler);
+        super( null, view, resources, spaceGame,status, mainHandler, processHandler);
 
         this.aliveInvaders=this.getChildCount();
         invaders=new ArrayList<>(this.getChildCount());
@@ -52,16 +52,14 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 case SpaceGame.GAMESTART:
                     if (this.getAnimator()==null){
                         this.setAnimator(new ValueAnimator());
+                        this.getAnimator().setIntValues(1,100);
+                        this.getAnimator().setDuration(this.duration);
+                        this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
+                        this.getAnimator().setRepeatMode(ValueAnimator.REVERSE);
+                        this.getAnimator().setInterpolator(null);
+                        this.getAnimator().addUpdateListener(animatorListenerConfigure());
+                        this.getAnimator().start();
                     }
-
-                    this.getAnimator().setIntValues(1,100);
-                    this.getAnimator().setDuration(this.duration);
-                    this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
-                    this.getAnimator().setRepeatMode(ValueAnimator.REVERSE);
-                    this.getAnimator().setInterpolator(null);
-                    this.getAnimator().addUpdateListener(animatorListenerConfigure());
-                    this.getAnimator().start();
-//                    this.animator.cancel();
 
                     break;
                 case SpaceGame.STRIKE:
