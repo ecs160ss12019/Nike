@@ -2,6 +2,7 @@ package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
+import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
