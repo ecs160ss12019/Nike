@@ -91,22 +91,6 @@ public abstract class  AnimatedObject <View extends android.view.View>{
 
     }
 
-    public float getRelativeX(float x){
-        if (this.parentCoordinates==null){
-            android.view.View parentView = (android.view.View) this.view.getParent();
-            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
-        }
-        return x-this.parentCoordinates.x;
-    }
-
-    public float getRelativeY(float y){
-        if (this.parentCoordinates==null){
-            android.view.View parentView = (android.view.View) this.view.getParent();
-            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
-        }
-        return y-this.parentCoordinates.y;
-    }
-
     public void setWidth(int width){
         view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+width),(int)(this.getY()+this.getHeight()));
 
@@ -181,13 +165,80 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         this.status = status;
     }
 
+    /*
+    Get the relative X coordinate to its parent view and/or its initial location
+    if the "View" has been moved
+     */
     public float getX() {
         return this.view.getX();
     }
 
+    /*
+    Get the relative Y coordinate to its parent view and/or its initial location
+    if the "View" has been moved
+    */
     public float getY() {
         return this.view.getY();
     }
+
+
+    /*
+    Get the absolute X coordinate on the screen,
+    given its relative X pos
+     */
+    public float getAbsoluteX(){
+//        int[] coordinates = new int[2];
+//        this.view.getLocationOnScreen(coordinates);
+//        int x = coordinates[0];
+//        return x;
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return this.getX() + this.parentCoordinates.x;
+    }
+
+    /*
+    Get the absolute Y coordinate on the screen
+     */
+    public float getAbsoluteY(){
+//        int[] coordinates = new int[2];
+//        this.view.getLocationOnScreen(coordinates);
+//        int y = coordinates[1];
+//        return y;
+
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return this.getY() + this.parentCoordinates.y;
+    }
+
+    /*
+    Get the relative X coordinate of its image, given its
+    absolute X on the screen
+     */
+    public float getRelativeX(float absX){
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return absX - this.parentCoordinates.x;
+    }
+
+
+    /*
+    Get the relative Y coordinate of its image, given its
+    absolute Y on the screen
+     */
+    public float getRelativeY(float absY){
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return absY - this.parentCoordinates.y;
+    }
+
 
     public int getWidth(){
         return this.view.getWidth();
