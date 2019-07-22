@@ -54,13 +54,17 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
                     score.setText("Test");
                     updateLives();
                     break;
-                case SpaceGame.LIFE_ADD: //when we get some point
+                case SpaceGame.LIFE_ADD: //when we gain live
                     lives.handle(actions,keys);
                     updateLives();
                     break;
-                case SpaceGame.LIFE_GONE: //when we get some point
+                case SpaceGame.LIFE_GONE: //when we lose live
                     lives.handle(actions,keys);
                     updateLives();
+                    break;
+                case SpaceGame.SCORES:
+
+                    //score.setText();
                     break;
                 default: return;
             }
