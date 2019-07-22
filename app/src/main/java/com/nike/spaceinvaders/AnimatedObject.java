@@ -183,23 +183,35 @@ public abstract class  AnimatedObject <View extends android.view.View>{
 
 
     /*
-    Get the absolute X coordinate on the screen
+    Get the absolute X coordinate on the screen,
+    given its relative X pos
      */
-    public int getAbsoluteX(){
-        int[] coordinates = new int[2];
-        this.view.getLocationOnScreen(coordinates);
-        int x = coordinates[0];
-        return x;
+    public float getAbsoluteX(){
+//        int[] coordinates = new int[2];
+//        this.view.getLocationOnScreen(coordinates);
+//        int x = coordinates[0];
+//        return x;
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return this.getX() + this.parentCoordinates.x;
     }
 
     /*
     Get the absolute Y coordinate on the screen
      */
-    public int getAbsoluteY(){
-        int[] coordinates = new int[2];
-        this.view.getLocationOnScreen(coordinates);
-        int y = coordinates[1];
-        return y;
+    public float getAbsoluteY(){
+//        int[] coordinates = new int[2];
+//        this.view.getLocationOnScreen(coordinates);
+//        int y = coordinates[1];
+//        return y;
+
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return this.getY() + this.parentCoordinates.y;
     }
 
     /*

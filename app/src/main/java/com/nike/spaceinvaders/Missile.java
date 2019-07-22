@@ -109,8 +109,9 @@ class Missile extends AnimatedObject <ImageView>  {
                      */
                     Actions newActions=new Actions();
                     ArrayList<Float> coordinates=new ArrayList<>(2);
-                    coordinates.add(getX());
-                    coordinates.add(getY());
+                    // Add the missile's absolute coordinates
+                    coordinates.add(getAbsoluteX());
+                    coordinates.add(getAbsoluteY());
                     newActions.put(SpaceGame.STRIKE,
                             new Pair<AnimatedObject, ArrayList<Float>>(this,coordinates));
                     getSpaceGame().baseShelterGroup.handle(newActions);

@@ -41,6 +41,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         float missileY = data.get(1);
 
         // change the absolute missile coordinates to coordinates relative to shelter
+        // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
         // hit detection
 
     }
