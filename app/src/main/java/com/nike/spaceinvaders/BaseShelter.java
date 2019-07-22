@@ -12,12 +12,21 @@ import java.util.Objects;
 import java.util.Set;
 
 class BaseShelter extends AnimatedObject<ImageView> {
-    boolean[][] hitBox=new boolean[2][3];
+    boolean[][] hitBox;
+    // number of cols and rows of hitBoxes
+    private int numRow, numCol;
     private int abstractionLevel=5;
 
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(null, view, resources, spaceGame,status, mainHandler, processHandler);
+
+        // initialize hitBox
+        // Each hit box is 10 by 10 in pixels
+        numRow = this.getHeight() / 10;
+        numCol = this.getWidth() / 10;
+        hitBox = new boolean[numRow][numCol];
+
     }
 
 
