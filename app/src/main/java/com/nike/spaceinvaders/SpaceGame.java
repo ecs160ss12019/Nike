@@ -62,6 +62,12 @@ class SpaceGame  {
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
         this.hud=hud;
+
+        this.laserBase.setSpaceGame(this);
+        this.baseShelterGroup.setSpaceGame(this);
+        this.invaderGroup.setSpaceGame(this);
+        this.hud.setSpaceGame(this);
+
         this.resources=resources;
         this.status=status;
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
