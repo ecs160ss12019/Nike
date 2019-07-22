@@ -39,31 +39,28 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         for(Integer key:keys){
             switch(key) {
                 case SpaceGame.LIFE_ADD:
-                    regen();
+                    regen(actions);
                     break;
                 case SpaceGame.LIFE_GONE:
-                    hurt();
+                    hurt(actions);
                     break;
                 default:
                     return;
             }
         }
-
-
     }
 
-    private void hurt(){
+    private void hurt(Actions actions){
         this.lives--;
-        updateLives();
         if(lives==0){
             //pass GAMEOVER to Game
         }
-
+        getSpaceGame().hud.handle(actions);//change HUD
     }
-    private void regen(){
+    private void regen(Actions actions){
         if(lives<3) {
             this.lives++;
-            updateLives();
+            getSpaceGame().hud.handle(actions);//change HUD
         }
     }
 
@@ -71,19 +68,6 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         return lives;
     }
 
-    public void updateLives(){
-        switch(this.lives) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-
-                break;
-            default:
-                return;
-        }
-    }
 
 
 

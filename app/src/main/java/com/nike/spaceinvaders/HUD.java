@@ -29,27 +29,18 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
     }
 
     @Override
-    protected void handle(Actions actions) {
-        Set<Integer> keys=actions.keySet();
+    protected void handle(Actions actions,Set<Integer> keys) {
         for (Integer key: keys){
             Pair<AnimatedObject, ArrayList<Float>> value=actions.get(key);
             switch (key){
-                case SpaceGame.LIFE_ADD:
-                    regen();
-                    break;
-                case SpaceGame.LIFE_GONE:
-                    hurt();
+                case SpaceGame.TEST: //when we get some point
+                    score.setText("1000");
                     break;
                 default: return;
             }
         }
     }
 
-    private void regen() {
-
-    }
-    private void hurt() {
-    }
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
