@@ -2,10 +2,14 @@ package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.graphics.PointF;
+import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -15,10 +19,14 @@ import android.os.Handler;
  * Developer Henry Yi
  */
 class LaserBase extends AnimatedObject <ImageView>{
-    private int velocity=1;
+    private int velocity;
+    private float delta= 10f;
+    private boolean direction;
+
 
     LaserBase(  ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler);
+
     }
 
 
@@ -41,20 +49,34 @@ class LaserBase extends AnimatedObject <ImageView>{
      */
 
     @Override
-    protected void handle(Actions actions) {
+    protected void handle(Actions actions, Set<Integer> keys) {
+        if (this.getAnimator()==null){
+            this.setAnimator(new ValueAnimator());
+            this.getAnimator().setIntValues(1,100);
+            this.getAnimator().setDuration(200);
+            this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
+            this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
+            this.getAnimator().setInterpolator(null);
+            this.getAnimator().addUpdateListener(animatorListenerConfigure());
+        }
 
-    }
 
-    @Override
-    protected void handle(Actions actions, Set keys) {
-        Set<Integer> oldKeys = actions.keySet();
-        for(Integer key:oldKeys){
-            switch(key){
+        for (Integer key: keys) {
+            Pair<AnimatedObject, ArrayList<Float>> value = actions.get(key);
+            switch (key) {
                 case SpaceGame.MOVE_LEFT:
-                    this.setX(this.getX()-this.velocity);
+                    this.direction=false;
+                    this.getAnimator().start();
+                    break;
                 case SpaceGame.MOVE_RIGHT:
-                    this.setX(this.getX()+this.velocity);
+                    this.direction=true;
+                    this.getAnimator().start();
+                    break;
                 case SpaceGame.FIRE:
+                    break;
+                case SpaceGame.MOVE_STOP:
+                    this.getAnimator().pause();
+                    break;
             }
         }
     }
@@ -64,6 +86,35 @@ class LaserBase extends AnimatedObject <ImageView>{
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
-        return null;
+        final AnimatedObject that=this;
+        return new ValueAnimator.AnimatorUpdateListener() {
+            private int times;
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float fraction=animation.getAnimatedFraction();
+                float subFraction=0.01f;
+                float remaining=fraction%subFraction;
+                int times= (int) (fraction/subFraction);
+                if (remaining>=0.0&&this.times==times){
+                    return;
+                }else if (remaining>=0.0){
+                    this.times=times;
+                }
+                Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
+                assert size != null;
+                if ((that.getX()<20&&!direction)||(that.getX()>size.x-that.getWidth()-20&&direction)){
+                    return;
+                }
+                if (direction){
+                    that.setX(that.getX()+((LaserBase) that).getDelta());
+                }else {
+                    that.setX(that.getX()-((LaserBase) that).getDelta());
+                }
+            }
+        };
+    }
+
+    public float getDelta() {
+        return delta;
     }
 }

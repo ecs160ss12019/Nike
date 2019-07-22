@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -36,6 +37,7 @@ class SpaceGame  {
     public static final int LIFE_ADD=0b1000000;
     public static final int LIFE_GONE=0b10000000;
     public static final int RESURRECTION=0b100000000;
+    public static final int MOVE_STOP=0b10000000000;
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
@@ -92,6 +94,30 @@ class SpaceGame  {
                     break;
                 case SpaceGame.NUM_LIVES:
             }
+        }
+    }
+
+    public void onTouch(MotionEvent event){
+        AnimatedObject.Actions actions=new AnimatedObject.Actions();
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+
+                Point size= (Point) this.resources.get(SpaceGame.WINDOW_SIZE);
+                assert size != null;
+                int motion;
+                if (event.getRawX()>size.x/2&&event.getRawY()>laserBase.getY()){
+                    motion=SpaceGame.MOVE_RIGHT;
+                }else if (event.getRawX()<size.x/2&&event.getRawY()>laserBase.getY()){
+                    motion=SpaceGame.MOVE_LEFT;
+                }else {
+                    motion=SpaceGame.FIRE;
+                }
+                actions.put(motion, null);
+                this.laserBase.handle(actions);
+            break;
+            case MotionEvent.ACTION_UP:
+                actions.put(SpaceGame.MOVE_STOP,null);
+                this.laserBase.handle(actions);
         }
     }
 

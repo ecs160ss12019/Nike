@@ -100,4 +100,10 @@ public class SpaceActivity extends AppCompatActivity {
         super.onPause();
 //        mSpaceGame.pause();
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        mSpaceGame.onTouch(event);
+        return super.onTouchEvent(event);
+    }
 }
