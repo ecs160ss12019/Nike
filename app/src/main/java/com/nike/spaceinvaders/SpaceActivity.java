@@ -64,20 +64,30 @@ public class SpaceActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        SpaceGame.Resources resources=new SpaceGame.Resources();
+        final SpaceGame.Resources resources=new SpaceGame.Resources();
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
 
         resources.put(SpaceGame.WINDOW_SIZE,size);
-        View laserBase= findViewById(R.id.laserBase);
-        View baseShelterGroup= findViewById(R.id.shelters);
-        View invaderGroup= findViewById(R.id.invader_layout);
-        View hud=findViewById(R.id.HUD);
-        SpaceGame.Status status=new SpaceGame.Status();
-        mSpaceGame=new SpaceGame(new LaserBase((ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler),null,new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler),resources,status,mainHandler,processHandler);
-    }
+        final View laserBase= findViewById(R.id.laserBase);
+        final View baseShelterGroup= findViewById(R.id.shelters);
+        final View invaderGroup= findViewById(R.id.invader_layout);
+        final View hud=findViewById(R.id.HUD);
+        final SpaceGame.Status status=new SpaceGame.Status();
+        mainHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (laserBase.getY()==0.0){
+                    mainHandler.postDelayed(this,0);
+                    return;
+                }
+                mSpaceGame=new SpaceGame(new LaserBase((ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler),null,new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler),resources,status,mainHandler,processHandler);
+
+            }
+        },0);
+        }
 
     @Override
     protected void onResume(){

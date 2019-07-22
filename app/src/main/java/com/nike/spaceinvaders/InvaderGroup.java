@@ -60,9 +60,6 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     this.getAnimator().setRepeatMode(ValueAnimator.REVERSE);
                     this.getAnimator().setInterpolator(null);
                     this.getAnimator().addUpdateListener(animatorListenerConfigure());
-                    if (initialCoordinates==null){
-                        initialCoordinates=new PointF(this.getX(),this.getY());
-                    }
                     this.getAnimator().start();
 //                    this.animator.cancel();
 
@@ -88,11 +85,11 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         return new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-
+                if (initialCoordinates==null){
+                    initialCoordinates=new PointF(that.getAbsoluteX(),that.getAbsoluteY());
+                }
                 float fraction=animation.getAnimatedFraction();
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
-
-//                float processedFraction= (float) (fraction-0.5)*2;
                 assert size != null;
                 int deltaY=100;
                 int lengthY=size.y-(that.getHeight())-deltaY-100;
@@ -101,9 +98,9 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 float fractionX=(fraction%subFraction)*that.horizontalTimes;
                 int lengthX=size.x-(that.getWidth());
                 if(status%2==0){
-                    that.setXRaw(that.initialCoordinates.x+lengthX*fractionX);
+                    that.setXRaw(lengthX*fractionX);
                 }else if (fraction!=1.0){
-                    that.setXRaw(that.initialCoordinates.x+lengthX*(1-fractionX));
+                    that.setXRaw(lengthX*(1-fractionX));
                 }
                 that.setYRaw(that.initialCoordinates.y+lengthY*fraction);
                 Actions actions=new Actions();
