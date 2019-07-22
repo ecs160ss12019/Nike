@@ -18,6 +18,7 @@ public class Invader extends AnimatedObject <ImageView> {
     private Missile missile;
     private int[][] hitbox;
     private int abstractionLevel=10;
+
     Invader(ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(animator, view, resources, spaceGame, status,mainHandler, processHandler);
 
