@@ -25,6 +25,8 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     private View view;
     private SpaceGame.Resources resources;
 
+    private PointF parentCoordinates;
+
     AnimatedObject( ValueAnimator animator, View view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status,
                    Handler mainHandler, Handler processHandler){
 
@@ -87,6 +89,22 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     public void setHeight(int height){
         view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+this.getWidth()),(int)(this.getY()+height));
 
+    }
+
+    public float getRelativeX(float x){
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return x-this.parentCoordinates.x;
+    }
+
+    public float getRelativeY(float y){
+        if (this.parentCoordinates==null){
+            android.view.View parentView = (android.view.View) this.view.getParent();
+            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }
+        return y-this.parentCoordinates.y;
     }
 
     public void setWidth(int width){
