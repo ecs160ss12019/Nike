@@ -55,6 +55,7 @@ class LaserBase extends AnimatedObject <ImageView>{
             this.getAnimator().setDuration(200);
             this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
             this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
+            this.getAnimator().setInterpolator(null);
             this.getAnimator().addUpdateListener(animatorListenerConfigure());
         }
 
@@ -100,7 +101,6 @@ class LaserBase extends AnimatedObject <ImageView>{
                 if ((that.getX()<20&&!direction)||(that.getX()>size.x-that.getWidth()-20&&direction)){
                     return;
                 }
-//                Log.d("debugging", String.valueOf(((LaserBase) that).getDelta()));
                 if (direction){
                     that.setX(that.getX()+((LaserBase) that).getDelta());
                 }else {

@@ -90,7 +90,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
                 int deltaY=100;
-                int lengthY=size.y-(that.getHeight())-deltaY-100;
+                int lengthY=size.y-(that.getHeight())-deltaY-50-that.getSpaceGame().laserBase.getHeight();
                 float subFraction=1f/that.horizontalTimes;
                 int status= (int) (fraction/subFraction);
                 float fractionX=(fraction%subFraction)*that.horizontalTimes;
