@@ -96,8 +96,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
         this.setBitmap(this.bitmap);
         int pixels[]=new int[this.getHeight()*this.getWidth()];
         this.bitmap.getPixels(pixels,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
-        for (int index=0;index<200;index++){
-
+        for (int index=0;index<10316;index++){
+            pixels[index]=0;
         }
         this.bitmap.setPixels(pixels,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
         return;
