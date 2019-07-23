@@ -90,6 +90,7 @@ class SpaceGame  implements StatusManager{
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
         actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
 //        hud.handle(actions2);
+        //Below Test only
     }
 
     @Override
@@ -100,6 +101,11 @@ class SpaceGame  implements StatusManager{
                 case SpaceGame.NUM_INVADER:
                     break;
                 case SpaceGame.NUM_LIVES:
+                    break;
+                case SpaceGame.SCORES:
+                    break;
+                default:
+                    break;
             }
         }
     }
