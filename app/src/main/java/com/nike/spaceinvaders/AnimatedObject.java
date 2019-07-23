@@ -54,6 +54,15 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         }
     }
 
+    public Drawable getDrawable(){
+        if (this.view instanceof ImageView){
+            ImageView imageView=(ImageView)this.view;
+            return imageView.getDrawable();
+        }else {
+            return null;
+        }
+    }
+
     public void setDrawable(Drawable drawable){
         if (this.view instanceof ImageView){
             ImageView imageView=(ImageView)this.view;

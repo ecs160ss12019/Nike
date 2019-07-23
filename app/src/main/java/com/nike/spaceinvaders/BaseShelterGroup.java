@@ -43,6 +43,11 @@ public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
                     }
 
                     break;
+                case SpaceGame.TEST:
+                    Actions actions1=new Actions();
+                    actions1.put(SpaceGame.TEST,null);
+                    this.shelters.get(0).handle(actions1);
+                    break;
             }
         }
     }

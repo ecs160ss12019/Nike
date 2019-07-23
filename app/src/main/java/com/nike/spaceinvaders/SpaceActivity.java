@@ -67,7 +67,11 @@ public class SpaceActivity extends AppCompatActivity {
         display.getSize(size);
 
         resources.put(SpaceGame.WINDOW_SIZE,size);
+
+        resources.put(SpaceGame.RESOURCES,getResources());
+
         resources.put(SpaceGame.CONTEXT, this);
+
         final View laserBase= findViewById(R.id.laserBase);
         final View baseShelterGroup= findViewById(R.id.shelters);
         final View invaderGroup= findViewById(R.id.invader_layout);
