@@ -58,11 +58,13 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     }
 
     private void hurt(Actions actions){
-        this.lives--;
-        this.livesViews[lives-1].setVisibility(View.INVISIBLE);
-        if(lives==0){
+
+        if (this.lives<1){
             //pass GAMEOVER to Game
+            return;
         }
+        this.livesViews[lives-1].setVisibility(View.INVISIBLE);
+        this.lives--;
     }
     private void regen(Actions actions){
         if(lives<3) {

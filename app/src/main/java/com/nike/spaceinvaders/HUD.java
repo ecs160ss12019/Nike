@@ -40,50 +40,10 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
     @Override
 
     protected void handle(Actions actions,Set<Integer> keys) {
-        for (Integer key: keys){
-            Pair<AnimatedObject, SparseArray<Float>> value=actions.get(key);
-            switch (key){
-                case SpaceGame.TEST: //Test only
-                    score.setText("Test");
-                    updateLives();
-                    break;
-                case SpaceGame.LIFE_ADD: //when we gain live
-                    lives.handle(actions,keys);
-                    updateLives();
-                    break;
-                case SpaceGame.LIFE_GONE: //when we lose live
-                    lives.handle(actions,keys);
-                    updateLives();
-                    break;
-                case SpaceGame.SCORES:
-
-                    //score.setText();
-                    break;
-                default: return;
-            }
-        }
     }
 
     private void updateLives() {
-        int livenum = lives.getLives();
-        switch (livenum){
-            case 1:
-                live1.setVisibility(TextView.VISIBLE);
-                live2.setVisibility(TextView.INVISIBLE);
-                live3.setVisibility(TextView.INVISIBLE);
-                break;
-            case 2:
-                live1.setVisibility(TextView.VISIBLE);
-                live2.setVisibility(TextView.VISIBLE);
-                live3.setVisibility(TextView.INVISIBLE);
-                break;
-            case 3:
-                live1.setVisibility(TextView.VISIBLE);
-                live2.setVisibility(TextView.VISIBLE);
-                live3.setVisibility(TextView.VISIBLE);
-                break;
-                default: return;
-        }
+
     }
 
 
@@ -96,7 +56,19 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
     public void updateStatus(SpaceGame.Status status) {
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);
         int lives=livesTemp.intValue();
+        Actions actions=new Actions();
 
+        for(int index =0; index<Math.abs(lives-this.lives);index++){
+            if (lives-this.lives>0){
+                actions.put(SpaceGame.LIFE_ADD,null);
+                this.liveLayout.handle(actions);
+            }else if (lives-this.lives<0){
+                actions.put(SpaceGame.LIFE_GONE,null);
+                this.liveLayout.handle(actions);
+            }
+
+        }
+        this.lives=lives;
 
     }
 }
