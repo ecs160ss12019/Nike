@@ -2,6 +2,7 @@ package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.Log;
@@ -15,6 +16,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 import android.os.Handler;
+
+import org.ejml.data.Matrix;
+import org.ejml.equation.Equation;
+import org.ejml.simple.SimpleMatrix;
 
 /**
  * Developer Henry Yi
@@ -64,6 +69,12 @@ class LaserBase extends AnimatedObject <ImageView>{
 
         for (Integer key: keys) {
             Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
+//            SimpleMatrix a=new SimpleMatrix(new double[2][3]);
+//            a.getDDRM();
+//            Equation e=new Equation();
+//            e.process();
+
+//            e.alias();
             switch (key) {
                 case SpaceGame.MOVE_LEFT:
                     this.direction=false;
