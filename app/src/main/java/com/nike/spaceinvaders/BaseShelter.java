@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.Set;
 
 class BaseShelter extends AnimatedObject<ImageView> {
-    boolean[][] hitBox;
+    int[] hitBox;
     // number of cols and rows of hitBoxes
     private int numRow, numCol;
     // Each hit box is 10 by 10 in pixels
@@ -44,7 +44,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         // Each hit box is 10 by 10 in pixels
         numRow = this.getHeight() / boxSize;
         numCol = this.getWidth() / boxSize;
-        hitBox = new boolean[numRow][numCol];
+//        hitBox = new boolean[numRow][numCol];
 
     }
 
@@ -96,8 +96,10 @@ class BaseShelter extends AnimatedObject<ImageView> {
         damage.setBounds((int)x-30,(int)y, 50 + (int)x, 100 + (int)y);
         damage.draw(this.canvas);
         this.setBitmap(this.bitmap);
-        int pixels[]=new int[this.getHeight()*this.getWidth()];
-        this.bitmap.getPixels(pixels,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
+        if (this.hitBox==null){
+            this.hitBox=new int[this.getHeight()*this.getWidth()];
+        }
+        this.bitmap.getPixels(this.hitBox,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
 //        for (int index=0;index<10316;index++){
 //            pixels[index]=0;
 //        }
