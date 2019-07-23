@@ -64,12 +64,12 @@ class SpaceGame  implements StatusManager{
     final AnimatedObject baseShelterGroup;
     final AnimatedObject invaderGroup;
     final AnimatedObject missile=null;
-    final AnimatedObject hud;
+    final StatusManager hud;
     final Resources resources;
 
     private Status status;
 
-    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile,AnimatedObject hud, Resources resources,Status status, Handler mainHandler, Handler processThread){
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile,StatusManager hud, Resources resources,Status status, Handler mainHandler, Handler processThread){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
@@ -78,7 +78,7 @@ class SpaceGame  implements StatusManager{
         this.laserBase.setSpaceGame(this);
         this.baseShelterGroup.setSpaceGame(this);
         this.invaderGroup.setSpaceGame(this);
-        this.hud.setSpaceGame(this);
+        ((AnimatedObject)this.hud).setSpaceGame(this);
 
         this.resources=resources;
         this.status=status;
@@ -89,7 +89,7 @@ class SpaceGame  implements StatusManager{
 
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
         actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
-        hud.handle(actions2);
+//        hud.handle(actions2);
     }
 
     @Override
