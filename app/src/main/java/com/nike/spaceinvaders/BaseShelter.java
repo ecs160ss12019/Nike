@@ -25,6 +25,10 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * This class is a manager class for BaseShelter.
+ * It holds and manages an ImageView object that holds the image of the BaseShelter.
+ */
 class BaseShelter extends AnimatedObject<ImageView> {
     int[] hitBox;
     // number of cols and rows of hitBoxes
@@ -134,9 +138,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
         int maxX= (int) Math.ceil(position.x+size.getWidth());
         int minY= (int) Math.floor(position.y);
         int maxY= (int) Math.ceil(position.y+size.getHeight());
-        int realCoordinateMin=this.getWidth()*minY+minX;
         float slope=(float)(maxY-minY)/(float) (maxX-minX);
-        for (int x=0;x<this.getWidth();x++){
+        for (int x=minX;x<=maxX;x++){
             int y= (int) ((float)(x-minX)*slope+minY);
             int realCoordinate=this.getWidth()*(y-1)+x;
             if (realCoordinate>=0&&realCoordinate<hitBox.length&&this.hitBox[realCoordinate]>0){

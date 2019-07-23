@@ -15,6 +15,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+
+/**
+ * This class is an abstract class that is extended by all the AnimatedObjects in this game.
+ * It holds and manages a view object, the SpaceGame, the Threads handlers, ValueAnimator, Status of the game,
+ * Resources, and parenntCoordinates;
+ */
 public abstract class  AnimatedObject <View extends android.view.View>{
     private SpaceGame spaceGame;
     private Handler mainHandler;
