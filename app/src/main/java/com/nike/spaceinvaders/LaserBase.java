@@ -69,12 +69,12 @@ class LaserBase extends AnimatedObject <ImageView>{
 
         for (Integer key: keys) {
             Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
-            SimpleMatrix a=new SimpleMatrix(new double[2][3]);
-            a.getDDRM();
-            Equation e=new Equation();
+//            SimpleMatrix a=new SimpleMatrix(new double[2][3]);
+//            a.getDDRM();
+//            Equation e=new Equation();
 //            e.process();
 
-            e.alias();
+//            e.alias();
             switch (key) {
                 case SpaceGame.MOVE_LEFT:
                     this.direction=false;
