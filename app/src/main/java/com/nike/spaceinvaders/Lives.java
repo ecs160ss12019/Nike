@@ -4,15 +4,22 @@ import android.animation.ValueAnimator;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.HashMap;
 import java.util.Set;
 
 public class Lives extends AnimatedObject<ConstraintLayout> {
     private int lives;
+    private View[] livesViews;
     Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives) {
         super(null, view, resources, spaceGame,status, mainHandler, processHandler);
         this.lives=lives;
+        this.livesViews=new ImageView[3];
+        for (int index=0;index<this.getChildCount();index++){
+            this.livesViews[index]=  this.getChildAt(index);
+        }
     }
 
     /**
@@ -51,10 +58,13 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     }
 
     private void hurt(Actions actions){
-        this.lives--;
-        if(lives==0){
+
+        if (this.lives<1){
             //pass GAMEOVER to Game
+            return;
         }
+        this.livesViews[lives-1].setVisibility(View.INVISIBLE);
+        this.lives--;
     }
     private void regen(Actions actions){
         if(lives<3) {
