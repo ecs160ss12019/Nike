@@ -93,7 +93,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         Drawable damage=resources.getDrawable(R.drawable.explode,null);
         shelter.setBounds(0,0, this.getWidth(), this.getHeight());
         shelter.draw(this.canvas);
-        damage.setBounds((int)x-30,(int)y, 50 + (int)x, 100 + (int)y);
+        damage.setBounds((int)x-30,(int)y-30, 30 + (int)x, 30 + (int)y);
         damage.draw(this.canvas);
         this.setBitmap(this.bitmap);
         if (this.hitBox==null){
