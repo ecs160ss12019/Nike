@@ -129,7 +129,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
     Return the hitting point location if it hits
     Otherwise return null
      */
-    private boolean hitDetection(PointF position,Size size){
+    private Point hitDetection(PointF position,Size size){
         int minX= (int) Math.floor(position.x);
         int maxX= (int) Math.ceil(position.x+size.getWidth());
         int minY= (int) Math.floor(position.y);
@@ -140,9 +140,9 @@ class BaseShelter extends AnimatedObject<ImageView> {
             int y= (int) ((float)(x-minX)*slope+minY);
             int realCoordinate=this.getWidth()*(y-1)+x;
             if (realCoordinate>=0&&realCoordinate<hitBox.length&&this.hitBox[realCoordinate]>0){
-                return true;
+                return new Point(x,y);
             }
         }
-        return false;
+        return null;
     }
 }
