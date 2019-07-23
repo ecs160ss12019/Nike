@@ -143,5 +143,6 @@ class BaseShelter extends AnimatedObject<ImageView> {
                 return true;
             }
         }
+        return false;
     }
 }
