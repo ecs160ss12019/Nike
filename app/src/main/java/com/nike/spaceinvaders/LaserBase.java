@@ -74,6 +74,7 @@ class LaserBase extends AnimatedObject <ImageView>{
                     this.getAnimator().start();
                     break;
                 case SpaceGame.FIRE:
+                    this.getSpaceGame().hud.updateStatus();
                     break;
                 case SpaceGame.MOVE_STOP:
                     this.getAnimator().pause();
