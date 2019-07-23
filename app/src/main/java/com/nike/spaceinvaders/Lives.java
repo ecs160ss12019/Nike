@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Lives extends AnimatedObject<ConstraintLayout> {
+
     private int lives;
     private View[] livesViews;
     Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives) {
@@ -47,9 +48,11 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
             switch(key) {
                 case SpaceGame.LIFE_ADD:
                     regen(actions);
+                    updateLives();
                     break;
                 case SpaceGame.LIFE_GONE:
                     hurt(actions);
+                    updateLives();
                     break;
                 default:
                     return;
@@ -58,7 +61,6 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     }
 
     private void hurt(Actions actions){
-
         if (this.lives<1){
             //pass GAMEOVER to Game
             return;
@@ -69,6 +71,15 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     private void regen(Actions actions){
         if(lives<3) {
             this.lives++;
+        }
+    }
+    private void updateLives(){
+        int livenum = this.lives;
+        livesViews[0].setVisibility(View.INVISIBLE);
+        livesViews[1].setVisibility(View.INVISIBLE);
+        livesViews[2].setVisibility(View.INVISIBLE);
+        for (int i=0;i<livenum;i++){
+            livesViews[i].setVisibility(View.VISIBLE);
         }
     }
 
