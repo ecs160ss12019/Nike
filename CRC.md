@@ -1,3 +1,4 @@
+
 | LaserBase | |
 |---|---|
 |  - Able to move right or left when user touches the left/right part of the screen <br> - Has 3 lives <br> - Able to shoot missle when user touch the middle screen on the screen |  Missle <br> SpaceGame |
@@ -14,6 +15,12 @@
 |  - Manage a group of invaders|  Invader |
 
 
+| BaseShelterGroup | |
+|---|---|
+|  - Manage a group of baseShelters  <br> - Get the action signal from the outside world and then distribute it to every baseShelter  |  BaseShelter <br> SpaceGame |
+
+
+
 | BaseShelter | |
 |---|---|
 |  - Has an array of ShelterBlocks that make up a baseShelter  <br> - Detect the collision with missiles <br> - Spawns at between invader and laserbase |  Missle <br> SpaceGame |
@@ -22,6 +29,14 @@
 | ShelterBlock | |
 |---|---|
 |  - Make up each baseShelter  <br> - Each block should have height and width <br> - Detect whether a block is dead or not | BaseShelter |
+
+
+
+
+| MissilePool | |
+|---|---|
+|  - Providing a pool of missiles available to use  <br> - Handle the case where one missile collides with another missile |  Missile <br> SpaceGame |
+
 
 
 | Missile | |
@@ -43,3 +58,8 @@
 | HUD | |
 |---|---|
 |  - Records information of status like Lifes, score, and level  <br> - Update them when variables change |  GameObject <br> SpaceGame <br> LaserBase |
+
+| Lives | |
+|---|---|
+|  - A member in the HUD class that keeps track of the remaining number of lives  <br> - Manage the animation of live icons appearing on the top right corner of the screen |  HUD <br> SpaceGame |
+
