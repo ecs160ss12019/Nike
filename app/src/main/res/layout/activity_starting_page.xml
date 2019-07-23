@@ -5,6 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StartingPage"
-    android:background="@drawable/SpaceBG">
+    android:background="@drawable/space_background">
 
+    <TextView
+        android:id="@+id/text_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176sp"
+        android:layout_marginTop="144sp"
+        android:layout_marginEnd="176sp"
+        android:fontFamily="@font/arcadeclassic"
+        android:text="SPACE"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:onClick="GameStart"/>
+    <TextView
+        android:id="@+id/text_invader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176sp"
+        android:layout_marginTop="2sp"
+        android:layout_marginEnd="176sp"
+        android:fontFamily="@font/arcadeclassic"
+        android:text="INVADER"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_space" />
 </android.support.constraint.ConstraintLayout>
