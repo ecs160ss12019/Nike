@@ -1,9 +1,15 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.util.Log;
 import android.util.SparseArray;
 import android.widget.ImageView;
 
@@ -18,6 +24,10 @@ class BaseShelter extends AnimatedObject<ImageView> {
     private int numRow, numCol;
     // Each hit box is 10 by 10 in pixels
     private int boxSize = 10;
+
+    private Bitmap bitmap;
+
+    private Canvas canvas;
 
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
@@ -37,24 +47,51 @@ class BaseShelter extends AnimatedObject<ImageView> {
      */
     @Override
     protected void handle(Actions actions, Set keys) {
-        SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
-        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
-        float missileAbsY = data.get(SpaceGame.Y_COORDINATE);
+        drawDamage(50f,50f);
+        return;
+//        SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
+//        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
+//        float missileAbsY = data.get(SpaceGame.Y_COORDINATE);
+//
+//
+//        // change the absolute missile coordinates to coordinates relative to shelter
+//        float missileRelX = getRelativeX(missileAbsX);
+//        float missileRelY = getRelativeY(missileAbsY);
+//
+//        // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
+//        if(0 < missileRelX && missileRelX < numCol && 0 < missileRelY && missileRelY < numRow)
+//        {
+//          // hit detection
+//            // draw the hitting effect using bitmap
+//        }
+//        // else return
 
 
-        // change the absolute missile coordinates to coordinates relative to shelter
-        float missileRelX = getRelativeX(missileAbsX);
-        float missileRelY = getRelativeY(missileAbsY);
+    }
 
-        // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
-        if(0 < missileRelX && missileRelX < numCol && 0 < missileRelY && missileRelY < numRow)
-        {
-          // hit detection
-            // draw the hitting effect using bitmap
+    private void drawDamage(float x,float y){
+        if (this.bitmap==null){
+            Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
+            this.bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), conf); // this creates a MUTABLE bitmap
         }
-        // else return
+        if (this.canvas==null){
+            this.canvas=new Canvas(this.bitmap);
+        }
+        Resources resources= (Resources) this.getResources().get(SpaceGame.RESOURCES);
+        assert resources != null;
+        Drawable shelter=resources.getDrawable(R.drawable.shelter,null);
+        shelter.setBounds((int)x,(int)y, 100 + (int)x, 100 + (int)y);
+        shelter.draw(this.canvas);
+        shelter.setBounds((int)x-30,(int)y, 50 + (int)x, 100 + (int)y);
+        shelter.draw(this.canvas);
+        this.setBitmap(this.bitmap);
+        int pixels[]=new int[this.getHeight()*this.getWidth()];
+        this.bitmap.getPixels(pixels,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
+        for (int index=0;index<200;index++){
 
-
+        }
+        this.bitmap.setPixels(pixels,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
+        return;
     }
 
     @Override
