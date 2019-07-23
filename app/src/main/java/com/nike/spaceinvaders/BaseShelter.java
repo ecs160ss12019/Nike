@@ -88,18 +88,20 @@ class BaseShelter extends AnimatedObject<ImageView> {
         }
         Resources resources= (Resources) this.getResources().get(SpaceGame.RESOURCES);
         assert resources != null;
-        Drawable shelter=resources.getDrawable(R.drawable.shelter,null);
-        shelter.setBounds((int)x,(int)y, 100 + (int)x, 100 + (int)y);
+        Drawable shelter=this.getDrawable();
+        shelter.setBounds(shelter.copyBounds());
+        Drawable damage=resources.getDrawable(R.drawable.explode,null);
+        shelter.setBounds(0,0, this.getWidth(), this.getHeight());
         shelter.draw(this.canvas);
-        shelter.setBounds((int)x-30,(int)y, 50 + (int)x, 100 + (int)y);
-        shelter.draw(this.canvas);
+        damage.setBounds((int)x-30,(int)y, 50 + (int)x, 100 + (int)y);
+        damage.draw(this.canvas);
         this.setBitmap(this.bitmap);
         int pixels[]=new int[this.getHeight()*this.getWidth()];
         this.bitmap.getPixels(pixels,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
-        for (int index=0;index<10316;index++){
-            pixels[index]=0;
-        }
-        this.bitmap.setPixels(pixels,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
+//        for (int index=0;index<10316;index++){
+//            pixels[index]=0;
+//        }
+//        this.bitmap.setPixels(pixels,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
         return;
     }
 
