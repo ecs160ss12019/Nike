@@ -5,6 +5,13 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
@@ -42,6 +49,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
     }
 
 
+
     /*
     Only need to handle the strike case
      */
@@ -69,8 +77,9 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     }
 
+
     private void drawDamage(float x,float y){
-        if (this.bitmap==null){
+        if (this.bitmap==null) {
             Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
             this.bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), conf); // this creates a MUTABLE bitmap
         }
