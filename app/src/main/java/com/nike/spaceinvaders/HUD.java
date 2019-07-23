@@ -55,9 +55,11 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
     @Override
     public void updateStatus(SpaceGame.Status status) {
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);
+        Float scoreTemp=(Objects.requireNonNull(status.get(SpaceGame.SCORES)).first);
         int lives=livesTemp.intValue();
-        Actions actions=new Actions();
+        int score=scoreTemp.intValue();
 
+        Actions actions=new Actions();
         for(int index =0; index<Math.abs(lives-this.lives);index++){
             if (lives-this.lives>0){
                 actions.put(SpaceGame.LIFE_ADD,null);
@@ -66,9 +68,11 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
                 actions.put(SpaceGame.LIFE_GONE,null);
                 this.liveLayout.handle(actions);
             }
-
         }
         this.lives=lives;
+
+        //update score
+        this.score.setText(String.valueOf(score));
 
     }
 }
