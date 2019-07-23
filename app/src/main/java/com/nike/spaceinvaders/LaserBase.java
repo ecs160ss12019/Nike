@@ -109,7 +109,7 @@ class LaserBase extends AnimatedObject <ImageView>{
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction=animation.getAnimatedFraction();
-                float subFraction=0.01f;
+                float subFraction=0.005f;
                 float remaining=fraction%subFraction;
                 int times= (int) (fraction/subFraction);
                 if (remaining>=0.0&&this.times==times){
