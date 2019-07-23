@@ -87,9 +87,13 @@ class SpaceGame  implements StatusManager{
         actions.put(GAMESTART,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         invaderGroup.handle(actions);
 
-        AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
+/*        AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
         actions2.put(TEST,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
-        hud.handle(actions2);
+        hud.handle(actions2);*/
+        Status st = new Status();
+        Pair<Float,Float> pr = new Pair<>((float)1000,null);
+        st.put(SCORES,pr);
+        hud.updateStatus(st);
     }
 
     @Override

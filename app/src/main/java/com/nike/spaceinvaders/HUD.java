@@ -21,6 +21,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
     private ImageView live1,live2,live3;
     private Lives lives;
     private static int LIVEMAX=3;
+    private int scoreNum;
 
 
     @IdRes
@@ -44,6 +45,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
         this.live1=view.findViewById(live1Id);
         this.live2=view.findViewById(live2Id);
         this.live3=view.findViewById(live3Id);
+        scoreNum=0;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
             Pair<AnimatedObject, SparseArray<Float>> value=actions.get(key);
             switch (key){
                 case SpaceGame.TEST: //Test only
-                    score.setText("Test");
+                    score.setText(String.valueOf(scoreNum));
                     updateLives();
                     break;
                 case SpaceGame.LIFE_ADD: //when we gain live
@@ -63,10 +65,6 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
                 case SpaceGame.LIFE_GONE: //when we lose live
                     lives.handle(actions,keys);
                     updateLives();
-                    break;
-                case SpaceGame.SCORES:
-
-                    //score.setText();
                     break;
                 default: return;
             }
@@ -103,6 +101,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
 
     @Override
     public void updateStatus(SpaceGame.Status status) {
-
+        float score = status.get(SpaceGame.SCORES).first;
+        this.score.setText(String.valueOf(score));
     }
 }
