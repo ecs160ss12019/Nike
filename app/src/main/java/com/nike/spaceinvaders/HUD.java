@@ -42,8 +42,8 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
     protected void handle(Actions actions,Set<Integer> keys) {
     }
 
-    private void updateLives() {
 
+        private void updateLives() {
     }
 
 
