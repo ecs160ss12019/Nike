@@ -1,7 +1,12 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
@@ -20,7 +25,6 @@ class BaseShelter extends AnimatedObject<ImageView> {
     // Each hit box is 10 by 10 in pixels
     private int boxSize = 10;
 
-    private Bitmap hitPic;
 
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
@@ -33,6 +37,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         hitBox = new boolean[numRow][numCol];
 
     }
+
 
 
     /*
@@ -53,7 +58,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         float missileBoxX = missileBoxXY.x;
         float missileBoxY = missileBoxXY.y;
 
-        // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
+        // check they are within hitBox ranges ( 0 < x < numCol && 0 < y < numRow)
         if(0 < missileBoxX && missileBoxX < numCol && 0 < missileBoxY && missileBoxY < numRow)
         {
             // hit detection
