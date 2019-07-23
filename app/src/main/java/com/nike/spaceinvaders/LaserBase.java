@@ -2,6 +2,7 @@ package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.Log;
@@ -15,6 +16,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 import android.os.Handler;
+
+import org.ejml.data.Matrix;
+import org.ejml.equation.Equation;
+import org.ejml.simple.SimpleMatrix;
 
 /**
  * Developer Henry Yi
@@ -64,6 +69,12 @@ class LaserBase extends AnimatedObject <ImageView>{
 
         for (Integer key: keys) {
             Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
+//            SimpleMatrix a=new SimpleMatrix(new double[2][3]);
+//            a.getDDRM();
+//            Equation e=new Equation();
+//            e.process();
+
+//            e.alias();
             switch (key) {
                 case SpaceGame.MOVE_LEFT:
                     this.direction=false;
@@ -74,8 +85,11 @@ class LaserBase extends AnimatedObject <ImageView>{
                     this.getAnimator().start();
                     break;
                 case SpaceGame.FIRE:
-                    getStatus().put(SpaceGame.NUM_LIVES,new Pair<Float, Float>(4f,1f));
-                    this.getSpaceGame().hud.updateStatus(getStatus());
+//                    getStatus().put(SpaceGame.NUM_LIVES,new Pair<Float, Float>(4f,1f));
+//                    this.getSpaceGame().hud.updateStatus(getStatus());
+                    Actions actions1=new Actions();
+                    actions1.put(SpaceGame.TEST,null);
+                    this.getSpaceGame().baseShelterGroup.handle(actions1);
                     break;
                 case SpaceGame.MOVE_STOP:
                     this.getAnimator().pause();
@@ -95,7 +109,7 @@ class LaserBase extends AnimatedObject <ImageView>{
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction=animation.getAnimatedFraction();
-                float subFraction=0.01f;
+                float subFraction=0.005f;
                 float remaining=fraction%subFraction;
                 int times= (int) (fraction/subFraction);
                 if (remaining>=0.0&&this.times==times){
