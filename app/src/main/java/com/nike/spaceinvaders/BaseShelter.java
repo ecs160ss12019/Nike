@@ -1,6 +1,12 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
@@ -19,6 +25,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
     // Each hit box is 10 by 10 in pixels
     private int boxSize = 10;
 
+
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(null, view, resources, spaceGame,status, mainHandler, processHandler);
@@ -30,6 +37,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         hitBox = new boolean[numRow][numCol];
 
     }
+
 
 
     /*
@@ -46,11 +54,19 @@ class BaseShelter extends AnimatedObject<ImageView> {
         float missileRelX = getRelativeX(missileAbsX);
         float missileRelY = getRelativeY(missileAbsY);
 
-        // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
-        if(0 < missileRelX && missileRelX < numCol && 0 < missileRelY && missileRelY < numRow)
+        PointF missileBoxXY = getBoxCoordinate(missileRelX, missileRelY);
+        float missileBoxX = missileBoxXY.x;
+        float missileBoxY = missileBoxXY.y;
+
+        // check they are within hitBox ranges ( 0 < x < numCol && 0 < y < numRow)
+        if(0 < missileBoxX && missileBoxX < numCol && 0 < missileBoxY && missileBoxY < numRow)
         {
-          // hit detection
-            // draw the hitting effect using bitmap
+            // hit detection
+            if(hitDetection(missileBoxXY, new Size(boxSize, boxSize)))
+            {
+                // draw the hitting effect using bitmap
+                // notify the missile handler to be gone
+            }
         }
         // else return
 
