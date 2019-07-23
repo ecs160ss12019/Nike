@@ -12,7 +12,6 @@ public class StartingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting_page);
 
-
     }
 
 
