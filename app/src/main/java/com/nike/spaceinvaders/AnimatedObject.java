@@ -124,7 +124,6 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     public void setSize(int height,int width){
         ViewGroup.LayoutParams layoutParams=this.view.getLayoutParams();
         if (layoutParams!=null){
-            Log.d("llll",layoutParams.toString());
             layoutParams.width=width;
             layoutParams.height=height;
             this.view.requestLayout();

@@ -58,6 +58,13 @@ public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
         }
     }
 
+    @Override
+    public void setSpaceGame(SpaceGame spaceGame) {
+        super.setSpaceGame(spaceGame);
+        for (BaseShelter baseShelter:shelters){
+            baseShelter.setSpaceGame(getSpaceGame());
+        }
+    }
 
     private void strikeBaseShelter(){
 
