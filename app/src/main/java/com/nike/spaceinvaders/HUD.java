@@ -73,7 +73,6 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
         int score=scoreTemp.intValue();
         this.score.setText(String.valueOf(score));
     }
-
     private void updateLives(SpaceGame.Status status) {
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);
         int lives=livesTemp.intValue();
@@ -87,7 +86,6 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
                 actions.put(SpaceGame.LIFE_GONE,null);
                 this.liveLayout.handle(actions);
             }
-
         }
         this.lives=lives;
     }

@@ -91,6 +91,10 @@ class SpaceGame  implements StatusManager{
         actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
 //        hud.handle(actions2);
         //Below Test only
+        Status st = new Status();
+        st.put(SCORES,new Pair<Float, Float>(Float.valueOf(0),null));
+        st.put(NUM_LIVES,new Pair<Float, Float>(Float.valueOf(2),null));
+        hud.updateStatus(st);
     }
 
     @Override
