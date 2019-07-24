@@ -57,7 +57,6 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
     @Override
     protected void handle(Actions actions) {
-        Log.d("afewf","awe");
         super.handle(actions);
     }
 
