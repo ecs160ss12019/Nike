@@ -52,6 +52,7 @@ class SpaceGame  implements StatusManager{
     public static final int Y_COORDINATE=0b0010000;
     public static final int X_WIDTH=0b0100000;
     public static final int Y_HEIGHT=0b1000000;
+    public static final int MOVE_DIRECTION=0b10000000;
 
     /* Status Flags */
     public static final int NUM_INVADER=0b0000001;
@@ -101,6 +102,8 @@ class SpaceGame  implements StatusManager{
                 case SpaceGame.NUM_INVADER:
                     break;
                 case SpaceGame.NUM_LIVES:
+                    hud.updateStatus(status);
+                    break;
             }
         }
     }

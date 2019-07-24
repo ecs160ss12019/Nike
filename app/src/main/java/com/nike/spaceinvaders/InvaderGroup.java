@@ -57,7 +57,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                         this.getAnimator().setIntValues(1,100);
                         this.getAnimator().setDuration(this.duration);
                         this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
-                        this.getAnimator().setRepeatMode(ValueAnimator.REVERSE);
+                        this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
                         this.getAnimator().setInterpolator(null);
                         this.getAnimator().addUpdateListener(animatorListenerConfigure());
                         this.getAnimator().start();
@@ -111,9 +111,19 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 Actions actions=new Actions();
                 actions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
                 that.getSpaceGame().laserBase.handle(actions);
+                if (fraction==1.0){
+                    killLaserBase();
+                }
 
             }
         };
+    }
+
+    private void killLaserBase(){
+        Pair<Float,Float> value=getStatus().get(SpaceGame.NUM_LIVES);
+        assert value != null;
+        getStatus().put(SpaceGame.NUM_LIVES,new Pair<>(value.first-1,null));
+        this.getSpaceGame().updateStatus(getStatus());
     }
 
     @Override
