@@ -27,7 +27,7 @@ import java.util.Set;
 
 /**
  * This class is a manager class for BaseShelter.
- * It holds and manages an ImageView object that holds the image of the BaseShelter.
+ * It holds and manages an {@link ImageView} object that holds the image of the BaseShelter.
  */
 class BaseShelter extends AnimatedObject<ImageView> {
     int[] hitBox;

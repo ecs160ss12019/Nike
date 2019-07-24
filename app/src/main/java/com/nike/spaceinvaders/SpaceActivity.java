@@ -16,6 +16,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class SpaceActivity extends AppCompatActivity {
         final View baseShelterGroup= findViewById(R.id.shelters);
         final View invaderGroup= findViewById(R.id.invader_layout);
         final View hud=findViewById(R.id.HUD);
+        final ViewGroup mainLayout=findViewById(R.id.main_layout);
         final SpaceGame.Status status=new SpaceGame.Status();
         mainHandler.postDelayed(new Runnable() {
             @Override
@@ -84,7 +86,7 @@ public class SpaceActivity extends AppCompatActivity {
                     mainHandler.postDelayed(this,0);
                     return;
                 }
-                mSpaceGame=new SpaceGame( new LaserBase( (ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler),null,new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler),resources,status,mainHandler,processHandler);
+                mSpaceGame=new SpaceGame( new LaserBase( (ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler),null,new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler),resources,status,mainLayout,mainHandler,processHandler);
 
             }
         },0);

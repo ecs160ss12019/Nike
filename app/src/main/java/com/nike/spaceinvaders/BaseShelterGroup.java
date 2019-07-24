@@ -11,6 +11,12 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
+
+/**
+ * This class is a manager class for the entire BaseShelters.
+ * It holds and manages an {@link ConstraintLayout} object that holds the layout of the BaseShelters.
+ * Also, it holds a {@link ArrayList<BaseShelter>} that holds the all BaseShelters.
+ */
 public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
 
     private ArrayList<BaseShelter> shelters;

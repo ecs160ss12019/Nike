@@ -133,8 +133,9 @@ public class MissilePool {
                 this.excessiveMissiles.remove(missile);
             }
         }else{
-            missile.setStatus(true);
+
             synchronized (this.gloriousMissiles){
+                missile.setStatus(true);
                 missile.initialize();
                 missile.detachFrom(layout);
                 this.gloriousMissiles.remove(missile.getKey());
@@ -184,25 +185,29 @@ public class MissilePool {
                     checkCount=0;
                     synchronized (excessiveMissiles){
                         for (int index=excessiveMissiles.size()-1;index>=0;index--){
-                            Missile missile=excessiveMissiles.get(index);
+                            final Missile missile=excessiveMissiles.get(index);
                             if (System.currentTimeMillis()-missile.getTime()>20000){
-                                try {
-                                    recycle(missile);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                mainHandler.post(() -> {
+                                    try {
+                                        recycle(missile);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                });
                             }
                         }
                     }
                     synchronized (gloriousMissiles){
                         for (int index=gloriousMissiles.size()-1;index>=0;index--){
-                            Missile missile=gloriousMissiles.get(index);
+                            final Missile missile=gloriousMissiles.get(index);
                             if (System.currentTimeMillis()-missile.getTime()>20000){
-                                try {
-                                    recycle(missile);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                mainHandler.post(()->{
+                                    try {
+                                        recycle(missile);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                });
                             }
                         }
                     }
