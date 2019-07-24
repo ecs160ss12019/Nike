@@ -3,6 +3,7 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.PointF;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -28,17 +29,16 @@ public class Invader extends AnimatedObject <ImageView> {
 
     }
 
-    private void kill(AnimatedObject missile){
+    private void kill(Actions actions,AnimatedObject missile){
         this.status=false;
         this.setVisibility(View.INVISIBLE);
-        Actions actions=new Actions();
+        Set<Integer> keys=new ArraySet<>();
+        keys.add(SpaceGame.MISSILE_GONE);
+        keys.add(SpaceGame.HIT);
         actions.put(SpaceGame.MISSILE_GONE,null);
-        missile.handle(actions);
-        if (getSpaceGame().invaderGroup==null){
-            Log.d("aasfdfa","asfawe");
-            return;
-        }
-        ((InvaderGroup)(getSpaceGame().invaderGroup)).setDetection(false);
+        actions.put(SpaceGame.HIT,null);
+        missile.handle(actions,keys);
+        this.getSpaceGame().invaderGroup.handle(actions,keys);
         notifySpaceGame();
     }
 
@@ -56,7 +56,7 @@ public class Invader extends AnimatedObject <ImageView> {
 
 
 
-    private boolean hitDetection(AnimatedObject missile){
+    private boolean hitDetection(Actions actions,AnimatedObject missile){
         if (!status){
             return false;
         }
@@ -64,10 +64,10 @@ public class Invader extends AnimatedObject <ImageView> {
         float y=missile.getY();
         int missileWidth=missile.getWidth();
         float left,top,bottom,right;
-        left=this.getAbsoluteX();
+        left=this.getAbsoluteX()+50;
         top=this.getAbsoluteY();
         bottom=top+this.getHeight();
-        right=left+this.getWidth();
+        right=left+this.getWidth()-50;
         if ((x>=left&&x<=right&&y<=bottom)||(x+missileWidth)>=left&&(x+missileWidth)<=right&&y<=bottom){
             return true;
         }else {
@@ -83,8 +83,8 @@ public class Invader extends AnimatedObject <ImageView> {
             switch (key){
                 case SpaceGame.STRIKE:
                     assert value != null;
-                    if (hitDetection(value.first)){
-                        kill(value.first);
+                    if (hitDetection(actions,value.first)){
+                        kill(actions,value.first);
                     }
             }
         }

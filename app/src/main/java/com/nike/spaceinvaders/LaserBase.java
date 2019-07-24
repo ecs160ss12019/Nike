@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -96,7 +97,9 @@ class LaserBase extends AnimatedObject <ImageView>{
                     values.put(SpaceGame.Y_COORDINATE,(this.getY()));
                     values.put(SpaceGame.MOVE_DIRECTION,1f);
                     actions.put(SpaceGame.FIRE,new Pair<>(this,values));
-                    missile.handle(actions);
+                    Set<Integer> newKeys=new ArraySet<>();
+                    newKeys.add(SpaceGame.FIRE);
+                    missile.handle(actions,newKeys);
                     break;
                 case SpaceGame.MOVE_STOP:
                     this.getAnimator().pause();

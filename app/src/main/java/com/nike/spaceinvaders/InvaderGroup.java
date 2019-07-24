@@ -57,7 +57,12 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
     @Override
     protected void handle(Actions actions) {
-        Set<Integer> keys=actions.keySet();
+        Log.d("afewf","awe");
+        super.handle(actions);
+    }
+
+    @Override
+    protected void handle(Actions actions, Set<Integer> keys) {
         for (Integer key: keys){
             Pair<AnimatedObject, SparseArray<Float>> value=actions.get(key);
             switch (key){
@@ -78,13 +83,14 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     Set<Integer> x=new ArraySet<>();
                     x.add(SpaceGame.STRIKE);
                     strikeInvaders(actions,x);
+                    break;
+                case SpaceGame.HIT:
+
+                    Log.d("debugging","afwe");
+                    this.setDetection(false);
+                    break;
             }
         }
-    }
-
-    @Override
-    protected void handle(Actions actions, Set<Integer> keys) {
-
     }
 
     public void setDetection(boolean detection) {
@@ -138,8 +144,6 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 that.setYRaw(that.initialCoordinates.y+lengthY*fraction);
 
                 that.getSpaceGame().laserBase.handle(actions);
-//                Log.d("aaaas", String.valueOf(fraction));
-
 
             }
         };
