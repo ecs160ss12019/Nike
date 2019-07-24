@@ -90,6 +90,7 @@ class Missile extends AnimatedObject <ImageView>  {
                     this.up=startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
                     float endY = findEndYPos();
                     // load the missile
+//                    this.setAlpha(1);
                     this.setVisibility(View.VISIBLE);
                     // set starting x position
 
@@ -147,9 +148,18 @@ class Missile extends AnimatedObject <ImageView>  {
         final Actions actions=new Actions();
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
         return new ValueAnimator.AnimatorUpdateListener() {
+            private int times=0;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction=animation.getAnimatedFraction();
+                float subFraction=0.005f;
+                float remaining=fraction%subFraction;
+                int times= (int) (fraction/subFraction);
+                if (remaining>=0.0&&this.times==times){
+                    return;
+                }else if (remaining>=0.0){
+                    this.times=times;
+                }
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
                 int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
@@ -170,6 +180,9 @@ class Missile extends AnimatedObject <ImageView>  {
 
     public void initialize() {
         this.setVisibility(View.INVISIBLE);
+        this.setX(-100);
+        this.setY(-100);
+//        this.setAlpha(0);
         if (this.getAnimator() == null){
             this.setAnimator(new ValueAnimator());
 //            this.getAnimator().setInterpolator(null);
