@@ -26,7 +26,7 @@ import java.util.Set;
 class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
     private int aliveInvaders;
     private ArrayList<Invader> invaders;
-    private int duration=20000;
+    private int duration=30000;
     private int velocity=200;
     private int horizontalTimes=20;
     private PointF initialCoordinates;
@@ -96,8 +96,8 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                         this.setAnimator(new ValueAnimator());
                         this.getAnimator().setIntValues(1,100);
                         this.getAnimator().setDuration(this.duration);
-//                        this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
-//                        this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
+                        this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
+                        this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
                         this.getAnimator().setInterpolator(null);
                         this.getAnimator().addUpdateListener(animatorListenerConfigure());
                         this.getAnimator().start();
@@ -169,27 +169,25 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 break;
             }
         }
-        for (int index=this.numCol-1;index>=0;index--){
-            if (this.hitStatus.get(index).second<=0&&(index==this.numCol-1||this.hitStatus.get(index+1).second<=0)){
-                available--;
-            }else {
-                break;
-            }
-        }
+
         return this.invaderWidth*(this.numCol-available);
     }
 
     @Override
     public int getHeight() {
         int available= (int) Math.ceil(this.getChildCount()/this.numCol);
-        for (int index=this.numCol-1;index>=0;index--){
-            if (this.hitStatus.get(index).first<=0&&(index==this.numCol-1||this.hitStatus.get(index+1).second<=0)){
+        for (int index=(int) Math.ceil(this.getChildCount()/this.numCol)-1;index>=0;index--){
+            if (this.hitStatus.get(index).first<=0&&(index==Math.ceil(this.getChildCount()/this.numCol)-1||this.hitStatus.get(index+1).first<=0)){
                 available--;
             }else {
                 break;
             }
         }
-        return (int) (super.getHeight()*(available/(float)this.numCol));
+        return (int) (super.getHeight()*(available/ Math.ceil(this.getChildCount()/this.numCol)));
+    }
+
+    private int getOriginalHeight(){
+        return super.getHeight();
     }
 
     @Override
@@ -204,22 +202,24 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     initialCoordinates=new PointF(that.getAbsoluteX(),that.getAbsoluteY());
                 }
                 float fraction=animation.getAnimatedFraction();
-                if (fraction==1.0){
+                if (fraction==1.0||that.getHeight()+that.getY()>=that.getSpaceGame().laserBase.getY()){
+                    animation.cancel();
                     killLaserBase();
+
                     return;
                 }
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
                 int deltaY=100;
-                int lengthY=size.y-(that.getHeight())-deltaY-50-that.getSpaceGame().laserBase.getHeight();
+                int lengthY=size.y;
                 float subFraction=1f/that.horizontalTimes;
                 int status= (int) (fraction/subFraction);
                 float fractionX=(fraction%subFraction)*that.horizontalTimes;
                 int lengthX=size.x-(that.getWidth());
                 if(status%2==0){
-                    that.setXRaw(that.getDeltaX()+lengthX*fractionX);
+                    that.setXRaw(-that.getDeltaX()+lengthX*fractionX);
                 }else if (fraction!=1.0){
-                    that.setXRaw(lengthX*(1-fractionX));
+                    that.setXRaw(-that.getDeltaX()+lengthX*(1-fractionX));
                 }
                 that.setYRaw(that.initialCoordinates.y+lengthY*fraction);
 

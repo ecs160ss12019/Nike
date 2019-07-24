@@ -116,11 +116,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/invader"
             android:layout_width="63dp"
             android:layout_height="63dp"
-            android:layout_marginStart="17dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/myinvader" />
@@ -156,7 +156,6 @@
             android:id="@+id/invader5"
             android:layout_width="63dp"
             android:layout_height="63dp"
-            android:layout_marginEnd="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/invader4"
             app:layout_constraintTop_toTopOf="parent"
@@ -166,7 +165,6 @@
             android:id="@+id/invader10"
             android:layout_width="63dp"
             android:layout_height="63dp"
-            android:layout_marginStart="17dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/invader"
@@ -204,21 +202,21 @@
             app:layout_constraintStart_toEndOf="@+id/invader3"
             app:layout_constraintTop_toBottomOf="@+id/invader4"
             app:srcCompat="@drawable/myinvader" />
+
         <ImageView
             android:id="@+id/invader12"
             android:layout_width="63dp"
             android:layout_height="63dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/invader4"
             app:layout_constraintTop_toBottomOf="@+id/invader5"
             app:srcCompat="@drawable/myinvader" />
+
         <ImageView
             android:id="@+id/invader25"
             android:layout_width="63dp"
             android:layout_height="63dp"
-            android:layout_marginStart="17dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/invader10"
@@ -262,16 +260,15 @@
             android:layout_width="63dp"
             android:layout_height="63dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/invader4"
             app:layout_constraintTop_toBottomOf="@+id/invader12"
             app:srcCompat="@drawable/myinvader" />
+
         <ImageView
             android:id="@+id/invader31"
             android:layout_width="63dp"
             android:layout_height="63dp"
-            android:layout_marginStart="17dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/invader25"
@@ -315,7 +312,6 @@
             android:layout_width="63dp"
             android:layout_height="63dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/invader4"
             app:layout_constraintTop_toBottomOf="@+id/invader29"
