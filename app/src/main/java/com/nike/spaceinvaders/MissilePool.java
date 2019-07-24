@@ -107,7 +107,7 @@ public class MissilePool {
                         Missile missile=new Missile(index,true,that,missileView,resources,spaceGame,status,mainHandler,processHandler);
                         that.freshMissiles.put(index,missile);
                         missile.initialize();
-                        missile.attachTo(that.layout);
+//                        missile.attachTo(that.layout);
                     }
                 }
                 that.availability=true;
