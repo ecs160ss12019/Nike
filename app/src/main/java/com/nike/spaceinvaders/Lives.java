@@ -89,7 +89,6 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
 
 
 
-
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         return null;

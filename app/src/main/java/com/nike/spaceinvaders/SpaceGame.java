@@ -87,12 +87,14 @@ class SpaceGame  implements StatusManager{
         actions.put(GAMESTART,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         invaderGroup.handle(actions);
 
-/*        AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
+        AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
         actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
-        hud.handle(actions2);*/
-        //Test for updateStatus
-        this.status.put(NUM_LIVES,new Pair<Float, Float>((float)3,null));
-        updateStatus(this.status);
+//        hud.handle(actions2);
+        //Below Test only
+        Status st = new Status();
+        st.put(SCORES,new Pair<Float, Float>(Float.valueOf(0),null));
+        st.put(NUM_LIVES,new Pair<Float, Float>(Float.valueOf(2),null));
+        hud.updateStatus(st);
     }
 
     @Override
@@ -103,7 +105,8 @@ class SpaceGame  implements StatusManager{
                 case SpaceGame.NUM_INVADER:
                     break;
                 case SpaceGame.NUM_LIVES:
-                    hud.updateStatus(status);
+                    break;
+                case SpaceGame.SCORES:
                     break;
                 default:
                     break;
