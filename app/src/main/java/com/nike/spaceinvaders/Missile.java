@@ -101,17 +101,11 @@ class Missile extends AnimatedObject <ImageView>  {
                     // do we really need to check null?
                     if (this.getAnimator() == null){
                         this.setAnimator(new ValueAnimator());
-
-                        this.getAnimator().setFloatValues(startY, endY);
-                        Log.d("debugging4", String.valueOf(Math.abs(endY - startY) / speed));
-                        this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)*1000));
-                        // repeat?
-                        //  this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
-                        this.getAnimator().addUpdateListener(animatorListenerConfigure());
-                        this.getAnimator().start();
                     }
 
-
+                    Log.d("debugging4", String.valueOf(Math.abs(endY - startY) / speed));
+                    this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)*1000));
+                    this.getAnimator().start();
                     break;
 
 
@@ -156,13 +150,10 @@ class Missile extends AnimatedObject <ImageView>  {
         return new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                Log.d("debugging2", String.valueOf(that.getX()));
-                Log.d("debugging3", String.valueOf(that.getY()));
                 float fraction=animation.getAnimatedFraction();
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
                 int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
-                Log.d("debugging", String.valueOf(lengthY));
                 that.setY(((Missile) that).startY+fraction*lengthY);
                 that.setX(((Missile) that).startX);
                 if(fraction==1.0){
@@ -179,14 +170,23 @@ class Missile extends AnimatedObject <ImageView>  {
 
     public void initialize() {
         // set the missile to be invisible
-        this.setVisibility(View.INVISIBLE);
-        this.setDrawable(((Resources)(getResources().get(SpaceGame.RESOURCES))).getDrawable(R.drawable.);
+        this.setVisibility(View.VISIBLE);
+        this.setX(0);
+        this.setY(0);
+        this.setDrawable(((Resources)(getResources().get(SpaceGame.RESOURCES))).getDrawable(R.drawable.missile,null));
         Point screenPt = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
         // The width of missile will be 1 percent of the screen width
         width = screenPt.x / 100;
         // the height of missile will be 1/25 of the screen height
         height = screenPt.y / 25;
-
+        this.setSize((int)height,(int)width);
+        if (this.getAnimator() == null){
+            this.setAnimator(new ValueAnimator());
+            this.getAnimator().addUpdateListener(animatorListenerConfigure());
+        }else {
+            this.getAnimator().cancel();
+        }
+        this.getAnimator().setFloatValues(startY, findEndYPos());
         speed = 60;
     }
 

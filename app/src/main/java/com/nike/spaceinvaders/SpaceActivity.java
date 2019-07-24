@@ -79,6 +79,7 @@ public class SpaceActivity extends AppCompatActivity {
         final View hud=findViewById(R.id.HUD);
         final ViewGroup mainLayout=findViewById(R.id.main_layout);
         final SpaceGame.Status status=new SpaceGame.Status();
+        status.put(SpaceGame.NUM_LIVES,new Pair<>(3f,0f));
         mainHandler.postDelayed(new Runnable() {
             @Override
             public void run() {

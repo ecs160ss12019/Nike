@@ -5,6 +5,7 @@ import android.graphics.PointF;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -57,6 +58,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
     public void updateStatus(SpaceGame.Status status) {
         Set<Integer> keys=status.keySet();
         for (Integer key:keys){
+            Log.d("lll", String.valueOf(key));
             switch (key){
                 case SpaceGame.NUM_LIVES:
                     updateLives(status);
@@ -77,6 +79,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
         this.score.setText(String.valueOf(score));
     }
     private void updateLives(SpaceGame.Status status) {
+        Log.d("aaaaaa","sss");
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);
         int lives=livesTemp.intValue();
         Actions actions=new Actions();
