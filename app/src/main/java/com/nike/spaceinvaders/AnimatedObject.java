@@ -221,9 +221,11 @@ public abstract class  AnimatedObject <View extends android.view.View>{
 //        this.view.getLocationOnScreen(coordinates);
 //        int x = coordinates[0];
 //        return x;
+        android.view.View parentView = (android.view.View) this.view.getParent();
         if (this.parentCoordinates==null){
-            android.view.View parentView = (android.view.View) this.view.getParent();
             this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }else {
+            this.parentCoordinates.x=parentView.getX();
         }
         return this.getX() + this.parentCoordinates.x;
     }
@@ -236,10 +238,12 @@ public abstract class  AnimatedObject <View extends android.view.View>{
 //        this.view.getLocationOnScreen(coordinates);
 //        int y = coordinates[1];
 //        return y;
-
+        android.view.View parentView = (android.view.View) this.view.getParent();
         if (this.parentCoordinates==null){
-            android.view.View parentView = (android.view.View) this.view.getParent();
+
             this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+        }else {
+            this.parentCoordinates.y=parentView.getY();
         }
         return this.getY() + this.parentCoordinates.y;
     }
