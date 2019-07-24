@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/space_background">
+    android:background="@drawable/space_background"
+    android:id="@+id/start_menu">
 
     <TextView
         android:id="@+id/text_space"
@@ -53,7 +54,8 @@
         app:layout_constraintHorizontal_bias="0.339"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_invader"
-        android:clickable="true" />
+        android:clickable="true"
+        android:onClick="startgame" />
 
     <TextView
         android:id="@+id/setting"
