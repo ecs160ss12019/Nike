@@ -61,12 +61,23 @@ public class MissilePool {
             synchronized (missileArray){
                 if (missileArray.size()>numberOfMissile){
                     int difference=missileArray.size()-numberOfMissile;
-                    for (int index=missileArray.size()-1;index>=missileArray.size()-difference;index--){
+                    int count=0;
+                    for (int index=this.numberOfMissile-1;index>=0;index--){
+                        if (count>=difference){
+                            break;
+                        }
                         int key=missileArray.keyAt(index);
+                        Missile missile=missileArray.get(key);
+                        if (missile==null){
+                            continue;
+                        }
                         synchronized (excessiveMissiles){
-                            excessiveMissiles.add(missileArray.get(key));
+                            missile.setRecyclable(false);
+                            missile.setKey(-1);
+                            excessiveMissiles.add(missile);
                         }
                         missileArray.remove(key);
+                        count++;
                     }
                 }else {
                     int difference=numberOfMissile-missileArray.size();
@@ -107,7 +118,7 @@ public class MissilePool {
                         Missile missile=new Missile(index,true,that,missileView,resources,spaceGame,status,mainHandler,processHandler);
                         that.freshMissiles.put(index,missile);
                         missile.initialize();
-                        missile.attachTo(that.layout);
+//                        missile.attachTo(that.layout);
                     }
                 }
                 that.availability=true;
@@ -153,15 +164,21 @@ public class MissilePool {
             return null;
         }
         synchronized (freshMissiles){
-            if (freshMissiles.size()>0){
-                this.checkCount++;
-                Missile missile=freshMissiles.get(freshMissiles.keyAt(freshMissiles.size()-1));
-                missile.setStatus(false);
-                missile.setTime(System.currentTimeMillis());
-                missile.attachTo(layout);
-                gc();
-                return missile;
+            synchronized (gloriousMissiles){
+                if (freshMissiles.size()>0){
+                    int size=freshMissiles.size();
+                    this.checkCount++;
+                    Missile missile=freshMissiles.get(freshMissiles.keyAt(freshMissiles.size()-1));
+                    missile.setStatus(false);
+                    missile.setTime(System.currentTimeMillis());
+                    missile.attachTo(layout);
+                    freshMissiles.remove(freshMissiles.keyAt(size-1));
+                    gloriousMissiles.put(freshMissiles.keyAt(size-1),missile);
+                    gc();
+                    return missile;
+                }
             }
+
         }
         synchronized (excessiveMissiles){
             Context context= (Context) this.resources.get(SpaceGame.CONTEXT);
@@ -200,6 +217,9 @@ public class MissilePool {
                     synchronized (gloriousMissiles){
                         for (int index=gloriousMissiles.size()-1;index>=0;index--){
                             final Missile missile=gloriousMissiles.get(index);
+                            if (missile==null){
+                                continue;
+                            }
                             if (System.currentTimeMillis()-missile.getTime()>20000){
                                 mainHandler.post(()->{
                                     try {
