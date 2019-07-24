@@ -21,5 +21,6 @@ public class StartMenu extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SpaceActivity.class);//从MainActivity页面跳转至LoginActivity页面
         this.startActivity(intent);
+        //overridePendingTransition(R.anim.);
     }
 }
