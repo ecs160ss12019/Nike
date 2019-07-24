@@ -151,4 +151,13 @@ class SpaceGame  implements StatusManager{
 
     }
 
+    static class MutablePair <T,K> {
+        public T first;
+        public K second;
+        MutablePair (T first,K second){
+            this.first=first;
+            this.second=second;
+        }
+    }
+
 }
