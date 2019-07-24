@@ -9,6 +9,7 @@
     android:fitsSystemWindows="true"
     tools:context="com.nike.spaceinvaders.SpaceActivity">
 
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/HUD"
         android:layout_width="0dp"
@@ -396,4 +397,8 @@
         app:srcCompat="@drawable/mylaserbase">
 
     </ImageView>
+
+    <include layout="@layout/start_menu"
+        android:id="@+id/start_menu"
+        android:visibility="invisible" />
 </android.support.constraint.ConstraintLayout>

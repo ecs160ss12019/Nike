@@ -5,7 +5,6 @@ import android.graphics.PointF;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.constraint.ConstraintLayout;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -16,10 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
-/**
- * This class is a manager class for BaseShelter.
- * It holds and manages an {@link TextView} object that holds the text of the score, and {@link Lives} that manages the lives indicators.
- */
+
 public class HUD extends AnimatedObject <ConstraintLayout> implements StatusManager {
     private TextView score;
     private Lives liveLayout;

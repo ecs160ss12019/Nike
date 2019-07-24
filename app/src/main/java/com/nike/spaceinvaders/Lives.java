@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Lives extends AnimatedObject<ConstraintLayout> {
+
     private int lives;
     private View[] livesViews;
     Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives) {
