@@ -8,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class StartMenu extends AppCompatActivity {
-    TextView startbutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,10 +16,10 @@ public class StartMenu extends AppCompatActivity {
     }
 
     public void startgame(View view) {
-        Toast.makeText(getApplicationContext(),"Test",Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"Test",Toast.LENGTH_LONG).show();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SpaceActivity.class);//从MainActivity页面跳转至LoginActivity页面
         this.startActivity(intent);
-        //overridePendingTransition(R.anim.);
+        overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }
 }
