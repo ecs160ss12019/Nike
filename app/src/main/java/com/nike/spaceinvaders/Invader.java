@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.graphics.PointF;
 import android.util.Pair;
 import android.util.SparseArray;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -25,21 +27,12 @@ public class Invader extends AnimatedObject <ImageView> {
 
     }
 
-    private void kill(Pair<AnimatedObject, SparseArray<Float>> strike){
-        Missile missile= (Missile) strike.first;
-        PointF position= new PointF(missile.getX(),missile.getY());
-        Size size=new Size(missile.getHeight(),missile.getWidth());
-
-        float groupX=strike.second.get(0);
-        float groupY=strike.second.get(1);
-        float realX=groupX+this.getX();
-        float realY=groupY+this.getY();
-
-        if (position.x>=realX&&position.x<=realX+this.getWidth()
-                &&position.y>=realY&&position.y<=realY+this.getHeight()){
-            this.status=false;
-            this.setAlpha(0);
-        }
+    private void kill(AnimatedObject missile){
+        this.status=false;
+        this.setVisibility(View.INVISIBLE);
+        Actions actions=new Actions();
+        actions.put(SpaceGame.MISSILE_GONE,null);
+        missile.handle(actions);
         notifySpaceGame();
     }
 
@@ -62,8 +55,27 @@ public class Invader extends AnimatedObject <ImageView> {
             switch (key){
                 case SpaceGame.STRIKE:
                     assert value != null;
-                    kill(value);
+                    if (hitDetection(value.first)){
+                        kill(value.first);
+                    }
             }
+        }
+    }
+
+    private boolean hitDetection(AnimatedObject missile){
+        float x=missile.getX();
+        float y=missile.getY();
+        int width=missile.getWidth();
+        int height=missile.getHeight();
+        float left,top,bottom,right;
+        left=this.getX();
+        top=this.getY();
+        bottom=this.getY()+this.getHeight();
+        right=this.getX()+this.getWidth();
+        if ((x>=left&&x<=right&&y<=bottom)||(x+missile.getWidth())>=left&&(x+missile.getWidth())<=right&&y<=bottom){
+            return true;
+        }else {
+            return false;
         }
     }
 

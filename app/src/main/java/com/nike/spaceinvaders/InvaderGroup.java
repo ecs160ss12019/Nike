@@ -8,6 +8,7 @@ import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -64,18 +65,23 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
                     break;
                 case SpaceGame.STRIKE:
-                    assert value != null;
+                    Set<Integer> x=new ArraySet<>();
+                    x.add(SpaceGame.STRIKE);
+                    strikeInvaders(actions,x);
             }
         }
     }
 
     @Override
-    protected void handle(Actions actions, Set keys) {
+    protected void handle(Actions actions, Set<Integer> keys) {
 
     }
 
-    private void strikeInvaders(Pair<AnimatedObject, ArrayList<Float>> value, PointF position){
+    private void strikeInvaders(Actions actions, Set<Integer> keys){
 
+        for (Invader invader:invaders){
+            invader.handle(actions,keys);
+        }
     }
 
     @Override
