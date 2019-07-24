@@ -68,7 +68,7 @@ public class Invader extends AnimatedObject <ImageView> {
         top=this.getAbsoluteY();
         bottom=top+this.getHeight();
         right=left+this.getWidth()-50;
-        if ((x>=left&&x<=right&&y<=bottom)||(x+missileWidth)>=left&&(x+missileWidth)<=right&&y<=bottom){
+        if ((x>=left&&x<=right&&y<=bottom&&y>=top)||((x+missileWidth)>=left&&(x+missileWidth)<=right&&y<=bottom&&y>=top)){
             return true;
         }else {
             return false;

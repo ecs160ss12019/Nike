@@ -84,8 +84,6 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     strikeInvaders(actions,x);
                     break;
                 case SpaceGame.HIT:
-
-                    Log.d("debugging","afwe");
                     this.setDetection(false);
                     break;
             }
