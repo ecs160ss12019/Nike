@@ -109,6 +109,8 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         final InvaderGroup that=this;
+        Actions actions=new Actions();
+        actions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
         return new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -134,8 +136,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     that.setXRaw(lengthX*(1-fractionX));
                 }
                 that.setYRaw(that.initialCoordinates.y+lengthY*fraction);
-                Actions actions=new Actions();
-                actions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
+
                 that.getSpaceGame().laserBase.handle(actions);
 //                Log.d("aaaas", String.valueOf(fraction));
 
