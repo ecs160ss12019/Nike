@@ -196,18 +196,31 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         Actions actions=new Actions();
         actions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
         return new ValueAnimator.AnimatorUpdateListener() {
+            private int deltaDeltaX;
+            private int deltaX;
+            private int width;
+            private int deltaWidth;
+            private float variationStart;
+            private float absVariationEnd;
+            private boolean speedShift=false;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 if (initialCoordinates==null){
                     initialCoordinates=new PointF(that.getAbsoluteX(),that.getAbsoluteY());
                 }
+                if (width==0){
+                    width=that.getWidth();
+                    deltaX=that.getDeltaX();
+                }
                 float fraction=animation.getAnimatedFraction();
                 if (fraction==1.0||that.getHeight()+that.getY()>=that.getSpaceGame().laserBase.getY()){
-                    animation.cancel();
-                    killLaserBase();
+//                    animation.cancel();
+//                    killLaserBase();
 
-                    return;
+//                    return;
                 }
+
+
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
                 int deltaY=100;
@@ -215,11 +228,30 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 float subFraction=1f/that.horizontalTimes;
                 int status= (int) (fraction/subFraction);
                 float fractionX=(fraction%subFraction)*that.horizontalTimes;
-                int lengthX=size.x-(that.getWidth());
+
+                int tempDeltaX=getDeltaX();
+                int tempWidth=getWidth();
+                if (!this.speedShift&&(tempDeltaX!=deltaX||tempWidth!=width)){
+                    variationStart=fractionX;
+                    absVariationEnd=fraction+subFraction;
+                    deltaDeltaX=tempDeltaX-deltaX;
+                    deltaWidth=tempWidth-width;
+                    this.speedShift=true;
+                }
+                if (fraction>=absVariationEnd||fractionX<variationStart){
+                    width=that.getWidth();
+                    deltaX=that.getDeltaX();
+                    this.speedShift=false;
+                }
+                if (this.speedShift){
+                    tempDeltaX= deltaX+(int) (deltaDeltaX*((fractionX-variationStart)/(1-variationStart)));
+                    tempWidth=width+(int) (deltaWidth*((fractionX-variationStart)/(1-variationStart)));
+                }
+                int lengthX=size.x-(tempWidth);
                 if(status%2==0){
-                    that.setXRaw(-that.getDeltaX()+lengthX*fractionX);
+                    that.setXRaw(-tempDeltaX+lengthX*fractionX);
                 }else if (fraction!=1.0){
-                    that.setXRaw(-that.getDeltaX()+lengthX*(1-fractionX));
+                    that.setXRaw(-tempDeltaX+lengthX*(1-fractionX));
                 }
                 that.setYRaw(that.initialCoordinates.y+lengthY*fraction);
 
