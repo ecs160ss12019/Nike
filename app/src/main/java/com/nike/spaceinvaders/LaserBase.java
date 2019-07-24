@@ -65,8 +65,7 @@ class LaserBase extends AnimatedObject <ImageView>{
             this.getAnimator().setInterpolator(null);
             this.getAnimator().addUpdateListener(animatorListenerConfigure());
         }
-
-        //this.getSpaceGame().invaderGroup
+        //AnimatedObject invaderGroup = getSpaceGame().invaderGroup;
         for (Integer key: keys) {
             Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
 //            SimpleMatrix a=new SimpleMatrix(new double[2][3]);
@@ -140,8 +139,11 @@ class LaserBase extends AnimatedObject <ImageView>{
         };
     }
 
-    protected void hurtDetection(InvaderGroup invaderGroup){
-
+    private void notifySpaceGame(){
+        Pair<Float,Float> value=getStatus().get(SpaceGame.NUM_LIVES);
+        assert value != null;
+        getStatus().put(SpaceGame.NUM_LIVES,new Pair<>(value.first-1,null));
+        this.getSpaceGame().updateStatus(getStatus());
     }
 
     public float getDelta() {

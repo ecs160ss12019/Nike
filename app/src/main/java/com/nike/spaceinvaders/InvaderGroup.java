@@ -73,6 +73,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         return;
     }
 
+
     @Override
     public void setSpaceGame(SpaceGame spaceGame) {
         super.setSpaceGame(spaceGame);
@@ -125,17 +126,31 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         this.detection = detection;
     }
 
+
+    /*private void hitLaserBaseDetector(Actions actions, Set<Integer> keys){
+
+        boolean isHurt = false;
+        for (Invader invader:invaders){
+            //isHurt = invader.hitDetection(mLaserBase);
+        }
+    }*/
+
     public boolean isDetection() {
         return detection;
     }
 
     private void strikeInvaders(Actions actions, Set<Integer> keys){
-
+        boolean isHurt = false;
         for (Invader invader:invaders){
             if (!this.detection){
                 break;
             }
             invader.handle(actions,keys);
+
+            //isHurt = invader.hitDetection(/*need laserbase here*/);
+        }
+        if(isHurt){
+            killLaserBase();
         }
         this.detection=true;
     }
@@ -268,14 +283,6 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         this.getSpaceGame().updateStatus(getStatus());
     }
 
-    //hitLaserBaseDetector will be called in LaserBase.handle
-    public boolean hitLaserBaseDetector(LaserBase mLaserBase){
-        boolean isHurt = false;
-        for (Invader invader:invaders){
-            isHurt = invader.hitDetection(mLaserBase);
-        }
-        return isHurt;
-    }
 
     @Override
     public void setX(float x) {
