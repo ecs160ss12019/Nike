@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.content.ContentValues.TAG;
+
 public class SpaceActivity extends AppCompatActivity {
     private SpaceGame mSpaceGame;
     private Handler mainHandler;

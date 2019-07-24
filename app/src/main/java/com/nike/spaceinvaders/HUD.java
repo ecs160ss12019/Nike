@@ -5,8 +5,10 @@ import android.graphics.PointF;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.constraint.ConstraintLayout;
+import android.text.Layout;
 import android.util.Pair;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,13 +30,14 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
     @IdRes
     private final int livesId=R.id.lives;
 
-
     HUD(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(null, view, resources, spaceGame,status, mainHandler, processHandler);
         //init
         this.lives=this.LIVEMAX;
         this.score=view.findViewById(scoreId);
         this.liveLayout=new Lives((ConstraintLayout) view.findViewById(livesId),resources,spaceGame,status,mainHandler,processHandler,LIVEMAX);
+
+
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,6 +26,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+
+import static android.content.ContentValues.TAG;
 
 class SpaceGame  implements StatusManager{
     /* Action Flags */
@@ -79,22 +82,21 @@ class SpaceGame  implements StatusManager{
         this.baseShelterGroup.setSpaceGame(this);
         this.invaderGroup.setSpaceGame(this);
         ((AnimatedObject)this.hud).setSpaceGame(this);
-
         this.resources=resources;
         this.status=status;
 
-        AnimatedObject.Actions actions=new AnimatedObject.Actions();
+/*        AnimatedObject.Actions actions=new AnimatedObject.Actions();
         actions.put(GAMESTART,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         invaderGroup.handle(actions);
 
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
         actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
-//        hud.handle(actions2);
+        //hud.handle(actions2);
         //Below Test only
         Status st = new Status();
         st.put(SCORES,new Pair<Float, Float>(Float.valueOf(0),null));
-        st.put(NUM_LIVES,new Pair<Float, Float>(Float.valueOf(2),null));
-        hud.updateStatus(st);
+        st.put(NUM_LIVES,new Pair<Float, Float>(Float.valueOf(3),null));
+        hud.updateStatus(st);*/
     }
 
     @Override
@@ -145,5 +147,7 @@ class SpaceGame  implements StatusManager{
     static class Resources extends  HashMap<Integer, Object>{
 
     }
+
+
 
 }
