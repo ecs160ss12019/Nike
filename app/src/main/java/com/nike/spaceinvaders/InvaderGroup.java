@@ -140,17 +140,10 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
     }
 
     private void strikeInvaders(Actions actions, Set<Integer> keys){
-        boolean isHurt = false;
         for (Invader invader:invaders){
             if (!this.detection){
                 break;
             }
-            invader.handle(actions,keys);
-
-            //isHurt = invader.hitDetection(/*need laserbase here*/);
-        }
-        if(isHurt){
-            killLaserBase();
         }
         this.detection=true;
     }
