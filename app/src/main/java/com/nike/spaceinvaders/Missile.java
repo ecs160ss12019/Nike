@@ -148,18 +148,9 @@ class Missile extends AnimatedObject <ImageView>  {
         final Actions actions=new Actions();
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
         return new ValueAnimator.AnimatorUpdateListener() {
-            private int times=0;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction=animation.getAnimatedFraction();
-                float subFraction=0.005f;
-                float remaining=fraction%subFraction;
-                int times= (int) (fraction/subFraction);
-                if (remaining>=0.0&&this.times==times){
-                    return;
-                }else if (remaining>=0.0){
-                    this.times=times;
-                }
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
                 int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
