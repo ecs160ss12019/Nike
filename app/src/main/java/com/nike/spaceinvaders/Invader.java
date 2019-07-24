@@ -43,7 +43,11 @@ public class Invader extends AnimatedObject <ImageView> {
     }
 
     private void notifySpaceGame(){
-
+        SpaceGame.Status status=getStatus();
+        Pair<Float,Float> value=status.get(SpaceGame.SCORES);
+        assert value != null;
+        status.put(SpaceGame.SCORES,new Pair<>(value.first+10,null));
+        getSpaceGame().updateStatus(status);
     }
 
     public boolean diagnose(){

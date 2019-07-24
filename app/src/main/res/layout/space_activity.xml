@@ -83,7 +83,7 @@
             android:layout_marginBottom="2dp"
             android:fontFamily="@font/arcadeclassic"
             android:gravity="center"
-            android:text="170"
+            android:text="0"
             android:textColor="@color/green"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"

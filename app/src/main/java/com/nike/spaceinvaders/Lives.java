@@ -61,7 +61,6 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     }
 
     private void hurt(Actions actions){
-        Log.d("pppppp","ss");
         if (this.lives<1){
             //pass GAMEOVER to Game
             return;

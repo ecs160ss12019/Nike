@@ -92,7 +92,10 @@ class SpaceGame  implements StatusManager{
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
         actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
 //        hud.handle(actions2);
+
+        status.put(SpaceGame.SCORES,new Pair<>(0f,null));
         //Below Test only
+
     }
 
     @Override
@@ -106,6 +109,7 @@ class SpaceGame  implements StatusManager{
                     hud.updateStatus(status);
                     break;
                 case SpaceGame.SCORES:
+                    hud.updateStatus(status);
                     break;
                 default:
                     break;
