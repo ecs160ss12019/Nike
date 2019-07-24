@@ -17,6 +17,7 @@ import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseArray;
 import android.widget.ImageView;
 
@@ -59,24 +60,39 @@ class BaseShelter extends AnimatedObject<ImageView> {
      */
     @Override
     protected void handle(Actions actions, Set keys) {
-        drawDamage(25f,50f);
-        return;
-//        SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
-//        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
-//        float missileAbsY = data.get(SpaceGame.Y_COORDINATE);
-//
-//
-//        // change the absolute missile coordinates to coordinates relative to shelter
-//        float missileRelX = getRelativeX(missileAbsX);
-//        float missileRelY = getRelativeY(missileAbsY);
-//
-//        // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
-//        if(0 < missileRelX && missileRelX < numCol && 0 < missileRelY && missileRelY < numRow)
-//        {
-//          // hit detection
-//            // draw the hitting effect using bitmap
-//        }
-//        // else return
+
+        SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
+        Missile missile = (Missile)Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
+        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
+        float missileAbsY = data.get(SpaceGame.Y_COORDINATE);
+
+
+        // change the absolute missile coordinates to coordinates relative to shelter
+        float missileRelX = getRelativeX(missileAbsX);
+        float missileRelY = getRelativeY(missileAbsY);
+
+        // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
+        if(0 < missileRelX && missileRelX < numCol && 0 < missileRelY && missileRelY < numRow)
+        {
+            // hit detection
+            PointF boxXY = getBoxCoordinate(missileRelX, missileRelY);
+            Point hitPoint = hitDetection(boxXY, new Size(this.boxSize, this.boxSize));
+
+            if(hitPoint != null)
+            {
+                // draw the hitting effect using bitmap
+                drawDamage(hitPoint.x, hitPoint.y);
+
+                // notify the missile to be gone
+                Actions missileGone = new Actions();
+                missileGone.put(SpaceGame.MISSILE_GONE, new
+                        Pair<AnimatedObject, SparseArray<Float>>(this, null));
+
+                missile.handle(missileGone, null);
+            }
+
+        }
+        // else return
 
 
     }
