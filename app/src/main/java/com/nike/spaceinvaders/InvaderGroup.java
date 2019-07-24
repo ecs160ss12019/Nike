@@ -268,6 +268,15 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         this.getSpaceGame().updateStatus(getStatus());
     }
 
+    //hitLaserBaseDetector will be called in LaserBase.handle
+    public boolean hitLaserBaseDetector(LaserBase mLaserBase){
+        boolean isHurt = false;
+        for (Invader invader:invaders){
+            isHurt = invader.hitDetection(mLaserBase);
+        }
+        return isHurt;
+    }
+
     @Override
     public void setX(float x) {
         if (this.initialCoordinates!=null){
