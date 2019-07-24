@@ -133,8 +133,9 @@ public class MissilePool {
                 this.excessiveMissiles.remove(missile);
             }
         }else{
-            missile.setStatus(true);
+
             synchronized (this.gloriousMissiles){
+                missile.setStatus(true);
                 missile.initialize();
                 missile.detachFrom(layout);
                 this.gloriousMissiles.remove(missile.getKey());
