@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -60,7 +61,6 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     }
 
     private void hurt(Actions actions){
-
         if (this.lives<1){
             //pass GAMEOVER to Game
             return;

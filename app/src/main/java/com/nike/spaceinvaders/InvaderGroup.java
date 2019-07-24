@@ -30,6 +30,8 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
     private int horizontalTimes=20;
     private PointF initialCoordinates;
 
+    private boolean detection=true;
+
     InvaderGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
 
         super( null, view, resources, spaceGame,status, mainHandler, processHandler);
@@ -39,10 +41,18 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
         for (int i=0;i<this.getChildCount();i++){
             ImageView invaderView= (ImageView) this.getChildAt(i);
-            invaders.add(new Invader(this.getAnimator(),invaderView,this.getResources(),this.getSpaceGame(),this.getStatus(),this.getMainHandler(),this.getProcessHandler()));
+            invaders.add(new Invader(this.getAnimator(),invaderView,resources,spaceGame,status,mainHandler,processHandler));
         }
 
 
+    }
+
+    @Override
+    public void setSpaceGame(SpaceGame spaceGame) {
+        super.setSpaceGame(spaceGame);
+        for (Invader invader:invaders){
+            invader.setSpaceGame(getSpaceGame());
+        }
     }
 
     @Override
@@ -56,8 +66,8 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                         this.setAnimator(new ValueAnimator());
                         this.getAnimator().setIntValues(1,100);
                         this.getAnimator().setDuration(this.duration);
-                        this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
-                        this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
+//                        this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
+//                        this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
                         this.getAnimator().setInterpolator(null);
                         this.getAnimator().addUpdateListener(animatorListenerConfigure());
                         this.getAnimator().start();
@@ -77,11 +87,23 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
     }
 
+    public void setDetection(boolean detection) {
+        this.detection = detection;
+    }
+
+    public boolean isDetection() {
+        return detection;
+    }
+
     private void strikeInvaders(Actions actions, Set<Integer> keys){
 
         for (Invader invader:invaders){
+            if (!this.detection){
+                break;
+            }
             invader.handle(actions,keys);
         }
+        this.detection=true;
     }
 
     @Override
@@ -94,6 +116,10 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     initialCoordinates=new PointF(that.getAbsoluteX(),that.getAbsoluteY());
                 }
                 float fraction=animation.getAnimatedFraction();
+                if (fraction==1.0){
+                    killLaserBase();
+                    return;
+                }
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
                 int deltaY=100;
@@ -111,9 +137,8 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 Actions actions=new Actions();
                 actions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
                 that.getSpaceGame().laserBase.handle(actions);
-                if (fraction==1.0){
-                    killLaserBase();
-                }
+//                Log.d("aaaas", String.valueOf(fraction));
+
 
             }
         };

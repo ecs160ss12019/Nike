@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -72,6 +73,7 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     public void setDrawable(Drawable drawable){
         if (this.view instanceof ImageView){
             ImageView imageView=(ImageView)this.view;
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setImageDrawable(drawable);
         }
     }
@@ -103,17 +105,29 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     }
 
     public void setHeight(int height){
-        view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+this.getWidth()),(int)(this.getY()+height));
+        ViewGroup.LayoutParams layoutParams=this.view.getLayoutParams();
+        if (layoutParams!=null){
+            layoutParams.height=height;
+            this.view.requestLayout();
+        }
 
     }
 
     public void setWidth(int width){
-        view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+width),(int)(this.getY()+this.getHeight()));
-
+        ViewGroup.LayoutParams layoutParams=this.view.getLayoutParams();
+        if (layoutParams!=null){
+            layoutParams.width=width;
+            this.view.requestLayout();
+        }
     }
 
     public void setSize(int height,int width){
-        view.layout((int)this.getX(),(int)this.getY(),(int)(this.getX()+width),(int)(this.getY()+height));
+        ViewGroup.LayoutParams layoutParams=this.view.getLayoutParams();
+        if (layoutParams!=null){
+            layoutParams.width=width;
+            layoutParams.height=height;
+            this.view.requestLayout();
+        }
     }
 
     public void setSpaceGame(SpaceGame spaceGame) {
@@ -279,7 +293,8 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     }
 
     public void attachTo(ViewGroup layout){
-        layout.addView(this.view);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(this.getWidth(),this.getHeight());
+        layout.addView(this.view,layoutParams);
     }
 
     public void detachFrom(ViewGroup layout){

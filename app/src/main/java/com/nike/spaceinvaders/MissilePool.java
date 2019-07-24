@@ -172,6 +172,7 @@ public class MissilePool {
                     freshMissiles.remove(freshMissiles.keyAt(size-1));
                     gloriousMissiles.put(freshMissiles.keyAt(size-1),missile);
                     gc();
+                    missile.initialize();
                     return missile;
                 }
             }
@@ -186,6 +187,7 @@ public class MissilePool {
             missile.attachTo(layout);
             this.checkCount++;
             gc();
+            missile.initialize();
             return missile;
         }
     }

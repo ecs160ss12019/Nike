@@ -3,6 +3,7 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.PointF;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -33,11 +34,20 @@ public class Invader extends AnimatedObject <ImageView> {
         Actions actions=new Actions();
         actions.put(SpaceGame.MISSILE_GONE,null);
         missile.handle(actions);
+        if (getSpaceGame().invaderGroup==null){
+            Log.d("aasfdfa","asfawe");
+            return;
+        }
+        ((InvaderGroup)(getSpaceGame().invaderGroup)).setDetection(false);
         notifySpaceGame();
     }
 
     private void notifySpaceGame(){
-
+        SpaceGame.Status status=getStatus();
+        Pair<Float,Float> value=status.get(SpaceGame.SCORES);
+        assert value != null;
+        status.put(SpaceGame.SCORES,new Pair<>(value.first+10,null));
+        getSpaceGame().updateStatus(status);
     }
 
     public boolean diagnose(){
@@ -46,9 +56,27 @@ public class Invader extends AnimatedObject <ImageView> {
 
 
 
+    private boolean hitDetection(AnimatedObject missile){
+        if (!status){
+            return false;
+        }
+        float x=missile.getX();
+        float y=missile.getY();
+        int missileWidth=missile.getWidth();
+        float left,top,bottom,right;
+        left=this.getAbsoluteX();
+        top=this.getAbsoluteY();
+        bottom=top+this.getHeight();
+        right=left+this.getWidth();
+        if ((x>=left&&x<=right&&y<=bottom)||(x+missileWidth)>=left&&(x+missileWidth)<=right&&y<=bottom){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     @Override
-    protected void handle(Actions actions) {
-        Set<Integer> keys=actions.keySet();
+    protected void handle(Actions actions, Set<Integer> keys) {
         for (Integer key: keys){
             Pair<AnimatedObject, SparseArray<Float>> value=actions.get(key);
 
@@ -60,28 +88,6 @@ public class Invader extends AnimatedObject <ImageView> {
                     }
             }
         }
-    }
-
-    private boolean hitDetection(AnimatedObject missile){
-        float x=missile.getX();
-        float y=missile.getY();
-        int width=missile.getWidth();
-        int height=missile.getHeight();
-        float left,top,bottom,right;
-        left=this.getX();
-        top=this.getY();
-        bottom=this.getY()+this.getHeight();
-        right=this.getX()+this.getWidth();
-        if ((x>=left&&x<=right&&y<=bottom)||(x+missile.getWidth())>=left&&(x+missile.getWidth())<=right&&y<=bottom){
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-    @Override
-    protected void handle(Actions actions, Set keys) {
-
     }
 
     @Override

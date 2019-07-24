@@ -91,10 +91,9 @@ class LaserBase extends AnimatedObject <ImageView>{
 //                    actions1.put(SpaceGame.TEST,null);
 //                    this.getSpaceGame().baseShelterGroup.handle(actions1);
                     AnimatedObject missile=getSpaceGame().missilePool.getMissile();
-                    Log.d("debugging1", String.valueOf(missile.getWidth()));
                     SparseArray<Float> values=new SparseArray<>();
-                    values.put(SpaceGame.X_COORDINATE,(this.getWidth()-50)/2+this.getX());
-                    values.put(SpaceGame.Y_COORDINATE,(this.getHeight()+this.getY()));
+                    values.put(SpaceGame.X_COORDINATE,(this.getWidth()-25)/2+this.getX());
+                    values.put(SpaceGame.Y_COORDINATE,(this.getY()));
                     values.put(SpaceGame.MOVE_DIRECTION,1f);
                     actions.put(SpaceGame.FIRE,new Pair<>(this,values));
                     missile.handle(actions);
