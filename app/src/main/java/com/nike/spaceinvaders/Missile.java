@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Handler;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -74,9 +75,8 @@ class Missile extends AnimatedObject <ImageView>  {
      * @param keys The keys that we need to iterate through.
      */
     @Override
-    protected void handle(Actions actions, Set keys) {
-        Set<Integer> oldKeys = actions.keySet();
-        for(Integer key:oldKeys){
+    protected void handle(Actions actions, Set<Integer> keys) {
+        for(Integer key:keys){
             switch(key){
                 case SpaceGame.FIRE:
                     /*
@@ -111,16 +111,19 @@ class Missile extends AnimatedObject <ImageView>  {
                     /*
                         Missile is moving and may hit an object
                      */
+                    Log.d("STRIKE","SDF");
                     Actions newActions=new Actions();
+                    Set<Integer> newKeys=new ArraySet<>();
+                    newKeys.add(SpaceGame.STRIKE);
                     SparseArray<Float> coordinates=new SparseArray<>(2);
                     // Add the missile's absolute coordinates
                     coordinates.put(SpaceGame.X_COORDINATE,getAbsoluteX());
                     coordinates.put(SpaceGame.Y_COORDINATE,getAbsoluteY());
                     newActions.put(SpaceGame.STRIKE,
                             new Pair<AnimatedObject, SparseArray<Float>>(this,coordinates));
-                    getSpaceGame().baseShelterGroup.handle(newActions);
-                    getSpaceGame().laserBase.handle(newActions);
-                    getSpaceGame().invaderGroup.handle(newActions);
+                    getSpaceGame().baseShelterGroup.handle(newActions,newKeys);
+                    getSpaceGame().laserBase.handle(newActions,newKeys);
+                    getSpaceGame().invaderGroup.handle(newActions,newKeys);
                     // handle missile collides with each other
                     break;
 
@@ -146,23 +149,22 @@ class Missile extends AnimatedObject <ImageView>  {
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         final AnimatedObject that=this;
         final Actions actions=new Actions();
+        final Set<Integer> newKeys=new ArraySet<>();
+        newKeys.add(SpaceGame.STRIKE);
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
-        return new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float fraction=animation.getAnimatedFraction();
-                Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
-                assert size != null;
-                int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
-                that.setY(((Missile) that).startY+fraction*lengthY);
-                that.setX(((Missile) that).startX);
-                that.getSpaceGame().invaderGroup.handle(actions);
-                if(fraction==1.0){
-                    try {
-                        ((Missile) that).recycle();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        return animation -> {
+            float fraction=animation.getAnimatedFraction();
+            Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
+            assert size != null;
+            int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
+            that.setY(((Missile) that).startY+fraction*lengthY);
+            that.setX(((Missile) that).startX);
+            that.getSpaceGame().invaderGroup.handle(actions,newKeys);
+            if(fraction==1.0){
+                try {
+                    ((Missile) that).recycle();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         };
@@ -206,7 +208,7 @@ class Missile extends AnimatedObject <ImageView>  {
     private float findEndYPos()
     {
         if(up)
-            return 0;
+            return -150;
         else
             return ((Point)this.getResources().get(SpaceGame.WINDOW_SIZE)).y;
     }

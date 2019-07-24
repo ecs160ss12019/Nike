@@ -40,6 +40,8 @@ class SpaceGame  implements StatusManager{
     public static final int LIFE_GONE=0b010000000;
     public static final int RESURRECTION=0b0100000000;
     public static final int MOVE_STOP=0b010000000000;
+    public static final int HIT=0b100000000000;
+
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
