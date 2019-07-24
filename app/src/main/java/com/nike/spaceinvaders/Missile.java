@@ -169,8 +169,10 @@ class Missile extends AnimatedObject <ImageView>  {
 
 
     public void initialize() {
+        this.setVisibility(View.INVISIBLE);
         if (this.getAnimator() == null){
             this.setAnimator(new ValueAnimator());
+//            this.getAnimator().setInterpolator(null);
             this.getAnimator().addUpdateListener(animatorListenerConfigure());
         }else {
             this.getAnimator().cancel();
@@ -178,7 +180,7 @@ class Missile extends AnimatedObject <ImageView>  {
         this.getAnimator().setFloatValues(startY, findEndYPos());
         speed = 600;
         // set the missile to be invisible
-        this.setVisibility(View.INVISIBLE);
+
 //        this.setX(0);
 //        this.setY(0);
         this.setDrawable(((Resources)(getResources().get(SpaceGame.RESOURCES))).getDrawable(R.drawable.missile,null));
