@@ -171,12 +171,12 @@ class Missile extends AnimatedObject <ImageView>  {
     public void initialize() {
         // set the missile to be invisible
         this.setVisibility(View.VISIBLE);
-        this.setX(0);
-        this.setY(0);
+//        this.setX(0);
+//        this.setY(0);
         this.setDrawable(((Resources)(getResources().get(SpaceGame.RESOURCES))).getDrawable(R.drawable.missile,null));
         Point screenPt = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
         // The width of missile will be 1 percent of the screen width
-        width = screenPt.x / 100;
+        width = screenPt.x / 50;
         // the height of missile will be 1/25 of the screen height
         height = screenPt.y / 25;
         this.setSize((int)height,(int)width);
@@ -187,7 +187,7 @@ class Missile extends AnimatedObject <ImageView>  {
             this.getAnimator().cancel();
         }
         this.getAnimator().setFloatValues(startY, findEndYPos());
-        speed = 60;
+        speed = 600;
     }
 
 
