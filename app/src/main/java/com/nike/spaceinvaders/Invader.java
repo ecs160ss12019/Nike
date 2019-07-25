@@ -23,10 +23,11 @@ public class Invader extends AnimatedObject <ImageView> {
     private Missile missile;
     private int[][] hitbox;
     private int abstractionLevel=10;
+    private int index;
 
-    Invader(ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    Invader(int index,ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(animator, view, resources, spaceGame, status,mainHandler, processHandler);
-
+        this.index=index;
     }
 
     private void kill(Actions actions,AnimatedObject missile){
@@ -36,7 +37,7 @@ public class Invader extends AnimatedObject <ImageView> {
         keys.add(SpaceGame.MISSILE_GONE);
         keys.add(SpaceGame.HIT);
         actions.put(SpaceGame.MISSILE_GONE,null);
-        actions.put(SpaceGame.HIT,null);
+        actions.put(SpaceGame.HIT,new Pair<>(this,null));
         missile.handle(actions,keys);
         this.getSpaceGame().invaderGroup.handle(actions,keys);
         notifySpaceGame();
@@ -93,5 +94,13 @@ public class Invader extends AnimatedObject <ImageView> {
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         return null;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }
