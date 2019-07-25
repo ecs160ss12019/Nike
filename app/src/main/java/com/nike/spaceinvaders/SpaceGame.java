@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+//Adding two flags at l46 and l47
 class SpaceGame  implements StatusManager{
     /* Action Flags */
     public static final int GAMESTART=0b00000001;
