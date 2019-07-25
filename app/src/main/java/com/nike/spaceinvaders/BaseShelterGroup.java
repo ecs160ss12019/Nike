@@ -5,7 +5,6 @@ import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.util.ArraySet;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -71,7 +70,6 @@ public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
     private void strikeBaseShelter(Actions actions, Set<Integer> keys){
         for(BaseShelter baseShelter: shelters)
         {
-            Log.d("abc", "sb");
             baseShelter.handle(actions, keys);
         }
     }
