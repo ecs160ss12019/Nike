@@ -37,11 +37,6 @@
 |  - Has an array of ShelterBlocks that make up a baseShelter  <br> - Detect the collision with missiles <br> - Spawns at between invader and laserbase |  Missle <br> SpaceGame |
 
 
-| ShelterBlock | |
-|---|---|
-|  - Make up each baseShelter  <br> - Each block should have height and width <br> - Detect whether a block is dead or not | BaseShelter |
-
-
 
 
 | MissilePool | |
@@ -58,6 +53,7 @@
 | HUD | |
 |---|---|
 |  - Records information of status like Lifes, score, and level  <br> - Update them when variables change |  GameObject <br> SpaceGame <br> LaserBase |
+
 
 | Lives | |
 |---|---|
