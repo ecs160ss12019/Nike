@@ -4,6 +4,8 @@ import android.animation.ValueAnimator;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.util.ArraySet;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -39,16 +41,16 @@ public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
 
 
     @Override
-    protected void handle(Actions actions, Set keys) {
-        Set<Integer> oldKeys = actions.keySet();
-        for (Integer key:oldKeys){
+    protected void handle(Actions actions, Set<Integer> keys) {
+
+        for (Integer key:keys){
             switch (key){
                 case SpaceGame.STRIKE:
-                    for(int i = 0; i < numShelters; i++) {
-                        shelters.get(i).handle(actions, keys);
-                    }
-
+                    Set<Integer> newkeys =new ArraySet<>();
+                    newkeys.add(SpaceGame.STRIKE);
+                    strikeBaseShelter(actions,newkeys);
                     break;
+
                 case SpaceGame.TEST:
                     Actions actions1=new Actions();
                     actions1.put(SpaceGame.TEST,null);
@@ -66,8 +68,12 @@ public class BaseShelterGroup extends AnimatedObject  <ConstraintLayout>  {
         }
     }
 
-    private void strikeBaseShelter(){
-
+    private void strikeBaseShelter(Actions actions, Set<Integer> keys){
+        for(BaseShelter baseShelter: shelters)
+        {
+            Log.d("abc", "sb");
+            baseShelter.handle(actions, keys);
+        }
     }
 
     @Override

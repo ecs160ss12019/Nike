@@ -256,6 +256,7 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         if (this.parentCoordinates==null){
             android.view.View parentView = (android.view.View) this.view.getParent();
             this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+            Log.d("parentCoordinate",this.parentCoordinates.toString());
         }
         return absX - this.parentCoordinates.x;
     }
