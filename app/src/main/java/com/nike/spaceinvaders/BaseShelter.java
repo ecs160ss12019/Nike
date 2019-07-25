@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.graphics.Paint;
 
 import android.graphics.Point;
@@ -62,6 +63,15 @@ class BaseShelter extends AnimatedObject<ImageView> {
         shelter.setBounds(0,0, this.getWidth(), this.getHeight());
         shelter.draw(this.canvas);
         this.bitmap.getPixels(this.hitBox,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
+        normalizeHitbox();
+    }
+
+    private void normalizeHitbox(){
+        for(int i=0;i<this.hitBox.length;i++){
+            if (this.hitBox[i]==Color.argb(0,0,0,0)||this.hitBox[i]==Color.argb(255,0,0,0)){
+                this.hitBox[i]=1;
+            }
+        }
     }
 
 
@@ -82,8 +92,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
         Log.d("parentCoordinate2", String.valueOf(missileAbsX));
         // change the absolute missile coordinates to coordinates relative to shelter
-        float missileRelX = getRelativeX(missileAbsX);
-        float missileRelY = getRelativeY(missileAbsY);
+        float missileRelX = missileAbsX-this.getAbsoluteX();
+        float missileRelY = missileAbsY-this.getAbsoluteY();
 
         // check they are within hitbox ranges ( 0 < x < numCol && 0 < y < numRow)
        // if(0 < missileRelX && missileRelX < numCol && 0 < missileRelY && missileRelY < numRow)
@@ -91,15 +101,15 @@ class BaseShelter extends AnimatedObject<ImageView> {
             // hit detection
            // PointF boxXY = getBoxCoordinate(missileRelX, missileRelY);
             PointF boxXY = new PointF(missileRelX, missileRelY);
-            Point hitPoint = hitDetection(boxXY, new Size(this.boxSize, this.boxSize));
+            Point hitPoint = hitDetection(boxXY, new Size(0, this.boxSize));
 
             Log.d("asdf", "here");
 
             if(hitPoint != null)
             {
                 // draw the hitting effect using bitmap
-                Log.d("X", String.valueOf(hitPoint.x));
-                Log.d("Y", String.valueOf(hitPoint.y));
+                Log.d("HitX", String.valueOf(hitPoint.x));
+                Log.d("HitY", String.valueOf(hitPoint.y));
                 drawDamage(hitPoint.x, hitPoint.y);
 
                 // notify the missile to be gone
@@ -134,6 +144,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
         Drawable damage=resources.getDrawable(R.drawable.explode,null);
 //        shelter.setBounds(0,0, this.getWidth(), this.getHeight());
 //        shelter.draw(this.canvas);
+        x = x -30;
+        y = y -20;
         damage.setBounds((int)x,(int)y, 70 + (int)x, 70 + (int)y);
         damage.draw(this.canvas);
         this.setBitmap(this.bitmap);
@@ -141,7 +153,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
 //            this.hitBox=new int[this.getHeight()*this.getWidth()];
 //        }
         this.bitmap.getPixels(this.hitBox,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
-//        for (int index=0;index<10316;index++){
+        normalizeHitbox();
+        //        for (int index=0;index<10316;index++){
 //            pixels[index]=0;
 //        }
 //        this.bitmap.setPixels(pixels,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
@@ -172,6 +185,10 @@ class BaseShelter extends AnimatedObject<ImageView> {
      */
     private Point hitDetection(PointF position,Size size){
         Log.d("parentposition",position.toString());
+        int width=this.getWidth();
+        int height=this.getHeight();
+        Log.d("height", String.valueOf(height));
+        Log.d("width", String.valueOf(width));
         int minX= (int) Math.floor(position.x);
         int maxX= (int) Math.ceil(position.x+size.getWidth());
         int minY= (int) Math.floor(position.y);
@@ -180,13 +197,17 @@ class BaseShelter extends AnimatedObject<ImageView> {
         for (int x=minX;x<=maxX;x++){
             int y= (int) ((float)(x-minX)*slope+minY);
             int realCoordinate=this.getWidth()*(y)+x;
+            
 
-            if (realCoordinate>=0&&realCoordinate<hitBox.length&& this.hitBox[realCoordinate]>670000000){
+            if (x>=0&&y>=0&&x<width&&y<height&&realCoordinate>=0&&realCoordinate<hitBox.length&& this.hitBox[realCoordinate] == Color.argb(255, 255, 0, 0)){
                 int pixel=this.hitBox[realCoordinate];
                 int redValue = Color.red(pixel);
                 int blueValue = Color.blue(pixel);
                 int greenValue = Color.green(pixel);
+                int alphaValue = Color.alpha(pixel);
+                Log.d("ValueARGB", String.valueOf(Color.argb(255,0,0,0)));
                 Log.d("Value", String.valueOf(pixel));
+                Log.d("AlphaValue", String.valueOf(alphaValue));
                 Log.d("RedValue", String.valueOf(redValue));
                 Log.d("BlueValue",String.valueOf(blueValue));
                 Log.d("GreenValue", String.valueOf(greenValue));
