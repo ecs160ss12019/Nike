@@ -111,7 +111,6 @@ class Missile extends AnimatedObject <ImageView>  {
                     /*
                         Missile is moving and may hit an object
                      */
-                    Log.d("STRIKE","SDF");
                     Actions newActions=new Actions();
                     Set<Integer> newKeys=new ArraySet<>();
                     newKeys.add(SpaceGame.STRIKE);
@@ -160,6 +159,7 @@ class Missile extends AnimatedObject <ImageView>  {
             that.setY(((Missile) that).startY+fraction*lengthY);
             that.setX(((Missile) that).startX);
             that.getSpaceGame().invaderGroup.handle(actions,newKeys);
+            that.getSpaceGame().baseShelterGroup.handle(actions,newKeys);
             if(fraction==1.0){
                 try {
                     ((Missile) that).recycle();
