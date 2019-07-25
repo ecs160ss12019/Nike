@@ -30,7 +30,6 @@ class LaserBase extends AnimatedObject <ImageView>{
     private float delta= 10f;
     private boolean direction;
 
-
     LaserBase(  ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler);
 
@@ -66,8 +65,6 @@ class LaserBase extends AnimatedObject <ImageView>{
             this.getAnimator().setInterpolator(null);
             this.getAnimator().addUpdateListener(animatorListenerConfigure());
         }
-
-
         for (Integer key: keys) {
             Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
 //            SimpleMatrix a=new SimpleMatrix(new double[2][3]);
@@ -144,6 +141,8 @@ class LaserBase extends AnimatedObject <ImageView>{
             }
         };
     }
+
+
 
     public float getDelta() {
         return delta;

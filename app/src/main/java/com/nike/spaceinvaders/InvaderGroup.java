@@ -211,10 +211,10 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
             public void onAnimationUpdate(ValueAnimator animation) {
                 //Log.d("in onAnimationUpdate","InvaderGroup");
                 Actions regularAction = new Actions();
-                actions.put(SpaceGame.INVADERS_ATTACK,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
+                regularAction.put(SpaceGame.INVADERS_ATTACK,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
                 Set<Integer> newKeys=new ArraySet<>();
                 newKeys.add(SpaceGame.INVADERS_ATTACK);
-                traverseInvaders(actions,newKeys);
+                traverseInvaders(regularAction,newKeys);
                 if (initialCoordinates==null){
                     initialCoordinates=new PointF(that.getAbsoluteX(),that.getAbsoluteY());
                 }
