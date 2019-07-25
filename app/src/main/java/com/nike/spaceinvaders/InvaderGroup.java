@@ -107,7 +107,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 case SpaceGame.STRIKE:
                     Set<Integer> x=new ArraySet<>();
                     x.add(SpaceGame.STRIKE);
-                    strikeInvaders(actions,x);
+                    traverseInvaders(actions,x);
                     break;
                 case SpaceGame.HIT:
                     Invader invader= (Invader) actions.get(SpaceGame.HIT).first;
@@ -129,7 +129,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         return detection;
     }
 
-    private void strikeInvaders(Actions actions, Set<Integer> keys){
+    private void traverseInvaders(Actions actions, Set<Integer> keys){
 
         for (Invader invader:invaders){
             if (!this.detection){
@@ -139,6 +139,9 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         }
         this.detection=true;
     }
+
+
+
 
     @Override
     public int getWidth() {
@@ -196,6 +199,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         Actions actions=new Actions();
         actions.put(SpaceGame.STRIKE,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
         return new ValueAnimator.AnimatorUpdateListener() {
+
             private int deltaDeltaX;
             private int deltaX;
             private int width;
@@ -205,6 +209,12 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
             private boolean speedShift=false;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+                //Log.d("in onAnimationUpdate","InvaderGroup");
+                Actions regularAction = new Actions();
+                actions.put(SpaceGame.INVADERS_ATTACK,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
+                Set<Integer> newKeys=new ArraySet<>();
+                newKeys.add(SpaceGame.INVADERS_ATTACK);
+                traverseInvaders(actions,newKeys);
                 if (initialCoordinates==null){
                     initialCoordinates=new PointF(that.getAbsoluteX(),that.getAbsoluteY());
                 }

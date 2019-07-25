@@ -99,7 +99,11 @@ class LaserBase extends AnimatedObject <ImageView>{
                     actions.put(SpaceGame.FIRE,new Pair<>(this,values));
                     Set<Integer> newKeys=new ArraySet<>();
                     newKeys.add(SpaceGame.FIRE);
-                    missile.handle(actions,newKeys);
+                    if(missile!=null){
+                        Log.d("inLaserBase FIRE","LaserBase is shooting");
+                        missile.handle(actions,newKeys);
+                    }
+
                     break;
                 case SpaceGame.MOVE_STOP:
                     this.getAnimator().pause();
