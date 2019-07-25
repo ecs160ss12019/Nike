@@ -106,8 +106,8 @@ Weili Yin,    CharlesYWL
 
 ## Screenshot
 
-[!A](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2A.png)
+![A](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2A.png)
 
-[!B](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2B.png)
+![B](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2B.png)
 
-[!C](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2C.png)
+![C](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2C.png)
