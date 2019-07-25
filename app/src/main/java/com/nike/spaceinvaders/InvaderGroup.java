@@ -117,6 +117,12 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     this.hitStatus.get(index%this.numCol).second-=1;
                     this.setDetection(false);
                     break;
+
+                    //added
+                case SpaceGame.FIRE:
+                    int aliveInvaderID = getAliveInvaderID();
+                    if (aliveInvaderID != -1)
+                        invaders.get(aliveInvaderID).shootMissile(actions);
             }
         }
     }
@@ -138,6 +144,19 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
             invader.handle(actions,keys);
         }
         this.detection=true;
+    }
+
+
+    public int getAliveInvaderID()
+    {
+        for(Invader invader: invaders)
+        {
+            if(invader.alive)
+            {
+                return invader.getIndex();
+            }
+        }
+        return -1;
     }
 
 

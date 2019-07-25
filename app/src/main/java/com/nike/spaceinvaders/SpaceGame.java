@@ -140,6 +140,8 @@ class SpaceGame  implements StatusManager{
                 }
                 actions.put(motion, null);
                 this.laserBase.handle(actions);
+                if(motion == SpaceGame.FIRE)
+                    this.invaderGroup.handle(actions);
             break;
             case MotionEvent.ACTION_UP:
                 actions.put(SpaceGame.MOVE_STOP,null);

@@ -20,6 +20,7 @@ import android.os.Handler;
 
 
 public class Invader extends AnimatedObject <ImageView> {
+    public boolean alive = true;
     private boolean status=true;
     private Missile missile;
     private int[][] hitbox;
@@ -36,6 +37,7 @@ public class Invader extends AnimatedObject <ImageView> {
     }
 
     private void kill(Actions actions,AnimatedObject missile){
+        alive = false;
         this.status=false;
         this.setVisibility(View.INVISIBLE);
         Set<Integer> keys=new ArraySet<>();
@@ -121,10 +123,11 @@ public class Invader extends AnimatedObject <ImageView> {
         SparseArray<Float> values=new SparseArray<>();
         values.put(SpaceGame.X_COORDINATE,(this.getWidth()-25)/2+this.getAbsoluteX());
         values.put(SpaceGame.Y_COORDINATE,(this.getAbsoluteY()));
-        values.put(SpaceGame.MOVE_DIRECTION,1f);
-        actions.put(SpaceGame.INVADERS_FIRE,new Pair<>(this,values));
+        // missile moving down
+        values.put(SpaceGame.MOVE_DIRECTION,0f);
+        actions.put(SpaceGame.FIRE,new Pair<>(this,values));
         Set<Integer> newKeys=new ArraySet<>();
-        newKeys.add(SpaceGame.INVADERS_FIRE);
+        newKeys.add(SpaceGame.FIRE);
         if(missile!=null){
             missile.handle(actions,newKeys);
         }

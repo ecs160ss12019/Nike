@@ -105,7 +105,7 @@ class Missile extends AnimatedObject <ImageView>  {
                     this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)*1000));
                     this.getAnimator().start();
                     break;
-
+/*
                 case SpaceGame.INVADERS_FIRE:
                     //Log.d("in Missile's handle -> Invaders_fire","a missile is handling invader's shoot request");
                     // get the starting position of missile
@@ -126,9 +126,10 @@ class Missile extends AnimatedObject <ImageView>  {
                         this.setAnimator(new ValueAnimator());
                     }
 
+
                     this.getAnimator().setDuration(((long)(Math.abs(endY1 - startY) / speed)*1000));
                     this.getAnimator().start();
-                    break;
+                    break;*/
 
                 case SpaceGame.STRIKE:
                     /*
@@ -181,7 +182,8 @@ class Missile extends AnimatedObject <ImageView>  {
             int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
             that.setY(((Missile) that).startY+fraction*lengthY);
             that.setX(((Missile) that).startX);
-            that.getSpaceGame().invaderGroup.handle(actions,newKeys);
+            if(up)
+                that.getSpaceGame().invaderGroup.handle(actions,newKeys);
             that.getSpaceGame().baseShelterGroup.handle(actions,newKeys);
             if(fraction==1.0){
                 try {
