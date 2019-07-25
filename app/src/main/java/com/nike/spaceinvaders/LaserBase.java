@@ -97,7 +97,7 @@ class LaserBase extends AnimatedObject <ImageView>{
                     Set<Integer> newKeys=new ArraySet<>();
                     newKeys.add(SpaceGame.FIRE);
                     if(missile!=null){
-                        Log.d("inLaserBase FIRE","LaserBase is shooting");
+                        //Log.d("inLaserBase FIRE","LaserBase is shooting");
                         missile.handle(actions,newKeys);
                     }
 

@@ -107,12 +107,14 @@ class Missile extends AnimatedObject <ImageView>  {
                     break;
 
                 case SpaceGame.INVADERS_FIRE:
-                    Log.d("in Missile's handle -> Invaders_fire","a missile is handling invader's shoot request");
+                    //Log.d("in Missile's handle -> Invaders_fire","a missile is handling invader's shoot request");
                     // get the starting position of missile
                     SparseArray<Float> startPts1 = Objects.requireNonNull(actions.get(key)).second;
                     this.startX = startPts1.get(SpaceGame.X_COORDINATE);
                     this.startY = startPts1.get(SpaceGame.Y_COORDINATE);
-                    this.up=startPts1.get(SpaceGame.MOVE_DIRECTION)!=1f;
+                    Log.d("shooting at y position",""+startPts1.get(SpaceGame.Y_COORDINATE));
+                    //this.up=startPts1.get(SpaceGame.MOVE_DIRECTION)==1f;
+                    this.up=false;
                     float endY1 = findEndYPos();
                     // load the missile
 //                    this.setAlpha(1);

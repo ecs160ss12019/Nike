@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 
 import android.os.Handler;
@@ -25,10 +26,13 @@ public class Invader extends AnimatedObject <ImageView> {
     private int abstractionLevel=10;
     private int index;
     private int shootcd=100;
+    private Random rand;
 
     Invader(int index,ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(animator, view, resources, spaceGame, status,mainHandler, processHandler);
         this.index=index;
+        rand = new Random();
+        shootcd = 50+rand.nextInt(1000);
     }
 
     private void kill(Actions actions,AnimatedObject missile){
@@ -93,7 +97,7 @@ public class Invader extends AnimatedObject <ImageView> {
                     shootcd--;
                     //Log.d("current shootcd ",shootcd+"");
                     if(shootcd==0&&this.status){
-                        shootcd=100;
+                        shootcd=50+rand.nextInt(1000);
                         shootMissile(actions);
                     }
 
@@ -111,11 +115,12 @@ public class Invader extends AnimatedObject <ImageView> {
     }
 
     protected void shootMissile(Actions actions){
-        Log.d("in invader shoot missile","a invader should be shooting missile");
+        //Log.d("in invader shoot missile","a invader should be shooting missile");
+        Log.d("the current shooting invader y is ",this.getY()+"");
         AnimatedObject missile=getSpaceGame().missilePool.getMissile();
         SparseArray<Float> values=new SparseArray<>();
-        values.put(SpaceGame.X_COORDINATE,(this.getWidth()-25)/2+this.getX());
-        values.put(SpaceGame.Y_COORDINATE,(this.getY()));
+        values.put(SpaceGame.X_COORDINATE,(this.getWidth()-25)/2+this.getAbsoluteX());
+        values.put(SpaceGame.Y_COORDINATE,(this.getAbsoluteY()));
         values.put(SpaceGame.MOVE_DIRECTION,1f);
         actions.put(SpaceGame.INVADERS_FIRE,new Pair<>(this,values));
         Set<Integer> newKeys=new ArraySet<>();

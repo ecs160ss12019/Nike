@@ -215,6 +215,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 Set<Integer> newKeys=new ArraySet<>();
                 newKeys.add(SpaceGame.INVADERS_ATTACK);
                 traverseInvaders(regularAction,newKeys);
+
                 if (initialCoordinates==null){
                     initialCoordinates=new PointF(that.getAbsoluteX(),that.getAbsoluteY());
                 }
@@ -258,14 +259,17 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     tempWidth=width+(int) (deltaWidth*((fractionX-variationStart)/(1-variationStart)));
                 }
                 int lengthX=size.x-(tempWidth);
+
                 if(status%2==0){
                     that.setXRaw(-tempDeltaX+lengthX*fractionX);
                 }else if (fraction!=1.0){
                     that.setXRaw(-tempDeltaX+lengthX*(1-fractionX));
                 }
+
                 that.setYRaw(that.initialCoordinates.y+lengthY*fraction);
 
                 that.getSpaceGame().laserBase.handle(actions);
+
 
             }
         };
