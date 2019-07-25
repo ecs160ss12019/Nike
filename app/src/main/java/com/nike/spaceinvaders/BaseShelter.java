@@ -33,6 +33,7 @@ import java.util.Set;
  */
 class BaseShelter extends AnimatedObject<ImageView> {
     int[] hitBox;
+    int[] oldHitBox;
     // number of cols and rows of hitBoxes
     private int numRow, numCol;
     // Each hit box is 10 by 10 in pixels
@@ -56,22 +57,37 @@ class BaseShelter extends AnimatedObject<ImageView> {
         this.bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), conf); // this creates a MUTABLE bitmap
 
         this.canvas=new Canvas(this.bitmap);
-        this.hitBox=new int[this.getHeight()*this.getWidth()];
+        this.oldHitBox=new int[this.getHeight()*this.getWidth()];
         Drawable shelter=this.getDrawable();
         shelter.setBounds(shelter.copyBounds());
         shelter.setBounds(0,0, this.getWidth(), this.getHeight());
         shelter.draw(this.canvas);
-        this.bitmap.getPixels(this.hitBox,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
-        normalizeHitbox();
+        this.bitmap.getPixels(this.oldHitBox,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
+        removePaddingHitBox();
+        //normalizeHitbox();
     }
 
-    private void normalizeHitbox(){
-        for(int i=0;i<this.hitBox.length;i++){
-            if (this.hitBox[i]==Color.argb(0,0,0,0)||this.hitBox[i]==Color.argb(255,0,0,0)){
-                this.hitBox[i]=1;
-            }
+//    private void normalizeHitbox(){
+//        for(int i=0;i<this.hitBox.length;i++){
+//            if (this.hitBox[i]==Color.argb(0,0,0,0)||this.hitBox[i]==Color.argb(255,0,0,0)){
+//                this.hitBox[i]=1;
+//            }
+//        }
+//    }
+
+
+    private void removePaddingHitBox()
+    {
+        int newHeight = bitmap.getHeight() - 20;
+        int newWidth = bitmap.getWidth();
+        hitBox = new int[newHeight * newWidth];
+        for(int i = 0; i < newHeight * newWidth; i++)
+        {
+            hitBox[i] = oldHitBox[i];
         }
+
     }
+
 
 
 
@@ -133,8 +149,9 @@ class BaseShelter extends AnimatedObject<ImageView> {
         damage.setBounds((int)x,(int)y, 70 + (int)x, 70 + (int)y);
         damage.draw(this.canvas);
         this.setBitmap(this.bitmap);
-        this.bitmap.getPixels(this.hitBox,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
-        normalizeHitbox();
+        this.bitmap.getPixels(this.oldHitBox,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
+        removePaddingHitBox();
+       // normalizeHitbox();
         //        for (int index=0;index<10316;index++){
 //            pixels[index]=0;
 //        }
@@ -180,8 +197,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
 
             if (x >= 0 && y >= 0 && x < width && y < height && realCoordinate >= 0
-                    && realCoordinate<hitBox.length && this.hitBox[realCoordinate] ==
-                    Color.argb(255, 255, 0, 0)){
+                    && realCoordinate<hitBox.length && this.hitBox[realCoordinate] !=
+                    Color.argb(255, 0, 0, 0)){
                 return new Point(x,y);
             }
         }
