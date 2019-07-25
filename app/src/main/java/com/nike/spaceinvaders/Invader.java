@@ -111,7 +111,7 @@ public class Invader extends AnimatedObject <ImageView> {
     }
 
     protected void shootMissile(Actions actions){
-        //Log.d("in invader shoot missile","a invader should be shooting missile");
+        Log.d("in invader shoot missile","a invader should be shooting missile");
         AnimatedObject missile=getSpaceGame().missilePool.getMissile();
         SparseArray<Float> values=new SparseArray<>();
         values.put(SpaceGame.X_COORDINATE,(this.getWidth()-25)/2+this.getX());
