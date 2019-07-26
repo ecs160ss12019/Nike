@@ -44,10 +44,12 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     private Canvas canvas;
 
-    BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
+    private int index;
+
+    BaseShelter(int index,ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(null, view, resources, spaceGame,status, mainHandler, processHandler);
-
+        this.index=index;
         // initialize hitBox
 
         numRow = this.getHeight() / boxSize;
@@ -141,7 +143,6 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
 
     private void drawDamage(float x,float y){
-
         Resources resources= (Resources) this.getResources().get(SpaceGame.RESOURCES);
         assert resources != null;
         Drawable damage=resources.getDrawable(R.drawable.explode,null);
@@ -185,26 +186,33 @@ class BaseShelter extends AnimatedObject<ImageView> {
     Return the hitting point location if it hits
     Otherwise return null
      */
-    private Point hitDetection(PointF position,Size size){
+    private Point hitDetection(PointF position,Size size) {
+        int width = this.getWidth();
+        int height = this.getHeight();
+        int minX = (int) Math.floor(position.x);
+        int maxX = (int) Math.ceil(position.x + size.getWidth());
+        int minY = (int) Math.floor(position.y);
+        int maxY = (int) Math.ceil(position.y + size.getHeight());
+        float slope = (float) (maxY - minY) / (float) (maxX - minX);
 
-        int width=this.getWidth();
-        int height=this.getHeight();
-        int minX= (int) Math.floor(position.x);
-        int maxX= (int) Math.ceil(position.x+size.getWidth());
-        int minY= (int) Math.floor(position.y);
-        int maxY= (int) Math.ceil(position.y+size.getHeight());
-        float slope=(float)(maxY-minY)/(float) (maxX-minX);
-
-        for (int x=minX;x<=maxX;x++){
-            int y= (int) ((float)(x-minX)*slope+minY);
-            int realCoordinate=this.getWidth()*(y)+x;
+        for (int x = minX; x <= maxX; x++) {
+            int y = (int) ((float) (x - minX) * slope + minY);
+            int realCoordinate = this.getWidth() * (y) + x;
 
 
             if (x >= 0 && y >= 0 && x < width && y < height && realCoordinate >= 0
-                    && realCoordinate<hitBox.length && this.hitBox[realCoordinate] !=
-                    Color.argb(255, 0, 0, 0)){
-                return new Point(x,y);
+                    && realCoordinate < hitBox.length && this.hitBox[realCoordinate] !=
+                    Color.argb(255, 0, 0, 0)) {
+
+                if (x >= 0 && y >= 0 && x < width && y < height && realCoordinate >= 0 && realCoordinate < hitBox.length && this.hitBox[realCoordinate] > 400000000) {
+                    int pixel = this.hitBox[realCoordinate];
+                    int redValue = Color.red(pixel);
+                    int blueValue = Color.blue(pixel);
+                    int greenValue = Color.green(pixel);
+                    return new Point(x, y);
+                }
             }
+            return null;
         }
         return null;
     }
