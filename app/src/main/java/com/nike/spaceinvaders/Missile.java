@@ -87,64 +87,60 @@ class Missile extends AnimatedObject <ImageView>  {
      * @param actions The actions to be handled by Missile:
      *                "#MISSILE_GONE" indicates the missile was collided with other object, and gone.
      *                "#FIRE" indicates the missile needs to move and strike objects.
-     * @param keys The keys that we need to iterate through.
+     * @param key
      */
     @Override
-    protected void handle(Actions actions, Set<Integer> keys) {
-        for(Integer key:keys){
-            switch(key){
-                case SpaceGame.FIRE:
-                    /*
-                        Missile has just been fired
-                     */
+    protected void handle(Actions actions, Integer key) {
+        switch(key){
+            case SpaceGame.FIRE:
+                /*
+                       Missile has just been fired
+                    */
 
-                    // get the starting position of missile
-                    SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
-                    this.startX = startPts.get(SpaceGame.X_COORDINATE);
-                    this.startY = startPts.get(SpaceGame.Y_COORDINATE);
-                    this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
-                    float endY = findEndYPos();
+                // get the starting position of missile
+                SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
+                this.startX = startPts.get(SpaceGame.X_COORDINATE);
+                this.startY = startPts.get(SpaceGame.Y_COORDINATE);
+                this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
+                float endY = findEndYPos();
 
-                    // load the missile
-                    this.setVisibility(View.VISIBLE);
+                // load the missile
+                this.setVisibility(View.VISIBLE);
 
-                    // do we really need to check null?
-                    if (this.getAnimator() == null){
-                        this.setAnimator(new ValueAnimator());
-                    }
+                // do we really need to check null?
+                if (this.getAnimator() == null){
+                    this.setAnimator(new ValueAnimator());
+                }
 
-                    this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)*1000));
-                    this.getAnimator().start();
-                    break;
+                this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)*1000));
+                this.getAnimator().start();
+                break;
+                case SpaceGame.STRIKE:/*
+                       One Missile strikes another missile
+                    */
 
-                case SpaceGame.STRIKE:
-                    /*
-                        One Missile strikes another missile
-                     */
+            case SpaceGame.MISSILE_GONE:
+                /*
+                       Missile hit an object and should disappear;
+                       Called by whom missile collides with
+                    */
 
-                case SpaceGame.MISSILE_GONE:
-                    /*
-                        Missile hit an object and should disappear;
-                        Called by whom missile collides with
-                     */
-
-                    try {
-                        recycle();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-            }
-
-
+                try {
+                    recycle();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
         }
+
+
+
     }
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         final AnimatedObject that=this;
         final Actions actions=new Actions();
-        final Set<Integer> newKeys=new ArraySet<>();
-        newKeys.add(SpaceGame.STRIKE);
+        ;
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
         return animation -> {
             float fraction=animation.getAnimatedFraction();
@@ -154,10 +150,10 @@ class Missile extends AnimatedObject <ImageView>  {
             that.setY(((Missile) that).startY+fraction*lengthY);
             that.setX(((Missile) that).startX);
             if(up)
-                that.getSpaceGame().invaderGroup.handle(actions,newKeys);
+                that.getSpaceGame().invaderGroup.handle(actions,SpaceGame.STRIKE);
             else
-                that.getSpaceGame().laserBase.handle(actions, newKeys);
-            that.getSpaceGame().baseShelterGroup.handle(actions,newKeys);
+                that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
+            that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
             if(fraction==1.0){
                 try {
                     ((Missile) that).recycle();

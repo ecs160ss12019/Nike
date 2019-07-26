@@ -96,8 +96,10 @@ class BaseShelter extends AnimatedObject<ImageView> {
     Only need to handle the strike case
      */
     @Override
-    protected void handle(Actions actions, Set<Integer> keys) {
+    protected void handle(Actions actions, Integer key) {
 
+        if(key != SpaceGame.STRIKE)
+            return;
     //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
         Missile missile = (Missile)Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
 //        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
@@ -128,9 +130,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
                 missileGone.put(SpaceGame.MISSILE_GONE, new
                         Pair<AnimatedObject, SparseArray<Float>>(this, null));
 
-                Set<Integer> newKeys=new ArraySet<>();
-                newKeys.add(SpaceGame.MISSILE_GONE);
-                missile.handle(missileGone, newKeys);
+                missile.handle(missileGone, SpaceGame.MISSILE_GONE);
             }
 
  //       }

@@ -25,12 +25,12 @@ import org.ejml.simple.SimpleMatrix;
 /**
  * Developer Henry Yi
  */
-class LaserBase extends AnimatedObject <ImageView>{
+class LaserBase extends AnimatedObject<ImageView> {
     private int velocity;
-    private float delta= 10f;
+    private float delta = 10f;
     private boolean direction;
 
-    LaserBase(  ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    LaserBase(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler);
 
     }
@@ -55,70 +55,57 @@ class LaserBase extends AnimatedObject <ImageView>{
      */
 
     @Override
-    protected void handle(Actions actions, Set<Integer> keys) {
-        if (this.getAnimator()==null){
+    protected void handle(Actions actions, Integer key) {
+        if (this.getAnimator() == null) {
             this.setAnimator(new ValueAnimator());
-            this.getAnimator().setIntValues(1,100);
+            this.getAnimator().setIntValues(1, 100);
             this.getAnimator().setDuration(200);
             this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
             this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
             this.getAnimator().setInterpolator(null);
             this.getAnimator().addUpdateListener(animatorListenerConfigure());
         }
-        for (Integer key: keys) {
-            Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
-//            SimpleMatrix a=new SimpleMatrix(new double[2][3]);
-//            a.getDDRM();
-//            Equation e=new Equation();
-//            e.process();
 
-//            e.alias();
-            switch (key) {
-                case SpaceGame.MOVE_LEFT:
-                    this.direction=false;
-                    this.getAnimator().start();
-                    break;
-                case SpaceGame.MOVE_RIGHT:
-                    this.direction=true;
-                    this.getAnimator().start();
-                    break;
-                case SpaceGame.FIRE:
-//                    getStatus().put(SpaceGame.NUM_LIVES,new Pair<Float, Float>(4f,1f));
-//                    this.getSpaceGame().hud.updateStatus(getStatus());
-//                    Actions actions1=new Actions();
-//                    actions1.put(SpaceGame.TEST,null);
-//                    this.getSpaceGame().baseShelterGroup.handle(actions1);
-                    AnimatedObject missile=getSpaceGame().missilePool.getMissile();
-                    SparseArray<Float> values=new SparseArray<>();
-                    values.put(SpaceGame.X_COORDINATE,(this.getWidth()-25)/2+this.getX());
-                    values.put(SpaceGame.Y_COORDINATE,(this.getY()));
-                    values.put(SpaceGame.MOVE_DIRECTION,1f);
-                    actions.put(SpaceGame.FIRE,new Pair<>(this,values));
-                    Set<Integer> newKeys=new ArraySet<>();
-                    newKeys.add(SpaceGame.FIRE);
-                    if(missile!=null){
-                        //Log.d("inLaserBase FIRE","LaserBase is shooting");
-                        missile.handle(actions,newKeys);
-                    }
+        Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
 
-                    break;
-                case SpaceGame.MOVE_STOP:
-                    this.getAnimator().pause();
-                    break;
+        switch (key) {
+            case SpaceGame.MOVE_LEFT:
+                this.direction = false;
+                this.getAnimator().start();
+                break;
+            case SpaceGame.MOVE_RIGHT:
+                this.direction = true;
+                this.getAnimator().start();
+                break;
+            case SpaceGame.FIRE:
+                AnimatedObject missile = getSpaceGame().missilePool.getMissile();
+                SparseArray<Float> values = new SparseArray<>();
+                values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getX());
+                values.put(SpaceGame.Y_COORDINATE, (this.getY()));
+                values.put(SpaceGame.MOVE_DIRECTION, 1f);
+                actions.put(SpaceGame.FIRE, new Pair<>(this, values));
+                if (missile != null) {
+                    //Log.d("inLaserBase FIRE","LaserBase is shooting");
+                    missile.handle(actions, SpaceGame.FIRE);
+                }
 
-                case SpaceGame.STRIKE:
-                        assert value != null;
-                        if (hitDetection(actions,value.first))
-                        {
-                            kill(actions,value.first);
-                        }
+                break;
+            case SpaceGame.MOVE_STOP:
+                this.getAnimator().pause();
+                break;
 
-            }
+            case SpaceGame.STRIKE:
+                assert value != null;
+                if (hitDetection(actions, value.first)) {
+                    kill(actions, value.first);
+                }
+
         }
+
     }
 
 
-    private boolean hitDetection(Actions actions,AnimatedObject missile){
+    private boolean hitDetection(Actions actions, AnimatedObject missile) {
         // get missile's location
         float x = missile.getX();
         float y = missile.getY();
@@ -130,73 +117,70 @@ class LaserBase extends AnimatedObject <ImageView>{
         top = this.getAbsoluteY();
         bottom = top + this.getHeight();
         right = left + this.getWidth() - 50;
-        if ((x>=left&&x<=right&&y<=bottom&&y>=top)||((x+missileWidth)>=left&&(x+missileWidth)<=right&&y<=bottom&&y>=top)){
+        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + missileWidth) >= left && (x + missileWidth) <= right && y <= bottom && y >= top)) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
 
-    private void kill(Actions actions,AnimatedObject missile){
+    private void kill(Actions actions, AnimatedObject missile) {
         this.setVisibility(View.INVISIBLE);
-        Set<Integer> keys=new ArraySet<>();
-        keys.add(SpaceGame.MISSILE_GONE);
-        actions.put(SpaceGame.MISSILE_GONE,null);
-        missile.handle(actions,keys);
+        actions.put(SpaceGame.MISSILE_GONE, null);
+        missile.handle(actions, SpaceGame.MISSILE_GONE);
         notifySpaceGame();
     }
 
     /*
     Notify the spaceGame to substitute a new laserBase if possible
     */
-    public void notifySpaceGame(){
-        SpaceGame.Status status=getStatus();
-        Pair<Float,Float> value=status.get(SpaceGame.NUM_LIVES);
+    public void notifySpaceGame() {
+        SpaceGame.Status status = getStatus();
+        Pair<Float, Float> value = status.get(SpaceGame.NUM_LIVES);
         assert value != null;
 
         // Now laserBase loses one life
         Float numLives = value.first - 1;
 
-        status.put(SpaceGame.NUM_LIVES,new Pair<>(numLives, null));
+        status.put(SpaceGame.NUM_LIVES, new Pair<>(numLives, null));
         getSpaceGame().updateStatus(status);
     }
 
 
-
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
-        final AnimatedObject that=this;
+        final AnimatedObject that = this;
         return new ValueAnimator.AnimatorUpdateListener() {
             private int times;
+
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                float fraction=animation.getAnimatedFraction();
-                float subFraction=0.005f;
-                float remaining=fraction%subFraction;
-                int times= (int) (fraction/subFraction);
-                if (remaining>=0.0&&this.times==times){
+                float fraction = animation.getAnimatedFraction();
+                float subFraction = 0.005f;
+                float remaining = fraction % subFraction;
+                int times = (int) (fraction / subFraction);
+                if (remaining >= 0.0 && this.times == times) {
                     return;
-                }else if (remaining>=0.0){
-                    this.times=times;
+                } else if (remaining >= 0.0) {
+                    this.times = times;
                 }
-                Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
+                Point size = (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
-                if ((that.getX()<20&&!direction)||(that.getX()>size.x-that.getWidth()-20&&direction)){
+                if ((that.getX() < 20 && !direction) || (that.getX() > size.x - that.getWidth() - 20 && direction)) {
                     return;
                 }
-                if (direction){
-                    that.setX(that.getX()+((LaserBase) that).getDelta());
-                }else {
-                    that.setX(that.getX()-((LaserBase) that).getDelta());
+                if (direction) {
+                    that.setX(that.getX() + ((LaserBase) that).getDelta());
+                } else {
+                    that.setX(that.getX() - ((LaserBase) that).getDelta());
                 }
             }
         };
     }
 
 
-    public void spawn()
-    {
+    public void spawn() {
         this.setVisibility(View.VISIBLE);
         return;
     }

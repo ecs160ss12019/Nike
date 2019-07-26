@@ -163,10 +163,11 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         if (actions!=null){
             keys=actions.keySet();
         }
-        handle(actions,keys);
+        for (Integer key: keys)
+            handle(actions,key);
     }
 
-    abstract protected void handle (Actions actions, Set<Integer> keys);
+    abstract protected void handle (Actions actions, Integer key);
 
     /**
      * {@inheritDoc}
