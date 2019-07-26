@@ -39,7 +39,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
 
     @Override
 
-    protected void handle(Actions actions,Set<Integer> keys) {
+    protected void handle(Actions actions,Integer key) {
     }
 
 

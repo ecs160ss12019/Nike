@@ -60,3 +60,34 @@
 | HUD | |
 |---|---|
 |  - Records information of status like Lifes, score, and level  <br> - Update them when variables change |  GameObject <br> SpaceGame <br> LaserBase |
+
+
+## Updates for Sprint 3
+
+### Removed:
+ShelterBlock
+
+
+### Modified:
+
+| Missile | |
+|---|---|
+|  - Controls the movement and size of missile  <br> - Emitted by invaders and laserbase with specified directions |  BaseShelter <br> Invader <br> LaserBase <br> SpaceGame |
+
+
+### Added:
+
+| MissilePool | |
+|---|---|
+|  - Providing a pool of missiles available to use  <br> - Handle the case where one missile collides with another missile |  Missile <br> SpaceGame |
+
+
+
+| BaseShelterGroup | |
+|---|---|
+|  - Manage a group of baseShelters  <br> - Get the action signal from the outside world and then distribute it to every baseShelter  |  BaseShelter <br> SpaceGame |
+
+
+| Lives | |
+|---|---|
+|  - A member in the HUD class that keeps track of the remaining number of lives  <br> - Manage the animation of live icons appearing on the top right corner of the screen |  HUD <br> SpaceGame |
