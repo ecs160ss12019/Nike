@@ -21,6 +21,6 @@ public class StartMenu extends AppCompatActivity {
         intent.setClass(StartMenu.this, SpaceActivity.class);//Jump from this to SpaceActivity
         this.startActivity(intent);
         //Animation of xml on transition
-        overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
+        overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);//android.anim.fade_in
     }
 }
