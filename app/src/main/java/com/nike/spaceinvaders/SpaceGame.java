@@ -102,6 +102,8 @@ class SpaceGame  implements StatusManager{
 
         status.put(SpaceGame.SCORES,new Pair<>(0f,null));
         //Below Test only
+/*        status.put(SpaceGame.NUM_LIVES,new Pair<>(Float.valueOf(1),null));//TODO:Bug: LIVEMAX Doesnt work
+        updateStatus(status);*/
 
     }
 
