@@ -112,6 +112,7 @@ class SpaceGame  implements StatusManager{
                 case SpaceGame.NUM_LIVES:
                     hud.updateStatus(status);
                     laserBase.setVisibility(View.VISIBLE);
+                    // TODO: pause the game for 3 seconds
                     break;
                 case SpaceGame.SCORES:
                     hud.updateStatus(status);

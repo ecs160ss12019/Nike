@@ -158,7 +158,7 @@ class LaserBase extends AnimatedObject <ImageView>{
         // Now laserBase loses one life
         Float numLives = value.first - 1;
 
-        status.put(SpaceGame.SCORES,new Pair<>(numLives, null));
+        status.put(SpaceGame.NUM_LIVES,new Pair<>(numLives, null));
         getSpaceGame().updateStatus(status);
     }
 
