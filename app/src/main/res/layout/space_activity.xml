@@ -389,7 +389,4 @@
 
     </ImageView>
 
-    <include layout="@layout/start_menu"
-        android:id="@+id/start_menu"
-        android:visibility="invisible" />
 </android.support.constraint.ConstraintLayout>

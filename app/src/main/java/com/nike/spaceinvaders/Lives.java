@@ -23,6 +23,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         for (int index = 0; index < this.getChildCount(); index++) {
             this.livesViews[index] = this.getChildAt(index);
         }
+        updateLives();
     }
 
     /**
