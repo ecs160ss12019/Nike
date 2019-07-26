@@ -87,7 +87,7 @@ class Missile extends AnimatedObject <ImageView>  {
                     SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
                     this.startX = startPts.get(SpaceGame.X_COORDINATE);
                     this.startY = startPts.get(SpaceGame.Y_COORDINATE);
-                    this.up=startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
+                    this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
                     float endY = findEndYPos();
 
                     // load the missile
@@ -106,20 +106,6 @@ class Missile extends AnimatedObject <ImageView>  {
                     /*
                         One Missile strikes another missile
                      */
-                    Actions newActions=new Actions();
-                    Set<Integer> newKeys=new ArraySet<>();
-                    newKeys.add(SpaceGame.STRIKE);
-                    SparseArray<Float> coordinates=new SparseArray<>(2);
-                    // Add the missile's absolute coordinates
-                    coordinates.put(SpaceGame.X_COORDINATE,getAbsoluteX());
-                    coordinates.put(SpaceGame.Y_COORDINATE,getAbsoluteY());
-                    newActions.put(SpaceGame.STRIKE,
-                            new Pair<AnimatedObject, SparseArray<Float>>(this,coordinates));
-                    getSpaceGame().baseShelterGroup.handle(newActions,newKeys);
-                    getSpaceGame().laserBase.handle(newActions,newKeys);
-                    getSpaceGame().invaderGroup.handle(newActions,newKeys);
-                    break;
-
 
                 case SpaceGame.MISSILE_GONE:
                     /*

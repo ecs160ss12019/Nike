@@ -80,7 +80,10 @@ class SpaceGame  implements StatusManager{
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
         this.hud=hud;
-        this.missilePool=new MissilePool(layout,resources,this,status,20,mainHandler,processThread);
+        this.missilePool = new MissilePool().setLayout(layout)
+                .setResources(resources).setMainHandler(mainHandler)
+                .setProcessHandler(processThread).setStatus(status).setSpaceGame(this)
+                .setCapacity(20);  // setCapacity needs to be called at the very last
         this.laserBase.setSpaceGame(this);
         this.baseShelterGroup.setSpaceGame(this);
         this.invaderGroup.setSpaceGame(this);

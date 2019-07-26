@@ -25,19 +25,53 @@ public class MissilePool {
     private int checkCount=0;
     private boolean availability=false;
 
-    MissilePool(ViewGroup layout, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, int numberOfMissile, Handler mainHandler, Handler processHandler){
-        this.layout=layout;
-        this.mainHandler=mainHandler;
-        this.processHandler=processHandler;
-        this.resources=resources;
-        this.spaceGame=spaceGame;
-        this.status=status;
-        configureCapacity(numberOfMissile);
+    MissilePool(){
     }
 
-    /*
+    public MissilePool setLayout(ViewGroup layout)
+    {
+        this.layout = layout;
+        return this;
+    }
 
-     */
+    public MissilePool setMainHandler(Handler mainHandler)
+    {
+        this.mainHandler = mainHandler;
+        return this;
+    }
+
+    public MissilePool setProcessHandler(Handler processHandler)
+    {
+        this.processHandler = processHandler;
+        return this;
+    }
+
+    public MissilePool setResources(SpaceGame.Resources resources)
+    {
+        this.resources = resources;
+        return this;
+    }
+
+
+    public MissilePool setSpaceGame(SpaceGame spaceGame)
+    {
+        this.spaceGame = spaceGame;
+        return this;
+    }
+
+
+    public MissilePool setStatus(SpaceGame.Status status)
+    {
+        this.status = status;
+        return this;
+    }
+
+    public MissilePool setCapacity(int numberOfMissile)
+    {
+        configureCapacity(numberOfMissile);
+        return this;
+    }
+
     public void configureCapacity(int numberOfMissile){
         for (int k=0;k<2;k++){
             final SparseArray<Missile> missileArray;
