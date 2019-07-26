@@ -15,6 +15,6 @@ public class SettingPage extends AppCompatActivity {
     public void back(View view){
         //TODO: should bring back some parameter to Spacegame
         finish();
-        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//slide_right
     }
 }
