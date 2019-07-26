@@ -14,12 +14,13 @@ public class StartMenu extends AppCompatActivity {
         setContentView(R.layout.start_menu);
 
     }
-
+    //invoked once start button has been pressed
     public void startgame(View view) {
         //Toast.makeText(getApplicationContext(),"Test",Toast.LENGTH_LONG).show();
         Intent intent = new Intent();
-        intent.setClass(StartMenu.this, SpaceActivity.class);//从MainActivity页面跳转至LoginActivity页面
+        intent.setClass(StartMenu.this, SpaceActivity.class);//Jump from this to SpaceActivity
         this.startActivity(intent);
+        //Animation of xml on transition
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }
 }
