@@ -97,6 +97,9 @@ class Missile extends AnimatedObject <ImageView>  {
                        Missile has just been fired
                     */
 
+                //Plays sound effect for missile
+                SoundEngine.playMissile();
+
                 // get the starting position of missile
                 SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
                 this.startX = startPts.get(SpaceGame.X_COORDINATE);
