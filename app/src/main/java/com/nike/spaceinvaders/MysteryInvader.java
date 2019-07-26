@@ -17,30 +17,28 @@ import java.util.Random;
 import java.util.Set;
 
 import android.os.Handler;
-import android.widget.Space;
 
 
-public class Invader extends AnimatedObject<ImageView> {
+public class MysteryInvader extends AnimatedObject<ImageView> {
     public boolean alive = true;
     private boolean status = true;
-    private Missile missile;
     private int[][] hitbox;
-    private int abstractionLevel = 10;
     private int index;
-    private int shootcd;
+    private int appearcd;
     private Random rand;
 
-    Invader(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    MysteryInvader(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(animator, view, resources, spaceGame, status, mainHandler, processHandler);
         this.index = index;
         rand = new Random();
-        shootcd = 50 + rand.nextInt(1000);
+        appearcd = 50 + rand.nextInt(1000);
     }
 
     private void kill(Actions actions, AnimatedObject missile) {
         alive = false;
         this.status = false;
         this.setVisibility(View.INVISIBLE);
+        Set<Integer> keys = new ArraySet<>();
         actions.put(SpaceGame.MISSILE_GONE, null);
         actions.put(SpaceGame.HIT, new Pair<>(this, null));
         missile.handle(actions, SpaceGame.MISSILE_GONE);
@@ -55,11 +53,6 @@ public class Invader extends AnimatedObject<ImageView> {
         status.put(SpaceGame.SCORES, new Pair<>(value.first + 10, null));
         getSpaceGame().updateStatus(status);
     }
-
-    public boolean diagnose() {
-        return this.status;
-    }
-
 
     private boolean hitDetection(Actions actions, AnimatedObject missile) {
         if (!status) {
@@ -82,6 +75,7 @@ public class Invader extends AnimatedObject<ImageView> {
 
     @Override
     protected void handle(Actions actions, Integer key) {
+        //Log.d("invader handle","in handle");
 
         Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
 
@@ -105,42 +99,5 @@ public class Invader extends AnimatedObject<ImageView> {
         };
     }
 
-    /*
-    Use random number generator to decide whether an invader
-    will shoot in this frame
-     */
-    public boolean toShoot() {
-        int randNum = rand.nextInt(2000);
 
-        if (randNum == 1) // chance is 1/2000
-        {
-            return true;
-        }
-        return false;
-    }
-
-
-    protected void shootMissile() {
-        Actions actions = new Actions();
-
-        AnimatedObject missile = getSpaceGame().missilePool.getMissile();
-        SparseArray<Float> values = new SparseArray<>();
-        values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getAbsoluteX());
-        values.put(SpaceGame.Y_COORDINATE, (this.getAbsoluteY()));
-        // missile moving down
-        values.put(SpaceGame.MOVE_DIRECTION, 0f);
-        actions.put(SpaceGame.FIRE, new Pair<>(this, values));
-
-        if (missile != null) {
-            missile.handle(actions, SpaceGame.FIRE);
-        }
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
 }

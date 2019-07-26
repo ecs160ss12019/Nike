@@ -18,6 +18,7 @@ import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+//Adding two flags at l46 and l47
 class SpaceGame  implements StatusManager{
     /* Action Flags */
     public static final int GAMESTART=0b00000001;
@@ -41,7 +43,6 @@ class SpaceGame  implements StatusManager{
     public static final int RESURRECTION=0b0100000000;
     public static final int MOVE_STOP=0b010000000000;
     public static final int HIT=0b100000000000;
-
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
@@ -73,12 +74,16 @@ class SpaceGame  implements StatusManager{
 
     private Status status;
 
+
     public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
         this.hud=hud;
-        this.missilePool=new MissilePool(layout,resources,this,status,20,mainHandler,processThread);
+        this.missilePool = new MissilePool().setLayout(layout)
+                .setResources(resources).setMainHandler(mainHandler)
+                .setProcessHandler(processThread).setStatus(status).setSpaceGame(this)
+                .setCapacity(20);  // setCapacity needs to be called at the very last
         this.laserBase.setSpaceGame(this);
         this.baseShelterGroup.setSpaceGame(this);
         this.invaderGroup.setSpaceGame(this);
@@ -109,6 +114,8 @@ class SpaceGame  implements StatusManager{
                     break;
                 case SpaceGame.NUM_LIVES:
                     hud.updateStatus(status);
+                    laserBase.setVisibility(View.VISIBLE);
+                    // TODO: pause the game for 3 seconds
                     break;
                 case SpaceGame.SCORES:
                     hud.updateStatus(status);
@@ -136,10 +143,17 @@ class SpaceGame  implements StatusManager{
                 }
                 actions.put(motion, null);
                 this.laserBase.handle(actions);
-            break;
+                // debug
+                if(motion == SpaceGame.FIRE)
+                {
+
+                }
+                break;
+
             case MotionEvent.ACTION_UP:
                 actions.put(SpaceGame.MOVE_STOP,null);
                 this.laserBase.handle(actions);
+                break;
         }
     }
 

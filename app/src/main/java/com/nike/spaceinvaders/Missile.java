@@ -11,6 +11,7 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.util.ArraySet;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -46,12 +47,27 @@ class Missile extends AnimatedObject <ImageView>  {
     private float startY;
 
 
-    Missile(int key, boolean recyclable, MissilePool pool,ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
-        this.key=key;
-        this.recyclable=recyclable;
-        this.pool=pool;
-    
+    }
+
+
+    public Missile initKey(int key)
+    {
+        this.key = key;
+        return this;
+    }
+
+    public Missile initRecyclable(boolean recyclable)
+    {
+        this.recyclable = recyclable;
+        return this;
+    }
+
+    public Missile initPool(MissilePool pool)
+    {
+        this.pool = pool;
+        return this;
     }
 
 
@@ -71,84 +87,60 @@ class Missile extends AnimatedObject <ImageView>  {
      * @param actions The actions to be handled by Missile:
      *                "#MISSILE_GONE" indicates the missile was collided with other object, and gone.
      *                "#FIRE" indicates the missile needs to move and strike objects.
-     * @param keys The keys that we need to iterate through.
+     * @param key
      */
     @Override
-    protected void handle(Actions actions, Set<Integer> keys) {
-        for(Integer key:keys){
-            switch(key){
-                case SpaceGame.FIRE:
-                    /*
-                        Missile has just been fired
-                     */
+    protected void handle(Actions actions, Integer key) {
+        switch(key){
+            case SpaceGame.FIRE:
+                /*
+                       Missile has just been fired
+                    */
 
-                    // get the starting position of missile
-                    SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
-                    this.startX = startPts.get(SpaceGame.X_COORDINATE);
-                    this.startY = startPts.get(SpaceGame.Y_COORDINATE);
-                    this.up=startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
-                    float endY = findEndYPos();
-                    // load the missile
-//                    this.setAlpha(1);
-                    this.setVisibility(View.VISIBLE);
-                    // set starting x position
+                // get the starting position of missile
+                SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
+                this.startX = startPts.get(SpaceGame.X_COORDINATE);
+                this.startY = startPts.get(SpaceGame.Y_COORDINATE);
+                this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
+                float endY = findEndYPos();
 
+                // load the missile
+                this.setVisibility(View.VISIBLE);
 
-                    // set up trajectory for missile
+                // do we really need to check null?
+                if (this.getAnimator() == null){
+                    this.setAnimator(new ValueAnimator());
+                }
 
-                    // do we really need to check null?
-                    if (this.getAnimator() == null){
-                        this.setAnimator(new ValueAnimator());
-                    }
+                this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)*1000));
+                this.getAnimator().start();
+                break;
+                case SpaceGame.STRIKE:/*
+                       One Missile strikes another missile
+                    */
 
-                    this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)*1000));
-                    this.getAnimator().start();
-                    break;
+            case SpaceGame.MISSILE_GONE:
+                /*
+                       Missile hit an object and should disappear;
+                       Called by whom missile collides with
+                    */
 
-
-                case SpaceGame.STRIKE:
-                    /*
-                        Missile is moving and may hit an object
-                     */
-                    Actions newActions=new Actions();
-                    Set<Integer> newKeys=new ArraySet<>();
-                    newKeys.add(SpaceGame.STRIKE);
-                    SparseArray<Float> coordinates=new SparseArray<>(2);
-                    // Add the missile's absolute coordinates
-                    coordinates.put(SpaceGame.X_COORDINATE,getAbsoluteX());
-                    coordinates.put(SpaceGame.Y_COORDINATE,getAbsoluteY());
-                    newActions.put(SpaceGame.STRIKE,
-                            new Pair<AnimatedObject, SparseArray<Float>>(this,coordinates));
-                    getSpaceGame().baseShelterGroup.handle(newActions,newKeys);
-                    getSpaceGame().laserBase.handle(newActions,newKeys);
-                    getSpaceGame().invaderGroup.handle(newActions,newKeys);
-                    // handle missile collides with each other
-                    break;
-
-
-                case SpaceGame.MISSILE_GONE:
-                    /*
-                        Missile hit an object and should disappear;
-                        Called by whom missile collides with
-                     */
-
-                    try {
-                        recycle();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-            }
-
-
+                try {
+                    recycle();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
         }
+
+
+
     }
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         final AnimatedObject that=this;
         final Actions actions=new Actions();
-        final Set<Integer> newKeys=new ArraySet<>();
-        newKeys.add(SpaceGame.STRIKE);
+        ;
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
         return animation -> {
             float fraction=animation.getAnimatedFraction();
@@ -157,8 +149,11 @@ class Missile extends AnimatedObject <ImageView>  {
             int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
             that.setY(((Missile) that).startY+fraction*lengthY);
             that.setX(((Missile) that).startX);
-            that.getSpaceGame().invaderGroup.handle(actions,newKeys);
-            that.getSpaceGame().baseShelterGroup.handle(actions,newKeys);
+            if(up)
+                that.getSpaceGame().invaderGroup.handle(actions,SpaceGame.STRIKE);
+            else
+                that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
+            that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
             if(fraction==1.0){
                 try {
                     ((Missile) that).recycle();

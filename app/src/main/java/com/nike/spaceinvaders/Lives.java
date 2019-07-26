@@ -15,12 +15,13 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
 
     private int lives;
     private View[] livesViews;
+
     Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives) {
-        super(null, view, resources, spaceGame,status, mainHandler, processHandler);
-        this.lives=lives;
-        this.livesViews=new ImageView[3];
-        for (int index=0;index<this.getChildCount();index++){
-            this.livesViews[index]=  this.getChildAt(index);
+        super(null, view, resources, spaceGame, status, mainHandler, processHandler);
+        this.lives = lives;
+        this.livesViews = new ImageView[3];
+        for (int index = 0; index < this.getChildCount(); index++) {
+            this.livesViews[index] = this.getChildAt(index);
         }
     }
 
@@ -40,37 +41,37 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
      *                "#LIFE_GONE" indicates the one life should be gone and vanished.
      *                "#LIFE_ADD" indicates the one life should added and resurrected.
      *                "#RESURRECTION" indicates the laserLase's lives restored to full mark.
-     * @param keys The keys that we need to iterate through.
+     * @param key
      */
 
     @Override
-    protected void handle(Actions actions, Set<Integer> keys) {
-        for(Integer key:keys){
-            switch(key) {
-                case SpaceGame.LIFE_ADD:
-                    regen(actions);
-                    updateLives();
-                    break;
-                case SpaceGame.LIFE_GONE:
-                    hurt(actions);
-                    updateLives();
-                    break;
-                default:
-                    return;
-            }
+    protected void handle(Actions actions, Integer key) {
+        switch (key) {
+            case SpaceGame.LIFE_ADD:
+                regen(actions);
+                updateLives();
+                break;
+            case SpaceGame.LIFE_GONE:
+                hurt(actions);
+                updateLives();
+                break;
+            default:
+                return;
         }
+
     }
 
-    private void hurt(Actions actions){
-        if (this.lives<1){
+    private void hurt(Actions actions) {
+        if (this.lives < 1) {
             //pass GAMEOVER to Game
             return;
         }
-        this.livesViews[lives-1].setVisibility(View.INVISIBLE);
+        this.livesViews[lives - 1].setVisibility(View.INVISIBLE);
         this.lives--;
     }
-    private void regen(Actions actions){
-        if(lives<3) {
+
+    private void regen(Actions actions) {
+        if (lives < 3) {
             this.lives++;
         }
     }
@@ -79,12 +80,12 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         return lives;
     }
 
-    private void updateLives(){
+    private void updateLives() {
         int livenum = this.lives;
         livesViews[0].setVisibility(View.INVISIBLE);
         livesViews[1].setVisibility(View.INVISIBLE);
         livesViews[2].setVisibility(View.INVISIBLE);
-        for (int i=0;i<livenum;i++){
+        for (int i = 0; i < livenum; i++) {
             livesViews[i].setVisibility(View.VISIBLE);
         }
     }

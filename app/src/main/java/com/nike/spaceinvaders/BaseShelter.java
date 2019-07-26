@@ -61,6 +61,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         Drawable shelter=this.getDrawable();
         shelter.setBounds(shelter.copyBounds());
         shelter.setBounds(0,0, this.getWidth(), this.getHeight());
+       // shelter.setAlpha(255);
         shelter.draw(this.canvas);
         this.bitmap.getPixels(this.oldHitBox,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
         removePaddingHitBox();
@@ -78,7 +79,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     private void removePaddingHitBox()
     {
-        int newHeight = bitmap.getHeight() - 20;
+        int newHeight = bitmap.getHeight() - 30;
         int newWidth = bitmap.getWidth();
         hitBox = new int[newHeight * newWidth];
         for(int i = 0; i < newHeight * newWidth; i++)
@@ -95,8 +96,10 @@ class BaseShelter extends AnimatedObject<ImageView> {
     Only need to handle the strike case
      */
     @Override
-    protected void handle(Actions actions, Set<Integer> keys) {
+    protected void handle(Actions actions, Integer key) {
 
+        if(key != SpaceGame.STRIKE)
+            return;
     //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
         Missile missile = (Missile)Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
 //        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
@@ -127,9 +130,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
                 missileGone.put(SpaceGame.MISSILE_GONE, new
                         Pair<AnimatedObject, SparseArray<Float>>(this, null));
 
-                Set<Integer> newKeys=new ArraySet<>();
-                newKeys.add(SpaceGame.MISSILE_GONE);
-                missile.handle(missileGone, newKeys);
+                missile.handle(missileGone, SpaceGame.MISSILE_GONE);
             }
 
  //       }
@@ -144,9 +145,12 @@ class BaseShelter extends AnimatedObject<ImageView> {
         Resources resources= (Resources) this.getResources().get(SpaceGame.RESOURCES);
         assert resources != null;
         Drawable damage=resources.getDrawable(R.drawable.explode,null);
-        x = x -30;
-        y = y -20;
+        x = x - 30;
+        y = y - 20;
+
+
         damage.setBounds((int)x,(int)y, 70 + (int)x, 70 + (int)y);
+       // damage.setAlpha(255);
         damage.draw(this.canvas);
         this.setBitmap(this.bitmap);
         this.bitmap.getPixels(this.oldHitBox,0,this.getWidth(),0,0,this.getWidth(),this.getHeight());
