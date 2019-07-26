@@ -142,9 +142,7 @@ class LaserBase extends AnimatedObject <ImageView>{
         this.setVisibility(View.INVISIBLE);
         Set<Integer> keys=new ArraySet<>();
         keys.add(SpaceGame.MISSILE_GONE);
-        keys.add(SpaceGame.HIT);
         actions.put(SpaceGame.MISSILE_GONE,null);
-        actions.put(SpaceGame.HIT,new Pair<>(this,null));
         missile.handle(actions,keys);
         notifySpaceGame();
     }
@@ -152,10 +150,19 @@ class LaserBase extends AnimatedObject <ImageView>{
     /*
     Notify the spaceGame to substitute a new laserBase if possible
     */
-    private void notifySpaceGame(){
-//        SpaceGame.Status status=getStatus();
-//        getSpaceGame().updateStatus(status);
+    public void notifySpaceGame(){
+        SpaceGame.Status status=getStatus();
+        Pair<Float,Float> value=status.get(SpaceGame.NUM_LIVES);
+        assert value != null;
+
+        // Now laserBase loses one life
+        Float numLives = value.first - 1;
+
+        status.put(SpaceGame.SCORES,new Pair<>(numLives, null));
+        getSpaceGame().updateStatus(status);
     }
+
+
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
@@ -187,6 +194,12 @@ class LaserBase extends AnimatedObject <ImageView>{
         };
     }
 
+
+    public void spawn()
+    {
+        this.setVisibility(View.VISIBLE);
+        return;
+    }
 
 
     public float getDelta() {

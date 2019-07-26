@@ -18,6 +18,7 @@ import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -110,6 +111,7 @@ class SpaceGame  implements StatusManager{
                     break;
                 case SpaceGame.NUM_LIVES:
                     hud.updateStatus(status);
+                    laserBase.setVisibility(View.VISIBLE);
                     break;
                 case SpaceGame.SCORES:
                     hud.updateStatus(status);
@@ -137,6 +139,11 @@ class SpaceGame  implements StatusManager{
                 }
                 actions.put(motion, null);
                 this.laserBase.handle(actions);
+                // debug
+                if(motion == SpaceGame.FIRE)
+                {
+
+                }
                 break;
 
             case MotionEvent.ACTION_UP:
