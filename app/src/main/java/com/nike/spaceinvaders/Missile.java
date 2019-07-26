@@ -89,13 +89,9 @@ class Missile extends AnimatedObject <ImageView>  {
                     this.startY = startPts.get(SpaceGame.Y_COORDINATE);
                     this.up=startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
                     float endY = findEndYPos();
+
                     // load the missile
-//                    this.setAlpha(1);
                     this.setVisibility(View.VISIBLE);
-                    // set starting x position
-
-
-                    // set up trajectory for missile
 
                     // do we really need to check null?
                     if (this.getAnimator() == null){
@@ -105,31 +101,6 @@ class Missile extends AnimatedObject <ImageView>  {
                     this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)*1000));
                     this.getAnimator().start();
                     break;
-/*
-                case SpaceGame.INVADERS_FIRE:
-                    //Log.d("in Missile's handle -> Invaders_fire","a missile is handling invader's shoot request");
-                    // get the starting position of missile
-                    SparseArray<Float> startPts1 = Objects.requireNonNull(actions.get(key)).second;
-                    this.startX = startPts1.get(SpaceGame.X_COORDINATE);
-                    this.startY = startPts1.get(SpaceGame.Y_COORDINATE);
-                    Log.d("shooting at y position",""+startPts1.get(SpaceGame.Y_COORDINATE));
-                    //this.up=startPts1.get(SpaceGame.MOVE_DIRECTION)==1f;
-                    this.up=false;
-                    float endY1 = findEndYPos();
-                    // load the missile
-//                    this.setAlpha(1);
-                    this.setVisibility(View.VISIBLE);
-                    // set starting x position
-
-                    // do we really need to check null?
-                    if (this.getAnimator() == null){
-                        this.setAnimator(new ValueAnimator());
-                    }
-
-
-                    this.getAnimator().setDuration(((long)(Math.abs(endY1 - startY) / speed)*1000));
-                    this.getAnimator().start();
-                    break;*/
 
                 case SpaceGame.STRIKE:
                     /*
@@ -147,7 +118,6 @@ class Missile extends AnimatedObject <ImageView>  {
                     getSpaceGame().baseShelterGroup.handle(newActions,newKeys);
                     getSpaceGame().laserBase.handle(newActions,newKeys);
                     getSpaceGame().invaderGroup.handle(newActions,newKeys);
-                    // handle missile collides with each other
                     break;
 
 

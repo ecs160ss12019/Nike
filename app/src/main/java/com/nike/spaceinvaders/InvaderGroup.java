@@ -275,13 +275,6 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         };
     }
 
-    private void killLaserBase(){
-        Pair<Float,Float> value=getStatus().get(SpaceGame.NUM_LIVES);
-        assert value != null;
-        getStatus().put(SpaceGame.NUM_LIVES,new Pair<>(value.first-1,null));
-        this.getSpaceGame().updateStatus(getStatus());
-    }
-
     @Override
     public void setX(float x) {
         if (this.initialCoordinates!=null){
