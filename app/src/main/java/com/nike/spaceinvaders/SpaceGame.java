@@ -42,9 +42,6 @@ class SpaceGame  implements StatusManager{
     public static final int RESURRECTION=0b0100000000;
     public static final int MOVE_STOP=0b010000000000;
     public static final int HIT=0b100000000000;
-    //INVADERS ARE ABLE TO SHOOT MISSILE
-    public static final int INVADERS_ATTACK=0b100000000001;
-    public static final int INVADERS_FIRE=0b100000000010;
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
@@ -140,12 +137,12 @@ class SpaceGame  implements StatusManager{
                 }
                 actions.put(motion, null);
                 this.laserBase.handle(actions);
-                if(motion == SpaceGame.FIRE)
-                    this.invaderGroup.handle(actions);
-            break;
+                break;
+
             case MotionEvent.ACTION_UP:
                 actions.put(SpaceGame.MOVE_STOP,null);
                 this.laserBase.handle(actions);
+                break;
         }
     }
 

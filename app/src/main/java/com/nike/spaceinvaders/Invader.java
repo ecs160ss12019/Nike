@@ -95,13 +95,6 @@ public class Invader extends AnimatedObject <ImageView> {
                     if (hitDetection(actions,value.first)){
                         kill(actions,value.first);
                     }
-                case SpaceGame.INVADERS_ATTACK:
-                    shootcd--;
-                    //Log.d("current shootcd ",shootcd+"");
-                    if(shootcd==0&&this.status){
-                        shootcd=50+rand.nextInt(1000);
-                        shootMissile(actions);
-                    }
 
             }
         }
@@ -116,9 +109,27 @@ public class Invader extends AnimatedObject <ImageView> {
         };
     }
 
-    protected void shootMissile(Actions actions){
-        //Log.d("in invader shoot missile","a invader should be shooting missile");
-        Log.d("the current shooting invader y is ",this.getY()+"");
+    /*
+    Use random number generator to decide whether an invader
+    will shoot in this frame
+     */
+    public boolean toShoot()
+    {
+        int randNum = rand.nextInt(2000);
+
+        if(randNum == 1) // chance is 1/2000
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+    protected void shootMissile(){
+        Actions actions = new Actions();
+
         AnimatedObject missile=getSpaceGame().missilePool.getMissile();
         SparseArray<Float> values=new SparseArray<>();
         values.put(SpaceGame.X_COORDINATE,(this.getWidth()-25)/2+this.getAbsoluteX());

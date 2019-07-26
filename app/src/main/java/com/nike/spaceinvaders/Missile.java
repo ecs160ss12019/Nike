@@ -133,7 +133,7 @@ class Missile extends AnimatedObject <ImageView>  {
 
                 case SpaceGame.STRIKE:
                     /*
-                        Missile is moving and may hit an object
+                        One Missile strikes another missile
                      */
                     Actions newActions=new Actions();
                     Set<Integer> newKeys=new ArraySet<>();

@@ -107,7 +107,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 case SpaceGame.STRIKE:
                     Set<Integer> x=new ArraySet<>();
                     x.add(SpaceGame.STRIKE);
-                    traverseInvaders(actions,x);
+                    strikeInvaders(actions,x);
                     break;
                 case SpaceGame.HIT:
                     Invader invader= (Invader) actions.get(SpaceGame.HIT).first;
@@ -118,11 +118,6 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                     this.setDetection(false);
                     break;
 
-                    //added
-                case SpaceGame.FIRE:
-                    int aliveInvaderID = getAliveInvaderID();
-                    if (aliveInvaderID != -1)
-                        invaders.get(aliveInvaderID).shootMissile(actions);
             }
         }
     }
@@ -135,7 +130,7 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         return detection;
     }
 
-    private void traverseInvaders(Actions actions, Set<Integer> keys){
+    private void strikeInvaders(Actions actions, Set<Integer> keys){
 
         for (Invader invader:invaders){
             if (!this.detection){
@@ -145,20 +140,6 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
         }
         this.detection=true;
     }
-
-
-    public int getAliveInvaderID()
-    {
-        for(Invader invader: invaders)
-        {
-            if(invader.alive)
-            {
-                return invader.getIndex();
-            }
-        }
-        return -1;
-    }
-
 
 
 
@@ -228,12 +209,8 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
             private boolean speedShift=false;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                //Log.d("in onAnimationUpdate","InvaderGroup");
-                Actions regularAction = new Actions();
-                regularAction.put(SpaceGame.INVADERS_ATTACK,new Pair<AnimatedObject, SparseArray<Float>>(that,null));
+
                 Set<Integer> newKeys=new ArraySet<>();
-                newKeys.add(SpaceGame.INVADERS_ATTACK);
-                traverseInvaders(regularAction,newKeys);
 
                 if (initialCoordinates==null){
                     initialCoordinates=new PointF(that.getAbsoluteX(),that.getAbsoluteY());
@@ -249,7 +226,6 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
 
 //                    return;
                 }
-
 
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
@@ -290,6 +266,11 @@ class InvaderGroup extends AnimatedObject  <ConstraintLayout> {
                 that.getSpaceGame().laserBase.handle(actions);
 
 
+                for(Invader invader:invaders)
+                {
+                    if(invader.alive && invader.toShoot())
+                        invader.shootMissile();
+                }
             }
         };
     }
