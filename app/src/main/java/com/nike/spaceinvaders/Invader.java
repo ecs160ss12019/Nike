@@ -74,6 +74,7 @@ public class Invader extends AnimatedObject<ImageView> {
         bottom = top + this.getHeight();
         right = left + this.getWidth() - 50;
         if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + missileWidth) >= left && (x + missileWidth) <= right && y <= bottom && y >= top)) {
+            SoundEngine.playInvaderKilled(); //Sound effect for invader being destroyed
             return true;
         } else {
             return false;
