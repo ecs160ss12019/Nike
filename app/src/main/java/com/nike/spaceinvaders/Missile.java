@@ -154,6 +154,8 @@ class Missile extends AnimatedObject <ImageView>  {
             that.setX(((Missile) that).startX);
             if(up)
                 that.getSpaceGame().invaderGroup.handle(actions,newKeys);
+            else
+                that.getSpaceGame().laserBase.handle(actions, newKeys);
             that.getSpaceGame().baseShelterGroup.handle(actions,newKeys);
             if(fraction==1.0){
                 try {
