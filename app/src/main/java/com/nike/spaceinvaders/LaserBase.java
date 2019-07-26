@@ -149,13 +149,12 @@ class LaserBase extends AnimatedObject <ImageView>{
         notifySpaceGame();
     }
 
-
+    /*
+    Notify the spaceGame to substitute a new laserBase if possible
+    */
     private void notifySpaceGame(){
-        SpaceGame.Status status=getStatus();
-        Pair<Float,Float> value=status.get(SpaceGame.SCORES);
-        assert value != null;
-        status.put(SpaceGame.SCORES,new Pair<>(value.first+10,null));
-        getSpaceGame().updateStatus(status);
+//        SpaceGame.Status status=getStatus();
+//        getSpaceGame().updateStatus(status);
     }
 
     @Override
