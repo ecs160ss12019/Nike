@@ -146,7 +146,9 @@ public class MissilePool {
                     for (int index=0;index<numberOfMissile;index++){
                         Context context= (Context) that.resources.get(SpaceGame.CONTEXT);
                         ImageView missileView=new ImageView(context);
-                        Missile missile=new Missile(index,true,that,missileView,resources,spaceGame,status,mainHandler,processHandler);
+                        Missile missile=new Missile(missileView,
+                                resources,spaceGame,status,mainHandler,processHandler)
+                                .initKey(index).initRecyclable(true).initPool(that);
                         that.freshMissiles.put(index,missile);
                         missile.initialize();
 //                        missile.attachTo(that.layout);
@@ -215,7 +217,9 @@ public class MissilePool {
         synchronized (excessiveMissiles){
             Context context= (Context) this.resources.get(SpaceGame.CONTEXT);
             ImageView missileView=new ImageView(context);
-            Missile missile=new Missile(-1,false,this,missileView,resources,spaceGame,status,mainHandler,processHandler);
+            Missile missile=new Missile(missileView,
+                    resources,spaceGame,status,mainHandler,processHandler)
+                    .initKey(-1).initPool(this).initRecyclable(false);
             excessiveMissiles.add(missile);
             missile.initialize();
             missile.attachTo(layout);

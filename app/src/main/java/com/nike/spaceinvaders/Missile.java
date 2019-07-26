@@ -47,12 +47,27 @@ class Missile extends AnimatedObject <ImageView>  {
     private float startY;
 
 
-    Missile(int key, boolean recyclable, MissilePool pool,ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
-        this.key=key;
-        this.recyclable=recyclable;
-        this.pool=pool;
-    
+    }
+
+
+    public Missile initKey(int key)
+    {
+        this.key = key;
+        return this;
+    }
+
+    public Missile initRecyclable(boolean recyclable)
+    {
+        this.recyclable = recyclable;
+        return this;
+    }
+
+    public Missile initPool(MissilePool pool)
+    {
+        this.pool = pool;
+        return this;
     }
 
 
