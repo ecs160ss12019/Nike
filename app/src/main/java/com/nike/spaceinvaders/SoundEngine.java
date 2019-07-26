@@ -13,10 +13,10 @@ import java.io.IOException;
 class SoundEngine {
     // for playing sound effects
     private static SoundPool mSP;
-    private static int mJump_ID = -1;
-    private static int mReach_Objective_ID = -1;
-    private static  int mCoin_Pickup_ID = -1;
-    private static  int mPlayer_Burn_ID = -1;
+    private static int mShoot_ID = -1;
+    private static int mInvaderKilled_ID = -1;
+    private static  int mSound3_ID = -1;
+    private static  int mSound4_ID = -1;
 
     private static SoundEngine ourInstance;
 
@@ -45,17 +45,17 @@ class SoundEngine {
             AssetFileDescriptor descriptor;
 
             // Prepare the sounds in memory
-            descriptor = assetManager.openFd("jump.ogg");
-            mJump_ID = mSP.load(descriptor, 0);
+            descriptor = assetManager.openFd("shoot.wav");
+            mShoot_ID = mSP.load(descriptor, 0);
 
-            descriptor = assetManager.openFd("reach_objective.ogg");
-            mReach_Objective_ID = mSP.load(descriptor, 0);
+            descriptor = assetManager.openFd("invaderkilled.wav");
+            mInvaderKilled_ID = mSP.load(descriptor, 0);
 
-            descriptor = assetManager.openFd("coin_pickup.ogg");
-            mCoin_Pickup_ID = mSP.load(descriptor, 0);
+            descriptor = assetManager.openFd("sound3.ogg");
+            mSound3_ID = mSP.load(descriptor, 0);
 
-            descriptor = assetManager.openFd("player_burn.ogg");
-            mPlayer_Burn_ID = mSP.load(descriptor, 0);
+            descriptor = assetManager.openFd("sound4.ogg");
+            mSound4_ID = mSP.load(descriptor, 0);
 
         } catch (IOException e) {
             // Error
