@@ -63,4 +63,20 @@ class SoundEngine {
 
     }
 
+    public static void playMissile(){
+        mSP.play(mShoot_ID,1, 1, 0, 0, 1);
+    }
+
+    public static void playInvaderKilled(){
+        mSP.play(mInvaderKilled_ID,1, 1, 0, 0, 1);
+    }
+
+    public static void playSound3(){
+        mSP.play(mSound3_ID,1, 1, 0, 0, 1);
+    }
+
+    public static void playSound4() {
+        mSP.play(mSound4_ID, 1, 1, 0, 0, 1);
+    }
+
 }
