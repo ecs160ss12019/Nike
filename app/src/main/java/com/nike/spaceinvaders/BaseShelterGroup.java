@@ -32,9 +32,9 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
 
         for (int i = 0; i < numShelters; i++) {
             ImageView sheltersView = (ImageView) this.getChildAt(i);
-            shelters.add(new BaseShelter(sheltersView, this.getResources(),
-                    this.getSpaceGame(), this.getStatus(),
-                    this.getMainHandler(), this.getProcessHandler()));
+            shelters.add(new BaseShelter(i,sheltersView, this.getResources(),
+                    this.getSpaceGame(),this.getStatus(),
+                    this.getMainHandler(),this.getProcessHandler()));
         }
     }
 
