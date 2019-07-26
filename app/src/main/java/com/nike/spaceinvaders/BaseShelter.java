@@ -169,18 +169,6 @@ class BaseShelter extends AnimatedObject<ImageView> {
         return null;
     }
 
-    /*
-    Get the coordinate in terms of box
-    For example, if a box has relative coordinates of (18, 22), then
-    it is in the second column, third row, and thus should have box
-    coordinates of (1.8, 2.2) if the box size is 10
-     */
-//    private PointF getBoxCoordinate(float x,float y){
-//        float newX = x / this.boxSize;
-//        float newY = y / this.boxSize;
-//        return new PointF(newX,newY);
-//    }
-
 
     /*
     Return the hitting point location if it hits
