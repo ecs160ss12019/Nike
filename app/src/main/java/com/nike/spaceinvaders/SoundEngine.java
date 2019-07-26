@@ -20,7 +20,12 @@ class SoundEngine {
 
     private static SoundEngine ourInstance;
 
-    public SoundEngine(Context c){
+    public static SoundEngine getInstance(Context context) {
+        ourInstance = new SoundEngine(context);
+        return ourInstance;
+    }
+
+    public SoundEngine(Context c) {
         // Initialize the SoundPool
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
