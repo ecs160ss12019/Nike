@@ -139,7 +139,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         this.setBitmap(this.bitmap);
         this.bitmap.getPixels(this.oldHitBox, 0, this.getWidth(), 0, 0, this.getWidth(), this.getHeight());
         removePaddingHitBox();
-        
+
         //        for (int index=0;index<10316;index++){
 //            pixels[index]=0;
 //        }
