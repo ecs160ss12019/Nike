@@ -32,7 +32,7 @@ import java.util.Set;
 class Missile extends AnimatedObject <ImageView>  {
     private long time;
     private boolean recyclable;
-    private boolean status=true;
+    private boolean alive = true;
     private int key;
     private MissilePool pool;
 
@@ -226,12 +226,12 @@ class Missile extends AnimatedObject <ImageView>  {
         this.key = key;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isAlive() {
+        return alive;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setAliveStatus(boolean status) {
+        this.alive = status;
     }
 
     public long getTime() {

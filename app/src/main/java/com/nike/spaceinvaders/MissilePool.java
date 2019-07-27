@@ -117,7 +117,7 @@ public class MissilePool {
                             for (int index=excessiveMissiles.size()-1;index>=0&&index>=missileArray.size()-difference;index--){
                                 Missile missile=excessiveMissiles.get(index);
                                 boolean status=k==0;
-                                if (missile.isStatus()==status){
+                                if (missile.isAlive()==status){
                                     missile.setRecyclable(true);
                                     missile.setKey(missileArray.size());
                                     missileArray.put(missileArray.size(),missile);
@@ -179,7 +179,7 @@ public class MissilePool {
         }else{
 
             synchronized (this.gloriousMissiles){
-                missile.setStatus(true);
+                missile.setAliveStatus(true);
                 missile.initialize();
                 missile.detachFrom(layout);
                 this.gloriousMissiles.remove(missile.getKey());
@@ -202,7 +202,7 @@ public class MissilePool {
                     int size=freshMissiles.size();
                     this.checkCount++;
                     Missile missile=freshMissiles.get(freshMissiles.keyAt(freshMissiles.size()-1));
-                    missile.setStatus(false);
+                    missile.setAliveStatus(false);
                     missile.setTime(System.currentTimeMillis());
                     missile.attachTo(layout);
                     freshMissiles.remove(freshMissiles.keyAt(size-1));
