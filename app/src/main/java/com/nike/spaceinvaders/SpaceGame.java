@@ -33,6 +33,8 @@ class SpaceGame  implements StatusManager{
     /* Action Flags */
     public static final int GAMESTART=0b00000001;
     // Missile has been released and is moving(striking)
+    // If an game object, say invaders, encounter STRIKE,
+    // it means it may get hit
     public static final int STRIKE=0b00000010;
     public static final int TOUCH=0b00000100;
     public static final int MISSILE_GONE=0b00001000;
@@ -115,8 +117,9 @@ class SpaceGame  implements StatusManager{
                 case SpaceGame.NUM_INVADER:
                     break;
                 case SpaceGame.NUM_LIVES:
+                    // laserBase loses on life
                     hud.updateStatus(status);
-                    laserBase.setVisibility(View.VISIBLE);
+                    ((LaserBase)laserBase).spawn();
                     // TODO: pause the game for 3 seconds
                     break;
                 case SpaceGame.SCORES:

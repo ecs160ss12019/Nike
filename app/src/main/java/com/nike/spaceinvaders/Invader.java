@@ -21,8 +21,7 @@ import android.widget.Space;
 
 
 public class Invader extends AnimatedObject<ImageView> {
-    public boolean alive = true;
-    private boolean status = true;
+    private boolean alive = true;
     private Missile missile;
     private int[][] hitbox;
     private int abstractionLevel = 10;
@@ -39,7 +38,6 @@ public class Invader extends AnimatedObject<ImageView> {
 
     private void kill(Actions actions, AnimatedObject missile) {
         alive = false;
-        this.status = false;
         this.setVisibility(View.INVISIBLE);
         actions.put(SpaceGame.MISSILE_GONE, null);
         actions.put(SpaceGame.HIT, new Pair<>(this, null));
@@ -56,13 +54,10 @@ public class Invader extends AnimatedObject<ImageView> {
         getSpaceGame().updateStatus(status);
     }
 
-    public boolean diagnose() {
-        return this.status;
-    }
 
 
     private boolean hitDetection(Actions actions, AnimatedObject missile) {
-        if (!status) {
+        if (!alive) {
             return false;
         }
         float x = missile.getX();
@@ -143,5 +138,12 @@ public class Invader extends AnimatedObject<ImageView> {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+
+
+    public boolean isAlive()
+    {
+        return alive;
     }
 }

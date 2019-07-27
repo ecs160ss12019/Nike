@@ -266,7 +266,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
 
                 for (Invader invader : invaders) {
-                    if (invader.alive && invader.toShoot())
+                    if (invader.isAlive() && invader.toShoot())
                         invader.shootMissile();
                 }
             }
