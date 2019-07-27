@@ -75,7 +75,7 @@ class SpaceGame  implements StatusManager{
     private Status status;
 
 
-    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread){
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;

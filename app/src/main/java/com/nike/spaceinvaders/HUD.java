@@ -77,7 +77,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);
         int lives=livesTemp.intValue();
         Actions actions=new Actions();
-
+        //judge if live increase or decrease
         for(int index =0; index<Math.abs(lives-this.lives);index++){
             if (lives-this.lives>0){
                 actions.put(SpaceGame.LIFE_ADD,null);
