@@ -16,8 +16,8 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     private int lives;
     private View[] livesViews;
 
-    Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives) {
-        super(null, view, resources, spaceGame, status, mainHandler, processHandler);
+    Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives,SoundEngine soundEngine) {
+        super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
         this.lives = lives;
         this.livesViews = new ImageView[3];
         for (int index = 0; index < this.getChildCount(); index++) {

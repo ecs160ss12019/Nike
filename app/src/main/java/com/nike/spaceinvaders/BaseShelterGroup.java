@@ -24,8 +24,8 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
     private int numShelters;
 
     BaseShelterGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame,
-                     SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super(null, view, resources, spaceGame, status, mainHandler, processHandler);
+                     SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
+        super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
 
         numShelters = this.getChildCount();
         shelters = new ArrayList<>(numShelters);
@@ -34,7 +34,7 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
             ImageView sheltersView = (ImageView) this.getChildAt(i);
             shelters.add(new BaseShelter(sheltersView, this.getResources(),
                     this.getSpaceGame(), this.getStatus(),
-                    this.getMainHandler(), this.getProcessHandler()));
+                    this.getMainHandler(), this.getProcessHandler(),this.getSoundEngine()));
         }
     }
 

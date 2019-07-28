@@ -28,8 +28,8 @@ public class Invader extends AnimatedObject<ImageView> {
     private int index;
     private Random rand;
 
-    Invader(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super(animator, view, resources, spaceGame, status, mainHandler, processHandler);
+    Invader(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
+        super(animator, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
         this.index = index;
         rand = new Random();
     }
@@ -67,7 +67,7 @@ public class Invader extends AnimatedObject<ImageView> {
         bottom = top + this.getHeight();
         right = left + this.getWidth() - 50;
         if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + missileWidth) >= left && (x + missileWidth) <= right && y <= bottom && y >= top)) {
-            SoundEngine.playInvaderKilled(); //Sound effect for invader being destroyed
+            this.getSoundEngine().playInvaderKilled(); //Sound effect for invader being destroyed
             return true;
         } else {
             return false;

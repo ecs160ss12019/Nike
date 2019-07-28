@@ -27,8 +27,8 @@ public class MysteryInvader extends AnimatedObject<ImageView> {
     private int appearcd;
     private Random rand;
 
-    MysteryInvader(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super(animator, view, resources, spaceGame, status, mainHandler, processHandler);
+    MysteryInvader(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
+        super(animator, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
         this.index = index;
         rand = new Random();
         appearcd = 50 + rand.nextInt(1000);
