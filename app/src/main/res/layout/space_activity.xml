@@ -293,57 +293,6 @@
             app:layout_constraintTop_toBottomOf="@+id/invader12"
             app:srcCompat="@drawable/myinvader" />
 
-        <ImageView
-            android:id="@+id/invader31"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/invader25"
-            app:srcCompat="@drawable/myinvader" />
-
-        <ImageView
-            android:id="@+id/invader32"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/invader3"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/invader"
-            app:layout_constraintTop_toBottomOf="@+id/invader26"
-            app:srcCompat="@drawable/myinvader" />
-
-        <ImageView
-            android:id="@+id/invader33"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/invader4"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/invader2"
-            app:layout_constraintTop_toBottomOf="@+id/invader27"
-            app:srcCompat="@drawable/myinvader" />
-
-        <ImageView
-            android:id="@+id/invader34"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/invader5"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/invader3"
-            app:layout_constraintTop_toBottomOf="@+id/invader28"
-            app:srcCompat="@drawable/myinvader" />
-
-        <ImageView
-            android:id="@+id/invader35"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/invader4"
-            app:layout_constraintTop_toBottomOf="@+id/invader29"
-            app:srcCompat="@drawable/myinvader" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout

@@ -15,7 +15,7 @@ import java.util.Set;
 //Adding two flags at l46 and l47
 class SpaceGame  implements StatusManager{
     /* Action Flags */
-    public static final int GAMESTART=0b00000001;
+    public static final int GAME_START =0b00000001;
     // Missile has been released and is moving(striking)
     // If an game object, say invaders, encounter STRIKE,
     // it means it may get hit
@@ -29,6 +29,8 @@ class SpaceGame  implements StatusManager{
     public static final int RESURRECTION=0b0100000000;
     public static final int MOVE_STOP=0b010000000000;
     public static final int HIT=0b100000000000;
+    public static final int GAME_PAUSE=0b1000000000000;
+    public static final int GAME_RESUME=0b10000000000000;
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
@@ -55,6 +57,8 @@ class SpaceGame  implements StatusManager{
     final AnimatedObject baseShelterGroup;
     final AnimatedObject invaderGroup;
     final AnimatedObject UFO;
+
+    final
     final MissilePool missilePool;
     final StatusManager hud;
     final Resources resources;
@@ -82,7 +86,7 @@ class SpaceGame  implements StatusManager{
         this.status=status;
 
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
-        actions.put(GAMESTART,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
+        actions.put(GAME_START,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         invaderGroup.handle(actions);
         UFO.handle(actions);
 
@@ -166,5 +170,11 @@ class SpaceGame  implements StatusManager{
             this.second=second;
         }
     }
+
+    interface state{
+        void notifyState();
+    }
+
+
 
 }

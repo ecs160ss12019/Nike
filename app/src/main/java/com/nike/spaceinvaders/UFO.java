@@ -1,24 +1,15 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
-import android.content.res.Resources;
 import android.graphics.Point;
-import android.graphics.PointF;
-import android.util.ArraySet;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
-import java.util.Set;
 
 import android.os.Handler;
-import android.widget.Space;
 
 
 public class UFO extends Invader {
@@ -44,7 +35,7 @@ public class UFO extends Invader {
         Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
 
         switch (key) {
-            case SpaceGame.GAMESTART:
+            case SpaceGame.GAME_START:
                 if (this.getAnimator() == null) {
                     this.setAnimator(new ValueAnimator());
                     this.getAnimator().setIntValues(1, 100);
@@ -63,7 +54,12 @@ public class UFO extends Invader {
                 if (hitDetection(actions, value.first)) {
                     kill(actions, value.first);
                 }
-
+                break;
+            case SpaceGame.GAME_PAUSE:
+                if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
+                    this.getAnimator().pause();
+                }
+                break;
         }
 
     }

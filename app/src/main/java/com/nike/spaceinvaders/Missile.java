@@ -134,6 +134,12 @@ class Missile extends AnimatedObject <ImageView>  {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            case SpaceGame.GAME_PAUSE:
+                if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
+                    this.getAnimator().pause();
+                }
+                break;
         }
 
 

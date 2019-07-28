@@ -85,7 +85,12 @@ public class Invader extends AnimatedObject<ImageView> {
                 if (hitDetection(actions, value.first)) {
                     kill(actions, value.first);
                 }
-
+                break;
+            case SpaceGame.GAME_PAUSE:
+                if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
+                    this.getAnimator().pause();
+                }
+                break;
         }
 
     }
