@@ -44,7 +44,7 @@ class Missile extends AnimatedObject <ImageView>  {
     private float startX;
     private float startY;
 
-    private float fraction;
+    private ValueAnimator.AnimatorUpdateListener updateListener;
 
 
     Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
@@ -145,31 +145,33 @@ class Missile extends AnimatedObject <ImageView>  {
         final AnimatedObject that=this;
         final Actions actions=new Actions();
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
-        return animation -> {
+        if (this.updateListener==null){
+            this.updateListener= animation -> {
 //            Log.d("Missile",that.toString());
-            float fraction=animation.getAnimatedFraction();
-            Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
-            assert size != null;
-            int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
-            that.setY(((Missile) that).startY+fraction*lengthY);
-            that.setX(((Missile) that).startX);
-            if(up)
-                that.getSpaceGame().invaderGroup.handle(actions,SpaceGame.STRIKE);
-            else
-                that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
-            that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
+                float fraction=animation.getAnimatedFraction();
+                Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
+                assert size != null;
+                int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
+                that.setY(((Missile) that).startY+fraction*lengthY);
+                that.setX(((Missile) that).startX);
+                if(up)
+                    that.getSpaceGame().invaderGroup.handle(actions,SpaceGame.STRIKE);
+                else
+                    that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
+                that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
 //            if(up)
 //                Log.d("fraction", String.valueOf(fraction));
-            this.fraction=fraction;
-            if(fraction==1.0&&alive){
-                try {
+                if(fraction==1.0){
+                    try {
                         alive = false;
-                    ((Missile) that).recycle();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        ((Missile) that).recycle();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        };
+            };
+        }
+        return this.updateListener;
     }
 
 
@@ -177,14 +179,13 @@ class Missile extends AnimatedObject <ImageView>  {
         this.setVisibility(View.INVISIBLE);
         this.setX(-100);
         this.setY(-100);
-        if (this.getAnimator() == null){
-            this.setAnimator(new ValueAnimator());
-//            this.getAnimator().setInterpolator(null);
-            this.getAnimator().addUpdateListener(animatorListenerConfigure());
-        }else {
+        if (this.getAnimator()!=null){
             this.getAnimator().cancel();
         }
-        this.getAnimator().setFloatValues(this.fraction, this.fraction+100f);
+        this.setAnimator(new ValueAnimator());
+//            this.getAnimator().setInterpolator(null);
+        this.getAnimator().addUpdateListener(animatorListenerConfigure());
+        this.getAnimator().setFloatValues(1f, 100f);
         speed = 600;
         // set the missile to be invisible
 
