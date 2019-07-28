@@ -15,6 +15,7 @@ public class MissilePool {
     private SpaceGame.Resources resources;
     private SpaceGame spaceGame;
     private SpaceGame.Status status;
+    private SoundEngine soundEngine;
 
   // Missiles that are available
     private SparseArray<Missile> freshMissiles;
@@ -25,52 +26,20 @@ public class MissilePool {
     private int checkCount=0;
     private boolean availability=false;
 
-    MissilePool(){
-    }
-
-    public MissilePool setLayout(ViewGroup layout)
-    {
+    MissilePool(ViewGroup layout, SpaceGame.Resources resources, SpaceGame spaceGame,
+                SpaceGame.Status status, int numberOfMissile, Handler mainHandler,
+                Handler processHandler,SoundEngine soundEngine) {
         this.layout = layout;
-        return this;
-    }
-
-    public MissilePool setMainHandler(Handler mainHandler)
-    {
         this.mainHandler = mainHandler;
-        return this;
-    }
-
-    public MissilePool setProcessHandler(Handler processHandler)
-    {
         this.processHandler = processHandler;
-        return this;
-    }
-
-    public MissilePool setResources(SpaceGame.Resources resources)
-    {
         this.resources = resources;
-        return this;
-    }
-
-
-    public MissilePool setSpaceGame(SpaceGame spaceGame)
-    {
         this.spaceGame = spaceGame;
-        return this;
-    }
-
-
-    public MissilePool setStatus(SpaceGame.Status status)
-    {
         this.status = status;
-        return this;
+        this.numberOfMissile = numberOfMissile;
+        this.soundEngine=soundEngine;
+        configureCapacity(numberOfMissile);
     }
 
-    public MissilePool setCapacity(int numberOfMissile)
-    {
-        configureCapacity(numberOfMissile);
-        return this;
-    }
 
     public void configureCapacity(int numberOfMissile){
         for (int k=0;k<2;k++){
@@ -117,7 +86,7 @@ public class MissilePool {
                             for (int index=excessiveMissiles.size()-1;index>=0&&index>=missileArray.size()-difference;index--){
                                 Missile missile=excessiveMissiles.get(index);
                                 boolean status=k==0;
-                                if (missile.isStatus()==status){
+                                if (missile.isAlive()==status){
                                     missile.setRecyclable(true);
                                     missile.setKey(missileArray.size());
                                     missileArray.put(missileArray.size(),missile);
@@ -147,7 +116,7 @@ public class MissilePool {
                         Context context= (Context) that.resources.get(SpaceGame.CONTEXT);
                         ImageView missileView=new ImageView(context);
                         Missile missile=new Missile(missileView,
-                                resources,spaceGame,status,mainHandler,processHandler)
+                                resources,spaceGame,status,mainHandler,processHandler,soundEngine)
                                 .initKey(index).initRecyclable(true).initPool(that);
                         that.freshMissiles.put(index,missile);
                         missile.initialize();
@@ -172,15 +141,13 @@ public class MissilePool {
         }
         if (!missile.isRecyclable()){
             synchronized (this.excessiveMissiles){
-                missile.initialize();
                 missile.detachFrom(layout);
                 this.excessiveMissiles.remove(missile);
             }
         }else{
 
             synchronized (this.gloriousMissiles){
-                missile.setStatus(true);
-                missile.initialize();
+                missile.setAliveStatus(true);
                 missile.detachFrom(layout);
                 this.gloriousMissiles.remove(missile.getKey());
             }
@@ -202,7 +169,7 @@ public class MissilePool {
                     int size=freshMissiles.size();
                     this.checkCount++;
                     Missile missile=freshMissiles.get(freshMissiles.keyAt(freshMissiles.size()-1));
-                    missile.setStatus(false);
+                    missile.setAliveStatus(false);
                     missile.setTime(System.currentTimeMillis());
                     missile.attachTo(layout);
                     freshMissiles.remove(freshMissiles.keyAt(size-1));
@@ -218,11 +185,12 @@ public class MissilePool {
             Context context= (Context) this.resources.get(SpaceGame.CONTEXT);
             ImageView missileView=new ImageView(context);
             Missile missile=new Missile(missileView,
-                    resources,spaceGame,status,mainHandler,processHandler)
+                    resources,spaceGame,status,mainHandler,processHandler,soundEngine)
                     .initKey(-1).initPool(this).initRecyclable(false);
             excessiveMissiles.add(missile);
             missile.initialize();
             missile.attachTo(layout);
+            missile.setTime(System.currentTimeMillis());
             this.checkCount++;
             gc();
             missile.initialize();
@@ -272,6 +240,86 @@ public class MissilePool {
             });
         }
 
+    }
+
+    public static class Builder {
+        private ViewGroup layout;
+        private int numberOfMissile;
+        private Handler mainHandler;
+        private Handler processHandler;
+        private SpaceGame.Resources resources;
+        private SpaceGame spaceGame;
+        private SpaceGame.Status status;
+        private SoundEngine soundEngine;
+
+
+        public Builder(int capacity)
+        {
+            this.numberOfMissile = capacity;
+        }
+
+        public Builder(ViewGroup layout, SpaceGame.Resources resources, SpaceGame spaceGame,
+                       SpaceGame.Status status, int numberOfMissile, Handler mainHandler,
+                       Handler processHandler)
+        {
+            this.layout = layout;
+            this.mainHandler = mainHandler;
+            this.processHandler = processHandler;
+            this.resources = resources;
+            this.spaceGame = spaceGame;
+            this.status = status;
+            this.numberOfMissile = numberOfMissile;
+        }
+
+
+        public Builder setLayout(ViewGroup layout)
+        {
+            this.layout = layout;
+            return this;
+        }
+
+        public Builder setMainHandler(Handler mainHandler)
+        {
+            this.mainHandler = mainHandler;
+            return this;
+        }
+
+        public Builder setProcessHandler(Handler processHandler)
+        {
+            this.processHandler = processHandler;
+            return this;
+        }
+
+        public Builder setResources(SpaceGame.Resources resources)
+        {
+            this.resources = resources;
+            return this;
+        }
+
+
+        public Builder setSpaceGame(SpaceGame spaceGame)
+        {
+            this.spaceGame = spaceGame;
+            return this;
+        }
+
+
+        public Builder setStatus(SpaceGame.Status status)
+        {
+            this.status = status;
+            return this;
+        }
+
+        public MissilePool build()
+        {
+            return new MissilePool(layout, resources, spaceGame, status,
+                    numberOfMissile, mainHandler, processHandler,soundEngine);
+        }
+
+        public Builder setSoundEngine(SoundEngine soundEngine) {
+            this.soundEngine = soundEngine;
+            return this;
+        }
     }
 
 }

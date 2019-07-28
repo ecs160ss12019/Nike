@@ -29,12 +29,12 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
     private final int livesId=R.id.lives;
 
 
-    HUD(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super(null, view, resources, spaceGame,status, mainHandler, processHandler);
+    HUD(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
+        super(null, view, resources, spaceGame,status, mainHandler, processHandler,soundEngine);
         //init
         this.lives=this.LIVEMAX;
         this.score=view.findViewById(scoreId);
-        this.liveLayout=new Lives((ConstraintLayout) view.findViewById(livesId),resources,spaceGame,status,mainHandler,processHandler,LIVEMAX);
+        this.liveLayout=new Lives((ConstraintLayout) view.findViewById(livesId),resources,spaceGame,status,mainHandler,processHandler,LIVEMAX,soundEngine);
     }
 
     @Override

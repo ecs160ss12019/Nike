@@ -12,34 +12,32 @@ import java.io.IOException;
 
 class SoundEngine {
     // for playing sound effects
-    private static SoundPool mSP;
-    private static int mShoot_ID = -1;
-    private static int mInvaderKilled_ID = -1;
-    private static  int mSound3_ID = -1;
-    private static  int mSound4_ID = -1;
+    private SoundPool mSP;
+    private int mShoot_ID = -1;
+    private int mInvaderKilled_ID = -1;
+    private  int mSound3_ID = -1;
+    private  int mSound4_ID = -1;
 
     private static SoundEngine ourInstance;
 
     public static SoundEngine getInstance(Context context) {
-        ourInstance = new SoundEngine(context);
+        if (ourInstance==null){
+            ourInstance = new SoundEngine(context);
+        }
         return ourInstance;
     }
 
-    public SoundEngine(Context c) {
+    private SoundEngine(Context c) {
         // Initialize the SoundPool
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build();
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
 
-            mSP = new SoundPool.Builder()
-                    .setMaxStreams(5)
-                    .setAudioAttributes(audioAttributes)
-                    .build();
-        } else {
-            mSP = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-        }
+        mSP = new SoundPool.Builder()
+                .setMaxStreams(5)
+                .setAudioAttributes(audioAttributes)
+                .build();
         try {
             AssetManager assetManager = c.getAssets();
             AssetFileDescriptor descriptor;
@@ -63,19 +61,19 @@ class SoundEngine {
 
     }
 
-    public static void playMissile(){
+    public void playMissile(){
         mSP.play(mShoot_ID,1, 1, 0, 0, 1);
     }
 
-    public static void playInvaderKilled(){
+    public void playInvaderKilled(){
         mSP.play(mInvaderKilled_ID,1, 1, 0, 0, 1);
     }
 
-    public static void playSound3(){
+    public void playSound3(){
         mSP.play(mSound3_ID,1, 1, 0, 0, 1);
     }
 
-    public static void playSound4() {
+    public void playSound4() {
         mSP.play(mSound4_ID, 1, 1, 0, 0, 1);
     }
 

@@ -2,30 +2,14 @@
 
 package com.nike.spaceinvaders;
 
-import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.PointF;
-import android.graphics.Rect;
 import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 //Adding two flags at l46 and l47
@@ -33,6 +17,8 @@ class SpaceGame  implements StatusManager{
     /* Action Flags */
     public static final int GAMESTART=0b00000001;
     // Missile has been released and is moving(striking)
+    // If an game object, say invaders, encounter STRIKE,
+    // it means it may get hit
     public static final int STRIKE=0b00000010;
     public static final int TOUCH=0b00000100;
     public static final int MISSILE_GONE=0b00001000;
@@ -68,6 +54,7 @@ class SpaceGame  implements StatusManager{
     final AnimatedObject laserBase;
     final AnimatedObject baseShelterGroup;
     final AnimatedObject invaderGroup;
+    final AnimatedObject UFO;
     final MissilePool missilePool;
     final StatusManager hud;
     final Resources resources;
@@ -75,18 +62,20 @@ class SpaceGame  implements StatusManager{
     private Status status;
 
 
-    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject UFO, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
+        this.UFO = UFO;
         this.hud=hud;
-        this.missilePool = new MissilePool().setLayout(layout)
+        this.missilePool = new MissilePool.Builder(20).setLayout(layout)
                 .setResources(resources).setMainHandler(mainHandler)
-                .setProcessHandler(processThread).setStatus(status).setSpaceGame(this)
-                .setCapacity(20);  // setCapacity needs to be called at the very last
+                .setProcessHandler(processThread).setStatus(status).setSpaceGame(this).setSoundEngine(se)
+                .build();  // setCapacity needs to be called at the very last
         this.laserBase.setSpaceGame(this);
         this.baseShelterGroup.setSpaceGame(this);
         this.invaderGroup.setSpaceGame(this);
+        this.UFO.setSpaceGame(this);
         ((AnimatedObject)this.hud).setSpaceGame(this);
 
         this.resources=resources;
@@ -95,6 +84,7 @@ class SpaceGame  implements StatusManager{
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
         actions.put(GAMESTART,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         invaderGroup.handle(actions);
+        UFO.handle(actions);
 
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
         actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
@@ -115,8 +105,9 @@ class SpaceGame  implements StatusManager{
                 case SpaceGame.NUM_INVADER:
                     break;
                 case SpaceGame.NUM_LIVES:
+                    // laserBase loses on life
                     hud.updateStatus(status);
-                    laserBase.setVisibility(View.VISIBLE);
+                    ((LaserBase)laserBase).spawn();
                     // TODO: pause the game for 3 seconds
                     break;
                 case SpaceGame.SCORES:

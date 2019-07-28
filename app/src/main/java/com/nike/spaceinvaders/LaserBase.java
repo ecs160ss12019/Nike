@@ -29,9 +29,10 @@ class LaserBase extends AnimatedObject<ImageView> {
     private int velocity;
     private float delta = 10f;
     private boolean direction;
+//    private Missile lastMissile;
 
-    LaserBase(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super(null, view, resources, spaceGame, status, mainHandler, processHandler);
+    LaserBase(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
+        super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
 
     }
 
@@ -78,6 +79,8 @@ class LaserBase extends AnimatedObject<ImageView> {
                 this.getAnimator().start();
                 break;
             case SpaceGame.FIRE:
+//                if(lastMissile != null && lastMissile.isAlive())
+//                    return;
                 AnimatedObject missile = getSpaceGame().missilePool.getMissile();
                 SparseArray<Float> values = new SparseArray<>();
                 values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getX());
@@ -85,7 +88,7 @@ class LaserBase extends AnimatedObject<ImageView> {
                 values.put(SpaceGame.MOVE_DIRECTION, 1f);
                 actions.put(SpaceGame.FIRE, new Pair<>(this, values));
                 if (missile != null) {
-                    //Log.d("inLaserBase FIRE","LaserBase is shooting");
+//                    lastMissile = (Missile) missile;
                     missile.handle(actions, SpaceGame.FIRE);
                 }
 
