@@ -119,7 +119,7 @@ public class MissilePool {
                                 resources,spaceGame,status,mainHandler,processHandler,soundEngine)
                                 .initKey(index).initRecyclable(true).initPool(that);
                         that.freshMissiles.put(index,missile);
-                        missile.initialize(true);
+                        missile.initialize();
 //                        missile.attachTo(that.layout);
                     }
                 }
@@ -175,7 +175,7 @@ public class MissilePool {
                     freshMissiles.remove(freshMissiles.keyAt(size-1));
                     gloriousMissiles.put(freshMissiles.keyAt(size-1),missile);
                     gc();
-                    missile.initialize(true);
+                    missile.initialize();
                     return missile;
                 }
             }
@@ -188,12 +188,12 @@ public class MissilePool {
                     resources,spaceGame,status,mainHandler,processHandler,soundEngine)
                     .initKey(-1).initPool(this).initRecyclable(false);
             excessiveMissiles.add(missile);
-            missile.initialize(true);
+            missile.initialize();
             missile.attachTo(layout);
             missile.setTime(System.currentTimeMillis());
             this.checkCount++;
             gc();
-            missile.initialize(true);
+            missile.initialize();
             return missile;
         }
     }
