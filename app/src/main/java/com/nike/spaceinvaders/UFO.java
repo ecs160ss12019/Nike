@@ -54,6 +54,7 @@ public class UFO extends Invader {
                     this.getAnimator().setInterpolator(null);
                     this.getAnimator().addUpdateListener(animatorListenerConfigure());
                     this.getAnimator().start();
+                    this.setVisibility(View.INVISIBLE);
                 }
 
                 break;
