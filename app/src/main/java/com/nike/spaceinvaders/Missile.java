@@ -105,6 +105,7 @@ class Missile extends AnimatedObject <ImageView>  {
                 this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
                 float endY = findEndYPos();
 
+
                 // load the missile
                 this.setVisibility(View.VISIBLE);
 
@@ -141,7 +142,6 @@ class Missile extends AnimatedObject <ImageView>  {
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         final AnimatedObject that=this;
         final Actions actions=new Actions();
-        ;
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
         return animation -> {
             float fraction=animation.getAnimatedFraction();
@@ -155,13 +155,14 @@ class Missile extends AnimatedObject <ImageView>  {
             else
                 that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
             that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
-            if(fraction==1.0){
-                try {
-                    ((Missile) that).recycle();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+        //    Log.d("fraction", String.valueOf(fraction));
+//            if(fraction==1.0){
+//                try {
+//                    ((Missile) that).recycle();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
         };
     }
 
