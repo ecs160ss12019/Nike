@@ -2,30 +2,14 @@
 
 package com.nike.spaceinvaders;
 
-import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.PointF;
-import android.graphics.Rect;
 import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 //Adding two flags at l46 and l47
@@ -82,7 +66,7 @@ class SpaceGame  implements StatusManager{
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
         this.hud=hud;
-        this.missilePool = new MissilePoolBuilder(20).setLayout(layout)
+        this.missilePool = new MissilePool.Builder(20).setLayout(layout)
                 .setResources(resources).setMainHandler(mainHandler)
                 .setProcessHandler(processThread).setStatus(status).setSpaceGame(this).setSoundEngine(se)
                 .build();  // setCapacity needs to be called at the very last

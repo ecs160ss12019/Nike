@@ -244,4 +244,84 @@ public class MissilePool {
 
     }
 
+    public static class Builder {
+        private ViewGroup layout;
+        private int numberOfMissile;
+        private Handler mainHandler;
+        private Handler processHandler;
+        private SpaceGame.Resources resources;
+        private SpaceGame spaceGame;
+        private SpaceGame.Status status;
+        private SoundEngine soundEngine;
+
+
+        public Builder(int capacity)
+        {
+            this.numberOfMissile = capacity;
+        }
+
+        public Builder(ViewGroup layout, SpaceGame.Resources resources, SpaceGame spaceGame,
+                       SpaceGame.Status status, int numberOfMissile, Handler mainHandler,
+                       Handler processHandler)
+        {
+            this.layout = layout;
+            this.mainHandler = mainHandler;
+            this.processHandler = processHandler;
+            this.resources = resources;
+            this.spaceGame = spaceGame;
+            this.status = status;
+            this.numberOfMissile = numberOfMissile;
+        }
+
+
+        public Builder setLayout(ViewGroup layout)
+        {
+            this.layout = layout;
+            return this;
+        }
+
+        public Builder setMainHandler(Handler mainHandler)
+        {
+            this.mainHandler = mainHandler;
+            return this;
+        }
+
+        public Builder setProcessHandler(Handler processHandler)
+        {
+            this.processHandler = processHandler;
+            return this;
+        }
+
+        public Builder setResources(SpaceGame.Resources resources)
+        {
+            this.resources = resources;
+            return this;
+        }
+
+
+        public Builder setSpaceGame(SpaceGame spaceGame)
+        {
+            this.spaceGame = spaceGame;
+            return this;
+        }
+
+
+        public Builder setStatus(SpaceGame.Status status)
+        {
+            this.status = status;
+            return this;
+        }
+
+        public MissilePool build()
+        {
+            return new MissilePool(layout, resources, spaceGame, status,
+                    numberOfMissile, mainHandler, processHandler,soundEngine);
+        }
+
+        public Builder setSoundEngine(SoundEngine soundEngine) {
+            this.soundEngine = soundEngine;
+            return this;
+        }
+    }
+
 }
