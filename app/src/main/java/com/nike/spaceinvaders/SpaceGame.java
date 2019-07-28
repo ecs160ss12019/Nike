@@ -12,6 +12,7 @@ import android.widget.Space;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 //Adding two flags at l46 and l47
@@ -139,12 +140,21 @@ class SpaceGame  implements StatusManager{
                 case SpaceGame.SCORES:
                     hud.updateStatus(status);
                     break;
+                case SpaceGame.STATE:
+                    if (Objects.requireNonNull(status.get(key)).first==1f){
+                        this.setState(new PausedGame());
+                    }
                 default:
 
                     break;
             }
         }
-        state.notifyState(this.animatedObjects);
+
+    }
+
+    private void setState(State state) {
+        this.state = state;
+        this.state.notifyState(this.animatedObjects);
     }
 
     public void onTouch(MotionEvent event){
