@@ -27,4 +27,12 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="AppTheme.PopTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
+
 </resources>

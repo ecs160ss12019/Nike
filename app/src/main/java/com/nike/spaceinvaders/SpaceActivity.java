@@ -2,6 +2,7 @@ package com.nike.spaceinvaders;
 
 import android.app.Activity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -18,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,5 +113,12 @@ public class SpaceActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         mSpaceGame.onTouch(event);
         return super.onTouchEvent(event);
+    }
+
+    //invoked when pressing pause
+    public void pause_press(View view){
+        //Toast.makeText(getApplicationContext(),"TEST",Toast.LENGTH_SHORT).show();
+//        mSpaceGame.pause();
+        startActivity(new Intent(SpaceActivity.this,Pop.class));
     }
 }
