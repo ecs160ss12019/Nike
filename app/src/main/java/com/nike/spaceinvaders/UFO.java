@@ -32,9 +32,9 @@ public class UFO extends Invader {
     UFO(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
         myrand = new Random();
-        appear = 200;
+        appear = 200;//really frequent
         duration = 200;
-        remainedFrames = 50;
+        remainedFrames = 50;//kinda slow
         direction = myrand.nextBoolean();
     }
 
@@ -75,28 +75,28 @@ public class UFO extends Invader {
         return new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                if(decider){
-                    if(remainedFrames!=0){
+                if(decider){//if it should be flying at this frame
+                    if(remainedFrames!=0){//if it's in the middle of the trip
                         Point size = (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
-                        if(direction){
+                        if(direction){//from the left?
                             setX((float)size.x*((float)remainedFrames/50));
-                        }else{
+                        }else{//or the right?
                             setX((float)size.x-size.x*((float)remainedFrames/50));
                         }
                         remainedFrames--;
-                    }else{
+                    }else{//trip should end rn
                         decider =false;
                         remainedFrames=50;
                         direction = myrand.nextBoolean();
                         that.setVisibility(View.INVISIBLE);
                     }
-                }else{
-                    if(myrand.nextInt(appear)==1){
+                }else{//not flying at this frame, should it start?
+                    if(myrand.nextInt(appear)==1){//yes, start flying
                         decider=true;
                         that.setVisibility(View.VISIBLE);
                     }
                 }
-                Log.d("current appear rand is", ""+remainedFrames);
+                //Log.d("current appear rand is", ""+remainedFrames);
             }
         };
     }
