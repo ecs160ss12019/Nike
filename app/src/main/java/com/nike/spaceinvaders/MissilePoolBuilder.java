@@ -11,6 +11,7 @@ public class MissilePoolBuilder {
     private SpaceGame.Resources resources;
     private SpaceGame spaceGame;
     private SpaceGame.Status status;
+    private SoundEngine soundEngine;
 
 
     public MissilePoolBuilder(int capacity)
@@ -70,11 +71,14 @@ public class MissilePoolBuilder {
         return this;
     }
 
-
     public MissilePool build()
     {
         return new MissilePool(layout, resources, spaceGame, status,
-                numberOfMissile, mainHandler, processHandler);
+                numberOfMissile, mainHandler, processHandler,soundEngine);
     }
 
+    public MissilePoolBuilder setSoundEngine(SoundEngine soundEngine) {
+        this.soundEngine = soundEngine;
+        return this;
+    }
 }

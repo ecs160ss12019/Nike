@@ -45,8 +45,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
     private Canvas canvas;
 
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
-                SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super(null, view, resources, spaceGame, status, mainHandler, processHandler);
+                SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
+        super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
 
         // initialize hitBox
 

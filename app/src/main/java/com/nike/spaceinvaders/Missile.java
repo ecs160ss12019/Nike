@@ -47,8 +47,8 @@ class Missile extends AnimatedObject <ImageView>  {
     private ValueAnimator.AnimatorUpdateListener updateListener;
 
 
-    Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
-        super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
+    Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
+        super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
     }
 
 
@@ -98,7 +98,7 @@ class Missile extends AnimatedObject <ImageView>  {
                     */
 
                 //Plays sound effect for missile
-                SoundEngine.playMissile();
+                getSoundEngine().playMissile();
 
                 // get the starting position of missile
                 SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
@@ -147,7 +147,6 @@ class Missile extends AnimatedObject <ImageView>  {
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
         if (this.updateListener==null){
             this.updateListener= animation -> {
-//            Log.d("Missile",that.toString());
                 float fraction=animation.getAnimatedFraction();
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;

@@ -15,6 +15,7 @@ public class MissilePool {
     private SpaceGame.Resources resources;
     private SpaceGame spaceGame;
     private SpaceGame.Status status;
+    private SoundEngine soundEngine;
 
   // Missiles that are available
     private SparseArray<Missile> freshMissiles;
@@ -27,7 +28,7 @@ public class MissilePool {
 
     MissilePool(ViewGroup layout, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, int numberOfMissile, Handler mainHandler,
-                Handler processHandler) {
+                Handler processHandler,SoundEngine soundEngine) {
         this.layout = layout;
         this.mainHandler = mainHandler;
         this.processHandler = processHandler;
@@ -35,6 +36,7 @@ public class MissilePool {
         this.spaceGame = spaceGame;
         this.status = status;
         this.numberOfMissile = numberOfMissile;
+        this.soundEngine=soundEngine;
         configureCapacity(numberOfMissile);
     }
 
@@ -114,7 +116,7 @@ public class MissilePool {
                         Context context= (Context) that.resources.get(SpaceGame.CONTEXT);
                         ImageView missileView=new ImageView(context);
                         Missile missile=new Missile(missileView,
-                                resources,spaceGame,status,mainHandler,processHandler)
+                                resources,spaceGame,status,mainHandler,processHandler,soundEngine)
                                 .initKey(index).initRecyclable(true).initPool(that);
                         that.freshMissiles.put(index,missile);
                         missile.initialize();
@@ -185,7 +187,7 @@ public class MissilePool {
             Context context= (Context) this.resources.get(SpaceGame.CONTEXT);
             ImageView missileView=new ImageView(context);
             Missile missile=new Missile(missileView,
-                    resources,spaceGame,status,mainHandler,processHandler)
+                    resources,spaceGame,status,mainHandler,processHandler,soundEngine)
                     .initKey(-1).initPool(this).initRecyclable(false);
             excessiveMissiles.add(missile);
             missile.initialize();

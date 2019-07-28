@@ -41,9 +41,9 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     private int invaderWidth;
     private int invaderHeight;
 
-    InvaderGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
+    InvaderGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
 
-        super(null, view, resources, spaceGame, status, mainHandler, processHandler);
+        super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
 
         this.aliveInvaders = this.getChildCount();
         invaders = new ArrayList<>(this.getChildCount());
@@ -53,7 +53,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
             ImageView invaderView = (ImageView) this.getChildAt(i);
             this.invaderWidth = invaderView.getWidth();
             this.invaderHeight = invaderView.getHeight();
-            invaders.add(new Invader(i, this.getAnimator(), invaderView, resources, spaceGame, status, mainHandler, processHandler));
+            invaders.add(new Invader(i, this.getAnimator(), invaderView, resources, spaceGame, status, mainHandler, processHandler,soundEngine));
             hit[i / this.numCol][i % this.numCol] = true;
             SpaceGame.MutablePair<Integer, Integer> value = this.hitStatus.get(i / this.numCol);
             if (value == null) {

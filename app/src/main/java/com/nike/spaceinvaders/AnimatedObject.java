@@ -34,9 +34,10 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     private SpaceGame.Resources resources;
 
     private PointF parentCoordinates;
+    private SoundEngine soundEngine;
 
     AnimatedObject( ValueAnimator animator, View view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status,
-                   Handler mainHandler, Handler processHandler){
+                   Handler mainHandler, Handler processHandler,SoundEngine soundEngine){
 
         this.view = view;
         this.resources=resources;
@@ -44,6 +45,7 @@ public abstract class  AnimatedObject <View extends android.view.View>{
         this.status=status;
         this.mainHandler=mainHandler;
         this.processHandler=processHandler;
+        this.soundEngine=soundEngine;
     }
 
     public void setX(float x){
@@ -305,6 +307,14 @@ public abstract class  AnimatedObject <View extends android.view.View>{
 
     public void detachFrom(ViewGroup layout){
         layout.removeView(this.view);
+    }
+
+    public SoundEngine getSoundEngine() {
+        return soundEngine;
+    }
+
+    public void setSoundEngine(SoundEngine soundEngine) {
+        this.soundEngine = soundEngine;
     }
 
 
