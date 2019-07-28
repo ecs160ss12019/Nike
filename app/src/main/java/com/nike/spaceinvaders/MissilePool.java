@@ -119,7 +119,7 @@ public class MissilePool {
                                 resources,spaceGame,status,mainHandler,processHandler,soundEngine)
                                 .initKey(index).initRecyclable(true).initPool(that);
                         that.freshMissiles.put(index,missile);
-                        missile.initialize();
+                        missile.initialize(true);
 //                        missile.attachTo(that.layout);
                     }
                 }
@@ -141,7 +141,6 @@ public class MissilePool {
         }
         if (!missile.isRecyclable()){
             synchronized (this.excessiveMissiles){
-                missile.initialize();
                 missile.detachFrom(layout);
                 this.excessiveMissiles.remove(missile);
             }
@@ -149,7 +148,6 @@ public class MissilePool {
 
             synchronized (this.gloriousMissiles){
                 missile.setAliveStatus(true);
-                missile.initialize();
                 missile.detachFrom(layout);
                 this.gloriousMissiles.remove(missile.getKey());
             }
@@ -177,7 +175,7 @@ public class MissilePool {
                     freshMissiles.remove(freshMissiles.keyAt(size-1));
                     gloriousMissiles.put(freshMissiles.keyAt(size-1),missile);
                     gc();
-                    missile.initialize();
+                    missile.initialize(true);
                     return missile;
                 }
             }
@@ -190,12 +188,12 @@ public class MissilePool {
                     resources,spaceGame,status,mainHandler,processHandler,soundEngine)
                     .initKey(-1).initPool(this).initRecyclable(false);
             excessiveMissiles.add(missile);
-            missile.initialize();
+            missile.initialize(true);
             missile.attachTo(layout);
             missile.setTime(System.currentTimeMillis());
             this.checkCount++;
             gc();
-            missile.initialize();
+            missile.initialize(true);
             return missile;
         }
     }
