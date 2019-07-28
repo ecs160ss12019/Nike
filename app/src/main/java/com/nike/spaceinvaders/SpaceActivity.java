@@ -120,6 +120,10 @@ public class SpaceActivity extends AppCompatActivity {
     public void pause_press(View view){
         //Toast.makeText(getApplicationContext(),"TEST",Toast.LENGTH_SHORT).show();
 //        mSpaceGame.pause();
-        startActivity(new Intent(SpaceActivity.this,Pop.class));
+
+        Intent i = new Intent(SpaceActivity.this,Pop.class);
+        i.putExtra("signal","pause");
+        startActivity(i);
+        overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }
 }
