@@ -44,6 +44,8 @@ class Missile extends AnimatedObject <ImageView>  {
     private float startX;
     private float startY;
 
+    private float fraction;
+
 
     Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler);
@@ -144,6 +146,7 @@ class Missile extends AnimatedObject <ImageView>  {
         final Actions actions=new Actions();
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
         return animation -> {
+//            Log.d("Missile",that.toString());
             float fraction=animation.getAnimatedFraction();
             Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
             assert size != null;
@@ -157,15 +160,15 @@ class Missile extends AnimatedObject <ImageView>  {
             that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
 //            if(up)
 //                Log.d("fraction", String.valueOf(fraction));
-
-//            if(fraction==1.0){
-//                try {
-//                        alive = false;
-//                    ((Missile) that).recycle();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
+            this.fraction=fraction;
+            if(fraction==1.0&&alive){
+                try {
+                        alive = false;
+                    ((Missile) that).recycle();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         };
     }
 
@@ -181,7 +184,7 @@ class Missile extends AnimatedObject <ImageView>  {
         }else {
             this.getAnimator().cancel();
         }
-        this.getAnimator().setFloatValues(startY, findEndYPos());
+        this.getAnimator().setFloatValues(this.fraction, this.fraction+100f);
         speed = 600;
         // set the missile to be invisible
 

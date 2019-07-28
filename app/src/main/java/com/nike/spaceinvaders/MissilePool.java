@@ -190,6 +190,7 @@ public class MissilePool {
             excessiveMissiles.add(missile);
             missile.initialize();
             missile.attachTo(layout);
+            missile.setTime(System.currentTimeMillis());
             this.checkCount++;
             gc();
             missile.initialize();
