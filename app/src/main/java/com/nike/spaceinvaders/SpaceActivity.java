@@ -78,6 +78,7 @@ public class SpaceActivity extends AppCompatActivity {
         final View laserBase= findViewById(R.id.laserBase);
         final View baseShelterGroup= findViewById(R.id.shelters);
         final View invaderGroup= findViewById(R.id.invader_layout);
+        final View ufo = findViewById(R.id.UFO);
         final View hud=findViewById(R.id.HUD);
         final ViewGroup mainLayout=findViewById(R.id.main_layout);
         final SpaceGame.Status status=new SpaceGame.Status();
@@ -89,7 +90,7 @@ public class SpaceActivity extends AppCompatActivity {
                     mainHandler.postDelayed(this,0);
                     return;
                 }
-                mSpaceGame=new SpaceGame( new LaserBase( (ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler,se),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),null,new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler,se),resources,status,mainLayout,mainHandler,processHandler, se);
+                mSpaceGame=new SpaceGame( new LaserBase( (ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler,se),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),null,new UFO(0,null,(ImageView) ufo,resources,mSpaceGame,status,mainHandler,processHandler,se), new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler,se),resources,status,mainLayout,mainHandler,processHandler, se);
 
             }
         },0);
