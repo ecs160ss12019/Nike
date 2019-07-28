@@ -154,7 +154,7 @@ class SpaceGame  implements StatusManager{
 
     private void setState(State state) {
         this.state = state;
-        this.state.notifyState(this.animatedObjects);
+        this.state.notifyState(this.animatedObjects,this.missilePool);
     }
 
     public void onTouch(MotionEvent event){
@@ -177,7 +177,11 @@ class SpaceGame  implements StatusManager{
                 // debug
                 if(motion == SpaceGame.FIRE)
                 {
-
+                    if (this.getState() instanceof PausedGame){
+                        this.setState(new RunningGame());
+                    }else {
+                        this.setState(new PausedGame());
+                    }
                 }
                 break;
 
@@ -186,6 +190,10 @@ class SpaceGame  implements StatusManager{
                 this.laserBase.handle(actions);
                 break;
         }
+    }
+
+    public State getState() {
+        return state;
     }
 
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{
@@ -210,39 +218,41 @@ class SpaceGame  implements StatusManager{
     }
 
     interface State{
-        void notifyState(AnimatedObjectBox animatedObjects);
+        void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool);
     }
 
     class PausedGame implements State{
 
         @Override
-        public void notifyState(AnimatedObjectBox animatedObjects) {
+        public void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool) {
             Collection<AnimatedObject> objects=animatedObjects.values();
             AnimatedObject.Actions actions=new AnimatedObject.Actions();
             actions.put(SpaceGame.GAME_PAUSE,null);
             for (AnimatedObject object:objects){
                 object.handle(actions,SpaceGame.GAME_PAUSE);
             }
+            pool.pauseMissiles();
         }
     }
 
     class RunningGame implements State{
 
         @Override
-        public void notifyState(AnimatedObjectBox animatedObjects) {
+        public void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool) {
             Collection<AnimatedObject> objects=animatedObjects.values();
             AnimatedObject.Actions actions=new AnimatedObject.Actions();
             actions.put(SpaceGame.GAME_PAUSE,null);
             for (AnimatedObject object:objects){
                 object.handle(actions,SpaceGame.GAME_RESUME);
             }
+            pool.resumeMissile();
         }
     }
 
     class EndedGame implements State{
 
         @Override
-        public void notifyState(AnimatedObjectBox animatedObjects) {
+        public void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool) {
             Collection<AnimatedObject> objects=animatedObjects.values();
             AnimatedObject.Actions actions=new AnimatedObject.Actions();
             actions.put(SpaceGame.GAME_PAUSE,null);

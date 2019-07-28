@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.widget.ImageView;
@@ -108,6 +109,11 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
             case SpaceGame.GAME_PAUSE:
                 if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
                     this.getAnimator().pause();
+                }
+                break;
+            case SpaceGame.GAME_RESUME:
+                if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
+                    this.getAnimator().resume();
                 }
                 break;
 
@@ -261,6 +267,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
 
                 for (Invader invader : invaders) {
+                    Log.d("alalala","aefwafe");
                     if (invader.isAlive() && invader.toShoot())
                         invader.shootMissile();
                 }

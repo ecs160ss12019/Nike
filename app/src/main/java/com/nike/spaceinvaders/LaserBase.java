@@ -112,11 +112,15 @@ class LaserBase extends AnimatedObject<ImageView> {
                 if (hitDetection(actions, value.first)) {
                     kill(actions, value.first);
                 }
+                break;
             case SpaceGame.GAME_PAUSE:
                 this.running=false;
                 if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
                     this.getAnimator().pause();
                 }
+                break;
+            case SpaceGame.GAME_RESUME:
+                this.running=true;
                 break;
 
         }
