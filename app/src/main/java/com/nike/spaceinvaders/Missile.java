@@ -48,7 +48,7 @@ class Missile extends AnimatedObject <ImageView>  {
 
 
     Missile(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
-        super( new ValueAnimator(), view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
+        super( null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
     }
 
 
@@ -130,7 +130,7 @@ class Missile extends AnimatedObject <ImageView>  {
                     */
                 try {
                     alive = false;
-                    recycle();
+                    recycle(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -163,7 +163,7 @@ class Missile extends AnimatedObject <ImageView>  {
                 if(fraction==1.0){
                     try {
                         alive = false;
-                        ((Missile) that).recycle();
+                        ((Missile) that).recycle(true);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -174,16 +174,19 @@ class Missile extends AnimatedObject <ImageView>  {
     }
 
 
-    public void initialize() {
+    public void initialize(boolean isEnded) {
         this.setVisibility(View.INVISIBLE);
         this.setX(-100);
         this.setY(-100);
-        if (this.getAnimator()!=null){
-            this.getAnimator().cancel();
+        if (this.getAnimator()==null){
+            this.setAnimator(new ValueAnimator());
+            this.getAnimator().addUpdateListener(animatorListenerConfigure());
+
         }
-        this.setAnimator(new ValueAnimator());
+        if (!isEnded){
+            this.getAnimator().end();
+        }
 //            this.getAnimator().setInterpolator(null);
-        this.getAnimator().addUpdateListener(animatorListenerConfigure());
         this.getAnimator().setFloatValues(1f, 100f);
         speed = 600;
         // set the missile to be invisible
@@ -221,8 +224,8 @@ class Missile extends AnimatedObject <ImageView>  {
         return key;
     }
 
-    public void recycle() throws Exception {
-        initialize();
+    public void recycle(boolean isEnded) throws Exception {
+        initialize(isEnded);
         this.pool.recycle(this);
     }
 
