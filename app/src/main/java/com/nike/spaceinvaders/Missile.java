@@ -147,7 +147,6 @@ class Missile extends AnimatedObject <ImageView>  {
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
         if (this.updateListener==null){
             this.updateListener= animation -> {
-                Log.d("affaf",that.toString());
                 float fraction=animation.getAnimatedFraction();
                 Point size= (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
