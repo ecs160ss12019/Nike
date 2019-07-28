@@ -102,7 +102,7 @@ class Missile extends AnimatedObject <ImageView>  {
                 SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
                 this.startX = startPts.get(SpaceGame.X_COORDINATE);
                 this.startY = startPts.get(SpaceGame.Y_COORDINATE);
-                this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
+                this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f; // 1f = up, 0f = down
                 float endY = findEndYPos();
 
 
@@ -126,8 +126,8 @@ class Missile extends AnimatedObject <ImageView>  {
                        Missile hit an object and should disappear;
                        Called by whom missile collides with
                     */
-
                 try {
+                    alive = false;
                     recycle();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -155,9 +155,12 @@ class Missile extends AnimatedObject <ImageView>  {
             else
                 that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
             that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
-        //    Log.d("fraction", String.valueOf(fraction));
+//            if(up)
+//                Log.d("fraction", String.valueOf(fraction));
+
 //            if(fraction==1.0){
 //                try {
+//                        alive = false;
 //                    ((Missile) that).recycle();
 //                } catch (Exception e) {
 //                    e.printStackTrace();
@@ -171,7 +174,6 @@ class Missile extends AnimatedObject <ImageView>  {
         this.setVisibility(View.INVISIBLE);
         this.setX(-100);
         this.setY(-100);
-//        this.setAlpha(0);
         if (this.getAnimator() == null){
             this.setAnimator(new ValueAnimator());
 //            this.getAnimator().setInterpolator(null);
@@ -183,8 +185,6 @@ class Missile extends AnimatedObject <ImageView>  {
         speed = 600;
         // set the missile to be invisible
 
-//        this.setX(0);
-//        this.setY(0);
         this.setDrawable(((Resources)(getResources().get(SpaceGame.RESOURCES))).getDrawable(R.drawable.missile,null));
         Point screenPt = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
         // The width of missile will be 1 percent of the screen width
@@ -204,7 +204,7 @@ class Missile extends AnimatedObject <ImageView>  {
     private float findEndYPos()
     {
         if(up)
-            return -150;
+            return -150; // somewhere "above" the screen so that cannot be seen
         else
             return ((Point)this.getResources().get(SpaceGame.WINDOW_SIZE)).y;
     }

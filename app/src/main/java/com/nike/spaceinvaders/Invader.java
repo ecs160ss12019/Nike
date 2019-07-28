@@ -26,14 +26,12 @@ public class Invader extends AnimatedObject<ImageView> {
     private int[][] hitbox;
     private int abstractionLevel = 10;
     private int index;
-    private int shootcd;
     private Random rand;
 
     Invader(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler) {
         super(animator, view, resources, spaceGame, status, mainHandler, processHandler);
         this.index = index;
         rand = new Random();
-        shootcd = 50 + rand.nextInt(1000);
     }
 
     private void kill(Actions actions, AnimatedObject missile) {
