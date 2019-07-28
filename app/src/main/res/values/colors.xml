@@ -8,6 +8,7 @@
     <color name="black">#000000</color>
     <color name="red_half_transparent">#B3FF0000</color>
     <color name="blue_half_transparent">#B30000FF</color>
+    <color name="gray_half_transparent">#4D1A1A1A</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>

@@ -2,6 +2,7 @@ package com.nike.spaceinvaders;
 
 import android.app.Activity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -18,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,6 +80,7 @@ public class SpaceActivity extends AppCompatActivity {
         final View laserBase= findViewById(R.id.laserBase);
         final View baseShelterGroup= findViewById(R.id.shelters);
         final View invaderGroup= findViewById(R.id.invader_layout);
+        final View ufo = findViewById(R.id.UFO);
         final View hud=findViewById(R.id.HUD);
         final ViewGroup mainLayout=findViewById(R.id.main_layout);
         final SpaceGame.Status status=new SpaceGame.Status();
@@ -89,7 +92,7 @@ public class SpaceActivity extends AppCompatActivity {
                     mainHandler.postDelayed(this,0);
                     return;
                 }
-                mSpaceGame=new SpaceGame( new LaserBase( (ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler,se),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),null,new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler,se),resources,status,mainLayout,mainHandler,processHandler, se);
+                mSpaceGame=new SpaceGame( new LaserBase( (ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler,se),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),null,new UFO(0,null,(ImageView) ufo,resources,mSpaceGame,status,mainHandler,processHandler,se), new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler,se),resources,status,mainLayout,mainHandler,processHandler, se);
 
             }
         },0);
@@ -111,5 +114,16 @@ public class SpaceActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         mSpaceGame.onTouch(event);
         return super.onTouchEvent(event);
+    }
+
+    //invoked when pressing pause
+    public void pause_press(View view){
+        //Toast.makeText(getApplicationContext(),"TEST",Toast.LENGTH_SHORT).show();
+//        mSpaceGame.pause();
+
+        Intent i = new Intent(SpaceActivity.this,Pop.class);
+        i.putExtra("signal","pause");
+        startActivity(i);
+        overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }
 }

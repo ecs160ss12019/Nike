@@ -54,6 +54,7 @@ class SpaceGame  implements StatusManager{
     final AnimatedObject laserBase;
     final AnimatedObject baseShelterGroup;
     final AnimatedObject invaderGroup;
+    final AnimatedObject UFO;
     final MissilePool missilePool;
     final StatusManager hud;
     final Resources resources;
@@ -61,10 +62,11 @@ class SpaceGame  implements StatusManager{
     private Status status;
 
 
-    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject UFO, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
+        this.UFO = UFO;
         this.hud=hud;
         this.missilePool = new MissilePool.Builder(20).setLayout(layout)
                 .setResources(resources).setMainHandler(mainHandler)
@@ -73,6 +75,7 @@ class SpaceGame  implements StatusManager{
         this.laserBase.setSpaceGame(this);
         this.baseShelterGroup.setSpaceGame(this);
         this.invaderGroup.setSpaceGame(this);
+        this.UFO.setSpaceGame(this);
         ((AnimatedObject)this.hud).setSpaceGame(this);
 
         this.resources=resources;
@@ -81,6 +84,7 @@ class SpaceGame  implements StatusManager{
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
         actions.put(GAMESTART,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         invaderGroup.handle(actions);
+        UFO.handle(actions);
 
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
         actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
