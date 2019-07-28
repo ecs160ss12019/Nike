@@ -32,15 +32,13 @@ import java.util.Set;
 class Missile extends AnimatedObject <ImageView>  {
     private long time;
     private boolean recyclable;
-    private boolean status=true;
+    private boolean alive = true;
     private int key;
     private MissilePool pool;
 
     // whether the missile is moving up or down
     private boolean up;
-    // The width and height of missile
-    private float width;
-    private float height;
+
     private float speed;
 
     private float startX;
@@ -97,12 +95,16 @@ class Missile extends AnimatedObject <ImageView>  {
                        Missile has just been fired
                     */
 
+                //Plays sound effect for missile
+                SoundEngine.playMissile();
+
                 // get the starting position of missile
                 SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
                 this.startX = startPts.get(SpaceGame.X_COORDINATE);
                 this.startY = startPts.get(SpaceGame.Y_COORDINATE);
-                this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f;
+                this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f; // 1f = up, 0f = down
                 float endY = findEndYPos();
+
 
                 // load the missile
                 this.setVisibility(View.VISIBLE);
@@ -124,8 +126,8 @@ class Missile extends AnimatedObject <ImageView>  {
                        Missile hit an object and should disappear;
                        Called by whom missile collides with
                     */
-
                 try {
+                    alive = false;
                     recycle();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -140,7 +142,6 @@ class Missile extends AnimatedObject <ImageView>  {
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         final AnimatedObject that=this;
         final Actions actions=new Actions();
-        ;
         actions.put(SpaceGame.STRIKE,new Pair<>(this,null));
         return animation -> {
             float fraction=animation.getAnimatedFraction();
@@ -154,13 +155,17 @@ class Missile extends AnimatedObject <ImageView>  {
             else
                 that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
             that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
-            if(fraction==1.0){
-                try {
-                    ((Missile) that).recycle();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+//            if(up)
+//                Log.d("fraction", String.valueOf(fraction));
+
+//            if(fraction==1.0){
+//                try {
+//                        alive = false;
+//                    ((Missile) that).recycle();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
         };
     }
 
@@ -169,7 +174,6 @@ class Missile extends AnimatedObject <ImageView>  {
         this.setVisibility(View.INVISIBLE);
         this.setX(-100);
         this.setY(-100);
-//        this.setAlpha(0);
         if (this.getAnimator() == null){
             this.setAnimator(new ValueAnimator());
 //            this.getAnimator().setInterpolator(null);
@@ -181,14 +185,12 @@ class Missile extends AnimatedObject <ImageView>  {
         speed = 600;
         // set the missile to be invisible
 
-//        this.setX(0);
-//        this.setY(0);
         this.setDrawable(((Resources)(getResources().get(SpaceGame.RESOURCES))).getDrawable(R.drawable.missile,null));
         Point screenPt = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
         // The width of missile will be 1 percent of the screen width
-        width = screenPt.x / 50;
+        float width = screenPt.x / 50;
         // the height of missile will be 1/25 of the screen height
-        height = screenPt.y / 25;
+        float height = screenPt.y / 25;
         this.setSize((int)height,(int)width);
 
     }
@@ -202,7 +204,7 @@ class Missile extends AnimatedObject <ImageView>  {
     private float findEndYPos()
     {
         if(up)
-            return -150;
+            return -150; // somewhere "above" the screen so that cannot be seen
         else
             return ((Point)this.getResources().get(SpaceGame.WINDOW_SIZE)).y;
     }
@@ -225,12 +227,12 @@ class Missile extends AnimatedObject <ImageView>  {
         this.key = key;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isAlive() {
+        return alive;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setAliveStatus(boolean status) {
+        this.alive = status;
     }
 
     public long getTime() {

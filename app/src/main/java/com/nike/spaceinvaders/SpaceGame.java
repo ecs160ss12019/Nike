@@ -33,6 +33,8 @@ class SpaceGame  implements StatusManager{
     /* Action Flags */
     public static final int GAMESTART=0b00000001;
     // Missile has been released and is moving(striking)
+    // If an game object, say invaders, encounter STRIKE,
+    // it means it may get hit
     public static final int STRIKE=0b00000010;
     public static final int TOUCH=0b00000100;
     public static final int MISSILE_GONE=0b00001000;
@@ -75,15 +77,15 @@ class SpaceGame  implements StatusManager{
     private Status status;
 
 
-    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread){
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
         this.hud=hud;
-        this.missilePool = new MissilePool().setLayout(layout)
+        this.missilePool = new MissilePoolBuilder(20).setLayout(layout)
                 .setResources(resources).setMainHandler(mainHandler)
                 .setProcessHandler(processThread).setStatus(status).setSpaceGame(this)
-                .setCapacity(20);  // setCapacity needs to be called at the very last
+                .build();  // setCapacity needs to be called at the very last
         this.laserBase.setSpaceGame(this);
         this.baseShelterGroup.setSpaceGame(this);
         this.invaderGroup.setSpaceGame(this);
@@ -102,6 +104,8 @@ class SpaceGame  implements StatusManager{
 
         status.put(SpaceGame.SCORES,new Pair<>(0f,null));
         //Below Test only
+/*        status.put(SpaceGame.NUM_LIVES,new Pair<>(Float.valueOf(1),null));//TODO:Bug: LIVEMAX Doesnt work
+        updateStatus(status);*/
 
     }
 
@@ -113,8 +117,9 @@ class SpaceGame  implements StatusManager{
                 case SpaceGame.NUM_INVADER:
                     break;
                 case SpaceGame.NUM_LIVES:
+                    // laserBase loses on life
                     hud.updateStatus(status);
-                    laserBase.setVisibility(View.VISIBLE);
+                    ((LaserBase)laserBase).spawn();
                     // TODO: pause the game for 3 seconds
                     break;
                 case SpaceGame.SCORES:
