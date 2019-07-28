@@ -130,7 +130,7 @@ class Missile extends AnimatedObject <ImageView>  {
                     */
                 try {
                     alive = false;
-                    recycle(false);
+                    recycle();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -163,7 +163,7 @@ class Missile extends AnimatedObject <ImageView>  {
                 if(fraction==1.0){
                     try {
                         alive = false;
-                        ((Missile) that).recycle(true);
+                        ((Missile) that).recycle();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -174,7 +174,7 @@ class Missile extends AnimatedObject <ImageView>  {
     }
 
 
-    public void initialize(boolean isEnded) {
+    public void initialize() {
         this.setVisibility(View.INVISIBLE);
         this.setX(-100);
         this.setY(-100);
@@ -183,7 +183,7 @@ class Missile extends AnimatedObject <ImageView>  {
             this.getAnimator().addUpdateListener(animatorListenerConfigure());
 
         }
-        if (!isEnded){
+        if (this.getAnimator().isRunning()&&this.getAnimator().getAnimatedFraction()!=1f){
             this.getAnimator().end();
         }
 //            this.getAnimator().setInterpolator(null);
@@ -224,8 +224,8 @@ class Missile extends AnimatedObject <ImageView>  {
         return key;
     }
 
-    public void recycle(boolean isEnded) throws Exception {
-        initialize(isEnded);
+    public void recycle() throws Exception {
+        initialize();
         this.pool.recycle(this);
     }
 

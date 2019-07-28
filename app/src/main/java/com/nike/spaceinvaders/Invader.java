@@ -34,7 +34,7 @@ public class Invader extends AnimatedObject<ImageView> {
         rand = new Random();
     }
 
-    private void kill(Actions actions, AnimatedObject missile) {
+    protected void kill(Actions actions, AnimatedObject missile) {
         alive = false;
         this.setVisibility(View.INVISIBLE);
         actions.put(SpaceGame.MISSILE_GONE, null);
@@ -44,7 +44,7 @@ public class Invader extends AnimatedObject<ImageView> {
         notifySpaceGame();
     }
 
-    private void notifySpaceGame() {
+    protected void notifySpaceGame() {
         SpaceGame.Status status = getStatus();
         Pair<Float, Float> value = status.get(SpaceGame.SCORES);
         assert value != null;
@@ -54,7 +54,7 @@ public class Invader extends AnimatedObject<ImageView> {
 
 
 
-    private boolean hitDetection(Actions actions, AnimatedObject missile) {
+    protected boolean hitDetection(Actions actions, AnimatedObject missile) {
         if (!alive) {
             return false;
         }
