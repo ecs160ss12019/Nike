@@ -253,10 +253,12 @@ class Missile extends AnimatedObject<ImageView> {
 
     private void notifyGameObjects(AnimatedObject that, Actions actions)
     {
-        if(up)
-            that.getSpaceGame().invaderGroup.handle(actions,SpaceGame.STRIKE);
-        else
+        if(up) {
+            that.getSpaceGame().invaderGroup.handle(actions, SpaceGame.STRIKE);
+            that.getSpaceGame().UFO.handle(actions, SpaceGame.STRIKE);
+        } else {
             that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
+        }
         that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
     }
 

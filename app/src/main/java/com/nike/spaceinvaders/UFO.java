@@ -30,6 +30,7 @@ public class UFO extends Invader {
         duration = 1000;
         remainedFrames = 50;//kinda slow
         direction = myrand.nextBoolean();
+        alive = true;
     }
 
     @Override
