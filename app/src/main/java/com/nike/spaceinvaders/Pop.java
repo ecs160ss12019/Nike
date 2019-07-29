@@ -2,6 +2,7 @@ package com.nike.spaceinvaders;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,9 +14,8 @@ public class Pop extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/*
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();*/
+
+        getSupportActionBar().hide();
 
         Intent i = getIntent();
         String sig = i.getStringExtra("signal");
@@ -38,13 +38,20 @@ public class Pop extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.5),(int)(height*.5));
 
-
     }
+    //resume button pressed
     public void resume(View view){
         finish();
+        overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);//android.anim.fade_in
     }
-
+    //retry button pressed
     public void retry(View view) {
         //TODO: restart game
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }
 }
