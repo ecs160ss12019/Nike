@@ -153,12 +153,14 @@ public class SpaceActivity extends AppCompatActivity {
         String str = bundle.getString("signal");
         Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
 
-        if(str.equalsIgnoreCase("resume")){
+        if(str.equals("resume")){
             if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
                 mSpaceGame.setState(new SpaceGame.RunningGame());
             }else {
                 mSpaceGame.setState(new SpaceGame.PausedGame());
             }
+        }else if(str.equals("restart")){
+            //TODO: restart the game
         }
 
     }

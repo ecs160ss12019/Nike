@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.Window;
 
 public class Pop extends AppCompatActivity {
-
+    public String str;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +19,7 @@ public class Pop extends AppCompatActivity {
 
         Intent i = getIntent();
         String sig = i.getStringExtra("signal");
+        this.str=sig;
         switch (sig){
             case "pause":
                 setContentView(R.layout.pop_pause);
@@ -55,14 +56,22 @@ public class Pop extends AppCompatActivity {
         //TODO: restart game
     }
 
+
+
     @Override
     public void finish(){
+
         Intent intent=this.getIntent();
         Bundle bundle=intent.getExtras();
         //Test only
-        bundle.putString("signal","resume");
-        intent.putExtras(bundle);
-        this.setResult(Activity.RESULT_OK,intent);
+        if (this.str.equals("pause")) {
+            bundle.putString("signal","resume");
+            intent.putExtras(bundle);
+            this.setResult(Activity.RESULT_OK,intent);
+        }else {
+            bundle.putString("signal","restart");
+            intent.putExtras(bundle);
+        }
         super.finish();
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }
