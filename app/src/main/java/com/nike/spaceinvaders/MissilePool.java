@@ -2,6 +2,7 @@ package com.nike.spaceinvaders;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -197,6 +198,40 @@ public class MissilePool {
             return missile;
         }
     }
+
+    public synchronized void pauseMissiles(){
+        AnimatedObject.Actions paused=new AnimatedObject.Actions();
+        paused.put(SpaceGame.GAME_PAUSE,null);
+        for (int index=gloriousMissiles.size()-1;index>=0;index--){
+            if (gloriousMissiles.get(gloriousMissiles.keyAt(index))==null){
+                continue;
+            }
+            gloriousMissiles.get(gloriousMissiles.keyAt(index)).setTime(System.currentTimeMillis());
+            gloriousMissiles.get(gloriousMissiles.keyAt(index)).handle(paused,SpaceGame.GAME_PAUSE);
+        }
+        for (int index=excessiveMissiles.size()-1;index>=0;index--){
+            excessiveMissiles.get(index).setTime(System.currentTimeMillis());
+            excessiveMissiles.get(index).handle(paused,SpaceGame.GAME_PAUSE);
+        }
+    }
+
+
+    public synchronized void resumeMissile(){
+        AnimatedObject.Actions running=new AnimatedObject.Actions();
+        running.put(SpaceGame.GAME_RESUME,null);
+        for (int index=gloriousMissiles.size()-1;index>=0;index--){
+            if (gloriousMissiles.get(gloriousMissiles.keyAt(index))==null){
+                continue;
+            }
+            gloriousMissiles.get(gloriousMissiles.keyAt(index)).setTime(System.currentTimeMillis());
+            gloriousMissiles.get(gloriousMissiles.keyAt(index)).handle(running,SpaceGame.GAME_RESUME);
+        }
+        for (int index=excessiveMissiles.size()-1;index>=0;index--){
+            excessiveMissiles.get(index).setTime(System.currentTimeMillis());
+            excessiveMissiles.get(index).handle(running,SpaceGame.GAME_RESUME);
+        }
+    }
+
 
     // A garbage collector
     private void gc(){

@@ -1,25 +1,16 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
-import android.content.res.Resources;
-import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
-import android.util.SparseBooleanArray;
-import android.view.animation.BaseInterpolator;
 import android.widget.ImageView;
-import android.widget.Space;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 
 /**
  * Developer Henry Yi & Xuanchen Zhou
@@ -91,7 +82,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     protected void handle(Actions actions, Integer key) {
         Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
         switch (key) {
-            case SpaceGame.GAMESTART:
+            case SpaceGame.GAME_START:
                 if (this.getAnimator() == null) {
                     this.setAnimator(new ValueAnimator());
                     this.getAnimator().setIntValues(1, 100);
@@ -114,6 +105,16 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
                 this.hitStatus.get(index / this.numCol).first -= 1;
                 this.hitStatus.get(index % this.numCol).second -= 1;
                 this.setDetection(false);
+                break;
+            case SpaceGame.GAME_PAUSE:
+                if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
+                    this.getAnimator().pause();
+                }
+                break;
+            case SpaceGame.GAME_RESUME:
+                if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
+                    this.getAnimator().resume();
+                }
                 break;
 
         }
