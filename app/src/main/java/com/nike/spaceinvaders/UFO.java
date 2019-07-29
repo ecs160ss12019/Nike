@@ -2,12 +2,14 @@ package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
 import android.graphics.Point;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Random;
+import java.util.concurrent.TimeoutException;
 
 import android.os.Handler;
 
@@ -23,8 +25,8 @@ public class UFO extends Invader {
     UFO(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
         myrand = new Random();
-        appear = 200;//really frequent
-        duration = 200;
+        appear = 20;//really frequent
+        duration = 2000;
         remainedFrames = 50;//kinda slow
         direction = myrand.nextBoolean();
     }
@@ -40,12 +42,12 @@ public class UFO extends Invader {
                     this.setAnimator(new ValueAnimator());
                     this.getAnimator().setIntValues(1, 100);
                     this.getAnimator().setDuration(this.duration);
-                    this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
-                    this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
+//                    this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
+//                    this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
                     this.getAnimator().setInterpolator(null);
                     this.getAnimator().addUpdateListener(animatorListenerConfigure());
                     this.getAnimator().start();
-                    this.setVisibility(View.INVISIBLE);
+                    this.setX(-150);
                 }
 
                 break;
@@ -73,32 +75,46 @@ public class UFO extends Invader {
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
+
         final AnimatedObject that = this;
         return new ValueAnimator.AnimatorUpdateListener() {
+            private int times;
+            private int expectation;
+            private float subFraction;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                if(decider){//if it should be flying at this frame
-                    if(remainedFrames!=0){//if it's in the middle of the trip
-                        Point size = (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
-                        if(direction){//from the left?
-                            setX((float)size.x*((float)remainedFrames/50));
-                        }else{//or the right?
-                            setX((float)size.x-size.x*((float)remainedFrames/50));
-                        }
-                        remainedFrames--;
-                    }else{//trip should end rn
-                        decider =false;
-                        remainedFrames=50;
-                        direction = myrand.nextBoolean();
-                        that.setVisibility(View.INVISIBLE);
-                    }
-                }else{//not flying at this frame, should it start?
-                    if(myrand.nextInt(appear)==1){//yes, start flying
-                        decider=true;
-                        that.setVisibility(View.VISIBLE);
-                    }
+                if (expectation==0){
+                    expectation=myrand.nextInt(appear);
+                    Log.d("END-1", String.valueOf(expectation));
+
                 }
-                //Log.d("current appear rand is", ""+remainedFrames);
+                float fraction = animation.getAnimatedFraction();
+                if (fraction==1f){
+
+
+                    that.getMainHandler().post(() -> {
+                        animation.setIntValues(1, 100);
+                        animation.setDuration(duration);
+                        animation.start();
+                        Log.d("END-2", String.valueOf(times));
+                        times++;
+                    });
+
+                }
+                if (times==expectation){
+                    direction = myrand.nextBoolean();
+                    Point size = (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
+                    assert size != null;
+                    int lengthX = size.x;
+                    Log.d("fraction", String.valueOf(fraction));
+                    if (direction){
+                        that.setX(lengthX*fraction);
+                    }else {
+                        that.setX(lengthX*(1-fraction));
+                    }
+                    times=0;
+                    expectation=0;
+                }
             }
         };
     }

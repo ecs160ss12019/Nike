@@ -206,7 +206,6 @@ public class MissilePool {
             if (gloriousMissiles.get(gloriousMissiles.keyAt(index))==null){
                 continue;
             }
-            Log.d("awfwafew","awefwaeeeee");
             gloriousMissiles.get(gloriousMissiles.keyAt(index)).setTime(System.currentTimeMillis());
             gloriousMissiles.get(gloriousMissiles.keyAt(index)).handle(paused,SpaceGame.GAME_PAUSE);
         }
