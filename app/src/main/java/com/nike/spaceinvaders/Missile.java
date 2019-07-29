@@ -95,8 +95,8 @@ class Missile extends AnimatedObject<ImageView> {
                        Missile has just been fired
                     */
 
-                //Plays sound effect for missile
-                missileForm.playMissileSound();
+                //Plays sound effect for missile and set up missile's image
+                withSoundAndImage();
 
                 // get the starting position of missile
                 SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
@@ -118,11 +118,12 @@ class Missile extends AnimatedObject<ImageView> {
                 this.getAnimator().start();
                 break;
 
-
-            case SpaceGame.STRIKE:/*
-                       One Missile strikes another missile
-                    */
-                break;
+//
+//            case SpaceGame.STRIKE:
+//                /*
+//                       One Missile strikes another missile
+//                    */
+//                break;
 
             case SpaceGame.MISSILE_GONE:
                 /*
@@ -137,7 +138,6 @@ class Missile extends AnimatedObject<ImageView> {
                 }
                 break;
             case SpaceGame.GAME_PAUSE:
-                Log.d("Paused","awfawefwaeew");
                 if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
                     this.getAnimator().pause();
                 }
@@ -187,6 +187,7 @@ class Missile extends AnimatedObject<ImageView> {
 
 
     public void initialize() {
+        // set the missile to be invisible
         this.setVisibility(View.INVISIBLE);
         this.setX(-100);
         this.setY(-100);
@@ -198,10 +199,9 @@ class Missile extends AnimatedObject<ImageView> {
         if (this.getAnimator().isRunning()&&this.getAnimator().getAnimatedFraction()!=1f){
             this.getAnimator().end();
         }
-//            this.getAnimator().setInterpolator(null);
+
         this.getAnimator().setFloatValues(1f, 100f);
         speed = 600;
-        // set the missile to be invisible
 
         this.setDrawable(((Resources) (getResources().get(SpaceGame.RESOURCES))).getDrawable(R.drawable.missile, null));
         Point screenPt = (Point) this.getResources().get(SpaceGame.WINDOW_SIZE);
@@ -227,9 +227,19 @@ class Missile extends AnimatedObject<ImageView> {
     }
 
 
+    /*
+    Plays sound effect for missile and set up missile's image
+     */
+    private void withSoundAndImage()
+    {
+        missileForm.playMissileSound();
+        Resources resources = (Resources) this.getResources().get(SpaceGame.RESOURCES);
+        missileForm.setMissileImage(this, resources);
+    }
+
+
     public void setMissileForm(MissileForm missileForm)
     {
-        //this.setDrawable();
         this.missileForm = missileForm;
     }
 

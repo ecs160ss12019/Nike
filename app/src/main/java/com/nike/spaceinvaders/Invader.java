@@ -156,12 +156,16 @@ public class Invader extends AnimatedObject<ImageView> {
             case 0:
                 this.missileForm = new InvaderAMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
+                break;
+
             case 1:
                 this.missileForm = new InvaderBMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
+                break;
             case 2:
                 this.missileForm = new InvaderCMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
+                break;
         }
     }
 
