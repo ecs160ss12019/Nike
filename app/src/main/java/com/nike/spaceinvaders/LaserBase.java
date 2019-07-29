@@ -1,6 +1,7 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -92,6 +93,8 @@ class LaserBase extends AnimatedObject<ImageView> {
 //                if(lastMissile != null && lastMissile.isAlive())
 //                    return;
                 AnimatedObject missile = getSpaceGame().missilePool.getMissile();
+                ((Missile) missile).setMissileForm(new LaserBaseMissileForm
+                        ((Context) this.getResources().get(SpaceGame.CONTEXT)));
                 SparseArray<Float> values = new SparseArray<>();
                 values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getX());
                 values.put(SpaceGame.Y_COORDINATE, (this.getY()));
