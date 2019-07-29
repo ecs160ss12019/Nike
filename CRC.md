@@ -72,3 +72,20 @@
 |---|---|
 |  - Missile has two features that determine its form: Sound and Image  <br> - Set the form of Missile |  Missile |
 
+
+
+| UFO | |
+|---|---|
+|  - A class derives from invader  <br> - Not able to shoot but give user bonus points |  SpaceGame <br> Missile |
+
+
+
+
+| StartMenu | |
+|---|---|
+|  - Display the Menu when the game is paused or not staated yet |  HUD <br> SpaceGame |
+
+
+| Pop | |
+|---|---|
+|  - Handle the pop-up window |  HUD <br> SpaceGame |

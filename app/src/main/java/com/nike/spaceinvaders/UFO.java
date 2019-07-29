@@ -1,5 +1,11 @@
 package com.nike.spaceinvaders;
 
+/*
+- A class derives from invader
+- Not able to shoot but give user bonus points
+ */
+
+
 import android.animation.ValueAnimator;
 import android.graphics.Point;
 import android.util.Log;
