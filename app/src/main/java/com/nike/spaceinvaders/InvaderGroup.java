@@ -297,4 +297,9 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     public void setXRaw(float x) {
         super.setX(x);
     }
+
+    @Override
+    public float evaluate(float value) {
+        return 0;
+    }
 }

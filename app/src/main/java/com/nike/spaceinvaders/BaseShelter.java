@@ -180,4 +180,9 @@ class BaseShelter extends AnimatedObject<ImageView> {
         }
         return null;
     }
+
+    @Override
+    public float evaluate(float value) {
+        return 0;
+    }
 }

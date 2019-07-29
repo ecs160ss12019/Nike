@@ -284,4 +284,8 @@ class Missile extends AnimatedObject<ImageView> {
     }
 
 
+    @Override
+    public float evaluate(float value) {
+        return 0;
+    }
 }

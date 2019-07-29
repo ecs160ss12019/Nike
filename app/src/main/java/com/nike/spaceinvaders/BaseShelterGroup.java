@@ -69,4 +69,9 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
         return null;
     }
+
+    @Override
+    public float evaluate(float value) {
+        return 0;
+    }
 }

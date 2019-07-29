@@ -14,4 +14,9 @@ public class AI {
     }
 
 
+
+
+    interface Evaluator {
+         float evaluate(float value);
+    }
 }

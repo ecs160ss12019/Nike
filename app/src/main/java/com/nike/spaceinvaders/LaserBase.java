@@ -215,4 +215,9 @@ class LaserBase extends AnimatedObject<ImageView> {
     public float getDelta() {
         return delta;
     }
+
+    @Override
+    public float evaluate(float value) {
+        return 0;
+    }
 }

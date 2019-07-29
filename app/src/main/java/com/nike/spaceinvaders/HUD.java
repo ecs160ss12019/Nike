@@ -89,4 +89,9 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
         }
         this.lives=lives;
     }
+
+    @Override
+    public float evaluate(float value) {
+        return 0;
+    }
 }
