@@ -9,6 +9,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PointF;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
@@ -42,6 +43,18 @@ public class Invader extends AnimatedObject<ImageView> {
         this.index = index;
         initMissileForm();
         rand = new Random();
+        if(row==0){
+            view.setBackgroundResource(R.drawable.orangeinvader);
+        }else if(row==1){
+            view.setBackgroundResource(R.drawable.yellowinvader);
+        }else if(row==2){
+            view.setBackgroundResource(R.drawable.blueinvader);
+        }else{
+        }
+        AnimationDrawable frameAnimation =  (AnimationDrawable) view.getBackground();
+        if(frameAnimation!=null){
+            frameAnimation.start();
+        }
     }
 
     protected void kill(Actions actions, AnimatedObject missile) {
