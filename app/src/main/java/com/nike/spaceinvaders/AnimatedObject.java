@@ -22,7 +22,7 @@ import java.util.Set;
  * It holds and manages a view object, the SpaceGame, the Threads handlers, ValueAnimator, Status of the game,
  * Resources, and parenntCoordinates;
  */
-public abstract class  AnimatedObject <View extends android.view.View>{
+public abstract class  AnimatedObject <View extends android.view.View> implements AI.Evaluator{
     private SpaceGame spaceGame;
     private Handler mainHandler;
     private Handler processHandler;

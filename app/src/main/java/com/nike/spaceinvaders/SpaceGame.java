@@ -178,11 +178,11 @@ class SpaceGame  implements StatusManager{
                 // debug
                 if(motion == SpaceGame.FIRE)
                 {
-                    if (this.getState() instanceof PausedGame){
-                        this.setState(new RunningGame());
-                    }else {
-                        this.setState(new PausedGame());
-                    }
+//                    if (this.getState() instanceof PausedGame){
+//                        this.setState(new RunningGame());
+//                    }else {
+//                        this.setState(new PausedGame());
+//                    }
                 }
                 break;
 

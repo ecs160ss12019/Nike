@@ -181,4 +181,9 @@ public class Invader extends AnimatedObject<ImageView> {
     {
         return alive;
     }
+
+    @Override
+    public float evaluate(float value) {
+        return 0;
+    }
 }
