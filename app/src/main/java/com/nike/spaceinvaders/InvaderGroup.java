@@ -267,8 +267,13 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
 
                 for (Invader invader : invaders) {
-                    if (invader.isAlive() && invader.toShoot())
-                        invader.shootMissile();
+                    if (invader.isAlive() && invader.toShoot()){
+                        invader.shootMissile();}
+                    if(invader.isAlive()){
+                        Actions actions = new Actions();
+                        actions.put(SpaceGame.CONTACT, new Pair<AnimatedObject, SparseArray<Float>>(invader, null));
+                        invader.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.CONTACT);
+                    }
                 }
             }
         };

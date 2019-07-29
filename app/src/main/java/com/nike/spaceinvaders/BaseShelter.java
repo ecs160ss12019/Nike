@@ -18,8 +18,10 @@ import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.ArraySet;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -79,48 +81,77 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     }
 
+    private boolean collisionDetection(AnimatedObject collider) {
+        // get collider's location
+        float x = collider.getAbsoluteX();
+        float y = collider.getAbsoluteY();
+
+        int colliderWidth = collider.getWidth();
+
+        float left, top, bottom, right;
+        left = this.getAbsoluteX() + 20;
+        top = this.getAbsoluteY();
+        bottom = top + this.getHeight();
+        right = left + this.getWidth() - 20;
+        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + colliderWidth) >= left && (x + colliderWidth) <= right && y <= bottom && y >= top)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void killSelf(){
+        this.setVisibility(View.INVISIBLE);
+    }
+
 
     /*
     Only need to handle the strike case
      */
     @Override
     protected void handle(Actions actions, Integer key) {
+        switch(key)
+        {
+            case SpaceGame.CONTACT:
+                if(collisionDetection(actions.get(SpaceGame.CONTACT).first)){
+                    killSelf();
+                }
+                break;
 
-        if (key != SpaceGame.STRIKE)
-            return;
-        //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
-        Missile missile = (Missile) Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
+            case SpaceGame.STRIKE:
+                //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
+                Missile missile = (Missile) Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
 //        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
 //        float missileAbsY = data.get(SpaceGame.Y_COORDINATE);
 
-        float missileAbsX = missile.getX();
-        float missileAbsY = missile.getY();
+                float missileAbsX = missile.getX();
+                float missileAbsY = missile.getY();
 
-        // change the absolute missile coordinates to coordinates relative to shelter
-        float missileRelX = missileAbsX - this.getAbsoluteX();
-        float missileRelY = missileAbsY - this.getAbsoluteY();
-
-
-        // hit detection
-        PointF boxXY = new PointF(missileRelX, missileRelY);
-        Point hitPoint = hitDetection(boxXY, new Size(0, this.boxSize));
+                // change the absolute missile coordinates to coordinates relative to shelter
+                float missileRelX = missileAbsX - this.getAbsoluteX();
+                float missileRelY = missileAbsY - this.getAbsoluteY();
 
 
-        if (hitPoint != null) {
-            // draw the hitting effect using bitmap
-            drawDamage(hitPoint.x, hitPoint.y);
+                // hit detection
+                PointF boxXY = new PointF(missileRelX, missileRelY);
+                Point hitPoint = hitDetection(boxXY, new Size(0, this.boxSize));
 
-            // notify the missile to be gone
-            Actions missileGone = new Actions();
-            missileGone.put(SpaceGame.MISSILE_GONE, new
-                    Pair<AnimatedObject, SparseArray<Float>>(this, null));
 
-            missile.handle(missileGone, SpaceGame.MISSILE_GONE);
+                if (hitPoint != null) {
+                    // draw the hitting effect using bitmap
+                    drawDamage(hitPoint.x, hitPoint.y);
+
+                    // notify the missile to be gone
+                    Actions missileGone = new Actions();
+                    missileGone.put(SpaceGame.MISSILE_GONE, new
+                            Pair<AnimatedObject, SparseArray<Float>>(this, null));
+
+                    missile.handle(missileGone, SpaceGame.MISSILE_GONE);
+                }
+                break;
+
+
         }
-
-        // else return
-
-
     }
 
 

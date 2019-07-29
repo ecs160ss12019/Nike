@@ -22,7 +22,7 @@ import android.widget.Space;
 
 
 public class Invader extends AnimatedObject<ImageView> {
-    private boolean alive = true;
+    public boolean alive = true;
     private Missile missile;
     private int[][] hitbox;
     private int abstractionLevel = 10;
@@ -107,9 +107,11 @@ public class Invader extends AnimatedObject<ImageView> {
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
+        final Invader that = this;
         return new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+
             }
         };
     }
@@ -133,7 +135,6 @@ public class Invader extends AnimatedObject<ImageView> {
         Actions actions = new Actions();
 
         AnimatedObject missile = getSpaceGame().missilePool.getMissile();
-        //
         SparseArray<Float> values = new SparseArray<>();
         values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getAbsoluteX());
         values.put(SpaceGame.Y_COORDINATE, (this.getAbsoluteY()));
@@ -142,6 +143,7 @@ public class Invader extends AnimatedObject<ImageView> {
         actions.put(SpaceGame.FIRE, new Pair<>(this, values));
 
         if (missile != null) {
+            ((Missile) missile).setMissileForm(this.missileForm);
             missile.handle(actions, SpaceGame.FIRE);
         }
     }
