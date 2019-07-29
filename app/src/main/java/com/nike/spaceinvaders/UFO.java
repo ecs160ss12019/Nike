@@ -21,12 +21,13 @@ public class UFO extends Invader {
     private boolean decider=false;//should the UFO start flying at this frame?
     private int remainedFrames;//this is the number of frames spent in each horizontal trip, so the speed of UFO is faster when this number is smaller
     private boolean direction;
+    private float startX=-200;
 
     UFO(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
         myrand = new Random();
-        appear = 20;//really frequent
-        duration = 2000;
+        appear = 15;//really frequent
+        duration = 1000;
         remainedFrames = 50;//kinda slow
         direction = myrand.nextBoolean();
     }
@@ -47,7 +48,7 @@ public class UFO extends Invader {
                     this.getAnimator().setInterpolator(null);
                     this.getAnimator().addUpdateListener(animatorListenerConfigure());
                     this.getAnimator().start();
-                    this.setX(-150);
+                    this.setX(this.startX);
                 }
 
                 break;
@@ -80,18 +81,22 @@ public class UFO extends Invader {
         return new ValueAnimator.AnimatorUpdateListener() {
             private int times;
             private int expectation;
-            private float subFraction;
+            private boolean running=false;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 if (expectation==0){
                     expectation=myrand.nextInt(appear);
+                    direction = myrand.nextBoolean();
                     Log.d("END-1", String.valueOf(expectation));
 
                 }
                 float fraction = animation.getAnimatedFraction();
                 if (fraction==1f){
-
-
+                    if (running){
+                        times=0;
+                        expectation=0;
+                        running=false;
+                    }
                     that.getMainHandler().post(() -> {
                         animation.setIntValues(1, 100);
                         animation.setDuration(duration);
@@ -99,21 +104,19 @@ public class UFO extends Invader {
                         Log.d("END-2", String.valueOf(times));
                         times++;
                     });
-
                 }
                 if (times==expectation){
-                    direction = myrand.nextBoolean();
+                    running=true;
+
                     Point size = (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                     assert size != null;
-                    int lengthX = size.x;
+                    int lengthX = (int) (size.x-((UFO) that).startX);
                     Log.d("fraction", String.valueOf(fraction));
                     if (direction){
-                        that.setX(lengthX*fraction);
+                        that.setX(((UFO) that).startX+lengthX*fraction);
                     }else {
-                        that.setX(lengthX*(1-fraction));
+                        that.setX(((UFO) that).startX+lengthX*(1-fraction));
                     }
-                    times=0;
-                    expectation=0;
                 }
             }
         };
