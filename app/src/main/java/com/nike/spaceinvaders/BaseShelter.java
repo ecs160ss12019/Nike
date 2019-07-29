@@ -1,5 +1,12 @@
 package com.nike.spaceinvaders;
 
+/*
+- Has an array of ShelterBlocks that make up a baseShelter
+- Detect the collision with missiles
+- Spawns at between invader and laserbase
+ */
+
+
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.Bitmap;

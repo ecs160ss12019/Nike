@@ -1,5 +1,10 @@
 package com.nike.spaceinvaders;
 
+/*
+- Generates and Manages the movement and size of invaders
+- Detect the collision with missiles
+- Spawns at the top of interface
+ */
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;

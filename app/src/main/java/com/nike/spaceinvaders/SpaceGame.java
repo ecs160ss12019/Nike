@@ -1,4 +1,8 @@
-// Author: Zhiyuan Guo
+/*
+- UI and framework of this game
+- Shows the graphical background of the game, which is the universe
+- Contains a list of objects in the game
+ */
 
 package com.nike.spaceinvaders;
 

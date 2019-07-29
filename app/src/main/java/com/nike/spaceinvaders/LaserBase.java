@@ -1,5 +1,10 @@
 package com.nike.spaceinvaders;
 
+/*
+- Able to move right or left when user touches the left/right part of the screen
+- Has 3 lives
+- Able to shoot missle when user touch the middle screen on the screen
+ */
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
@@ -23,9 +28,7 @@ import org.ejml.data.Matrix;
 import org.ejml.equation.Equation;
 import org.ejml.simple.SimpleMatrix;
 
-/**
- * Developer Henry Yi
- */
+
 class LaserBase extends AnimatedObject<ImageView> {
     private int velocity;
     private float delta = 10f;

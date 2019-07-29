@@ -1,5 +1,8 @@
 package com.nike.spaceinvaders;
 
+/*
+- Manage a group of invaders
+ */
 import android.animation.ValueAnimator;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -12,9 +15,8 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-/**
- * Developer Henry Yi & Xuanchen Zhou
- */
+
+
 class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     private int aliveInvaders;
     private ArrayList<Invader> invaders;

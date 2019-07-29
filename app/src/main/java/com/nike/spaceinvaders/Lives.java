@@ -1,5 +1,12 @@
 package com.nike.spaceinvaders;
 
+
+/*
+- A member in the HUD class that keeps track of the remaining number of lives
+- Manage the animation of live icons appearing on the top right corner of the screen
+ */
+
+
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.PointF;

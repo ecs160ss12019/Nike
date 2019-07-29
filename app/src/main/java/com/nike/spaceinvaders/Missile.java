@@ -1,6 +1,11 @@
-// Author: Zhiyuan Guo
-
 package com.nike.spaceinvaders;
+
+/*
+- Controls the movement and size of missile
+- Emitted by invaders and laserbase with specified directions
+ */
+
+
 
 import android.animation.ValueAnimator;
 import android.content.Context;
