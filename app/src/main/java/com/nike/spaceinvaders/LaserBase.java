@@ -93,8 +93,6 @@ class LaserBase extends AnimatedObject<ImageView> {
 //                if(lastMissile != null && lastMissile.isAlive())
 //                    return;
                 AnimatedObject missile = getSpaceGame().missilePool.getMissile();
-                ((Missile) missile).setMissileForm(new LaserBaseMissileForm
-                        ((Context) this.getResources().get(SpaceGame.CONTEXT)));
                 SparseArray<Float> values = new SparseArray<>();
                 values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getX());
                 values.put(SpaceGame.Y_COORDINATE, (this.getY()));
@@ -102,6 +100,8 @@ class LaserBase extends AnimatedObject<ImageView> {
                 actions.put(SpaceGame.FIRE, new Pair<>(this, values));
                 if (missile != null) {
 //                    lastMissile = (Missile) missile;
+                    ((Missile) missile).setMissileForm(new LaserBaseMissileForm
+                            ((Context) this.getResources().get(SpaceGame.CONTEXT)));
                     missile.handle(actions, SpaceGame.FIRE);
                 }
 

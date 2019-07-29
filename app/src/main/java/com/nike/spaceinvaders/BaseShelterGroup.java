@@ -44,8 +44,13 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
 
         switch (key) {
             case SpaceGame.STRIKE:
-                strikeBaseShelter(actions, SpaceGame.STRIKE);
+                traverseBaseShelter(actions, SpaceGame.STRIKE);
                 break;
+
+            case SpaceGame.CONTACT:
+                traverseBaseShelter(actions, SpaceGame.CONTACT);
+                break;
+
 
         }
     }
@@ -59,11 +64,12 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
         }
     }
 
-    private void strikeBaseShelter(Actions actions, Integer key) {
+    private void traverseBaseShelter(Actions actions, Integer key) {
         for (BaseShelter baseShelter : shelters) {
             baseShelter.handle(actions, key);
         }
     }
+
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
