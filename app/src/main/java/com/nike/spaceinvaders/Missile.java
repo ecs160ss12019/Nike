@@ -44,6 +44,8 @@ class Missile extends AnimatedObject<ImageView> {
     private float startX;
     private float startY;
 
+    private MissileForm missileForm;
+
     private ValueAnimator.AnimatorUpdateListener updateListener;
 
 
@@ -94,7 +96,7 @@ class Missile extends AnimatedObject<ImageView> {
                     */
 
                 //Plays sound effect for missile
-                getSoundEngine().playMissile();
+                missileForm.playMissileSound();
 
                 // get the starting position of missile
                 SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
@@ -222,6 +224,13 @@ class Missile extends AnimatedObject<ImageView> {
             return -150; // somewhere "above" the screen so that cannot be seen
         else
             return ((Point) this.getResources().get(SpaceGame.WINDOW_SIZE)).y;
+    }
+
+
+    public void setMissileForm(MissileForm missileForm)
+    {
+        //this.setDrawable();
+        this.missileForm = missileForm;
     }
 
 

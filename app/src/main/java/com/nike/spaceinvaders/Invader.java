@@ -35,7 +35,7 @@ public class Invader extends AnimatedObject<ImageView> {
         super(animator, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
         this.row = row;
         this.index = index;
-        setMissileForm();
+        initMissileForm();
         rand = new Random();
     }
 
@@ -147,7 +147,7 @@ public class Invader extends AnimatedObject<ImageView> {
     }
 
 
-    private void setMissileForm()
+    private void initMissileForm()
     {
         switch(row)
         {
