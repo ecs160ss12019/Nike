@@ -81,43 +81,38 @@ public class UFO extends Invader {
         return new ValueAnimator.AnimatorUpdateListener() {
             private int times;
             private int expectation;
-            private boolean running=false;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 if (expectation==0){
                     expectation=myrand.nextInt(appear);
                     direction = myrand.nextBoolean();
-                    Log.d("END-1", String.valueOf(expectation));
 
                 }
                 float fraction = animation.getAnimatedFraction();
-                if (fraction==1f){
-                    if (running){
+                if (times==expectation){
+                    if (fraction==1f){
                         times=0;
                         expectation=0;
-                        running=false;
                     }
-                    that.getMainHandler().post(() -> {
-                        animation.setIntValues(1, 100);
-                        animation.setDuration(duration);
-                        animation.start();
-                        Log.d("END-2", String.valueOf(times));
-                        times++;
-                    });
-                }
-                if (times==expectation){
-                    running=true;
-
                     Point size = (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                     assert size != null;
                     int lengthX = (int) (size.x-((UFO) that).startX);
-                    Log.d("fraction", String.valueOf(fraction));
                     if (direction){
                         that.setX(((UFO) that).startX+lengthX*fraction);
                     }else {
                         that.setX(((UFO) that).startX+lengthX*(1-fraction));
                     }
                 }
+                if (fraction==1f){
+                    that.getMainHandler().post(() -> {
+                        animation.setIntValues(1, 100);
+                        animation.setDuration(duration);
+                        animation.start();
+
+                    });
+                    times++;
+                }
+
             }
         };
     }
