@@ -80,8 +80,6 @@ class SoundEngine {
             descriptor = assetManager.openFd("Venus.wav");
             mBackgroundMusic_ID = mSP.load(descriptor, 0);
 
-            playBackGroundMusic();
-
         } catch (IOException e) {
             // Error
         }
