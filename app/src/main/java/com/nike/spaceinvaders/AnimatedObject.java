@@ -30,7 +30,7 @@ public abstract class  AnimatedObject <View extends android.view.View>{
     private SpaceGame.Status status;
 
     private ValueAnimator animator;
-    public View view;
+    private View view;
     private SpaceGame.Resources resources;
 
     private PointF parentCoordinates;
