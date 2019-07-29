@@ -30,7 +30,7 @@ import org.ejml.simple.SimpleMatrix;
 
 
 class LaserBase extends AnimatedObject<ImageView> {
-    private int velocity;
+    private int velocity=200;
     private float delta = 10f;
     private boolean direction;
     private boolean running=true;
@@ -65,13 +65,12 @@ class LaserBase extends AnimatedObject<ImageView> {
         if (this.getAnimator() == null) {
             this.setAnimator(new ValueAnimator());
             this.getAnimator().setIntValues(1, 100);
-            this.getAnimator().setDuration(200);
             this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
             this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
             this.getAnimator().setInterpolator(null);
             this.getAnimator().addUpdateListener(animatorListenerConfigure());
         }
-
+        this.getAnimator().setDuration((1/this.velocity)*40000);
         Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
 
         switch (key) {
@@ -80,6 +79,8 @@ class LaserBase extends AnimatedObject<ImageView> {
                     return;
                 }
                 this.direction = false;
+                this.velocity= (int) (value.second.get(SpaceGame.GRAVITY)*1000);
+                this.getAnimator().setDuration((1/this.velocity)*40000);
                 this.getAnimator().start();
                 break;
             case SpaceGame.MOVE_RIGHT:
@@ -87,6 +88,8 @@ class LaserBase extends AnimatedObject<ImageView> {
                     return;
                 }
                 this.direction = true;
+                this.velocity= (int) (value.second.get(SpaceGame.GRAVITY)*1000);
+                this.getAnimator().setDuration((1/this.velocity)*40000);
                 this.getAnimator().start();
                 break;
             case SpaceGame.FIRE:

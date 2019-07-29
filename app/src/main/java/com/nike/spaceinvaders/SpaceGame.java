@@ -7,6 +7,9 @@
 package com.nike.spaceinvaders;
 
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.os.Handler;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -19,8 +22,8 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-//adding flag Contact at line 32, which means at least one of the invader is touching
-class SpaceGame  implements StatusManager{
+//Adding two flags at l46 and l47
+class SpaceGame  implements StatusManager, SensorEventListener {
     /* Action Flags */
 
     public static final int GAME_START =0b00000001;
@@ -40,7 +43,6 @@ class SpaceGame  implements StatusManager{
     public static final int GAME_PAUSE=0b1000000000000;
     public static final int GAME_RESUME=0b10000000000000;
     public static final int GAME_STOP=0b100000000000000;
-    public static final int CONTACT=0b1000000000000000;
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
@@ -54,6 +56,7 @@ class SpaceGame  implements StatusManager{
     public static final int X_WIDTH=0b0100000;
     public static final int Y_HEIGHT=0b1000000;
     public static final int MOVE_DIRECTION=0b10000000;
+    public static final int GRAVITY=0b100000000;
 
     /* Status Flags */
     public static final int NUM_INVADER=0b0000001;
@@ -199,6 +202,31 @@ class SpaceGame  implements StatusManager{
 
     public State getState() {
         return state;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float gravity=event.values[1];
+        float gravityX=event.values[0];
+        float fraction=gravityX/100;
+        int motion;
+        AnimatedObject.Actions actions=new AnimatedObject.Actions();
+        if (fraction>100){
+            motion=SpaceGame.MOVE_RIGHT;
+        }else if (fraction<-100) {
+            motion=SpaceGame.MOVE_LEFT;
+        }else {
+            motion=SpaceGame.MOVE_STOP;
+        }
+        SparseArray<Float> value=new SparseArray<>();
+        value.put(SpaceGame.GRAVITY,fraction);
+        actions.put(motion, new Pair<>(null,value));
+        this.laserBase.handle(actions);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{
