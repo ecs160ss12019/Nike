@@ -19,4 +19,8 @@ public class AI {
     interface Evaluator {
          float evaluate(float value);
     }
+
+    interface Bonus{
+        float stimulate(float value);
+    }
 }

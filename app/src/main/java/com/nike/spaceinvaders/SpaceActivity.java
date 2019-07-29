@@ -2,10 +2,15 @@ package com.nike.spaceinvaders;
 
 import android.app.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,13 +27,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
-public class SpaceActivity extends AppCompatActivity {
+public class SpaceActivity extends AppCompatActivity implements SensorEventListener{
     private SpaceGame mSpaceGame;
     private Handler mainHandler;
     private Handler processHandler;
     private Thread processThread;
+    private SensorManager sensorManager;
+    private Sensor sensor;
+
+
 
     //Initiate runnable to be run in the process thread that initiate handler.
     private final Runnable threadInitiation= new Runnable() {
@@ -56,8 +66,10 @@ public class SpaceActivity extends AppCompatActivity {
         View contentView  = mInflater.inflate(R.layout.space_activity,null);
         setContentView(contentView);
 
-
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
     }
+
 
     @Override
     protected void onStart() {
@@ -102,12 +114,16 @@ public class SpaceActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 //        mSpaceGame.resume();
+        if (sensor!=null)
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     protected void onPause(){
         super.onPause();
 //        mSpaceGame.pause();
+        if (sensor!=null)
+            sensorManager.unregisterListener(this);
     }
 
     @Override
@@ -125,5 +141,16 @@ public class SpaceActivity extends AppCompatActivity {
         i.putExtra("signal","pause");
         startActivity(i);
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Log.d("Gravity", Arrays.toString(event.values));
+        mSpaceGame.onSensorChanged(event);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }

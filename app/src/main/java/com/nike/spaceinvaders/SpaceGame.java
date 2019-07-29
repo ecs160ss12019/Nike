@@ -3,6 +3,9 @@
 package com.nike.spaceinvaders;
 
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.os.Handler;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -16,7 +19,7 @@ import java.util.Objects;
 import java.util.Set;
 
 //Adding two flags at l46 and l47
-class SpaceGame  implements StatusManager{
+class SpaceGame  implements StatusManager, SensorEventListener {
     /* Action Flags */
 
     public static final int GAME_START =0b00000001;
@@ -49,6 +52,7 @@ class SpaceGame  implements StatusManager{
     public static final int X_WIDTH=0b0100000;
     public static final int Y_HEIGHT=0b1000000;
     public static final int MOVE_DIRECTION=0b10000000;
+    public static final int GRAVITY=0b100000000;
 
     /* Status Flags */
     public static final int NUM_INVADER=0b0000001;
@@ -194,6 +198,29 @@ class SpaceGame  implements StatusManager{
 
     public State getState() {
         return state;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float gravity=event.values[1];
+        float gravityX=event.values[0];
+        float fraction=gravityX/100;
+        int motion;
+        AnimatedObject.Actions actions=new AnimatedObject.Actions();
+        if (fraction>0){
+            motion=SpaceGame.MOVE_RIGHT;
+        }else {
+            motion=SpaceGame.MOVE_LEFT;
+        }
+        SparseArray<Float> value=new SparseArray<>();
+        value.put(SpaceGame.GRAVITY,fraction);
+        actions.put(motion, new Pair<>(null,value));
+        this.laserBase.handle(actions);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{
