@@ -1,6 +1,7 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
@@ -65,6 +66,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     private void hurt(Actions actions) {
         if (this.lives < 1) {
             //pass GAMEOVER to Game
+            //getSpaceGame().gameover();
             return;
         }
         this.livesViews[lives - 1].setVisibility(View.INVISIBLE);
