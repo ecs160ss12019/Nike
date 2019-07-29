@@ -1,5 +1,12 @@
 package com.nike.spaceinvaders;
 
+
+/*
+- Providing a pool of missiles available to use
+- Handle the case where one missile collides with another missile
+ */
+
+
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;

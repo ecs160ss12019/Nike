@@ -1,4 +1,8 @@
-// Author: Zhiyuan Guo
+/*
+- UI and framework of this game
+- Shows the graphical background of the game, which is the universe
+- Contains a list of objects in the game
+ */
 
 package com.nike.spaceinvaders;
 
@@ -156,7 +160,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     }
 
-    private void setState(State state) {
+    public void setState(State state) {
         this.state = state;
         this.state.notifyState(this.animatedObjects,this.missilePool);
     }
@@ -250,7 +254,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool);
     }
 
-    class PausedGame implements State{
+    static class PausedGame implements State{
 
         @Override
         public void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool) {
@@ -264,7 +268,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         }
     }
 
-    class RunningGame implements State{
+    static class RunningGame implements State{
 
         @Override
         public void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool) {

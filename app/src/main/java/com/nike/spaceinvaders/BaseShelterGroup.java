@@ -1,5 +1,10 @@
 package com.nike.spaceinvaders;
 
+/*
+- Manage a group of baseShelters
+- Get the action signal from the outside world and then distribute it to every baseShelter
+ */
+
 import android.animation.ValueAnimator;
 import android.graphics.PointF;
 import android.os.Handler;

@@ -1,5 +1,11 @@
 package com.nike.spaceinvaders;
 
+/*
+- Records information of status like Lifes, score, and level
+- Update them when variables change
+ */
+
+
 import android.animation.ValueAnimator;
 import android.graphics.PointF;
 import android.os.Handler;

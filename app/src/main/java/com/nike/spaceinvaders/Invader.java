@@ -1,5 +1,10 @@
 package com.nike.spaceinvaders;
 
+/*
+- Generates and Manages the movement and size of invaders
+- Detect the collision with missiles
+- Spawns at the top of interface
+ */
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
@@ -156,12 +161,16 @@ public class Invader extends AnimatedObject<ImageView> {
             case 0:
                 this.missileForm = new InvaderAMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
+                break;
+
             case 1:
                 this.missileForm = new InvaderBMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
+                break;
             case 2:
                 this.missileForm = new InvaderCMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
+                break;
         }
     }
 

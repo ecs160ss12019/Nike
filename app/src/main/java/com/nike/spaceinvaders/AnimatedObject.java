@@ -16,6 +16,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+/*
+- Base class of every animated object created in the game that holds a view of
+    object on the game screen and the SpaceGame object
+- Stores and manages view, animator, and handlers
+- Handle notification issued by other objects
+- Configure the animator listener
+ */
 
 /**
  * This class is an abstract class that is extended by all the AnimatedObjects in this game.
