@@ -66,7 +66,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     private void hurt(Actions actions) {
         if (this.lives < 1) {
             //pass GAMEOVER to Game
-
+            //getSpaceGame().gameover();
             return;
         }
         this.livesViews[lives - 1].setVisibility(View.INVISIBLE);
