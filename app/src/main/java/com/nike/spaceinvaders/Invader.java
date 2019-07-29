@@ -142,6 +142,7 @@ public class Invader extends AnimatedObject<ImageView> {
         actions.put(SpaceGame.FIRE, new Pair<>(this, values));
 
         if (missile != null) {
+            ((Missile) missile).setMissileForm(this.missileForm);
             missile.handle(actions, SpaceGame.FIRE);
         }
     }
