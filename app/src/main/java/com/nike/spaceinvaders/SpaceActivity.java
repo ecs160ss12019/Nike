@@ -118,9 +118,14 @@ public class SpaceActivity extends AppCompatActivity {
 
     //invoked when pressing pause
     public void pause_press(View view){
-        //Toast.makeText(getApplicationContext(),"TEST",Toast.LENGTH_SHORT).show();
-//        mSpaceGame.pause();
+        //TODO: not working, make gary effects
         makedisplaygray();
+        //pause the game
+        if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
+            //mSpaceGame.setState(new SpaceGame.RunningGame());
+        }else {
+            mSpaceGame.setState(new SpaceGame.PausedGame());
+        }
 
         Intent i = new Intent(SpaceActivity.this,Pop.class);
         i.putExtra("signal","pause");

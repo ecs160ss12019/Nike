@@ -41,6 +41,7 @@ public class Pop extends AppCompatActivity {
     }
     //resume button pressed
     public void resume(View view){
+
         finish();
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);//android.anim.fade_in
     }
