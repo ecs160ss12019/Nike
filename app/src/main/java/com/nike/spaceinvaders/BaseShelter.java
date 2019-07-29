@@ -110,10 +110,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
                 break;
 
             case SpaceGame.STRIKE:
-                //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
                 Missile missile = (Missile) Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
-//        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
-//        float missileAbsY = data.get(SpaceGame.Y_COORDINATE);
 
                 float missileAbsX = missile.getX();
                 float missileAbsY = missile.getY();

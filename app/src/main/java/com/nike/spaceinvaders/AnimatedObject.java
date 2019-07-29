@@ -183,9 +183,6 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
         float x = hittingObject.getAbsoluteX();
         float y = hittingObject.getAbsoluteY();
 
-        Log.d("myyx", String.valueOf(x));
-        Log.d("myyy", String.valueOf(y));
-
         int hittingObjectWidth = hittingObject.getWidth();
         float left, top, bottom, right;
         float padding = 20;
