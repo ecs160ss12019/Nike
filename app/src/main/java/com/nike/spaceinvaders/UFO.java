@@ -61,7 +61,7 @@ public class UFO extends Invader {
                 break;
             case SpaceGame.STRIKE:
                 assert value != null;
-                if (hitDetection(actions, value.first)) {
+                if (hitDetection(value.first)) {
                     kill(actions, value.first);
                 }
                 break;

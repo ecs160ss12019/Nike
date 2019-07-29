@@ -89,24 +89,6 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     }
 
-    private boolean collisionDetection(AnimatedObject collider) {
-        // get collider's location
-        float x = collider.getAbsoluteX();
-        float y = collider.getAbsoluteY();
-
-        int colliderWidth = collider.getWidth();
-
-        float left, top, bottom, right;
-        left = this.getAbsoluteX() + 20;
-        top = this.getAbsoluteY();
-        bottom = top + this.getHeight();
-        right = left + this.getWidth() - 20;
-        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + colliderWidth) >= left && (x + colliderWidth) <= right && y <= bottom && y >= top)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     private void killSelf(){
         alive = false;
@@ -122,7 +104,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         switch(key)
         {
             case SpaceGame.CONTACT:
-                if(collisionDetection(actions.get(SpaceGame.CONTACT).first)){
+                if(alive && hitDetection(actions.get(SpaceGame.CONTACT).first)){
                     killSelf();
                 }
                 break;

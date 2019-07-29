@@ -64,25 +64,21 @@ public class Invader extends AnimatedObject<ImageView> {
 
 
 
-    protected boolean hitDetection(Actions actions, AnimatedObject missile) {
-        if (!alive) {
-            return false;
-        }
-        float x = missile.getX();
-        float y = missile.getY();
-        int missileWidth = missile.getWidth();
-        float left, top, bottom, right;
-        left = this.getAbsoluteX() + 50;
-        top = this.getAbsoluteY();
-        bottom = top + this.getHeight();
-        right = left + this.getWidth() - 50;
-        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + missileWidth) >= left && (x + missileWidth) <= right && y <= bottom && y >= top)) {
-            this.getSoundEngine().playInvaderDeath(); //Sound effect for invader being destroyed
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    protected boolean hitDetection(AnimatedObject missile) {
+//        float x = missile.getX();
+//        float y = missile.getY();
+//        int missileWidth = missile.getWidth();
+//        float left, top, bottom, right;
+//        left = this.getAbsoluteX() + 50;
+//        top = this.getAbsoluteY();
+//        bottom = top + this.getHeight();
+//        right = left + this.getWidth() - 50;
+//        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + missileWidth) >= left && (x + missileWidth) <= right && y <= bottom && y >= top)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     @Override
     protected void handle(Actions actions, Integer key) {
@@ -92,7 +88,8 @@ public class Invader extends AnimatedObject<ImageView> {
         switch (key) {
             case SpaceGame.STRIKE:
                 assert value != null;
-                if (hitDetection(actions, value.first)) {
+                if (this.alive && hitDetection(value.first)) {
+                    this.getSoundEngine().playInvaderDeath(); //Sound effect for invader being destroyed
                     kill(actions, value.first);
                 }
                 break;
