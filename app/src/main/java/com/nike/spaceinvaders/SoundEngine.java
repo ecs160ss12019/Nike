@@ -88,19 +88,19 @@ class SoundEngine {
 
     }
 
-    public void playMissile(){
+    public void playLaserBaseMissile(){
         mSP.play(mShoot_ID,1, 1, 0, 0, 1);
     }
 
-    public void playMissile2(){
+    public void playInvaderMissile1(){
         mSP.play(mShoot2_ID,1, 1, 0, 0, 1);
     }
 
-    public void playMissile3(){
+    public void playInvaderMissile2(){
         mSP.play(mShoot3_ID,1, 1, 0, 0, 1);
     }
 
-    public void playMissile4(){
+    public void playInvaderMissile3(){
         mSP.play(mShoot4_ID,1, 1, 0, 0, 1);
     }
 

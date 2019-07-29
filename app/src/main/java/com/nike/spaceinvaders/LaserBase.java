@@ -1,6 +1,7 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -29,6 +30,7 @@ class LaserBase extends AnimatedObject<ImageView> {
     private int velocity;
     private float delta = 10f;
     private boolean direction;
+    private boolean running=true;
 //    private Missile lastMissile;
 
     LaserBase(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
@@ -71,17 +73,28 @@ class LaserBase extends AnimatedObject<ImageView> {
 
         switch (key) {
             case SpaceGame.MOVE_LEFT:
+                if (!this.running){
+                    return;
+                }
                 this.direction = false;
                 this.getAnimator().start();
                 break;
             case SpaceGame.MOVE_RIGHT:
+                if (!this.running){
+                    return;
+                }
                 this.direction = true;
                 this.getAnimator().start();
                 break;
             case SpaceGame.FIRE:
+                if (!this.running){
+                    return;
+                }
 //                if(lastMissile != null && lastMissile.isAlive())
 //                    return;
                 AnimatedObject missile = getSpaceGame().missilePool.getMissile();
+                ((Missile) missile).setMissileForm(new LaserBaseMissileForm
+                        ((Context) this.getResources().get(SpaceGame.CONTEXT)));
                 SparseArray<Float> values = new SparseArray<>();
                 values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getX());
                 values.put(SpaceGame.Y_COORDINATE, (this.getY()));
@@ -102,6 +115,16 @@ class LaserBase extends AnimatedObject<ImageView> {
                 if (hitDetection(actions, value.first)) {
                     kill(actions, value.first);
                 }
+                break;
+            case SpaceGame.GAME_PAUSE:
+                this.running=false;
+                if (this.getAnimator()!=null&&this.getAnimator().isStarted()){
+                    this.getAnimator().pause();
+                }
+                break;
+            case SpaceGame.GAME_RESUME:
+                this.running=true;
+                break;
 
         }
 

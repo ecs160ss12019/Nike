@@ -8,14 +8,18 @@ import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.Space;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 //Adding two flags at l46 and l47
 class SpaceGame  implements StatusManager{
     /* Action Flags */
-    public static final int GAMESTART=0b00000001;
+
+    public static final int GAME_START =0b00000001;
     // Missile has been released and is moving(striking)
     // If an game object, say invaders, encounter STRIKE,
     // it means it may get hit
@@ -29,6 +33,9 @@ class SpaceGame  implements StatusManager{
     public static final int RESURRECTION=0b0100000000;
     public static final int MOVE_STOP=0b010000000000;
     public static final int HIT=0b100000000000;
+    public static final int GAME_PAUSE=0b1000000000000;
+    public static final int GAME_RESUME=0b10000000000000;
+    public static final int GAME_STOP=0b100000000000000;
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
@@ -50,16 +57,28 @@ class SpaceGame  implements StatusManager{
     public static final int SCORES=0b0001000;
     public static final int LEVEL=0b0010000;
     public static final int PERKS_OF_LASERBASE=0b0100000;
+    public static final int STATE=0b1000000;
+
+    /* Animated Object type */
+    public static final int LASER_BASE=0b0000001;
+    public static final int BASE_SHELTER_GROUP=0b0000010;
+    public static final int INVADER_GROUP=0b0000100;
+    public static final int UFO_INVADER=0b0001000;
 
     final AnimatedObject laserBase;
     final AnimatedObject baseShelterGroup;
     final AnimatedObject invaderGroup;
     final AnimatedObject UFO;
+
+    final AnimatedObjectBox animatedObjects;
+
     final MissilePool missilePool;
     final StatusManager hud;
     final Resources resources;
 
     private Status status;
+
+    private State state;
 
 
     public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject UFO, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
@@ -76,13 +95,20 @@ class SpaceGame  implements StatusManager{
         this.baseShelterGroup.setSpaceGame(this);
         this.invaderGroup.setSpaceGame(this);
         this.UFO.setSpaceGame(this);
+        this.animatedObjects=new AnimatedObjectBox();
+
+        this.animatedObjects.put(SpaceGame.LASER_BASE,this.laserBase);
+        this.animatedObjects.put(SpaceGame.BASE_SHELTER_GROUP,this.baseShelterGroup);
+        this.animatedObjects.put(SpaceGame.INVADER_GROUP,this.invaderGroup);
+        this.animatedObjects.put(SpaceGame.UFO_INVADER,this.UFO);
+
         ((AnimatedObject)this.hud).setSpaceGame(this);
 
         this.resources=resources;
         this.status=status;
 
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
-        actions.put(GAMESTART,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
+        actions.put(GAME_START,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         invaderGroup.handle(actions);
         UFO.handle(actions);
 
@@ -94,6 +120,7 @@ class SpaceGame  implements StatusManager{
         //Below Test only
 /*        status.put(SpaceGame.NUM_LIVES,new Pair<>(Float.valueOf(1),null));//TODO:Bug: LIVEMAX Doesnt work
         updateStatus(status);*/
+
 
     }
 
@@ -113,10 +140,21 @@ class SpaceGame  implements StatusManager{
                 case SpaceGame.SCORES:
                     hud.updateStatus(status);
                     break;
+                case SpaceGame.STATE:
+                    if (Objects.requireNonNull(status.get(key)).first==1f){
+                        this.setState(new PausedGame());
+                    }
                 default:
+
                     break;
             }
         }
+
+    }
+
+    private void setState(State state) {
+        this.state = state;
+        this.state.notifyState(this.animatedObjects,this.missilePool);
     }
 
     public void onTouch(MotionEvent event){
@@ -139,7 +177,11 @@ class SpaceGame  implements StatusManager{
                 // debug
                 if(motion == SpaceGame.FIRE)
                 {
-
+                    if (this.getState() instanceof PausedGame){
+                        this.setState(new RunningGame());
+                    }else {
+                        this.setState(new PausedGame());
+                    }
                 }
                 break;
 
@@ -150,11 +192,19 @@ class SpaceGame  implements StatusManager{
         }
     }
 
+    public State getState() {
+        return state;
+    }
+
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{
 
     }
 
     static class Resources extends  HashMap<Integer, Object>{
+
+    }
+
+    static class AnimatedObjectBox extends HashMap<Integer, AnimatedObject>{
 
     }
 
@@ -164,6 +214,51 @@ class SpaceGame  implements StatusManager{
         MutablePair (T first,K second){
             this.first=first;
             this.second=second;
+        }
+    }
+
+    interface State{
+        void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool);
+    }
+
+    class PausedGame implements State{
+
+        @Override
+        public void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool) {
+            Collection<AnimatedObject> objects=animatedObjects.values();
+            AnimatedObject.Actions actions=new AnimatedObject.Actions();
+            actions.put(SpaceGame.GAME_PAUSE,null);
+            for (AnimatedObject object:objects){
+                object.handle(actions,SpaceGame.GAME_PAUSE);
+            }
+            pool.pauseMissiles();
+        }
+    }
+
+    class RunningGame implements State{
+
+        @Override
+        public void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool) {
+            Collection<AnimatedObject> objects=animatedObjects.values();
+            AnimatedObject.Actions actions=new AnimatedObject.Actions();
+            actions.put(SpaceGame.GAME_PAUSE,null);
+            for (AnimatedObject object:objects){
+                object.handle(actions,SpaceGame.GAME_RESUME);
+            }
+            pool.resumeMissile();
+        }
+    }
+
+    class EndedGame implements State{
+
+        @Override
+        public void notifyState(AnimatedObjectBox animatedObjects,MissilePool pool) {
+            Collection<AnimatedObject> objects=animatedObjects.values();
+            AnimatedObject.Actions actions=new AnimatedObject.Actions();
+            actions.put(SpaceGame.GAME_PAUSE,null);
+            for (AnimatedObject object:objects){
+                object.handle(actions,SpaceGame.GAME_STOP);
+            }
         }
     }
 
