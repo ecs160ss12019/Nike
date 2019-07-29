@@ -41,8 +41,13 @@ public class Pop extends AppCompatActivity {
     }
     //resume button pressed
     public void resume(View view){
-
-        finish();
+        Intent intent=this.getIntent();
+        Bundle bundle=intent.getExtras();
+        //Test only
+        bundle.putString("signal","resume");
+        intent.putExtras(bundle);
+        this.setResult(Activity.RESULT_OK,intent);
+        this.finish();
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);//android.anim.fade_in
     }
     //retry button pressed

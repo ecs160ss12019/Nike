@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -129,7 +130,8 @@ public class SpaceActivity extends AppCompatActivity {
 
         Intent i = new Intent(SpaceActivity.this,Pop.class);
         i.putExtra("signal","pause");
-        startActivity(i);
+        //startActivity(i);
+        startActivityForResult(i,0);
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }
 
@@ -142,5 +144,22 @@ public class SpaceActivity extends AppCompatActivity {
         ImageView i = new ImageView(this);
         i.findViewById(R.id.graylayer);
         i.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle bundle=data.getExtras();
+        String str = bundle.getString("signal");
+        Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
+
+        if(str.equalsIgnoreCase("resume")){
+            if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
+                mSpaceGame.setState(new SpaceGame.RunningGame());
+            }else {
+                mSpaceGame.setState(new SpaceGame.PausedGame());
+            }
+        }
+
     }
 }
