@@ -24,7 +24,7 @@ public class UFO extends Invader {
     private float startX=-200;
 
     UFO(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
-        super(index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
+        super(-1, index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
         myrand = new Random();
         appear = 15;//really frequent
         duration = 1000;
