@@ -22,6 +22,8 @@ class SoundEngine {
     private int mInvaderDeath3_ID = -1;
     private  int mlaserBaseDeath_ID = -1;
     private  int mMenuSelect_ID = -1;
+    private  int mBackgroundMusic_ID = -1;
+
 
     private static SoundEngine ourInstance;
 
@@ -40,7 +42,7 @@ class SoundEngine {
                 .build();
 
         mSP = new SoundPool.Builder()
-                .setMaxStreams(10)
+                .setMaxStreams(11)
                 .setAudioAttributes(audioAttributes)
                 .build();
         try {
@@ -69,11 +71,16 @@ class SoundEngine {
             descriptor = assetManager.openFd("invaderDeath3.wav");
             mInvaderDeath3_ID = mSP.load(descriptor, 0);
 
-            descriptor = assetManager.openFd("laserBaseDeath.ogg");
+            descriptor = assetManager.openFd("laserBaseDeath.wav");
             mlaserBaseDeath_ID = mSP.load(descriptor, 0);
 
-            descriptor = assetManager.openFd("menuSelect.ogg");
+            descriptor = assetManager.openFd("menuSelect.wav");
             mMenuSelect_ID = mSP.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("Venus.wav");
+            mBackgroundMusic_ID = mSP.load(descriptor, 0);
+
+            playBackGroundMusic();
 
         } catch (IOException e) {
             // Error
@@ -116,5 +123,11 @@ class SoundEngine {
     public void playMenuSelect() {
         mSP.play(mMenuSelect_ID, 1, 1, 0, 0, 1);
     }
+
+    public void playBackGroundMusic() {
+        mSP.play(mBackgroundMusic_ID, 1, 1, 0, 0, 1);
+    }
+
+
 
 }
