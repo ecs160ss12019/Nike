@@ -100,9 +100,11 @@ class Missile extends AnimatedObject<ImageView> {
 
                 // get the starting position of missile
                 SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
-                this.startX = startPts.get(SpaceGame.X_COORDINATE);
-                this.startY = startPts.get(SpaceGame.Y_COORDINATE);
-                this.up = startPts.get(SpaceGame.MOVE_DIRECTION) == 1f; // 1f = up, 0f = down
+                setStartXY(startPts.get(SpaceGame.X_COORDINATE),
+                        startPts.get(SpaceGame.Y_COORDINATE));
+
+                setDirection(startPts.get(SpaceGame.MOVE_DIRECTION));
+
                 float endY = findEndYPos();
 
 
@@ -165,13 +167,10 @@ class Missile extends AnimatedObject<ImageView> {
                 int lengthY= (int) (findEndYPos()-(((Missile) that).startY));
                 that.setY(((Missile) that).startY+fraction*lengthY);
                 that.setX(((Missile) that).startX);
-                if(up)
-                    that.getSpaceGame().invaderGroup.handle(actions,SpaceGame.STRIKE);
-                else
-                    that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
-                that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
-//            if(up)
-//                Log.d("fraction", String.valueOf(fraction));
+
+                // Call game objects' handle method
+                notifyGameObjects(that, actions);
+
                 if(fraction==1.0){
                     try {
                         alive = false;
@@ -235,6 +234,30 @@ class Missile extends AnimatedObject<ImageView> {
         missileForm.playMissileSound();
         Resources resources = (Resources) this.getResources().get(SpaceGame.RESOURCES);
         missileForm.setMissileImage(this, resources);
+    }
+
+
+    private void setStartXY(float x, float y)
+    {
+        this.startX = x;
+        this.startY = y;
+    }
+
+
+    private void setDirection(float direction)
+    {
+        this.up = direction == 1f; // 1f = up, 0f = down
+    }
+
+
+
+    private void notifyGameObjects(AnimatedObject that, Actions actions)
+    {
+        if(up)
+            that.getSpaceGame().invaderGroup.handle(actions,SpaceGame.STRIKE);
+        else
+            that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
+        that.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.STRIKE);
     }
 
 
