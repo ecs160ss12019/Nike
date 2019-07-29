@@ -18,10 +18,11 @@ class InvaderAMissileForm implements MissileForm
 
     public void playMissileSound()
     {
-        se.playMissile();
+        se.playInvaderMissile1();
     }
 
 }
+
 
 
 class InvaderBMissileForm implements MissileForm
@@ -35,7 +36,7 @@ class InvaderBMissileForm implements MissileForm
 
     public void playMissileSound()
     {
-
+        se.playInvaderMissile2();
     }
 
 }
@@ -54,7 +55,7 @@ class InvaderCMissileForm implements MissileForm
 
     public void playMissileSound()
     {
-
+        se.playInvaderMissile3();
     }
 }
 
@@ -72,6 +73,6 @@ class LaserBaseMissileForm implements MissileForm
 
     public void playMissileSound()
     {
-
+        se.playLaserBaseMissile();
     }
 }
