@@ -160,6 +160,8 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
     public void makedisplaygray(){
         ImageView i = new ImageView(this);
         i.findViewById(R.id.graylayer);
