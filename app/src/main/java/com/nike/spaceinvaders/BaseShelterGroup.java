@@ -71,7 +71,8 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
 
     private void traverseBaseShelter(Actions actions, Integer key) {
         for (BaseShelter baseShelter : shelters) {
-            baseShelter.handle(actions, key);
+            if(baseShelter.isAlive())
+                baseShelter.handle(actions, key);
         }
     }
 

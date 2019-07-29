@@ -48,6 +48,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
     // Each hit box is 10 by 10 in pixels
     private int boxSize = 10;
 
+    private boolean alive = true;
 
     private Bitmap bitmap;
 
@@ -108,6 +109,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
     }
 
     private void killSelf(){
+        alive = false;
         this.setVisibility(View.INVISIBLE);
     }
 
@@ -223,4 +225,6 @@ class BaseShelter extends AnimatedObject<ImageView> {
     public float evaluate(float value) {
         return 0;
     }
+
+    public boolean isAlive() {return alive;}
 }
