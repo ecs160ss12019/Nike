@@ -59,3 +59,16 @@
 |---|---|
 |  - A member in the HUD class that keeps track of the remaining number of lives  <br> - Manage the animation of live icons appearing on the top right corner of the screen |  HUD <br> SpaceGame |
 
+
+
+| SoundEngine | |
+|---|---|
+|  - Set up the sound pool  <br> - Plays different kinds of sound |  Missile <br> SpaceGame |
+
+
+
+
+| MissileForm | |
+|---|---|
+|  - Missile has two features that determine its form: Sound and Image  <br> - Set the form of Missile |  Missile |
+
