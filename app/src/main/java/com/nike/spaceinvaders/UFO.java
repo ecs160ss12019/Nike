@@ -24,7 +24,7 @@ public class UFO extends Invader {
     private float startX=-200;
 
     UFO(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
-        super(index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
+        super(index, index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
         myrand = new Random();
         appear = 15;//really frequent
         duration = 1000;
@@ -87,7 +87,7 @@ public class UFO extends Invader {
                 if (expectation==0){
                     expectation=myrand.nextInt(appear);
                     direction = myrand.nextBoolean();
-                    Log.d("END-1", String.valueOf(expectation));
+                    //Log.d("END-1", String.valueOf(expectation));
 
                 }
                 float fraction = animation.getAnimatedFraction();
@@ -101,7 +101,7 @@ public class UFO extends Invader {
                         animation.setIntValues(1, 100);
                         animation.setDuration(duration);
                         animation.start();
-                        Log.d("END-2", String.valueOf(times));
+                        //Log.d("END-2", String.valueOf(times));
                         times++;
                     });
                 }
@@ -111,7 +111,7 @@ public class UFO extends Invader {
                     Point size = (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                     assert size != null;
                     int lengthX = (int) (size.x-((UFO) that).startX);
-                    Log.d("fraction", String.valueOf(fraction));
+                    //Log.d("fraction", String.valueOf(fraction));
                     if (direction){
                         that.setX(((UFO) that).startX+lengthX*fraction);
                     }else {

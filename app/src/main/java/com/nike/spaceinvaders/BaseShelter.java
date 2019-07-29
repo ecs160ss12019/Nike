@@ -18,6 +18,7 @@ import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.ArraySet;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.widget.ImageView;
@@ -79,12 +80,43 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     }
 
+    private boolean collisionDetection( AnimatedObject collider) {
+        // get collider's location
+        float x = collider.getAbsoluteX();
+        float y = collider.getAbsoluteY();
+
+        int colliderWidth = collider.getWidth();
+
+        float left, top, bottom, right;
+        left = this.getAbsoluteX() + 50;
+        top = this.getAbsoluteY();
+        bottom = top + this.getHeight();
+        right = left + this.getWidth() - 50;
+        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + colliderWidth) >= left && (x + colliderWidth) <= right && y <= bottom && y >= top)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void killSelf(){
+        Log.d("tester","this baseshelter should be killed");
+    }
+
 
     /*
     Only need to handle the strike case
      */
     @Override
     protected void handle(Actions actions, Integer key) {
+        Log.d("in BaseShelter's handle","key is "+key);
+        if(key== SpaceGame.CONTACT){
+            Log.d("in baseshelter's handle, detecting collision with invaders", "not sure if contacted");
+            if(collisionDetection(actions.get(SpaceGame.CONTACT).first)){
+                Log.d("in baseshelter's handle, detecting collision with invaders", "already contacted");
+                killSelf();
+            }
+        }
 
         if (key != SpaceGame.STRIKE)
             return;

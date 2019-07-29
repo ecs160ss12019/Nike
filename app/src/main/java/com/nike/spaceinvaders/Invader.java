@@ -22,7 +22,7 @@ import android.widget.Space;
 
 
 public class Invader extends AnimatedObject<ImageView> {
-    private boolean alive = true;
+    public boolean alive = true;
     private Missile missile;
     private int[][] hitbox;
     private int abstractionLevel = 10;
@@ -107,9 +107,11 @@ public class Invader extends AnimatedObject<ImageView> {
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {
+        final Invader that = this;
         return new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+
             }
         };
     }

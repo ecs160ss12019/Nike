@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-//Adding two flags at l46 and l47
+//adding flag Contact at line 32, which means at least one of the invader is touching
 class SpaceGame  implements StatusManager{
     /* Action Flags */
 
@@ -36,6 +36,7 @@ class SpaceGame  implements StatusManager{
     public static final int GAME_PAUSE=0b1000000000000;
     public static final int GAME_RESUME=0b10000000000000;
     public static final int GAME_STOP=0b100000000000000;
+    public static final int CONTACT= 0b1000000000000;
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
