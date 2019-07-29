@@ -120,10 +120,22 @@ public class SpaceActivity extends AppCompatActivity {
     public void pause_press(View view){
         //Toast.makeText(getApplicationContext(),"TEST",Toast.LENGTH_SHORT).show();
 //        mSpaceGame.pause();
+        makedisplaygray();
 
         Intent i = new Intent(SpaceActivity.this,Pop.class);
         i.putExtra("signal","pause");
         startActivity(i);
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
+    }
+
+    public void makedisplaygray(){
+        ImageView i = new ImageView(this);
+        i.findViewById(R.id.graylayer);
+        i.setVisibility(View.INVISIBLE);
+    }
+    public void nodisplaygray(){
+        ImageView i = new ImageView(this);
+        i.findViewById(R.id.graylayer);
+        i.setVisibility(View.INVISIBLE);
     }
 }
