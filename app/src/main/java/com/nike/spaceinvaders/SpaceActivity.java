@@ -154,7 +154,10 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onSensorChanged(SensorEvent event) {
         Log.d("Gravity", Arrays.toString(event.values));
-        mSpaceGame.onSensorChanged(event);
+        if (mSpaceGame!=null) {
+            Log.d("adsfaw", "awefa");
+            mSpaceGame.onSensorChanged(event);
+        }
     }
 
     @Override

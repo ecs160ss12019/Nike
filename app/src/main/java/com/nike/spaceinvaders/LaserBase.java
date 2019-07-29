@@ -79,7 +79,10 @@ class LaserBase extends AnimatedObject<ImageView> {
                     return;
                 }
                 this.direction = false;
-                this.velocity= (int) (value.second.get(SpaceGame.GRAVITY)*1000);
+                if (value!=null&&value.second!=null&&value.second.get(SpaceGame.GRAVITY)!=null){
+                    this.velocity= (int) (value.second.get(SpaceGame.GRAVITY)*1000);
+                }
+
                 this.getAnimator().setDuration((1/this.velocity)*40000);
                 this.getAnimator().start();
                 break;
@@ -88,7 +91,9 @@ class LaserBase extends AnimatedObject<ImageView> {
                     return;
                 }
                 this.direction = true;
-                this.velocity= (int) (value.second.get(SpaceGame.GRAVITY)*1000);
+                if (value!=null&&value.second!=null&&value.second.get(SpaceGame.GRAVITY)!=null) {
+                    this.velocity = (int) (value.second.get(SpaceGame.GRAVITY) * 1000);
+                }
                 this.getAnimator().setDuration((1/this.velocity)*40000);
                 this.getAnimator().start();
                 break;
