@@ -135,7 +135,6 @@ public class Invader extends AnimatedObject<ImageView> {
         Actions actions = new Actions();
 
         AnimatedObject missile = getSpaceGame().missilePool.getMissile();
-        //
         SparseArray<Float> values = new SparseArray<>();
         values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getAbsoluteX());
         values.put(SpaceGame.Y_COORDINATE, (this.getAbsoluteY()));
