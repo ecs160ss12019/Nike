@@ -207,10 +207,12 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         float fraction=gravityX/100;
         int motion;
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
-        if (fraction>0){
+        if (fraction>100){
             motion=SpaceGame.MOVE_RIGHT;
-        }else {
+        }else if (fraction<-100) {
             motion=SpaceGame.MOVE_LEFT;
+        }else {
+            motion=SpaceGame.MOVE_STOP;
         }
         SparseArray<Float> value=new SparseArray<>();
         value.put(SpaceGame.GRAVITY,fraction);
