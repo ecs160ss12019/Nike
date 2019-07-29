@@ -29,7 +29,7 @@ import java.util.Set;
     Missile moves straight up/down once attacker releases
     it.
  */
-class Missile extends AnimatedObject <ImageView>  {
+class Missile extends AnimatedObject<ImageView> {
     private long time;
     private boolean recyclable;
     private boolean alive = true;
@@ -52,24 +52,20 @@ class Missile extends AnimatedObject <ImageView>  {
     }
 
 
-    public Missile initKey(int key)
-    {
+    public Missile initKey(int key) {
         this.key = key;
         return this;
     }
 
-    public Missile initRecyclable(boolean recyclable)
-    {
+    public Missile initRecyclable(boolean recyclable) {
         this.recyclable = recyclable;
         return this;
     }
 
-    public Missile initPool(MissilePool pool)
-    {
+    public Missile initPool(MissilePool pool) {
         this.pool = pool;
         return this;
     }
-
 
 
     /**
@@ -91,7 +87,7 @@ class Missile extends AnimatedObject <ImageView>  {
      */
     @Override
     protected void handle(Actions actions, Integer key) {
-        switch(key){
+        switch (key) {
             case SpaceGame.FIRE:
                 /*
                        Missile has just been fired
@@ -104,7 +100,7 @@ class Missile extends AnimatedObject <ImageView>  {
                 SparseArray<Float> startPts = Objects.requireNonNull(actions.get(key)).second;
                 this.startX = startPts.get(SpaceGame.X_COORDINATE);
                 this.startY = startPts.get(SpaceGame.Y_COORDINATE);
-                this.up = startPts.get(SpaceGame.MOVE_DIRECTION)==1f; // 1f = up, 0f = down
+                this.up = startPts.get(SpaceGame.MOVE_DIRECTION) == 1f; // 1f = up, 0f = down
                 float endY = findEndYPos();
 
 
@@ -112,16 +108,19 @@ class Missile extends AnimatedObject <ImageView>  {
                 this.setVisibility(View.VISIBLE);
 
                 // do we really need to check null?
-                if (this.getAnimator() == null){
+                if (this.getAnimator() == null) {
                     this.setAnimator(new ValueAnimator());
                 }
 
-                this.getAnimator().setDuration(((long)(Math.abs(endY - startY) / speed)*1000));
+                this.getAnimator().setDuration(((long) (Math.abs(endY - startY) / speed) * 1000));
                 this.getAnimator().start();
                 break;
-                case SpaceGame.STRIKE:/*
+
+
+            case SpaceGame.STRIKE:/*
                        One Missile strikes another missile
                     */
+                break;
 
             case SpaceGame.MISSILE_GONE:
                 /*
@@ -147,7 +146,6 @@ class Missile extends AnimatedObject <ImageView>  {
                 }
                 break;
         }
-
 
 
     }
@@ -203,13 +201,13 @@ class Missile extends AnimatedObject <ImageView>  {
         speed = 600;
         // set the missile to be invisible
 
-        this.setDrawable(((Resources)(getResources().get(SpaceGame.RESOURCES))).getDrawable(R.drawable.missile,null));
-        Point screenPt = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
+        this.setDrawable(((Resources) (getResources().get(SpaceGame.RESOURCES))).getDrawable(R.drawable.missile, null));
+        Point screenPt = (Point) this.getResources().get(SpaceGame.WINDOW_SIZE);
         // The width of missile will be 1 percent of the screen width
         float width = screenPt.x / 50;
         // the height of missile will be 1/25 of the screen height
         float height = screenPt.y / 25;
-        this.setSize((int)height,(int)width);
+        this.setSize((int) height, (int) width);
 
     }
 
@@ -219,12 +217,11 @@ class Missile extends AnimatedObject <ImageView>  {
         It should end at the top of screen if it is going up,
         and end at the bottom of screen otherwise.
      */
-    private float findEndYPos()
-    {
-        if(up)
+    private float findEndYPos() {
+        if (up)
             return -150; // somewhere "above" the screen so that cannot be seen
         else
-            return ((Point)this.getResources().get(SpaceGame.WINDOW_SIZE)).y;
+            return ((Point) this.getResources().get(SpaceGame.WINDOW_SIZE)).y;
     }
 
 

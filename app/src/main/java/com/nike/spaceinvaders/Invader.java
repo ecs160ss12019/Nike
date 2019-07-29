@@ -1,6 +1,7 @@
 package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.util.ArraySet;
@@ -26,11 +27,15 @@ public class Invader extends AnimatedObject<ImageView> {
     private int[][] hitbox;
     private int abstractionLevel = 10;
     private int index;
+    private int row;
     private Random rand;
+    private MissileForm missileForm;
 
-    Invader(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
+    Invader(int row, int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(animator, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
+        this.row = row;
         this.index = index;
+        setMissileForm();
         rand = new Random();
     }
 
@@ -67,7 +72,7 @@ public class Invader extends AnimatedObject<ImageView> {
         bottom = top + this.getHeight();
         right = left + this.getWidth() - 50;
         if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + missileWidth) >= left && (x + missileWidth) <= right && y <= bottom && y >= top)) {
-            this.getSoundEngine().playInvaderKilled(); //Sound effect for invader being destroyed
+            this.getSoundEngine().playInvaderDeath(); //Sound effect for invader being destroyed
             return true;
         } else {
             return false;
@@ -128,6 +133,7 @@ public class Invader extends AnimatedObject<ImageView> {
         Actions actions = new Actions();
 
         AnimatedObject missile = getSpaceGame().missilePool.getMissile();
+        //
         SparseArray<Float> values = new SparseArray<>();
         values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getAbsoluteX());
         values.put(SpaceGame.Y_COORDINATE, (this.getAbsoluteY()));
@@ -139,6 +145,24 @@ public class Invader extends AnimatedObject<ImageView> {
             missile.handle(actions, SpaceGame.FIRE);
         }
     }
+
+
+    private void setMissileForm()
+    {
+        switch(row)
+        {
+            case 0:
+                this.missileForm = new InvaderAMissileForm(
+                        (Context) this.getResources().get(SpaceGame.CONTEXT));
+            case 1:
+                this.missileForm = new InvaderBMissileForm(
+                        (Context) this.getResources().get(SpaceGame.CONTEXT));
+            case 2:
+                this.missileForm = new InvaderCMissileForm(
+                        (Context) this.getResources().get(SpaceGame.CONTEXT));
+        }
+    }
+
 
     public int getIndex() {
         return index;
