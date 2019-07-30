@@ -216,10 +216,19 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
     };
 
     void doBindService(){
+        bindService(new Intent(this, MusicPlayer.class),
+                Scon,Context.BIND_AUTO_CREATE);
+        mIsBound = true;
     }
 
     void doUnbindService()
     {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
     }
+
 
 }
