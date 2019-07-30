@@ -1,5 +1,7 @@
 package com.nike.spaceinvaders;
 
+import android.hardware.SensorEvent;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -20,9 +22,9 @@ public class ExampleUnitTest {
 
     }
     @Test
-    public void Gravity_Sensor(){
+    public void Hit_Detection(){
+        Invader invader=new Invader(0,0,null,null,null,null,null,null,null,null);
 
-        SpaceGame spaceGame=new SpaceGame(null,null,null,null,null,null,null,null,null,null,null,null);
-        spaceGame.onSensorChanged(new);
+        boolean result=invader.hitDetection()
     }
 }

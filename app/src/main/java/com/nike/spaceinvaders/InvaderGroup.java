@@ -306,7 +306,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     }
 
     @Override
-    public float evaluate(float value) {
-        return 0;
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }

@@ -241,12 +241,12 @@ class LaserBase extends AnimatedObject<ImageView> {
         return delta;
     }
 
-    @Override
-    public float evaluate(float value) {
-        return 0;
-    }
-
     public float getRealDelta() {
         return realDelta;
+    }
+
+    @Override
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }

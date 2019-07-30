@@ -183,7 +183,7 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         Bundle bundle=data.getExtras();
         String str = bundle.getString("signal");
         Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
-
+        mSpaceGame.setSetting(bundle);
         if(str.equals("resume")){
             if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
                 mSpaceGame.setState(new SpaceGame.RunningGame());

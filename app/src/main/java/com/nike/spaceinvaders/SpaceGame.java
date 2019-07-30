@@ -101,7 +101,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
 
 
-    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject UFO, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se, Bundle setting){
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject UFO, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
@@ -144,6 +144,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     }
 
+    public void setSetting(Bundle setting) {
+        this.setting = setting;
+    }
+
     @Override
     public void updateStatus(Status status){
         Set<Integer> keys=status.keySet();
@@ -169,7 +173,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                     break;
             }
         }
-
+        //Notify all the AnimatedObjects.
+        for (AnimatedObject object:this.animatedObjects.values()){
+            object.updateStatus(status);
+        }
     }
 
     public void setState(State state) {
@@ -255,7 +262,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     }
 
-    static class AnimatedObjectBox extends HashMap<Integer, AnimatedObject>{
+    private static class AnimatedObjectBox extends HashMap<Integer, AnimatedObject>{
 
     }
 

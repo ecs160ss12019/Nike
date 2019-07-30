@@ -191,7 +191,7 @@ public class Invader extends AnimatedObject<ImageView> {
     }
 
     @Override
-    public float evaluate(float value) {
-        return 0;
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }
