@@ -37,6 +37,7 @@ public class Invader extends AnimatedObject<ImageView> {
     private Random rand;
     private MissileForm missileForm;
 
+
     Invader(int row, int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(animator, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
         this.row = row;
@@ -184,7 +185,7 @@ public class Invader extends AnimatedObject<ImageView> {
     }
 
     @Override
-    public float evaluate(float value) {
-        return 0;
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }

@@ -34,6 +34,11 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     private int invaderWidth;
     private int invaderHeight;
 
+    /* Invader Setting Flags */
+    public final static int VELOCITY=0b1;
+
+
+
     InvaderGroup(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
 
         super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
@@ -306,7 +311,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     }
 
     @Override
-    public float evaluate(float value) {
-        return 0;
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }

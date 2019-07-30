@@ -323,9 +323,8 @@ class Missile extends AnimatedObject<ImageView> {
         return pool;
     }
 
-
     @Override
-    public float evaluate(float value) {
-        return 0;
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }

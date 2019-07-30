@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-public class HUD extends AnimatedObject <ConstraintLayout> implements StatusManager {
+public class HUD extends AnimatedObject <ConstraintLayout> {
     private TextView score;
     private Lives liveLayout;
     private int lives;
@@ -96,8 +96,4 @@ public class HUD extends AnimatedObject <ConstraintLayout> implements StatusMana
         this.lives=lives;
     }
 
-    @Override
-    public float evaluate(float value) {
-        return 0;
-    }
 }

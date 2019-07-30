@@ -201,8 +201,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
     }
 
     @Override
-    public float evaluate(float value) {
-        return 0;
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 
     public boolean isAlive() {return alive;}
