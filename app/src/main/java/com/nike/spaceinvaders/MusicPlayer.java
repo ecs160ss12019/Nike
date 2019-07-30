@@ -31,6 +31,26 @@ public class MusicPlayer extends Service implements MediaPlayer.OnErrorListener 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mPlayer = MediaPlayer.create(this, R.raw.venus);
+        mPlayer.setOnErrorListener(this);
+
+        if (mPlayer != null) {
+            mPlayer.setLooping(true);
+            mPlayer.setVolume(50, 50);
+        }
+
+
+        mPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+
+            public boolean onError(MediaPlayer mp, int what, int
+                    extra) {
+
+                onError(mPlayer, what, extra);
+                return true;
+            }
+        });
+
     }
 
 
