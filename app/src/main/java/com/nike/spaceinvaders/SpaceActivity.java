@@ -137,7 +137,7 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
     //invoked when pressing pause
     public void pause_press(View view){
-        //TODO: not working, make gary effects
+        //TODO: make gary effects not done
         makedisplaygray();
         //pause the game
         if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
@@ -147,7 +147,7 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         }
 
         Intent i = new Intent(SpaceActivity.this,Pop.class);
-        i.putExtra("signal","pause");
+        i.putExtra("insignal","pause");
         startActivityForResult(i,0);
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }
@@ -182,7 +182,7 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         super.onActivityResult(requestCode, resultCode, data);
         Bundle bundle=data.getExtras();
         String str = bundle.getString("signal");
-        Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),bundle.getString("signal"),Toast.LENGTH_SHORT).show();
 
         if(str.equals("resume")){
             if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
@@ -192,8 +192,16 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
             }
         }else if(str.equals("restart")){
             //TODO: restart the game
+            Toast.makeText(getApplicationContext(),"restartgame",Toast.LENGTH_SHORT).show();
+        } else if(str.equals("backtotitle")){
+            //situation when click back button
+            Toast.makeText(getApplicationContext(),"backtotitle",Toast.LENGTH_SHORT).show();
+            finish();
+            overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
         }
     }
+
+    //this will ban back button in bottom
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event){
         if (keyCode == KeyEvent.KEYCODE_BACK) {
