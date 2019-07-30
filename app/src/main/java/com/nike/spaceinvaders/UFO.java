@@ -8,6 +8,7 @@ package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -28,6 +29,7 @@ public class UFO extends Invader {
     private int remainedFrames;//this is the number of frames spent in each horizontal trip, so the speed of UFO is faster when this number is smaller
     private boolean direction;
     private float startX=-200;
+    private int type;
 
     UFO(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(-1, index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
@@ -37,6 +39,24 @@ public class UFO extends Invader {
         remainedFrames = 50;//kinda slow
         direction = myrand.nextBoolean();
         alive = true;
+        type = myrand.nextInt(3);
+        setType(type, view);//have different looks of ufos
+
+    }
+
+    protected void setType(int type, ImageView view){//want to do this every time when starts travel
+        if(type==0){
+            view.setBackgroundResource(R.drawable.ufo1);
+        }else if(type==1){
+            view.setBackgroundResource(R.drawable.ufo2);
+        }else if(type==2){
+            view.setBackgroundResource(R.drawable.ufo3);
+        }else{
+        }
+        AnimationDrawable frameAnimation =  (AnimationDrawable) view.getBackground();
+        if(frameAnimation!=null){
+            frameAnimation.start();
+        }
     }
 
     @Override

@@ -134,8 +134,7 @@
         app:layout_constraintBottom_toTopOf="@+id/invader_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HUD"
-        app:srcCompat="@drawable/myinvader" />
+        app:layout_constraintTop_toBottomOf="@+id/HUD"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/invader_layout"
@@ -347,7 +346,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/mylaserbase">
+        app:srcCompat="@drawable/laserbase">
 
     </ImageView>
 
