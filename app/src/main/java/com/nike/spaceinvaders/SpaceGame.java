@@ -12,14 +12,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
-import android.util.SparseBooleanArray;
-import android.util.SparseIntArray;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.widget.Space;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -112,15 +108,18 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                 .setProcessHandler(processThread).setStatus(status).setSpaceGame(this).setSoundEngine(se)
                 .build();  // setCapacity needs to be called at the very last
         this.laserBase.setSpaceGame(this);
+        this.laserBase.setHitDetection(new NormalHitDetection());
         this.baseShelterGroup.setSpaceGame(this);
+        this.baseShelterGroup.setHitDetection(new PreciseHitDetection());
         this.invaderGroup.setSpaceGame(this);
         this.UFO.setSpaceGame(this);
-        this.animatedObjects=new AnimatedObjectBox();
 
+        this.animatedObjects=new AnimatedObjectBox();
         this.animatedObjects.put(SpaceGame.LASER_BASE,this.laserBase);
         this.animatedObjects.put(SpaceGame.BASE_SHELTER_GROUP,this.baseShelterGroup);
         this.animatedObjects.put(SpaceGame.INVADER_GROUP,this.invaderGroup);
         this.animatedObjects.put(SpaceGame.UFO_INVADER,this.UFO);
+
 
         ((AnimatedObject)this.hud).setSpaceGame(this);
 

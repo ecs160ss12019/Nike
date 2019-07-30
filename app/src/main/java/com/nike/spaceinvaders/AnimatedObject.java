@@ -47,6 +47,8 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
 
     private int[] hitBox;
 
+    private HitDetection hitDetection;
+
     AnimatedObject( ValueAnimator animator, View view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status,
                    Handler mainHandler, Handler processHandler,SoundEngine soundEngine){
 
@@ -361,6 +363,14 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
 
     public void setHitBox(int[] hitBox) {
         this.hitBox = hitBox;
+    }
+
+    public HitDetection getHitDetection() {
+        return hitDetection;
+    }
+
+    public void setHitDetection(HitDetection hitDetection) {
+        this.hitDetection = hitDetection;
     }
 
 
