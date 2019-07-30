@@ -53,6 +53,15 @@ public class MusicPlayer extends Service implements MediaPlayer.OnErrorListener 
 
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //if (mPlayer != null) {
+        //    mPlayer.start();
+        //}
+        return START_NOT_STICKY;
+    }
+
+
 
     public boolean onError(MediaPlayer mp, int what, int extra) {
 
