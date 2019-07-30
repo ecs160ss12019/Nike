@@ -136,7 +136,7 @@ class LaserBase extends AnimatedObject<ImageView> {
 
             case SpaceGame.STRIKE:
                 assert value != null;
-                if (hitDetection(actions, value.first)) {
+                if (hitDetection(value.first)) {
                     kill(actions, value.first);
                 }
                 break;
@@ -154,25 +154,6 @@ class LaserBase extends AnimatedObject<ImageView> {
 
     }
 
-
-    private boolean hitDetection(Actions actions, AnimatedObject missile) {
-        // get missile's location
-        float x = missile.getX();
-        float y = missile.getY();
-
-        int missileWidth = missile.getWidth();
-
-        float left, top, bottom, right;
-        left = this.getAbsoluteX() + 50;
-        top = this.getAbsoluteY();
-        bottom = top + this.getHeight();
-        right = left + this.getWidth() - 50;
-        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + missileWidth) >= left && (x + missileWidth) <= right && y <= bottom && y >= top)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
     private void kill(Actions actions, AnimatedObject missile) {
