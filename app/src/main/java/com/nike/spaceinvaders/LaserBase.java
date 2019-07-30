@@ -32,8 +32,10 @@ import org.ejml.simple.SimpleMatrix;
 class LaserBase extends AnimatedObject<ImageView> {
     private int velocity=200;
     private float delta = 10f;
+    private float realDelta=delta;
     private boolean direction;
     private boolean running=true;
+    private boolean held=false;
 //    private Missile lastMissile;
 
     LaserBase(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
@@ -65,12 +67,12 @@ class LaserBase extends AnimatedObject<ImageView> {
         if (this.getAnimator() == null) {
             this.setAnimator(new ValueAnimator());
             this.getAnimator().setIntValues(1, 100);
+            this.getAnimator().setDuration(this.velocity);
             this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
             this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
             this.getAnimator().setInterpolator(null);
             this.getAnimator().addUpdateListener(animatorListenerConfigure());
         }
-        this.getAnimator().setDuration((1/this.velocity)*40000);
         Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
 
         switch (key) {
@@ -80,11 +82,13 @@ class LaserBase extends AnimatedObject<ImageView> {
                 }
                 this.direction = false;
                 if (value!=null&&value.second!=null&&value.second.get(SpaceGame.GRAVITY)!=null){
-                    this.velocity= (int) (value.second.get(SpaceGame.GRAVITY)*1000);
+                    this.realDelta= (int) (Math.abs(value.second.get(SpaceGame.GRAVITY)) * 20f);
+                }else {
+                    this.realDelta=this.delta;
+                    this.held=true;
                 }
-
-                this.getAnimator().setDuration((1/this.velocity)*40000);
-                this.getAnimator().start();
+                if (!this.getAnimator().isRunning()||this.getAnimator().isPaused())
+                    this.getAnimator().start();
                 break;
             case SpaceGame.MOVE_RIGHT:
                 if (!this.running){
@@ -92,10 +96,13 @@ class LaserBase extends AnimatedObject<ImageView> {
                 }
                 this.direction = true;
                 if (value!=null&&value.second!=null&&value.second.get(SpaceGame.GRAVITY)!=null) {
-                    this.velocity = (int) (value.second.get(SpaceGame.GRAVITY) * 1000);
+                    this.realDelta = (int) (Math.abs(value.second.get(SpaceGame.GRAVITY)) * 20f);
+                }else {
+                    this.realDelta=this.delta;
+                    this.held=true;
                 }
-                this.getAnimator().setDuration((1/this.velocity)*40000);
-                this.getAnimator().start();
+                if (!this.getAnimator().isRunning()||this.getAnimator().isPaused())
+                    this.getAnimator().start();
                 break;
             case SpaceGame.FIRE:
                 if (!this.running){
@@ -118,7 +125,13 @@ class LaserBase extends AnimatedObject<ImageView> {
 
                 break;
             case SpaceGame.MOVE_STOP:
-                this.getAnimator().pause();
+                if (value==null){
+                    this.held=false;
+                }
+                if (!this.held){
+                    this.getAnimator().pause();
+                }
+
                 break;
 
             case SpaceGame.STRIKE:
@@ -194,6 +207,7 @@ class LaserBase extends AnimatedObject<ImageView> {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction = animation.getAnimatedFraction();
+                Log.d("Fraction", String.valueOf(fraction));
                 float subFraction = 0.005f;
                 float remaining = fraction % subFraction;
                 int times = (int) (fraction / subFraction);
@@ -208,9 +222,9 @@ class LaserBase extends AnimatedObject<ImageView> {
                     return;
                 }
                 if (direction) {
-                    that.setX(that.getX() + ((LaserBase) that).getDelta());
+                    that.setX(that.getX() + ((LaserBase) that).getRealDelta());
                 } else {
-                    that.setX(that.getX() - ((LaserBase) that).getDelta());
+                    that.setX(that.getX() - ((LaserBase) that).getRealDelta());
                 }
             }
         };
@@ -230,5 +244,9 @@ class LaserBase extends AnimatedObject<ImageView> {
     @Override
     public float evaluate(float value) {
         return 0;
+    }
+
+    public float getRealDelta() {
+        return realDelta;
     }
 }

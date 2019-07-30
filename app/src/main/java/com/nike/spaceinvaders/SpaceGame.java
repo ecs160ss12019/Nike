@@ -11,6 +11,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -175,6 +176,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                 assert size != null;
                 int motion;
                 if (event.getRawX()>size.x/2&&event.getRawY()>laserBase.getY()){
+                    Log.d("awef","aeee");
                     motion=SpaceGame.MOVE_RIGHT;
                 }else if (event.getRawX()<size.x/2&&event.getRawY()>laserBase.getY()){
                     motion=SpaceGame.MOVE_LEFT;
@@ -209,13 +211,14 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         float gravity=event.values[1];
         float gravityX=event.values[0];
-        float fraction=gravityX/100;
+        float fraction=gravityX>7?(1):(gravityX<-7?-1:gravityX/7);
         int motion;
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
-        if (fraction>100){
-            motion=SpaceGame.MOVE_RIGHT;
-        }else if (fraction<-100) {
+//        Log.d("Gravity Fraction", String.valueOf(fraction));
+        if (fraction>1f/7){
             motion=SpaceGame.MOVE_LEFT;
+        }else if (fraction<-1f/7) {
+            motion=SpaceGame.MOVE_RIGHT;
         }else {
             motion=SpaceGame.MOVE_STOP;
         }

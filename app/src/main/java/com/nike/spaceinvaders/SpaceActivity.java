@@ -129,7 +129,8 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mSpaceGame.onTouch(event);
+        if (mSpaceGame!=null)
+            mSpaceGame.onTouch(event);
         return super.onTouchEvent(event);
     }
 
@@ -153,9 +154,9 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        Log.d("Gravity", Arrays.toString(event.values));
+//        Log.d("Gravity", Arrays.toString(event.values));
         if (mSpaceGame!=null) {
-            Log.d("adsfaw", "awefa");
+//            Log.d("adsfaw", "awefa");
             mSpaceGame.onSensorChanged(event);
         }
     }
