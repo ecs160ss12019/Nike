@@ -193,7 +193,6 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                 assert size != null;
                 int motion;
                 if (event.getRawX()>size.x/2&&event.getRawY()>laserBase.getY()){
-                    Log.d("awef","aeee");
                     motion=SpaceGame.MOVE_RIGHT;
                 }else if (event.getRawX()<size.x/2&&event.getRawY()>laserBase.getY()){
                     motion=SpaceGame.MOVE_LEFT;
@@ -226,10 +225,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        boolean gravitySetting=this.setting.getBoolean(String.valueOf(SpaceGame.GRAVITY));
-        if (!gravitySetting){
-            return;
-        }
+//        boolean gravitySetting=this.setting.getBoolean(String.valueOf(SpaceGame.GRAVITY));
+//        if (!gravitySetting){
+//            return;
+//        }
         float gravity=event.values[1];
         float gravityX=event.values[0];
         float fraction=gravityX>7?(1):(gravityX<-7?-1:gravityX/7);

@@ -42,7 +42,6 @@ import java.util.Set;
  */
 class BaseShelter extends AnimatedObject<ImageView> {
     private boolean status=true;
-    int[] hitBox;
     int[] oldHitBox;
     // number of cols and rows of hitBoxes
     private int numRow, numCol;
@@ -84,9 +83,9 @@ class BaseShelter extends AnimatedObject<ImageView> {
     private void removePaddingHitBox() {
         int newHeight = bitmap.getHeight() - 30;
         int newWidth = bitmap.getWidth();
-        hitBox = new int[newHeight * newWidth];
+        this.setHitBox(new int[newHeight * newWidth]);
         for (int i = 0; i < newHeight * newWidth; i++) {
-            hitBox[i] = oldHitBox[i];
+            this.getHitBox()[i] = oldHitBox[i];
         }
 
     }
@@ -218,7 +217,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
 
             if (x >= 0 && y >= 0 && x < width && y < height && realCoordinate >= 0
-                    && realCoordinate < hitBox.length && this.hitBox[realCoordinate] !=
+                    && realCoordinate < this.getHitBox().length && this.getHitBox()[realCoordinate] !=
                     Color.argb(255, 0, 0, 0)) {
                 return new Point(x, y);
             }
