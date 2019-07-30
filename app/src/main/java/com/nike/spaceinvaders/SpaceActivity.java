@@ -125,6 +125,9 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 //        mSpaceGame.resume();
         if (sensor!=null)
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        if (mServ != null) {
+            mServ.resumeMusic();
+        }
     }
 
     @Override
