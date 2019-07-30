@@ -8,7 +8,7 @@ interface HitDetection {
     Point hitDetection(AnimatedObject animatedObject,PointF position, AnimatedObject.Size size);
 }
 
-class NormalHitDetectio implements HitDetection{
+class NormalHitDetection implements HitDetection{
 
     @Override
     public Point hitDetection(AnimatedObject animatedObject,PointF position, AnimatedObject.Size size) {
