@@ -147,7 +147,6 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
         Intent i = new Intent(SpaceActivity.this,Pop.class);
         i.putExtra("signal","pause");
-        //startActivity(i);
         startActivityForResult(i,0);
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }

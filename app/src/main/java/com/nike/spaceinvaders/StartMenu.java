@@ -16,7 +16,6 @@ public class StartMenu extends AppCompatActivity {
     }
     //invoked once start button has been pressed
     public void startgame(View view) {
-        //Toast.makeText(getApplicationContext(),"Test",Toast.LENGTH_LONG).show();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SpaceActivity.class);//Jump from this to SpaceActivity
         this.startActivity(intent);
@@ -27,8 +26,20 @@ public class StartMenu extends AppCompatActivity {
     public void settingpage(View view){
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SettingPage.class);//Jump from this to SpaceActivity
-        this.startActivity(intent);
+        //this.startActivity(intent);
+        startActivityForResult(intent,0);
         //Animation of xml on transition
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//android.anim.fade_in
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle bundle=data.getExtras();
+        //get setting from setting page
+        String AiLevel = bundle.getString("AiLevel");
+        String GravityFlag = bundle.getString("GravityFlag");
+        Toast.makeText(getApplicationContext(),"AiLevel: "+AiLevel+" Gravity: "+GravityFlag,Toast.LENGTH_LONG).show();
+        //TODO: pass parameter to spaceActivity'
+
     }
 }
