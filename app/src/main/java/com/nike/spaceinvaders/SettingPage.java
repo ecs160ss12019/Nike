@@ -10,21 +10,32 @@ import android.widget.Toast;
 
 public class SettingPage extends AppCompatActivity {
 
-    public int gravityflag;//0 is off, 1 is on
+    SeekBar AiLevelBar,GravityBar;
+    public boolean gravityflag;//0 is off, 1 is on
     public int ailevel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_page);
         //init
-        gravityflag=1;
-        ailevel=0;
+        AiLevelBar= findViewById(R.id.ailevelbar);
+        GravityBar=findViewById(R.id.gravitybar);
+        Bundle bundle=getIntent().getExtras();
+        gravityflag=bundle.getBoolean("GravityFlag");
+        ailevel=bundle.getInt("AiLevel");
+
+        changeSeekBar();
         getSettingValue();
     }
 
+    //it can save changed seekbar
+    private void changeSeekBar() {
+        //reload saved value
+        AiLevelBar.setProgress(ailevel);
+        GravityBar.setProgress(gravityflag ?1:0);
+    }
+    //two listener for changed seekbar
     private void getSettingValue() {
-        SeekBar AiLevelBar= findViewById(R.id.ailevelbar);
-        SeekBar GravityBar= findViewById(R.id.gravitybar);
         AiLevelBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -41,7 +52,7 @@ public class SettingPage extends AppCompatActivity {
         GravityBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                gravityflag=progress;
+                gravityflag =(progress != 0);
             }
 
             @Override
@@ -59,20 +70,12 @@ public class SettingPage extends AppCompatActivity {
         Intent intent=this.getIntent();
         Bundle bundle=new Bundle();
         //Test only
-        bundle.putString("AiLevel",String.valueOf(ailevel));
-        bundle.putString("GravityFlag",String.valueOf(gravityflag));
+        bundle.putInt("AiLevel",ailevel);
+        bundle.putBoolean("GravityFlag",gravityflag);
         intent.putExtras(bundle);
         this.setResult(Activity.RESULT_OK, intent);
         this.finish();
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//slide_right
     }
-//Example of return value
-/*    Intent intent=this.getIntent();
-    Bundle bundle=intent.getExtras();
-    //Test only
-        bundle.putString("signal","resume");
-        intent.putExtras(bundle);
-        this.setResult(Activity.RESULT_OK, intent);
-        this.finish();
-    overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);//android.anim.fade_in*/
+
 }

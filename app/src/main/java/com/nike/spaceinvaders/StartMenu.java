@@ -8,11 +8,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class StartMenu extends AppCompatActivity {
+
+    private int AiLevel;
+    private boolean GravityFlag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_menu);
-
+        //init
+        AiLevel=0;
+        GravityFlag=true;
     }
     //invoked once start button has been pressed
     public void startgame(View view) {
@@ -26,7 +31,10 @@ public class StartMenu extends AppCompatActivity {
     public void settingpage(View view){
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SettingPage.class);//Jump from this to SpaceActivity
-        //this.startActivity(intent);
+        Bundle bundle=new Bundle();
+        bundle.putInt("AiLevel",this.AiLevel);
+        bundle.putBoolean("GravityFlag",this.GravityFlag);
+        intent.putExtras(bundle);
         startActivityForResult(intent,0);
         //Animation of xml on transition
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//android.anim.fade_in
@@ -36,10 +44,12 @@ public class StartMenu extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Bundle bundle=data.getExtras();
         //get setting from setting page
-        String AiLevel = bundle.getString("AiLevel");
-        String GravityFlag = bundle.getString("GravityFlag");
-        Toast.makeText(getApplicationContext(),"AiLevel: "+AiLevel+" Gravity: "+GravityFlag,Toast.LENGTH_LONG).show();
-        //TODO: pass parameter to spaceActivity'
+        int AiLevel = bundle.getInt("AiLevel");
+        Boolean GravityFlag = bundle.getBoolean("GravityFlag");
 
+        this.AiLevel=AiLevel;
+        this.GravityFlag=(GravityFlag);
+        //TestOnly
+        Toast.makeText(getApplicationContext(),"AiLevel: "+String.valueOf(this.AiLevel)+" Gravity: "+String.valueOf(this.GravityFlag),Toast.LENGTH_LONG).show();
     }
 }
