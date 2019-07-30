@@ -10,10 +10,13 @@ import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
+import android.util.SparseBooleanArray;
+import android.util.SparseIntArray;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.Space;
@@ -75,6 +78,12 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int INVADER_GROUP=0b0000100;
     public static final int UFO_INVADER=0b0001000;
 
+    /* Setting Flags */
+    public static final int GRAVITY_SETTING=0b0000001;
+    public static final int d=0b0000010;
+    public static final int a=0b0000100;
+    public static final int ds=0b0001000;
+
     final AnimatedObject laserBase;
     final AnimatedObject baseShelterGroup;
     final AnimatedObject invaderGroup;
@@ -85,13 +94,14 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     final MissilePool missilePool;
     final StatusManager hud;
     final Resources resources;
-
     private Status status;
+    private Bundle setting;
 
     private State state;
 
 
-    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject UFO, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
+
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject UFO, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se, Bundle setting){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
@@ -209,6 +219,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        boolean gravitySetting=this.setting.getBoolean(String.valueOf(SpaceGame.GRAVITY));
+        if (!gravitySetting){
+            return;
+        }
         float gravity=event.values[1];
         float gravityX=event.values[0];
         float fraction=gravityX>7?(1):(gravityX<-7?-1:gravityX/7);

@@ -38,7 +38,7 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
     private Thread processThread;
     private SensorManager sensorManager;
     private Sensor sensor;
-
+    private SpaceGame.Status setting;
 
 
     //Initiate runnable to be run in the process thread that initiate handler.

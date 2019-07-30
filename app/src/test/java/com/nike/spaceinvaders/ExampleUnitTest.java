@@ -19,4 +19,10 @@ public class ExampleUnitTest {
     public void AI_instantiation(){
 
     }
+    @Test
+    public void Gravity_Sensor(){
+
+        SpaceGame spaceGame=new SpaceGame(null,null,null,null,null,null,null,null,null,null,null,null);
+        spaceGame.onSensorChanged(new);
+    }
 }
