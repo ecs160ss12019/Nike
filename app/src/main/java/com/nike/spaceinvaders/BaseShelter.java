@@ -41,6 +41,7 @@ import java.util.Set;
  * It holds and manages an {@link ImageView} object that holds the image of the BaseShelter.
  */
 class BaseShelter extends AnimatedObject<ImageView> {
+    private boolean status=true;
     int[] hitBox;
     int[] oldHitBox;
     // number of cols and rows of hitBoxes
@@ -52,6 +53,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
     private Bitmap bitmap;
 
     private Canvas canvas;
+
+    private HitDetection hitDetection;
 
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
@@ -109,6 +112,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     private void killSelf(){
         this.setVisibility(View.INVISIBLE);
+        this.status=false;
     }
 
 
@@ -126,6 +130,9 @@ class BaseShelter extends AnimatedObject<ImageView> {
                 break;
 
             case SpaceGame.STRIKE:
+                if (!this.status){
+                    break;
+                }
                 //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
                 Missile missile = (Missile) Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
 //        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
@@ -222,5 +229,9 @@ class BaseShelter extends AnimatedObject<ImageView> {
     @Override
     public void updateStatus(SpaceGame.Status status) {
 
+    }
+
+    public void setHitDetection(HitDetection hitDetection) {
+        this.hitDetection = hitDetection;
     }
 }
