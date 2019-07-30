@@ -99,6 +99,19 @@ public class MusicPlayer extends Service implements MediaPlayer.OnErrorListener 
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPlayer != null) {
+            try {
+                mPlayer.stop();
+                mPlayer.release();
+            } finally {
+                mPlayer = null;
+            }
+        }
+    }
+
 
 
     public boolean onError(MediaPlayer mp, int what, int extra) {
