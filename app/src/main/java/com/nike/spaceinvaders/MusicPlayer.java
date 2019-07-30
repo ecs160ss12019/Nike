@@ -28,6 +28,12 @@ public class MusicPlayer extends Service implements MediaPlayer.OnErrorListener 
         return mBinder;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+
     public boolean onError(MediaPlayer mp, int what, int extra) {
 
         Toast.makeText(this, "Music player failed", Toast.LENGTH_SHORT).show();
