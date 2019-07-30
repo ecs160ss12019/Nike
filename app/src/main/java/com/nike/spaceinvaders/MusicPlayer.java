@@ -92,6 +92,11 @@ public class MusicPlayer extends Service implements MediaPlayer.OnErrorListener 
     }
 
     public void stopMusic() {
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
+        }
     }
 
 
