@@ -2,8 +2,10 @@ package com.nike.spaceinvaders;
 
 import android.app.Activity;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -13,6 +15,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -195,4 +198,28 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         }
 
     }
+
+
+    //MusicPlayer code
+    private boolean mIsBound = false;
+    private MusicPlayer mServ;
+    private ServiceConnection Scon =new ServiceConnection(){
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicPlayer.ServiceBinder)binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService(){
+    }
+
+    void doUnbindService()
+    {
+    }
+
 }
