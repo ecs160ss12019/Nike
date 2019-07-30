@@ -137,15 +137,13 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
     //invoked when pressing pause
     public void pause_press(View view){
-        //TODO: make gary effects not done
-        makedisplaygray();
         //pause the game
         if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
             //mSpaceGame.setState(new SpaceGame.RunningGame());
         }else {
             mSpaceGame.setState(new SpaceGame.PausedGame());
         }
-
+        //start popup window
         Intent i = new Intent(SpaceActivity.this,Pop.class);
         i.putExtra("insignal","pause");
         startActivityForResult(i,0);
@@ -166,16 +164,6 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
     }
 
-    public void makedisplaygray(){
-        ImageView i = new ImageView(this);
-        i.findViewById(R.id.graylayer);
-        i.setVisibility(View.INVISIBLE);
-    }
-    public void nodisplaygray(){
-        ImageView i = new ImageView(this);
-        i.findViewById(R.id.graylayer);
-        i.setVisibility(View.INVISIBLE);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -184,21 +172,28 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         String str = bundle.getString("signal");
         Toast.makeText(getApplicationContext(),bundle.getString("signal"),Toast.LENGTH_SHORT).show();
 
-        if(str.equals("resume")){
-            if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
-                mSpaceGame.setState(new SpaceGame.RunningGame());
-            }else {
-                mSpaceGame.setState(new SpaceGame.PausedGame());
-            }
-        }else if(str.equals("restart")){
-            //TODO: restart the game
-            Toast.makeText(getApplicationContext(),"restartgame",Toast.LENGTH_SHORT).show();
-        } else if(str.equals("backtotitle")){
-            //situation when click back button
-            Toast.makeText(getApplicationContext(),"backtotitle",Toast.LENGTH_SHORT).show();
-            finish();
-            overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
+        switch (str){
+            case "resume":
+                if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
+                    mSpaceGame.setState(new SpaceGame.RunningGame());
+                }else {
+                    mSpaceGame.setState(new SpaceGame.PausedGame());
+                }
+                break;
+            case "restart":
+                //TODO: restart the game
+                Toast.makeText(getApplicationContext(),"restartgame",Toast.LENGTH_SHORT).show();
+                break;
+            case "backtotitle":
+                //situation when click back button
+                Toast.makeText(getApplicationContext(),"backtotitle",Toast.LENGTH_SHORT).show();
+                finish();
+                overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
+                break;
+            default:
+                break;
         }
+
     }
 
     //this will ban back button in bottom

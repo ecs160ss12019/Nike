@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 public class StartMenu extends AppCompatActivity {
 
+    //two parameter will send to spacegame
     private int AiLevel;
     private boolean GravityFlag;
     @Override
