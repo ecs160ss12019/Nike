@@ -23,6 +23,11 @@ public class StartMenu extends AppCompatActivity {
     public void startgame(View view) {
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SpaceActivity.class);//Jump from this to SpaceActivity
+        //input parameter to spaceActivity
+        Bundle bundle=new Bundle();
+        bundle.putBoolean("GravityFlag",this.GravityFlag);
+        bundle.putInt("AiLevel",this.AiLevel);
+        intent.putExtras(bundle);
         this.startActivity(intent);
         //Animation of xml on transition
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);//android.anim.fade_in
@@ -49,7 +54,7 @@ public class StartMenu extends AppCompatActivity {
 
         this.AiLevel=AiLevel;
         this.GravityFlag=(GravityFlag);
-        //TestOnly
+        //TODO: delete following test after finishing
         Toast.makeText(getApplicationContext(),"AiLevel: "+String.valueOf(this.AiLevel)+" Gravity: "+String.valueOf(this.GravityFlag),Toast.LENGTH_LONG).show();
     }
 }

@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -192,6 +193,13 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         }else if(str.equals("restart")){
             //TODO: restart the game
         }
-
     }
+    @Override
+    public boolean onKeyDown(int keyCode,KeyEvent event){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return false;
+    }
+
 }
