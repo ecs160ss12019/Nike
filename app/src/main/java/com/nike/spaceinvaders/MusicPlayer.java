@@ -71,6 +71,16 @@ public class MusicPlayer extends Service implements MediaPlayer.OnErrorListener 
     }
 
 
+    public void resumeMusic() {
+    }
+
+    public void startMusic() {
+    }
+
+    public void stopMusic() {
+    }
+
+
 
     public boolean onError(MediaPlayer mp, int what, int extra) {
 
