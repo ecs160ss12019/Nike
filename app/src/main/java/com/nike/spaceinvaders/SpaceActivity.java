@@ -136,6 +136,9 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 //        mSpaceGame.pause();
         if (sensor!=null)
             sensorManager.unregisterListener(this);
+        if (mServ != null) {
+            mServ.pauseMusic();
+        }
     }
 
     @Override
