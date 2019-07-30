@@ -30,7 +30,6 @@ import android.widget.Space;
 public class Invader extends AnimatedObject<ImageView> {
     public boolean alive = true;
     private Missile missile;
-    private int[][] hitbox;
     private int abstractionLevel = 10;
     private int index;
     private int row;

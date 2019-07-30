@@ -41,7 +41,7 @@ import java.util.Set;
  * It holds and manages an {@link ImageView} object that holds the image of the BaseShelter.
  */
 class BaseShelter extends AnimatedObject<ImageView> {
-    int[] hitBox;
+    private boolean status=true;
     int[] oldHitBox;
     // number of cols and rows of hitBoxes
     private int numRow, numCol;
@@ -53,6 +53,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
     private Bitmap bitmap;
 
     private Canvas canvas;
+
+    private HitDetection hitDetection;
 
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
@@ -82,9 +84,9 @@ class BaseShelter extends AnimatedObject<ImageView> {
     private void removePaddingHitBox() {
         int newHeight = bitmap.getHeight() - 30;
         int newWidth = bitmap.getWidth();
-        hitBox = new int[newHeight * newWidth];
+        this.setHitBox(new int[newHeight * newWidth]);
         for (int i = 0; i < newHeight * newWidth; i++) {
-            hitBox[i] = oldHitBox[i];
+            this.getHitBox()[i] = oldHitBox[i];
         }
 
     }
@@ -93,6 +95,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
     private void killSelf(){
         alive = false;
         this.setVisibility(View.INVISIBLE);
+        this.status=false;
     }
 
 
@@ -110,6 +113,11 @@ class BaseShelter extends AnimatedObject<ImageView> {
                 break;
 
             case SpaceGame.STRIKE:
+                if (!this.status){
+                    break;
+                }
+                //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
+
                 Missile missile = (Missile) Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
 
                 float missileAbsX = missile.getX();
@@ -192,7 +200,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
 
             if (x >= 0 && y >= 0 && x < width && y < height && realCoordinate >= 0
-                    && realCoordinate < hitBox.length && this.hitBox[realCoordinate] !=
+                    && realCoordinate < this.getHitBox().length && this.getHitBox()[realCoordinate] !=
                     Color.argb(255, 0, 0, 0)) {
                 return new Point(x, y);
             }
@@ -205,5 +213,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     }
 
+    public void setHitDetection(HitDetection hitDetection) {
+        this.hitDetection = hitDetection;
+    }
     public boolean isAlive() {return alive;}
 }

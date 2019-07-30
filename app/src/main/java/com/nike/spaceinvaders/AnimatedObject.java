@@ -45,6 +45,8 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
 
     private AI.Evaluator evaluator;
 
+    private int[] hitBox;
+
     AnimatedObject( ValueAnimator animator, View view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status,
                    Handler mainHandler, Handler processHandler,SoundEngine soundEngine){
 
@@ -351,6 +353,14 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
 
     public void setEvaluator(AI.Evaluator evaluator) {
         this.evaluator = evaluator;
+    }
+
+    public int[] getHitBox() {
+        return hitBox;
+    }
+
+    public void setHitBox(int[] hitBox) {
+        this.hitBox = hitBox;
     }
 
 
