@@ -70,6 +70,11 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         View contentView  = mInflater.inflate(R.layout.space_activity,null);
         setContentView(contentView);
 
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicPlayer.class);
+        startService(music);
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
     }
@@ -229,6 +234,5 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
             mIsBound = false;
         }
     }
-
 
 }
