@@ -9,6 +9,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PointF;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
@@ -42,6 +43,18 @@ public class Invader extends AnimatedObject<ImageView> {
         this.index = index;
         initMissileForm();
         rand = new Random();
+        if(row==0){
+            view.setBackgroundResource(R.drawable.orangeinvader);
+        }else if(row==1){
+            view.setBackgroundResource(R.drawable.yellowinvader);
+        }else if(row==2){
+            view.setBackgroundResource(R.drawable.blueinvader);
+        }else{
+        }
+        AnimationDrawable frameAnimation =  (AnimationDrawable) view.getBackground();
+        if(frameAnimation!=null){
+            frameAnimation.start();
+        }
     }
 
     protected void kill(Actions actions, AnimatedObject missile) {
@@ -63,27 +76,6 @@ public class Invader extends AnimatedObject<ImageView> {
     }
 
 
-
-    protected boolean hitDetection(Actions actions, AnimatedObject missile) {
-        if (!alive) {
-            return false;
-        }
-        float x = missile.getX();
-        float y = missile.getY();
-        int missileWidth = missile.getWidth();
-        float left, top, bottom, right;
-        left = this.getAbsoluteX() + 50;
-        top = this.getAbsoluteY();
-        bottom = top + this.getHeight();
-        right = left + this.getWidth() - 50;
-        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + missileWidth) >= left && (x + missileWidth) <= right && y <= bottom && y >= top)) {
-            this.getSoundEngine().playInvaderDeath(); //Sound effect for invader being destroyed
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @Override
     protected void handle(Actions actions, Integer key) {
 
@@ -92,7 +84,8 @@ public class Invader extends AnimatedObject<ImageView> {
         switch (key) {
             case SpaceGame.STRIKE:
                 assert value != null;
-                if (hitDetection(actions, value.first)) {
+                if (this.alive && hitDetection(value.first)) {
+                    this.getSoundEngine().playInvaderDeath(); //Sound effect for invader being destroyed
                     kill(actions, value.first);
                 }
                 break;

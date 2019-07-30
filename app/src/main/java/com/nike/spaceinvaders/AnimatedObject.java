@@ -182,6 +182,25 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
 
     abstract protected void handle (Actions actions, Integer key);
 
+
+    protected boolean hitDetection(AnimatedObject hittingObject) {
+        float x = hittingObject.getAbsoluteX();
+        float y = hittingObject.getAbsoluteY();
+
+        int hittingObjectWidth = hittingObject.getWidth();
+        float left, top, bottom, right;
+        float padding = 20;
+        left = this.getAbsoluteX() + padding;
+        top = this.getAbsoluteY();
+        bottom = top + this.getHeight();
+        right = left + this.getWidth() - padding;
+        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + hittingObjectWidth) >= left && (x + hittingObjectWidth) <= right && y <= bottom && y >= top)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * {@inheritDoc}
      *

@@ -48,6 +48,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
     // Each hit box is 10 by 10 in pixels
     private int boxSize = 10;
 
+    private boolean alive = true;
 
     private Bitmap bitmap;
 
@@ -90,26 +91,9 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     }
 
-    private boolean collisionDetection(AnimatedObject collider) {
-        // get collider's location
-        float x = collider.getAbsoluteX();
-        float y = collider.getAbsoluteY();
-
-        int colliderWidth = collider.getWidth();
-
-        float left, top, bottom, right;
-        left = this.getAbsoluteX() + 20;
-        top = this.getAbsoluteY();
-        bottom = top + this.getHeight();
-        right = left + this.getWidth() - 20;
-        if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + colliderWidth) >= left && (x + colliderWidth) <= right && y <= bottom && y >= top)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     private void killSelf(){
+        alive = false;
         this.setVisibility(View.INVISIBLE);
         this.status=false;
     }
@@ -123,7 +107,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         switch(key)
         {
             case SpaceGame.CONTACT:
-                if(collisionDetection(actions.get(SpaceGame.CONTACT).first)){
+                if(alive && hitDetection(actions.get(SpaceGame.CONTACT).first)){
                     killSelf();
                 }
                 break;
@@ -133,9 +117,8 @@ class BaseShelter extends AnimatedObject<ImageView> {
                     break;
                 }
                 //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
+
                 Missile missile = (Missile) Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
-//        float missileAbsX = data.get(SpaceGame.X_COORDINATE);
-//        float missileAbsY = data.get(SpaceGame.Y_COORDINATE);
 
                 float missileAbsX = missile.getX();
                 float missileAbsY = missile.getY();
@@ -233,4 +216,5 @@ class BaseShelter extends AnimatedObject<ImageView> {
     public void setHitDetection(HitDetection hitDetection) {
         this.hitDetection = hitDetection;
     }
+    public boolean isAlive() {return alive;}
 }
