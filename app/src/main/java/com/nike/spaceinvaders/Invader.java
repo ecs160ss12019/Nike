@@ -85,7 +85,7 @@ public class Invader extends AnimatedObject<ImageView> {
             case SpaceGame.STRIKE:
                 assert value != null;
                 if (this.alive && hitDetection(value.first)) {
-                    this.getSoundEngine().playInvaderDeath(); //Sound effect for invader being destroyed
+                    playDeathSound(); //Sound effect for invader being destroyed
                     kill(actions, value.first);
                 }
                 break;
@@ -152,21 +152,42 @@ public class Invader extends AnimatedObject<ImageView> {
         switch(row)
         {
             case 0:
-                this.missileForm = new InvaderAMissileForm(
+                this.missileForm = new OrangeInvaderMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
                 break;
 
             case 1:
-                this.missileForm = new InvaderBMissileForm(
+                this.missileForm = new YellowInvaderMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
                 break;
             case 2:
-                this.missileForm = new InvaderCMissileForm(
+                this.missileForm = new BlueInvaderMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
                 break;
         }
     }
 
+
+    /*
+    Play a type of sound when an invader dies
+     */
+    private void playDeathSound()
+    {
+        switch(row)
+        {
+            case 0:
+                this.getSoundEngine().playYellowInvaderDeath();
+                break;
+
+            case 1:
+                this.getSoundEngine().playBlueInvaderDeath();
+                break;
+
+            case 2:
+                this.getSoundEngine().playOrangeInvaderDeath();
+                break;
+        }
+    }
 
     public int getIndex() {
         return index;
