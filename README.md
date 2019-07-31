@@ -140,3 +140,8 @@ Weili Yin,    CharlesYWL
 ![B](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2B.png)
 
 ![C](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2C.png)
+
+
+## Reference:
+Wasabeef, 2018, https://github.com/wasabeef/Blurry
+}

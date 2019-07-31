@@ -182,12 +182,12 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
     public void makedisplaygray(){
         ImageView i = new ImageView(this);
-        i.findViewById(R.id.graylayer);
+ //       i.findViewById(R.id.graylayer);
         i.setVisibility(View.INVISIBLE);
     }
     public void nodisplaygray(){
         ImageView i = new ImageView(this);
-        i.findViewById(R.id.graylayer);
+//        i.findViewById(R.id.graylayer);
         i.setVisibility(View.INVISIBLE);
     }
 

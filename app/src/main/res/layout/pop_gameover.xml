@@ -20,7 +20,7 @@
                     android:text="WASTED"
                     android:textColor="@color/white"
                     android:textSize="46sp"
-                    android:layout_marginTop="50sp"></TextView>
+                    android:layout_marginTop="40sp"></TextView>
 
                 <ImageView
                     android:id="@+id/resume_button"
@@ -30,5 +30,16 @@
                     android:clickable="true"
                     android:onClick="retry"
                     app:srcCompat="@android:drawable/ic_menu_rotate" />
+                <TextView
+                    android:id="@+id/backToTitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arcadeclassic"
+                    android:text="BACK  TO  TITLE"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:layout_marginTop="40sp"
+                    android:clickable="true"
+                    android:onClick="backToTitle"></TextView>
         </LinearLayout>
 </RelativeLayout>
