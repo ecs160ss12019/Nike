@@ -1,1 +1,11 @@
-Since most of our game objects need to move, we provide an abstract class called AnimatedObject so that every moving game object like missiles and laserBase will inherit from it. Each game object needs to implement a method called “handle” that will manage events such as player/invader shooting a missile and objects colliding with each other. When an event happens, the game object who initiates that event will call the handle method of the involved game object. For example, when laserBase shoots a missile, the initiator object “laserBase” will call the handle method of “missile”. In this case, the missile needs to know the position of laserBase so that it knows where to start its animation. Therefore, we have a static class called Action that has a Pair of an animated object(AO) and a sparseArray(SA), and an Action object will be passed to missile. SA is where all the data are put in and in this example will be laserBase’s coordinates. 
+Since most of our game objects need to move, we provide an abstract class called
+AnimatedObject so that every moving game object like missiles and laserBase will inherit
+from it. Each game object needs to implement a method called “handle” that will manage
+events such as player/invader shooting a missile and objects colliding with each other.
+When an event happens, the game object who initiates that event will call the handle
+method of the involved game object. For example, when laserBase shoots a missile, the
+initiator object “laserBase” will call the handle method of “missile”. In this case, the
+missile needs to know the position of laserBase so that it knows where to start its
+animation. Therefore, we have a static class called Action that has a Pair of an animated
+object(AO) and a sparseArray(SA), and an Action object will be passed to missile. SA is
+where all the data are put in and in this example will be laserBase’s coordinates. 
