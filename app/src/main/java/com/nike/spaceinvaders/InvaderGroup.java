@@ -69,6 +69,9 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
             }
         }
 
+        for(Invader invader: invaders)
+            invader.setHitDetection(new NormalHitDetection());
+
         return;
     }
 

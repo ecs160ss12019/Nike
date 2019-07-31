@@ -107,10 +107,13 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                 .setResources(resources).setMainHandler(mainHandler)
                 .setProcessHandler(processThread).setStatus(status).setSpaceGame(this).setSoundEngine(se)
                 .build();  // setCapacity needs to be called at the very last
+
         this.laserBase.setSpaceGame(this);
         this.laserBase.setHitDetection(new NormalHitDetection());
         this.baseShelterGroup.setSpaceGame(this);
         this.baseShelterGroup.setHitDetection(new PreciseHitDetection());
+        this.UFO.setHitDetection(new NormalHitDetection());
+
         this.invaderGroup.setSpaceGame(this);
         this.UFO.setSpaceGame(this);
 

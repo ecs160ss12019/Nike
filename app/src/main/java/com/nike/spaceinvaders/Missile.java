@@ -125,13 +125,6 @@ class Missile extends AnimatedObject<ImageView> {
                 this.getAnimator().start();
                 break;
 
-//
-//            case SpaceGame.STRIKE:
-//                /*
-//                       One Missile strikes another missile
-//                    */
-//                break;
-
             case SpaceGame.MISSILE_GONE:
                 /*
                        Missile hit an object and should disappear;

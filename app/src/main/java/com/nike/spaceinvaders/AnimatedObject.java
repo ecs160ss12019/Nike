@@ -252,10 +252,6 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
     given its relative X pos
      */
     public float getAbsoluteX(){
-//        int[] coordinates = new int[2];
-//        this.view.getLocationOnScreen(coordinates);
-//        int x = coordinates[0];
-//        return x;
         android.view.View parentView = (android.view.View) this.view.getParent();
         if (this.parentCoordinates==null){
             this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
@@ -269,10 +265,6 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
     Get the absolute Y coordinate on the screen
      */
     public float getAbsoluteY(){
-//        int[] coordinates = new int[2];
-//        this.view.getLocationOnScreen(coordinates);
-//        int y = coordinates[1];
-//        return y;
         android.view.View parentView = (android.view.View) this.view.getParent();
         if (this.parentCoordinates==null){
 
