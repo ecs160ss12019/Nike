@@ -28,11 +28,12 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.jackandphantom.blurimage.BlurImage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
+import jp.wasabeef.blurry.Blurry;
 
 public class SpaceActivity extends AppCompatActivity implements SensorEventListener{
     private SpaceGame mSpaceGame;
@@ -155,8 +156,16 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
     }
 
     private void blurEffect() {
-
+        ViewGroup rootView = findViewById(R.id.main_layout);
+        Blurry.with(getApplicationContext()).radius(25).sampling(2).onto(rootView);
     }
+
+    private void removeblurEffect(){
+        ViewGroup rootView = findViewById(R.id.main_layout);
+        Blurry.delete(rootView);
+    }
+
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -179,7 +188,7 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         Bundle bundle=data.getExtras();
         String str = bundle.getString("signal");
         Toast.makeText(getApplicationContext(),bundle.getString("signal"),Toast.LENGTH_SHORT).show();
-
+        removeblurEffect();
         switch (str){
             case "resume":
                 if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
