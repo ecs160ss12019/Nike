@@ -350,9 +350,12 @@
         app:srcCompat="@drawable/mylaserbase">
 
     </ImageView>
-<ImageView
+<android.support.v7.widget.CardView
     android:id="@+id/blurbackground"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent">
+    <eightbitlab.com.blurview.BlurView>
 
+    </eightbitlab.com.blurview.BlurView>
+</android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>
