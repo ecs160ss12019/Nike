@@ -114,11 +114,5 @@ Weili Yin,    CharlesYWL
 
 
 ## Reference:
-@misc{Charles2013,
-  author = {wasabeef},
-  title = {Blurry},
-  year = {2015-2019},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/wasabeef/Blurry}},
+Wasabeef, 2018, https://github.com/wasabeef/Blurry
 }
