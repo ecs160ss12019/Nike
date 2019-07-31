@@ -1,5 +1,10 @@
 package com.nike.spaceinvaders;
 
+/*
+   Detect the collision between objects
+ */
+
+
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;

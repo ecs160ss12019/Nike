@@ -1,5 +1,10 @@
 package com.nike.spaceinvaders;
 
+/*
+ Handle the pop-up window
+ */
+
+
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
