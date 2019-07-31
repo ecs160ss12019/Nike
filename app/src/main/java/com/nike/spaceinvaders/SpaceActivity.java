@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,6 +34,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
+import jp.wasabeef.blurry.Blurry;
 
 public class SpaceActivity extends AppCompatActivity implements SensorEventListener{
     private SpaceGame mSpaceGame;
@@ -150,20 +153,30 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
     //invoked when pressing pause
     public void pause_press(View view){
-        //TODO: not working, make gary effects
-        makedisplaygray();
+        //blur background
+        blurEffect();
         //pause the game
         if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
             //mSpaceGame.setState(new SpaceGame.RunningGame());
         }else {
             mSpaceGame.setState(new SpaceGame.PausedGame());
         }
-
+        //start popup window
         Intent i = new Intent(SpaceActivity.this,Pop.class);
-        i.putExtra("signal","pause");
-        //startActivity(i);
+        i.putExtra("insignal","pause");
         startActivityForResult(i,0);
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
+    }
+
+    //Cite from https://github.com/wasabeef/Blurry
+    private void blurEffect() {
+        ViewGroup rootView = findViewById(R.id.main_layout);
+        Blurry.with(getApplicationContext()).radius(25).sampling(2).onto(rootView);
+    }
+    //Cite from https://github.com/wasabeef/Blurry
+    private void removeblurEffect(){
+        ViewGroup rootView = findViewById(R.id.main_layout);
+        Blurry.delete(rootView);
     }
 
     @Override
@@ -180,34 +193,35 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
     }
 
-    public void makedisplaygray(){
-        ImageView i = new ImageView(this);
- //       i.findViewById(R.id.graylayer);
-        i.setVisibility(View.INVISIBLE);
-    }
-    public void nodisplaygray(){
-        ImageView i = new ImageView(this);
-//        i.findViewById(R.id.graylayer);
-        i.setVisibility(View.INVISIBLE);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Bundle bundle=data.getExtras();
         String str = bundle.getString("signal");
-        Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
-        mSpaceGame.setSetting(bundle);
-        if(str.equals("resume")){
-            if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
-                mSpaceGame.setState(new SpaceGame.RunningGame());
-            }else {
-                mSpaceGame.setState(new SpaceGame.PausedGame());
-            }
-        }else if(str.equals("restart")){
-            //TODO: restart the game
+        Toast.makeText(getApplicationContext(),bundle.getString("signal"),Toast.LENGTH_SHORT).show();
+        removeblurEffect();
+        switch (str){
+            case "resume":
+                if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
+                    mSpaceGame.setState(new SpaceGame.RunningGame());
+                }else {
+                    mSpaceGame.setState(new SpaceGame.PausedGame());
+                }
+                break;
+            case "restart":
+                //TODO: restart the game
+                Toast.makeText(getApplicationContext(),"restartgame",Toast.LENGTH_SHORT).show();
+                break;
+            case "backtotitle":
+                //situation when click back button
+                Toast.makeText(getApplicationContext(),"backtotitle",Toast.LENGTH_SHORT).show();
+                finish();
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                break;
+            default:
+                break;
         }
-
     }
 
 
@@ -239,6 +253,15 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
             unbindService(Scon);
             mIsBound = false;
         }
+    }
+
+    //this will ban back button in bottom
+    @Override
+    public boolean onKeyDown(int keyCode,KeyEvent event){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return false;
     }
 
 }
