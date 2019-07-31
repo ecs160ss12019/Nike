@@ -111,3 +111,14 @@ Weili Yin,    CharlesYWL
 ![B](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2B.png)
 
 ![C](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2C.png)
+
+
+## Reference:
+@misc{Charles2013,
+  author = {wasabeef},
+  title = {Blurry},
+  year = {2015-2019},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/wasabeef/Blurry}},
+}

@@ -155,11 +155,12 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
     }
 
+    //Cite from https://github.com/wasabeef/Blurry
     private void blurEffect() {
         ViewGroup rootView = findViewById(R.id.main_layout);
         Blurry.with(getApplicationContext()).radius(25).sampling(2).onto(rootView);
     }
-
+    //Cite from https://github.com/wasabeef/Blurry
     private void removeblurEffect(){
         ViewGroup rootView = findViewById(R.id.main_layout);
         Blurry.delete(rootView);
