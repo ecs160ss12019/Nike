@@ -118,6 +118,7 @@ public class UFO extends Invader {
                 if (times==expectation){
                     if (fraction==0f){
                         ((UFO) that).alive=true;
+                        setVisibility(View.VISIBLE);
                     }
                     if (fraction==1f){
                         times=0;
