@@ -38,9 +38,9 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int LIFE_ADD=0b01000000;
     public static final int LIFE_GONE=0b010000000;
     public static final int RESURRECTION=0b0100000000;
-    public static final int MOVE_STOP=0b010000000000;
-    public static final int HIT=0b100000000000;
-    public static final int GAME_PAUSE=0b1000000000000;
+    public static final int MOVE_STOP=  0b010000000000;
+    public static final int HIT=        0b100000000000;
+    public static final int GAME_PAUSE= 0b1000000000000;
     public static final int GAME_RESUME=0b10000000000000;
     public static final int GAME_STOP=  0b100000000000000;
     public static final int CONTACT=    0b1000000000000000;
@@ -54,19 +54,17 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int CONTEXT=0b0000100;
     public static final int X_COORDINATE=0b0001000;
     public static final int Y_COORDINATE=0b0010000;
-    public static final int X_WIDTH=0b0100000;
-    public static final int Y_HEIGHT=0b1000000;
     public static final int MOVE_DIRECTION=0b10000000;
     public static final int GRAVITY=0b100000000;
 
     /* Status Flags */
-    public static final int NUM_INVADER=0b0000001;
-    public static final int NUM_LIVES=0b0000010;
-    public static final int INTEGRITY_OF_SHELTER=0b0000100;
-    public static final int SCORES=0b0001000;
-    public static final int LEVEL=0b0010000;
-    public static final int PERKS_OF_LASERBASE=0b0100000;
-    public static final int STATE=0b1000000;
+    public static final int NUM_INVADER=            0b0000001;
+    public static final int NUM_LIVES=              0b0000010;
+    public static final int SCORES=                 0b0000100;
+    public static final int LEVEL=                  0b0001000;
+    public static final int PERKS_OF_LASERBASE=     0b0010000;
+    public static final int STATE=                  0b0100000;
+    public static final int GAME_OVER=              0b1000000;
 
     /* Animated Object type */
     public static final int LASER_BASE=0b0000001;
@@ -158,10 +156,11 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                 case SpaceGame.NUM_INVADER:
                     break;
                 case SpaceGame.NUM_LIVES:
-                    // laserBase loses on life
+                    // laserBase loses one life
                     hud.updateStatus(status);
                     ((LaserBase)laserBase).spawn();
                     // TODO: pause the game for 3 seconds
+                    // TODO: NEEDS TO BE DONE BY Weili
                     break;
                 case SpaceGame.SCORES:
                     hud.updateStatus(status);
@@ -170,8 +169,13 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                     if (Objects.requireNonNull(status.get(key)).first==1f){
                         this.setState(new PausedGame());
                     }
-                default:
+                    break;
 
+                case SpaceGame.GAME_OVER:
+                    // TODO: NEEDS TO BE DONE BY Weili
+                    break;
+
+                default:
                     break;
             }
         }

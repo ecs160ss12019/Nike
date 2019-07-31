@@ -283,7 +283,9 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
                     if(invader.isAlive()){
                         if (checkInvaded(invader))
                         {
-                            // TODO: send a signal back to space game to end the game
+                            // Send a signal back to SpaceGame to end the game
+                            notifyGameOver();
+                            break;
                         }
 
                         Actions actions = new Actions();
@@ -319,10 +321,14 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
         super.setX(x);
     }
 
+
+
     @Override
     public void updateStatus(SpaceGame.Status status) {
 
     }
+
+
 
     public boolean checkInvaded(Invader invader)
     {
@@ -334,4 +340,16 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
          return false;
     }
+
+
+    /*
+    Notify the spaceGame that the game is over
+     */
+    public void notifyGameOver()
+    {
+        SpaceGame.Status newStatus = getStatus();
+        newStatus.put(SpaceGame.GAME_OVER, new Pair<>(null, null));
+        getSpaceGame().updateStatus(newStatus);
+    }
+
 }
