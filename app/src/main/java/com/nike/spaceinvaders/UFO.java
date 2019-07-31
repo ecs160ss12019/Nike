@@ -38,7 +38,7 @@ public class UFO extends Invader {
         duration = 1000;
         remainedFrames = 50;//kinda slow
         direction = myrand.nextBoolean();
-        alive = true;
+        alive = false;
         type = myrand.nextInt(3);
         setType(type, view);//have different looks of ufos
 
@@ -51,7 +51,6 @@ public class UFO extends Invader {
             view.setBackgroundResource(R.drawable.ufo2);
         }else if(type==2){
             view.setBackgroundResource(R.drawable.ufo3);
-        }else{
         }
         AnimationDrawable frameAnimation =  (AnimationDrawable) view.getBackground();
         if(frameAnimation!=null){
@@ -81,7 +80,7 @@ public class UFO extends Invader {
                 break;
             case SpaceGame.STRIKE:
                 assert value != null;
-                if (hitDetection(value.first)) {
+                if (this.alive && hitDetection(value.first)) {
                     kill(actions, value.first);
                 }
                 break;
@@ -117,6 +116,9 @@ public class UFO extends Invader {
                 }
                 float fraction = animation.getAnimatedFraction();
                 if (times==expectation){
+                    if (fraction==0f){
+                        ((UFO) that).alive=true;
+                    }
                     if (fraction==1f){
                         times=0;
                         expectation=0;

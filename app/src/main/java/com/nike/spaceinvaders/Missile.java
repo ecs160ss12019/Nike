@@ -253,7 +253,7 @@ class Missile extends AnimatedObject<ImageView> {
     {
         if(up) {
             that.getSpaceGame().invaderGroup.handle(actions, SpaceGame.STRIKE);
- //           that.getSpaceGame().UFO.handle(actions, SpaceGame.STRIKE);
+            that.getSpaceGame().UFO.handle(actions, SpaceGame.STRIKE);
         } else {
             that.getSpaceGame().laserBase.handle(actions, SpaceGame.STRIKE);
         }

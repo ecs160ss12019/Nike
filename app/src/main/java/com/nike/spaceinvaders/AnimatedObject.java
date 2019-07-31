@@ -253,10 +253,15 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
      */
     public float getAbsoluteX(){
         android.view.View parentView = (android.view.View) this.view.getParent();
+        float parentX=0,parentY=0;
+        if (parentView!=null){
+            parentX=parentView.getX();
+            parentY=parentView.getY();
+        }
         if (this.parentCoordinates==null){
-            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+            this.parentCoordinates=new PointF(parentX,parentY);
         }else {
-            this.parentCoordinates.x=parentView.getX();
+            this.parentCoordinates.x=parentX;
         }
         return this.getX() + this.parentCoordinates.x;
     }
@@ -266,11 +271,16 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
      */
     public float getAbsoluteY(){
         android.view.View parentView = (android.view.View) this.view.getParent();
+        float parentX=0,parentY=0;
+        if (parentView!=null){
+            parentX=parentView.getX();
+            parentY=parentView.getY();
+        }
         if (this.parentCoordinates==null){
 
-            this.parentCoordinates=new PointF(parentView.getX(),parentView.getY());
+            this.parentCoordinates=new PointF(parentX,parentY);
         }else {
-            this.parentCoordinates.y=parentView.getY();
+            this.parentCoordinates.y=parentY;
         }
         return this.getY() + this.parentCoordinates.y;
     }
