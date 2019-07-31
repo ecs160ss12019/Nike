@@ -3,7 +3,6 @@ package com.nike.spaceinvaders;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 interface MissileForm {
     void playMissileSound();

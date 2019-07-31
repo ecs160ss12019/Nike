@@ -159,7 +159,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                     // laserBase loses one life
                     hud.updateStatus(status);
                     ((LaserBase)laserBase).spawn();
-                    // TODO: pause the game for 3 seconds
+                    // TODO: pause the game for 3 seconds when an laserbase dies
                     // TODO: NEEDS TO BE DONE BY Weili
                     break;
                 case SpaceGame.SCORES:

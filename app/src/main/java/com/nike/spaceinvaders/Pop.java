@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+
+
 public class Pop extends AppCompatActivity {
     public String str;//store signal
     @Override

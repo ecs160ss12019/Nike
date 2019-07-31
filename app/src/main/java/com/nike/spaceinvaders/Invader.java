@@ -5,26 +5,19 @@ package com.nike.spaceinvaders;
 - Detect the collision with missiles
 - Spawns at the top of interface
  */
+
+
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.PointF;
 import android.graphics.drawable.AnimationDrawable;
-import android.util.ArraySet;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
-import java.util.Set;
 
 import android.os.Handler;
-import android.widget.Space;
 
 
 public class Invader extends AnimatedObject<ImageView> {

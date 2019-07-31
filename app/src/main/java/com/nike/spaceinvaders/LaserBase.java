@@ -15,10 +15,6 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-
 import android.os.Handler;
 
 

@@ -1,14 +1,11 @@
 package com.nike.spaceinvaders;
 
-import android.app.Activity;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.res.Resources;
 import android.graphics.Point;
-import android.graphics.PointF;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,7 +16,6 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -28,14 +24,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TabHost;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
 import jp.wasabeef.blurry.Blurry;
+
+
 
 public class SpaceActivity extends AppCompatActivity implements SensorEventListener{
     private SpaceGame mSpaceGame;

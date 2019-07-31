@@ -3,16 +3,16 @@ package com.nike.spaceinvaders;
 /*
 - Manage a group of invaders
  */
+
+
 import android.animation.ValueAnimator;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.widget.ImageView;
-import android.widget.Space;
 
 import java.util.ArrayList;
 

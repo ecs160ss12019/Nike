@@ -9,15 +9,12 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Random;
-import java.util.concurrent.TimeoutException;
-
 import android.os.Handler;
 
 

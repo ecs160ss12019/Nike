@@ -7,18 +7,11 @@ package com.nike.spaceinvaders;
 
 
 import android.animation.ValueAnimator;
-import android.graphics.PointF;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.constraint.ConstraintLayout;
-import android.util.Pair;
-import android.util.SparseArray;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 

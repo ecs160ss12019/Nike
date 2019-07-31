@@ -8,16 +8,11 @@ package com.nike.spaceinvaders;
 
 
 import android.animation.ValueAnimator;
-import android.content.Intent;
-import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.util.HashMap;
-import java.util.Set;
 
 public class Lives extends AnimatedObject<ConstraintLayout> {
 

@@ -9,11 +9,12 @@ package com.nike.spaceinvaders;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import java.util.ArrayList;
+
+
 
 public class MissilePool {
     private ViewGroup layout;
@@ -25,9 +26,9 @@ public class MissilePool {
     private SpaceGame.Status status;
     private SoundEngine soundEngine;
 
-  // Missiles that are available
+    // Missiles that are available
     private SparseArray<Missile> freshMissiles;
-  // Missiles that are now used by others
+    // Missiles that are now used by others
     private SparseArray<Missile> gloriousMissiles;
     private ArrayList<Missile> excessiveMissiles;
 

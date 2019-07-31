@@ -10,31 +10,20 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
-import android.graphics.Paint;
 
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.util.ArraySet;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
-import java.util.Set;
+
 
 /**
  * This class is a manager class for BaseShelter.

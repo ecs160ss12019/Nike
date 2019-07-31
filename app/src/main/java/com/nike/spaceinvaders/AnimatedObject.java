@@ -1,20 +1,5 @@
 package com.nike.spaceinvaders;
 
-import android.animation.ValueAnimator;
-import android.graphics.Bitmap;
-import android.graphics.PointF;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.util.Log;
-import android.util.Pair;
-import android.util.SparseArray;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 
 /*
 - Base class of every animated object created in the game that holds a view of
@@ -23,6 +8,23 @@ import java.util.Set;
 - Handle notification issued by other objects
 - Configure the animator listener
  */
+
+
+
+import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
+import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.util.Log;
+import android.util.Pair;
+import android.util.SparseArray;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import java.util.HashMap;
+import java.util.Set;
+
 
 /**
  * This class is an abstract class that is extended by all the AnimatedObjects in this game.
