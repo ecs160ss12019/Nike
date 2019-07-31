@@ -5,14 +5,11 @@ package com.nike.spaceinvaders;
 - Has 3 lives
 - Able to shoot missle when user touch the middle screen on the screen
  */
+
+
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.graphics.PointF;
-import android.util.ArraySet;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -24,9 +21,6 @@ import java.util.Set;
 
 import android.os.Handler;
 
-import org.ejml.data.Matrix;
-import org.ejml.equation.Equation;
-import org.ejml.simple.SimpleMatrix;
 
 
 class LaserBase extends AnimatedObject<ImageView> {
