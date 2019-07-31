@@ -37,6 +37,7 @@ public class Invader extends AnimatedObject<ImageView> {
     private MissileForm missileForm;
 
 
+
     Invader(int row, int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(animator, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
         this.row = row;
@@ -121,7 +122,7 @@ public class Invader extends AnimatedObject<ImageView> {
     public boolean toShoot() {
         int randNum = rand.nextInt(2000);
 
-        if (randNum == 1) // chance is 1/2000
+        if (randNum == 100) // chance is 1/2000
         {
             return true;
         }
@@ -196,7 +197,6 @@ public class Invader extends AnimatedObject<ImageView> {
     public void setIndex(int index) {
         this.index = index;
     }
-
 
 
     public boolean isAlive()

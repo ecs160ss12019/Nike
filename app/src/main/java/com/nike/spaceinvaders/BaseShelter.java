@@ -119,6 +119,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
                 //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;
 
                 Missile missile = (Missile) Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).first;
+                boolean missileUp = missile.getDirectionUp();
 
                 float missileAbsX = missile.getX();
                 float missileAbsY = missile.getY();
@@ -135,7 +136,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
                 if (hitPoint != null) {
                     // draw the hitting effect using bitmap
-                    drawDamage(hitPoint.x, hitPoint.y);
+                    drawDamage(hitPoint.x, hitPoint.y, missileUp);
 
                     // notify the missile to be gone
                     Actions missileGone = new Actions();
@@ -151,13 +152,24 @@ class BaseShelter extends AnimatedObject<ImageView> {
     }
 
 
-    private void drawDamage(float x, float y) {
+    private void drawDamage(float x, float y, boolean missileUp) {
 
         Resources resources = (Resources) this.getResources().get(SpaceGame.RESOURCES);
         assert resources != null;
         Drawable damage = resources.getDrawable(R.drawable.explode, null);
-        x = x - 30;
-        y = y - 20;
+
+        float padding = 30;
+        if(missileUp)
+        {
+            // LaserBase is shooting
+            x = x - padding;
+            y = y - padding;
+        }
+        else
+        {
+            // Invaders are shooting
+            // No padding needed
+        }
 
 
         damage.setBounds((int) x, (int) y, 70 + (int) x, 70 + (int) y);

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.widget.ImageView;
+import android.widget.Space;
 
 import java.util.ArrayList;
 
@@ -280,6 +281,11 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
                     if (invader.isAlive() && invader.toShoot()){
                         invader.shootMissile();}
                     if(invader.isAlive()){
+                        if (checkInvaded(invader))
+                        {
+                            // TODO: send a signal back to space game to end the game
+                        }
+
                         Actions actions = new Actions();
                         actions.put(SpaceGame.CONTACT, new Pair<AnimatedObject, SparseArray<Float>>(invader, null));
                         invader.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.CONTACT);
@@ -316,5 +322,16 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     @Override
     public void updateStatus(SpaceGame.Status status) {
 
+    }
+
+    public boolean checkInvaded(Invader invader)
+    {
+         Point screenSize = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
+         float screenY = screenSize.y;
+
+         if(invader.getAbsoluteY() <= screenY)
+             return true;
+
+         return false;
     }
 }

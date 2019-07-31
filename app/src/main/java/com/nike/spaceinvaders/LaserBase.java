@@ -30,7 +30,6 @@ class LaserBase extends AnimatedObject<ImageView> {
     private boolean direction;
     private boolean running=true;
     private boolean held=false;
-//    private Missile lastMissile;
 
     LaserBase(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);

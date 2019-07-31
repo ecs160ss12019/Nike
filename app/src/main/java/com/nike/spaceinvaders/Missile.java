@@ -316,6 +316,8 @@ class Missile extends AnimatedObject<ImageView> {
         return pool;
     }
 
+    public boolean getDirectionUp() {return up;}
+
     @Override
     public void updateStatus(SpaceGame.Status status) {
 
