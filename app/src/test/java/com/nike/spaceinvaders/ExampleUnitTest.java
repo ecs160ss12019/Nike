@@ -1,5 +1,7 @@
 package com.nike.spaceinvaders;
 
+import android.hardware.SensorEvent;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -18,5 +20,11 @@ public class ExampleUnitTest {
     @Test
     public void AI_instantiation(){
 
+    }
+    @Test
+    public void Hit_Detection(){
+        Invader invader=new Invader(0,0,null,null,null,null,null,null,null,null);
+
+        boolean result=invader.hitDetection()
     }
 }

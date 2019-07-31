@@ -29,7 +29,7 @@ import java.util.Set;
  * It holds and manages a view object, the SpaceGame, the Threads handlers, ValueAnimator, Status of the game,
  * Resources, and parenntCoordinates;
  */
-public abstract class  AnimatedObject <View extends android.view.View> implements AI.Evaluator{
+public abstract class  AnimatedObject <View extends android.view.View> implements StatusManager{
     private SpaceGame spaceGame;
     private Handler mainHandler;
     private Handler processHandler;
@@ -42,6 +42,12 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
 
     private PointF parentCoordinates;
     private SoundEngine soundEngine;
+
+    private AI.Evaluator evaluator;
+
+    private int[] hitBox;
+
+    private HitDetection hitDetection;
 
     AnimatedObject( ValueAnimator animator, View view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status,
                    Handler mainHandler, Handler processHandler,SoundEngine soundEngine){
@@ -341,6 +347,30 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
 
     public void setSoundEngine(SoundEngine soundEngine) {
         this.soundEngine = soundEngine;
+    }
+
+    public AI.Evaluator getEvaluator() {
+        return evaluator;
+    }
+
+    public void setEvaluator(AI.Evaluator evaluator) {
+        this.evaluator = evaluator;
+    }
+
+    public int[] getHitBox() {
+        return hitBox;
+    }
+
+    public void setHitBox(int[] hitBox) {
+        this.hitBox = hitBox;
+    }
+
+    public HitDetection getHitDetection() {
+        return hitDetection;
+    }
+
+    public void setHitDetection(HitDetection hitDetection) {
+        this.hitDetection = hitDetection;
     }
 
 

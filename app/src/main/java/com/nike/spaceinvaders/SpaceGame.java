@@ -10,13 +10,12 @@ import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.widget.Space;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -75,6 +74,12 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int INVADER_GROUP=0b0000100;
     public static final int UFO_INVADER=0b0001000;
 
+    /* Setting Flags */
+    public static final int GRAVITY_SETTING=0b0000001;
+    public static final int d=0b0000010;
+    public static final int a=0b0000100;
+    public static final int ds=0b0001000;
+
     final AnimatedObject laserBase;
     final AnimatedObject baseShelterGroup;
     final AnimatedObject invaderGroup;
@@ -85,10 +90,11 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     final MissilePool missilePool;
     final StatusManager hud;
     final Resources resources;
-
     private Status status;
+    private Bundle setting;
 
     private State state;
+
 
 
     public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject UFO, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
@@ -102,15 +108,18 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                 .setProcessHandler(processThread).setStatus(status).setSpaceGame(this).setSoundEngine(se)
                 .build();  // setCapacity needs to be called at the very last
         this.laserBase.setSpaceGame(this);
+        this.laserBase.setHitDetection(new NormalHitDetection());
         this.baseShelterGroup.setSpaceGame(this);
+        this.baseShelterGroup.setHitDetection(new PreciseHitDetection());
         this.invaderGroup.setSpaceGame(this);
         this.UFO.setSpaceGame(this);
-        this.animatedObjects=new AnimatedObjectBox();
 
+        this.animatedObjects=new AnimatedObjectBox();
         this.animatedObjects.put(SpaceGame.LASER_BASE,this.laserBase);
         this.animatedObjects.put(SpaceGame.BASE_SHELTER_GROUP,this.baseShelterGroup);
         this.animatedObjects.put(SpaceGame.INVADER_GROUP,this.invaderGroup);
         this.animatedObjects.put(SpaceGame.UFO_INVADER,this.UFO);
+
 
         ((AnimatedObject)this.hud).setSpaceGame(this);
 
@@ -132,6 +141,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         updateStatus(status);*/
 
 
+    }
+
+    public void setSetting(Bundle setting) {
+        this.setting = setting;
     }
 
     @Override
@@ -159,7 +172,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                     break;
             }
         }
-
+        //Notify all the AnimatedObjects.
+        for (AnimatedObject object:this.animatedObjects.values()){
+            object.updateStatus(status);
+        }
     }
 
     public void setState(State state) {
@@ -176,7 +192,6 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                 assert size != null;
                 int motion;
                 if (event.getRawX()>size.x/2&&event.getRawY()>laserBase.getY()){
-                    Log.d("awef","aeee");
                     motion=SpaceGame.MOVE_RIGHT;
                 }else if (event.getRawX()<size.x/2&&event.getRawY()>laserBase.getY()){
                     motion=SpaceGame.MOVE_LEFT;
@@ -209,6 +224,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+//        boolean gravitySetting=this.setting.getBoolean(String.valueOf(SpaceGame.GRAVITY));
+//        if (!gravitySetting){
+//            return;
+//        }
         float gravity=event.values[1];
         float gravityX=event.values[0];
         float fraction=gravityX>7?(1):(gravityX<-7?-1:gravityX/7);
@@ -241,7 +260,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     }
 
-    static class AnimatedObjectBox extends HashMap<Integer, AnimatedObject>{
+    private static class AnimatedObjectBox extends HashMap<Integer, AnimatedObject>{
 
     }
 

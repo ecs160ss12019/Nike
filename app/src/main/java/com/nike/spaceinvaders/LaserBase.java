@@ -188,7 +188,6 @@ class LaserBase extends AnimatedObject<ImageView> {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction = animation.getAnimatedFraction();
-                Log.d("Fraction", String.valueOf(fraction));
                 float subFraction = 0.005f;
                 float remaining = fraction % subFraction;
                 int times = (int) (fraction / subFraction);
@@ -222,12 +221,12 @@ class LaserBase extends AnimatedObject<ImageView> {
         return delta;
     }
 
-    @Override
-    public float evaluate(float value) {
-        return 0;
-    }
-
     public float getRealDelta() {
         return realDelta;
+    }
+
+    @Override
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }

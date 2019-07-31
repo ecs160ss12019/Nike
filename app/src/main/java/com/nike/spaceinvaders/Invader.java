@@ -30,12 +30,12 @@ import android.widget.Space;
 public class Invader extends AnimatedObject<ImageView> {
     public boolean alive = true;
     private Missile missile;
-    private int[][] hitbox;
     private int abstractionLevel = 10;
     private int index;
     private int row;
     private Random rand;
     private MissileForm missileForm;
+
 
     Invader(int row, int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(animator, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
@@ -184,7 +184,7 @@ public class Invader extends AnimatedObject<ImageView> {
     }
 
     @Override
-    public float evaluate(float value) {
-        return 0;
+    public void updateStatus(SpaceGame.Status status) {
+
     }
 }
