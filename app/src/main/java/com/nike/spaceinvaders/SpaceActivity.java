@@ -28,6 +28,8 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.jackandphantom.blurimage.BlurImage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -137,6 +139,8 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
     //invoked when pressing pause
     public void pause_press(View view){
+        //blur background
+        blurEffect();
         //pause the game
         if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
             //mSpaceGame.setState(new SpaceGame.RunningGame());
@@ -148,6 +152,10 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         i.putExtra("insignal","pause");
         startActivityForResult(i,0);
         overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
+    }
+
+    private void blurEffect() {
+
     }
 
     @Override
@@ -188,7 +196,7 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
                 //situation when click back button
                 Toast.makeText(getApplicationContext(),"backtotitle",Toast.LENGTH_SHORT).show();
                 finish();
-                overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 break;
             default:
                 break;
