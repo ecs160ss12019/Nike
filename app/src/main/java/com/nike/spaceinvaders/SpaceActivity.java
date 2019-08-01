@@ -259,4 +259,9 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         return false;
     }
 
+    @Override
+    protected void onDestroy() {
+        doUnbindService();
+        super.onDestroy();
+    }
 }

@@ -23,7 +23,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     private int aliveInvaders;
     private ArrayList<Invader> invaders;
     private int duration = 30000;
-    private int velocity = 200;
+    private float velocity =  0.000033f;
     private int horizontalTimes = 20;
     private PointF initialCoordinates;
     private int numCol = 5;
@@ -227,23 +227,19 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-
-                //Set<Integer> newKeys = new ArraySet<>();
-
                 if (initialCoordinates == null) {
                     initialCoordinates = new PointF(that.getAbsoluteX(), that.getAbsoluteY());
                 }
+
+                AI.Evaluator evaluator= AI.getAI(SpaceGame.INVADER_GROUP,that.getStatus());
+                assert evaluator != null;
+                that.velocity=evaluator.evaluate(InvaderGroup.VELOCITY);
+                that.duration= (int) (1/that.velocity);
                 if (width == 0) {
                     width = that.getWidth();
                     deltaX = that.getDeltaX();
                 }
                 float fraction = animation.getAnimatedFraction();
-                if (fraction == 1.0 || that.getHeight() + that.getY() >= that.getSpaceGame().laserBase.getY()) {
-//                    animation.cancel();
-//                    killLaserBase();
-
-//                    return;
-                }
 
                 Point size = (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
@@ -296,7 +292,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
                         }
 
                         Actions actions = new Actions();
-                        actions.put(SpaceGame.CONTACT, new Pair<AnimatedObject, SparseArray<Float>>(invader, null));
+                        actions.put(SpaceGame.CONTACT, new Pair<>(invader, null));
                         invader.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.CONTACT);
                     }
                 }
