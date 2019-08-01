@@ -88,9 +88,14 @@ class BaseShelter extends AnimatedObject<ImageView> {
     }
 
 
+    @Override
+    protected void initialize() {
+
+    }
+
     /*
-    Only need to handle the strike case
-     */
+        Only need to handle the strike case
+         */
     @Override
     protected void handle(Actions actions, Integer key) {
         switch(key)

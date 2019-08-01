@@ -90,6 +90,11 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     }
 
     @Override
+    protected void initialize() {
+
+    }
+
+    @Override
     protected void handle(Actions actions, Integer key) {
         Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
         switch (key) {

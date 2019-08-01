@@ -29,6 +29,11 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         updateLives();
     }
 
+    @Override
+    protected void initialize() {
+
+    }
+
     /**
      * Sets int values that will be animated between. A single
      * value implies that that value is the one being animated to. However, this is not typically

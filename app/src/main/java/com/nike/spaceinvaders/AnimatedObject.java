@@ -186,6 +186,8 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
             handle(actions,key);
     }
 
+    abstract protected void initialize();
+
     abstract protected void handle (Actions actions, Integer key);
 
 

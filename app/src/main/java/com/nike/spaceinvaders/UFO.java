@@ -26,6 +26,7 @@ public class UFO extends Invader {
     private int remainedFrames;//this is the number of frames spent in each horizontal trip, so the speed of UFO is faster when this number is smaller
     private boolean direction;
     private float startX=-200;
+    private float startY=120;
     private int type;
 
     public static final int HIT_DETECTION=0b1;
@@ -116,7 +117,7 @@ public class UFO extends Invader {
                 float fraction = animation.getAnimatedFraction();
                 if (times==expectation){
                     if (fraction==0f){
-                        ((UFO) that).alive=true;
+                        that.setAlive(true);
                         setVisibility(View.VISIBLE);
                     }
                     if (fraction==1f){
@@ -128,8 +129,10 @@ public class UFO extends Invader {
                     int lengthX = (int) (size.x-((UFO) that).startX);
                     if (direction){
                         that.setX(((UFO) that).startX+lengthX*fraction);
+                        that.setY(((UFO) that).startY);
                     }else {
                         that.setX(((UFO) that).startX+lengthX*(1-fraction));
+                        that.setY(((UFO) that).startY);
                     }
                 }
                 if (fraction==1f){

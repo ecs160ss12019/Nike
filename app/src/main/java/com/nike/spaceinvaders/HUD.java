@@ -37,6 +37,11 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
     }
 
     @Override
+    protected void initialize() {
+
+    }
+
+    @Override
 
     protected void handle(Actions actions,Integer key) {
     }

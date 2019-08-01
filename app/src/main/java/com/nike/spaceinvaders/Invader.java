@@ -71,6 +71,11 @@ public class Invader extends AnimatedObject<ImageView> {
 
 
     @Override
+    protected void initialize() {
+
+    }
+
+    @Override
     protected void handle(Actions actions, Integer key) {
 
         Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
