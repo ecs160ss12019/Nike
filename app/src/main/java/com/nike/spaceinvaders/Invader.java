@@ -121,7 +121,7 @@ public class Invader extends AnimatedObject<ImageView> {
     will shoot in this frame
      */
     public boolean toShoot() {
-        int randNum = rand.nextInt(2000);
+        int randNum = rand.nextInt(200);
 
         if (randNum == 100) // chance is 1/2000
         {
