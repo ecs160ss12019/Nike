@@ -18,6 +18,7 @@ import android.util.SparseArray;
 import android.view.ContextMenu;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -97,6 +98,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     private Bundle setting;
 
     private State state;
+    private Context mContext;
 
 
 
@@ -120,6 +122,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         this.invaderGroup.setSpaceGame(this);
         this.UFO.setSpaceGame(this);
 
+        mContext=(Context) resources.get(SpaceGame.CONTEXT);
 
         this.animatedObjects=new AnimatedObjectBox();
         this.animatedObjects.put(SpaceGame.LASER_BASE,this.laserBase);
@@ -258,6 +261,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     }
 
     public void gameover() {
+        Toast.makeText(mContext,"gameover Test",Toast.LENGTH_LONG).show();
     }
 
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{

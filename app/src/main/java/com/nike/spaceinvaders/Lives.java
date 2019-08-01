@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -24,11 +25,14 @@ import android.widget.ImageView;
 import java.util.HashMap;
 import java.util.Set;
 
+import jp.wasabeef.blurry.Blurry;
+
 public class Lives extends AnimatedObject<ConstraintLayout> {
 
     private int lives;
     private View[] livesViews;
     Context mainContext;
+    SpaceGame spaceGame;
 
     Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives,SoundEngine soundEngine) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
@@ -38,6 +42,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
             this.livesViews[index] = this.getChildAt(index);
         }
         mainContext = (Context) getResources().get(SpaceGame.CONTEXT);
+        this.spaceGame = spaceGame;
         //updateLives();
     }
 
@@ -78,9 +83,10 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     }
 
     private void hurt(Actions actions) {
+        //Test only
         if (this.lives < 1) {
             //pass GAMEOVER to Game
-            getSpaceGame().gameover();
+            this.spaceGame.gameover();
             return;
         }
         //shake the live and disappear after 1s
@@ -90,6 +96,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         }
         this.lives--;
     }
+
 
     private void regen(Actions actions) {
         if (lives < 3) {
