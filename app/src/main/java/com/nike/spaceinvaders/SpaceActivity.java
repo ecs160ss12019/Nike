@@ -203,8 +203,9 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
                 }
                 break;
             case "restart":
-                //TODO: restart the game
                 Toast.makeText(getApplicationContext(),"restartgame",Toast.LENGTH_SHORT).show();
+                finish();
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 break;
             case "backtotitle":
                 //situation when click back button

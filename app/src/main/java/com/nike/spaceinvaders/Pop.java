@@ -61,7 +61,14 @@ public class Pop extends AppCompatActivity {
     }
     //retry button pressed
     public void retry(View view) {
-        //TODO: restart game
+        Intent intent=this.getIntent();
+        Bundle bundle= new Bundle();
+        //Test only
+        bundle.putString("signal","restart");
+        intent.putExtras(bundle);
+        this.setResult(Activity.RESULT_OK,intent);
+        this.finish();
+        overridePendingTransition(R.anim.zoom_in,R.anim.zoom_out);//android.anim.fade_in
     }
     //when Back to Title is pressed
     public void backToTitle(View view){

@@ -7,17 +7,29 @@ package com.nike.spaceinvaders;
  */
 
 
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
+import android.util.Pair;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
+import java.util.HashMap;
+import java.util.Set;
 
 public class Lives extends AnimatedObject<ConstraintLayout> {
 
     private int lives;
     private View[] livesViews;
+    Context mainContext;
 
     Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives,SoundEngine soundEngine) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
@@ -26,7 +38,8 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         for (int index = 0; index < this.getChildCount(); index++) {
             this.livesViews[index] = this.getChildAt(index);
         }
-        updateLives();
+        mainContext = (Context) getResources().get(SpaceGame.CONTEXT);
+        //updateLives();
     }
 
     @Override
@@ -75,11 +88,16 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
 
     private void hurt(Actions actions) {
         if (this.lives < 1) {
-            //pass GAMEOVER to Game
-            //getSpaceGame().gameover();
+            SpaceGame.Status newStatus = new SpaceGame.Status();
+            newStatus.put(SpaceGame.GAME_OVER, new Pair<>(null, null));
+            getSpaceGame().gameover();
             return;
         }
-        this.livesViews[lives - 1].setVisibility(View.INVISIBLE);
+        //shake the live and disappear after 1s
+        for (int i=0;i<3;i++) {
+            Animation shake = AnimationUtils.loadAnimation(mainContext, R.anim.shake);
+            livesViews[i].startAnimation(shake);
+        }
         this.lives--;
     }
 
@@ -93,6 +111,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         return lives;
     }
 
+    //it just show the correct lives
     private void updateLives() {
         int livenum = this.lives;
         livesViews[0].setVisibility(View.INVISIBLE);
@@ -101,6 +120,11 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         for (int i = 0; i < livenum; i++) {
             livesViews[i].setVisibility(View.VISIBLE);
         }
+
+/*        Animation shake = AnimationUtils.loadAnimation(mainContext, R.anim.shake);
+        livesViews[0].startAnimation(shake);*/
+
+
     }
 
 

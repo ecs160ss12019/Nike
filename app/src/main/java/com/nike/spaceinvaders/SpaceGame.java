@@ -6,6 +6,9 @@
 
 package com.nike.spaceinvaders;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,6 +19,7 @@ import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -176,6 +180,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
                 case SpaceGame.GAME_OVER:
                     // TODO: NEEDS TO BE DONE BY Weili
+                    gameover();
                     break;
 
                 default:
@@ -259,6 +264,22 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    public void gameover() {
+        Context context = (Context)this.resources.get(CONTEXT);
+        Toast.makeText(context,"Entered gameover",Toast.LENGTH_LONG).show();
+        //pause the game
+        if (getState() instanceof SpaceGame.PausedGame){
+            //setState(new SpaceGame.RunningGame());
+        }else {
+            setState(new SpaceGame.PausedGame());
+        }
+        //start popup window
+        Intent i = new Intent(context,Pop.class);
+        i.putExtra("insignal","gameover");
+        ((Activity) context).startActivityForResult(i,0);
 
     }
 

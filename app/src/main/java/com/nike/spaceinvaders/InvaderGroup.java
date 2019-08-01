@@ -355,7 +355,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     {
         SpaceGame.Status newStatus = getStatus();
         newStatus.put(SpaceGame.GAME_OVER, new Pair<>(null, null));
-        getSpaceGame().updateStatus(newStatus);
+        //getSpaceGame().updateStatus(newStatus);
     }
 
 }
