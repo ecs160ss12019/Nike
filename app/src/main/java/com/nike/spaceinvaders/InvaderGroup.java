@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.widget.ImageView;
@@ -280,13 +281,13 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
                 that.setYRaw(that.initialCoordinates.y + lengthY * fraction);
 
-                that.getSpaceGame().laserBase.handle(actions);
-
-
                 for (Invader invader : invaders) {
                     if (invader.isAlive() && invader.toShoot()){
                         invader.shootMissile();}
-                    if(invader.isAlive()){
+
+                    if(invader.isAlive() && fraction > 0.1){
+                        // When invader is alive and animation has already started
+                        // The second checking is very important and may have bugs
                         if (checkInvaded(invader))
                         {
                             // Send a signal back to SpaceGame to end the game
@@ -341,7 +342,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
          Point screenSize = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
          float screenY = screenSize.y;
 
-         if(invader.getAbsoluteY() <= screenY)
+         if(invader.getAbsoluteY() >= screenY)
              return true;
 
          return false;
@@ -353,7 +354,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
      */
     public void notifyGameOver()
     {
-        SpaceGame.Status newStatus = getStatus();
+        SpaceGame.Status newStatus = new SpaceGame.Status();
         newStatus.put(SpaceGame.GAME_OVER, new Pair<>(null, null));
         getSpaceGame().updateStatus(newStatus);
     }

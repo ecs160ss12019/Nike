@@ -6,6 +6,9 @@
 
 package com.nike.spaceinvaders;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,6 +19,7 @@ import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -135,15 +139,14 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         invaderGroup.handle(actions);
         ufo.handle(actions);
 
-        AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
-        actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
-//        hud.handle(actions2);
-
-        status.put(SpaceGame.SCORES,new Pair<>(0f,null));
-        //Below Test only
-/*        status.put(SpaceGame.NUM_LIVES,new Pair<>(Float.valueOf(1),null));//TODO:Bug: LIVEMAX Doesnt work
-        updateStatus(status);*/
-
+/*      TEST for shake animation of Live Gone
+        status.put(SpaceGame.NUM_LIVES,new Pair<>((float)2,null));
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                hud.updateStatus(status);
+            }
+        }, 5000);   //5 seconds*/
 
     }
 
@@ -173,9 +176,12 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                         this.setState(new PausedGame());
                     }
                     break;
-
+                case SpaceGame.LIFE_GONE:
+                    //when lose 1 live, will pause game for seconds and respawn laserbase
+                    lifeGone();
+                    break;
                 case SpaceGame.GAME_OVER:
-                    // TODO: NEEDS TO BE DONE BY Weili
+                    gameover();
                     break;
 
                 default:
@@ -186,6 +192,20 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         for (AnimatedObject object:this.animatedObjects.values()){
             object.updateStatus(status);
         }
+    }
+
+    private void lifeGone() {
+        //pause the game
+            setState(new SpaceGame.PausedGame());
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                setState(new SpaceGame.RunningGame());
+            }
+        }, 1000);   //1 seconds
+
+
     }
 
     public void setState(State state) {
@@ -260,6 +280,21 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public void gameover() {
+        Context context = (Context)this.resources.get(CONTEXT);
+        Toast.makeText(context,"Entered gameover",Toast.LENGTH_LONG).show();
+        //pause the game
+        if (getState() instanceof SpaceGame.PausedGame){
+            //setState(new SpaceGame.RunningGame());
+        }else {
+            setState(new SpaceGame.PausedGame());
+        }
+        //start popup window
+        Intent i = new Intent(context,Pop.class);
+        i.putExtra("insignal","gameover");
+        ((Activity) context).startActivityForResult(i,0);
     }
 
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{

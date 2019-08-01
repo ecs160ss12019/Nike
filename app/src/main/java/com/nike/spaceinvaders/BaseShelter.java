@@ -15,8 +15,10 @@ import android.graphics.Color;
 
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -71,6 +73,12 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     private void killSelf(){
         this.setAlive(false);
+        //this.view.setBackgroundResource(R.drawable.shelter_death);
+        //AnimationDrawable frameAnimation =  (AnimationDrawable) view.getBackground();
+        //if(frameAnimation!=null){
+            //Log.d("in baseshelter kill self","should be playing animation");
+            //frameAnimation.start();
+        //}
         this.setVisibility(View.INVISIBLE);
     }
 
@@ -152,12 +160,13 @@ class BaseShelter extends AnimatedObject<ImageView> {
         assert resources != null;
         Drawable damage = resources.getDrawable(R.drawable.explode, null);
 
-        float padding = 30;
+        float xPadding = 30;
+        float yPadding = 20;
         if(missileUp)
         {
             // LaserBase is shooting
-            x = x - padding;
-            y = y - padding;
+            x = x - xPadding;
+            y = y - yPadding;
         }
         else
         {

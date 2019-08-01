@@ -102,6 +102,7 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         final ViewGroup mainLayout=findViewById(R.id.main_layout);
         final SpaceGame.Status status=new SpaceGame.Status();
         status.put(SpaceGame.NUM_LIVES,new Pair<>(3f,0f));
+        status.put(SpaceGame.SCORES, new Pair<>(0f, 0f));
         mainHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -203,8 +204,9 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
                 }
                 break;
             case "restart":
-                //TODO: restart the game
                 Toast.makeText(getApplicationContext(),"restartgame",Toast.LENGTH_SHORT).show();
+                finish();
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 break;
             case "backtotitle":
                 //situation when click back button
