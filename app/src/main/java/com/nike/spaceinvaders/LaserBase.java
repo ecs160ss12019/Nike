@@ -10,6 +10,7 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Point;
+import android.icu.text.SymbolTable;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -27,6 +28,8 @@ class LaserBase extends AnimatedObject<ImageView> {
     private boolean running=true;
     private boolean held=false;
 
+    private long timeStamp;
+
     public static final int HIT_DETECTION=0b1;
     //AI setting.
     public static final int RATE_OF_MISSILE=0b1;
@@ -40,7 +43,11 @@ class LaserBase extends AnimatedObject<ImageView> {
 
     @Override
     protected void initialize() {
-
+        this.getMainHandler().postDelayed(()->{
+            Point size = (Point) this.getResources().get(SpaceGame.WINDOW_SIZE);
+            assert size != null;
+            this.setX(size.x/2f);
+        },1000);
     }
 
     /**
@@ -107,7 +114,11 @@ class LaserBase extends AnimatedObject<ImageView> {
                 if (!this.running){
                     return;
                 }
-
+                AI.Evaluator evaluator= AI.getAI(SpaceGame.LASER_BASE,this.getStatus());
+                float interval=evaluator.evaluate(LaserBase.RATE_OF_MISSILE);
+                if (System.currentTimeMillis()-this.timeStamp<interval){
+                    return;
+                }
                 AnimatedObject missile = getSpaceGame().missilePool.getMissile();
                 SparseArray<Float> values = new SparseArray<>();
                 values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getX());
@@ -115,9 +126,11 @@ class LaserBase extends AnimatedObject<ImageView> {
                 values.put(SpaceGame.MOVE_DIRECTION, 1f);
                 actions.put(SpaceGame.FIRE, new Pair<>(this, values));
 
+
                 if (missile != null) {
                     ((Missile) missile).setMissileForm(new LaserBaseMissileForm
                             ((Context) this.getResources().get(SpaceGame.CONTEXT)));
+                    this.timeStamp=System.currentTimeMillis();
                     missile.handle(actions, SpaceGame.FIRE);
                 }
 
