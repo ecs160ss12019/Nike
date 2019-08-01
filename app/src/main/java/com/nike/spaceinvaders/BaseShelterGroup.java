@@ -8,6 +8,7 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.util.SparseArray;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -72,6 +73,19 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
         }
     }
 
+    @Override
+    public void setHitDetection(SparseArray<HitDetection> hitDetection) {
+        for (BaseShelter baseShelter : shelters) {
+            baseShelter.setHitDetection(hitDetection);
+        }
+    }
+
+    @Override
+    public void setHitDetection(int key,HitDetection hitDetection) {
+        for (BaseShelter baseShelter : shelters) {
+            baseShelter.setHitDetection(key,hitDetection);
+        }
+    }
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {

@@ -28,6 +28,8 @@ public class UFO extends Invader {
     private float startX=-200;
     private int type;
 
+    public static final int HIT_DETECTION=0b1;
+
     UFO(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(-1, index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
         myrand = new Random();

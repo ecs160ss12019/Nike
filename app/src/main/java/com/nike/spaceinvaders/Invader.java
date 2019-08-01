@@ -29,7 +29,7 @@ public class Invader extends AnimatedObject<ImageView> {
     private Random rand;
     private MissileForm missileForm;
 
-
+    public static final int HIT_DETECTION=0b1;
 
     Invader(int row, int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(animator, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);

@@ -81,12 +81,13 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     final AnimatedObject laserBase;
     final AnimatedObject baseShelterGroup;
     final AnimatedObject invaderGroup;
-    final AnimatedObject UFO;
+    final AnimatedObject ufo;
+    final AnimatedObject hud;
 
     final AnimatedObjectBox animatedObjects;
 
     final MissilePool missilePool;
-    final StatusManager hud;
+
     final Resources resources;
     private Status status;
     private Bundle setting;
@@ -95,11 +96,11 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
 
 
-    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject UFO, StatusManager hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
+    public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject ufo, AnimatedObject hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
-        this.UFO = UFO;
+        this.ufo = ufo;
         this.hud=hud;
         this.missilePool = new MissilePool.Builder(20).setLayout(layout)
                 .setResources(resources).setMainHandler(mainHandler)
@@ -107,19 +108,21 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                 .build();  // setCapacity needs to be called at the very last
 
         this.laserBase.setSpaceGame(this);
-        this.laserBase.setHitDetection(new NormalHitDetection());
+        this.laserBase.setHitDetection(LaserBase.HIT_DETECTION,new NormalHitDetection());
         this.baseShelterGroup.setSpaceGame(this);
-        this.baseShelterGroup.setHitDetection(new PreciseHitDetection());
-        this.UFO.setHitDetection(new NormalHitDetection());
+        this.baseShelterGroup.setHitDetection(BaseShelter.HIT_DETECTION_NORMAL,new PreciseHitDetection());
+        this.baseShelterGroup.setHitDetection(BaseShelter.HIT_DETECTION_PRECISE,new PreciseHitDetection());
+        this.ufo.setHitDetection(UFO.HIT_DETECTION,new NormalHitDetection());
+        this.hud.setSpaceGame(this);
 
         this.invaderGroup.setSpaceGame(this);
-        this.UFO.setSpaceGame(this);
+        this.ufo.setSpaceGame(this);
 
         this.animatedObjects=new AnimatedObjectBox();
         this.animatedObjects.put(SpaceGame.LASER_BASE,this.laserBase);
         this.animatedObjects.put(SpaceGame.BASE_SHELTER_GROUP,this.baseShelterGroup);
         this.animatedObjects.put(SpaceGame.INVADER_GROUP,this.invaderGroup);
-        this.animatedObjects.put(SpaceGame.UFO_INVADER,this.UFO);
+        this.animatedObjects.put(SpaceGame.UFO_INVADER,this.ufo);
 
 
         ((AnimatedObject)this.hud).setSpaceGame(this);
@@ -130,7 +133,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
         actions.put(GAME_START,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         invaderGroup.handle(actions);
-        UFO.handle(actions);
+        ufo.handle(actions);
 
         AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
         actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));

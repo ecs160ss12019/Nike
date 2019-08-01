@@ -37,13 +37,13 @@ class BaseShelter extends AnimatedObject<ImageView> {
     // Each hit box is 10 by 10 in pixels
     private int boxSize = 10;
 
-    private boolean alive = true;
 
     private Bitmap bitmap;
 
     private Canvas canvas;
 
-    private HitDetection hitDetection;
+    public static final int HIT_DETECTION_NORMAL =0b1;
+    public static final int HIT_DETECTION_PRECISE =0b10;
 
     BaseShelter(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame,
                 SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
@@ -82,7 +82,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
 
     private void killSelf(){
-        alive = false;
+        this.setAlive(false);
         this.setVisibility(View.INVISIBLE);
         this.status=false;
     }
@@ -96,7 +96,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         switch(key)
         {
             case SpaceGame.CONTACT:
-                if(alive && hitDetection(actions.get(SpaceGame.CONTACT).first)){
+                if(this.isAlive() && hitDetection(actions.get(SpaceGame.CONTACT).first)){
                     killSelf();
                 }
                 break;
@@ -214,8 +214,4 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     }
 
-    public void setHitDetection(HitDetection hitDetection) {
-        this.hitDetection = hitDetection;
-    }
-    public boolean isAlive() {return alive;}
 }

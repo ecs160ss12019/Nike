@@ -49,7 +49,9 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
 
     private int[] hitBox;
 
-    private HitDetection hitDetection;
+    private SparseArray<HitDetection> hitDetection;
+
+    private boolean isAlive=true;
 
     AnimatedObject( ValueAnimator animator, View view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status,
                    Handler mainHandler, Handler processHandler,SoundEngine soundEngine){
@@ -369,12 +371,29 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
         this.hitBox = hitBox;
     }
 
-    public HitDetection getHitDetection() {
+    public SparseArray<HitDetection> getHitDetection() {
         return hitDetection;
     }
 
-    public void setHitDetection(HitDetection hitDetection) {
+    public void setHitDetection(SparseArray<HitDetection> hitDetection) {
         this.hitDetection = hitDetection;
+    }
+
+    public void setHitDetection(int key,HitDetection hitDetection) {
+        if (this.hitDetection!=null){
+            this.hitDetection.put(key,hitDetection);
+        }else {
+            this.hitDetection=new SparseArray<>();
+            this.hitDetection.put(key,hitDetection);
+        }
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
     }
 
 
