@@ -139,15 +139,14 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         invaderGroup.handle(actions);
         ufo.handle(actions);
 
-        AnimatedObject.Actions actions2 = new AnimatedObject.Actions();
-        actions2.put(LIFE_ADD,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
-//        hud.handle(actions2);
-
-        status.put(SpaceGame.SCORES,new Pair<>(0f,null));
-        //Below Test only
-/*        status.put(SpaceGame.NUM_LIVES,new Pair<>(Float.valueOf(1),null));//TODO:Bug: LIVEMAX Doesnt work
-        updateStatus(status);*/
-
+/*      TEST for shake animation of Live Gone
+        status.put(SpaceGame.NUM_LIVES,new Pair<>((float)2,null));
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                hud.updateStatus(status);
+            }
+        }, 5000);   //5 seconds*/
 
     }
 
