@@ -64,7 +64,10 @@ public class Invader extends AnimatedObject<ImageView> {
         SpaceGame.Status status = getStatus();
         Pair<Float, Float> value = status.get(SpaceGame.SCORES);
         assert value != null;
-        status.put(SpaceGame.SCORES, new Pair<>(value.first + 10, null));
+        float newScore = value.first + 10;
+
+        // Overwrite the old status value
+        status.put(SpaceGame.SCORES, new Pair<>(newScore, null));
         getSpaceGame().updateStatus(status);
     }
 

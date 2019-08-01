@@ -286,7 +286,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
                 for (Invader invader : invaders) {
                     if (invader.isAlive() && invader.toShoot()){
                         invader.shootMissile();}
-                    if(invader.isAlive()){
+                    if(invader.isAlive() && fraction > 10){
                         if (checkInvaded(invader))
                         {
                             // Send a signal back to SpaceGame to end the game
@@ -353,9 +353,9 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
      */
     public void notifyGameOver()
     {
-        SpaceGame.Status newStatus = getStatus();
+        SpaceGame.Status newStatus = new SpaceGame.Status();
         newStatus.put(SpaceGame.GAME_OVER, new Pair<>(null, null));
-        //getSpaceGame().updateStatus(newStatus);
+        getSpaceGame().updateStatus(newStatus);
     }
 
 }
