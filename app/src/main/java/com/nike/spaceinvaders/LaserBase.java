@@ -10,7 +10,6 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Point;
-import android.icu.text.SymbolTable;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
