@@ -28,6 +28,9 @@ class LaserBase extends AnimatedObject<ImageView> {
     private boolean held=false;
 
     public static final int HIT_DETECTION=0b1;
+    //AI setting.
+    public static final int RATE_OF_MISSILE=0b1;
+    public static final int RATE_OF_MOVEMENT=0b10;
 
     LaserBase(ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);

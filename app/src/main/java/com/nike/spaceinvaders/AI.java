@@ -45,7 +45,14 @@ public class AI {
 
         @Override
         float evaluate(int type) {
-            return getScale();
+            switch (type){
+                case LaserBase.RATE_OF_MISSILE:
+                    return this.getScale()*10;
+                case LaserBase.RATE_OF_MOVEMENT:
+                    return this.getScale()*5;
+                default:
+                    return 0;
+            }
         }
     }
 
