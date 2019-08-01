@@ -10,6 +10,7 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -133,6 +134,12 @@ class LaserBase extends AnimatedObject<ImageView> {
                 break;
 
             case SpaceGame.STRIKE:
+                assert value != null;
+                if (hitDetection(value.first)) {
+                    kill(actions, value.first);
+                }
+                break;
+            case SpaceGame.CONTACT:
                 assert value != null;
                 if (hitDetection(value.first)) {
                     kill(actions, value.first);

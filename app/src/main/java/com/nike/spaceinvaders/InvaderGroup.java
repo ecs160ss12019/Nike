@@ -281,7 +281,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
                 that.setYRaw(that.initialCoordinates.y + lengthY * fraction);
 
-                that.getSpaceGame().laserBase.handle(actions);
+                //that.getSpaceGame().laserBase.handle(actions);
 
 
                 for (Invader invader : invaders) {
@@ -301,6 +301,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
                         Actions actions = new Actions();
                         actions.put(SpaceGame.CONTACT, new Pair<AnimatedObject, SparseArray<Float>>(invader, null));
                         invader.getSpaceGame().baseShelterGroup.handle(actions, SpaceGame.CONTACT);
+                        invader.getSpaceGame().laserBase.handle(actions, SpaceGame.CONTACT);
                     }
                 }
             }
