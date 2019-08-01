@@ -113,12 +113,14 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
     }
 
     private void updateScores(SpaceGame.Status status) {
+        int initScore= Integer.valueOf(score.getText().toString());
         Float scoreTemp=(Objects.requireNonNull(status.get(SpaceGame.SCORES)).first);
         int score=scoreTemp.intValue();
         this.score.setText(String.valueOf(score));
 
         //Test only
-        updateMessage("+");
+        if(scoreTemp>initScore)
+            updateMessage("+");
     }
     private void updateLives(SpaceGame.Status status) {
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);
