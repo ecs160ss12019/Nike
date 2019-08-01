@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import java.util.HashMap;
@@ -107,6 +108,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
 
         Animation shake = AnimationUtils.loadAnimation(mainContext, R.anim.shake);
         livesViews[0].startAnimation(shake);
+
 
     }
 
