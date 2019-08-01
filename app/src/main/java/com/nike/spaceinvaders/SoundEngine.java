@@ -90,27 +90,27 @@ class SoundEngine {
         mSP.play(mShoot_ID,1, 1, 0, 0, 1);
     }
 
-    public void playInvaderMissile1(){
+    public void playYellowInvaderMissile(){
         mSP.play(mShoot2_ID,1, 1, 0, 0, 1);
     }
 
-    public void playInvaderMissile2(){
+    public void playBlueInvaderMissile(){
         mSP.play(mShoot3_ID,1, 1, 0, 0, 1);
     }
 
-    public void playInvaderMissile3(){
+    public void playOrangeInvaderMissile(){
         mSP.play(mShoot4_ID,1, 1, 0, 0, 1);
     }
 
-    public void playInvaderDeath(){
+    public void playYellowInvaderDeath(){
         mSP.play(mInvaderDeath_ID,1, 1, 0, 0, 1);
     }
 
-    public void playInvaderDeath2(){
+    public void playBlueInvaderDeath(){
         mSP.play(mInvaderDeath2_ID,1, 1, 0, 0, 1);
     }
 
-    public void playInvaderDeath3(){
+    public void playOrangeInvaderDeath(){
         mSP.play(mInvaderDeath3_ID,1, 1, 0, 0, 1);
     }
 

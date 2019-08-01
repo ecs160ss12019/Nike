@@ -91,6 +91,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/scorePrompt"
             app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/arcadeclassic"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/score"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/scorePrompt"
@@ -134,8 +149,7 @@
         app:layout_constraintBottom_toTopOf="@+id/invader_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HUD"
-        app:srcCompat="@drawable/myinvader" />
+        app:layout_constraintTop_toBottomOf="@+id/HUD"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/invader_layout"
@@ -347,7 +361,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/mylaserbase">
+        app:srcCompat="@drawable/laserbase">
+
     </ImageView>
 
 </android.support.constraint.ConstraintLayout>

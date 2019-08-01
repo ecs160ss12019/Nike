@@ -8,6 +8,7 @@ package com.nike.spaceinvaders;
 
 import android.animation.ValueAnimator;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -28,6 +29,7 @@ public class UFO extends Invader {
     private int remainedFrames;//this is the number of frames spent in each horizontal trip, so the speed of UFO is faster when this number is smaller
     private boolean direction;
     private float startX=-200;
+    private int type;
 
     UFO(int index, ValueAnimator animator, ImageView view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler,SoundEngine soundEngine) {
         super(-1, index, animator, view, resources, spaceGame, status, mainHandler, processHandler, soundEngine);
@@ -36,7 +38,24 @@ public class UFO extends Invader {
         duration = 1000;
         remainedFrames = 50;//kinda slow
         direction = myrand.nextBoolean();
-        alive = true;
+        alive = false;
+        type = myrand.nextInt(3);
+        setType(type, view);//have different looks of ufos
+
+    }
+
+    protected void setType(int type, ImageView view){//want to do this every time when starts travel
+        if(type==0){
+            view.setBackgroundResource(R.drawable.ufo1);
+        }else if(type==1){
+            view.setBackgroundResource(R.drawable.ufo2);
+        }else if(type==2){
+            view.setBackgroundResource(R.drawable.ufo3);
+        }
+        AnimationDrawable frameAnimation =  (AnimationDrawable) view.getBackground();
+        if(frameAnimation!=null){
+            frameAnimation.start();
+        }
     }
 
     @Override
@@ -61,7 +80,7 @@ public class UFO extends Invader {
                 break;
             case SpaceGame.STRIKE:
                 assert value != null;
-                if (hitDetection(value.first)) {
+                if (this.alive && hitDetection(value.first)) {
                     kill(actions, value.first);
                 }
                 break;
@@ -97,6 +116,10 @@ public class UFO extends Invader {
                 }
                 float fraction = animation.getAnimatedFraction();
                 if (times==expectation){
+                    if (fraction==0f){
+                        ((UFO) that).alive=true;
+                        setVisibility(View.VISIBLE);
+                    }
                     if (fraction==1f){
                         times=0;
                         expectation=0;

@@ -2,8 +2,10 @@ package com.nike.spaceinvaders;
 
 import android.app.Activity;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -13,6 +15,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +44,8 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
     private Thread processThread;
     private SensorManager sensorManager;
     private Sensor sensor;
-
+    private SpaceGame.Status setting;
+//    public static Context mContext;
 
 
     //Initiate runnable to be run in the process thread that initiate handler.
@@ -63,12 +67,18 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         this.mainHandler=new Handler();
         this.processThread=new Thread(this.threadInitiation);
         this.processThread.start();
+//        this.mContext = this;
 
         //Get layout file and inflate it into the screen and get the View object.
 
         LayoutInflater mInflater = LayoutInflater.from(this);
         View contentView  = mInflater.inflate(R.layout.space_activity,null);
         setContentView(contentView);
+
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicPlayer.class);
+        startService(music);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
@@ -118,8 +128,11 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
     protected void onResume(){
         super.onResume();
 //        mSpaceGame.resume();
-        if (sensor!=null)
+        if (sensor != null)
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        if (mServ != null) {
+            mServ.resumeMusic();
+        }
     }
 
     @Override
@@ -128,6 +141,9 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 //        mSpaceGame.pause();
         if (sensor!=null)
             sensorManager.unregisterListener(this);
+        if (mServ != null) {
+            mServ.pauseMusic();
+        }
     }
 
     @Override
@@ -164,8 +180,6 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         ViewGroup rootView = findViewById(R.id.main_layout);
         Blurry.delete(rootView);
     }
-
-
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -210,7 +224,37 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
             default:
                 break;
         }
+    }
 
+
+    //MusicPlayer code
+    private boolean mIsBound = false;
+    private MusicPlayer mServ;
+    private ServiceConnection Scon =new ServiceConnection(){
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicPlayer.ServiceBinder)binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService(){
+        bindService(new Intent(this, MusicPlayer.class),
+                Scon,Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
     }
 
     //this will ban back button in bottom

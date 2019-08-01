@@ -1,5 +1,10 @@
 package com.nike.spaceinvaders;
 
+/*
+   Detect the collision between objects
+ */
+
+
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -16,12 +21,12 @@ class NormalHitDetection implements HitDetection{
         float y = position.y;
         int missileWidth = size.getWidth();
         float left, top, bottom, right;
-        left = animatedObject.getAbsoluteX() + 50;
+        float padding = 50;
+        left = animatedObject.getAbsoluteX() + padding;
         top = animatedObject.getAbsoluteY();
         bottom = top + animatedObject.getHeight();
-        right = left + animatedObject.getWidth() - 50;
+        right = left + animatedObject.getWidth() - padding;
         if ((x >= left && x <= right && y <= bottom && y >= top) || ((x + missileWidth) >= left && (x + missileWidth) <= right && y <= bottom && y >= top)) {
-            animatedObject.getSoundEngine().playInvaderDeath(); //Sound effect for invader being destroyed
             return new Point();
         } else {
             return null;

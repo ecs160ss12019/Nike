@@ -83,9 +83,14 @@
 
 | StartMenu | |
 |---|---|
-|  - Display the Menu when the game is paused or not staated yet |  HUD <br> SpaceGame |
+|  - Display the Menu when the game is paused or not started yet |  HUD <br> SpaceGame |
 
 
 | Pop | |
 |---|---|
 |  - Handle the pop-up window |  HUD <br> SpaceGame |
+
+
+| MusicPlayer | |
+|---|---|
+|  - Plays the background music | SpaceGame |

@@ -6,6 +6,7 @@
 
 package com.nike.spaceinvaders;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
 import android.util.SparseArray;
+import android.view.ContextMenu;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
@@ -44,6 +46,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int GAME_RESUME=0b10000000000000;
     public static final int GAME_STOP=  0b100000000000000;
     public static final int CONTACT=    0b1000000000000000;
+    public static final int MESSAGE= 0b110000000000;
     //TEST only
     public static final int TEST=0b0100001;
     // The moment at which laserBase or invader fires the missile
@@ -107,12 +110,16 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                 .setResources(resources).setMainHandler(mainHandler)
                 .setProcessHandler(processThread).setStatus(status).setSpaceGame(this).setSoundEngine(se)
                 .build();  // setCapacity needs to be called at the very last
+
         this.laserBase.setSpaceGame(this);
         this.laserBase.setHitDetection(new NormalHitDetection());
         this.baseShelterGroup.setSpaceGame(this);
         this.baseShelterGroup.setHitDetection(new PreciseHitDetection());
+        this.UFO.setHitDetection(new NormalHitDetection());
+
         this.invaderGroup.setSpaceGame(this);
         this.UFO.setSpaceGame(this);
+
 
         this.animatedObjects=new AnimatedObjectBox();
         this.animatedObjects.put(SpaceGame.LASER_BASE,this.laserBase);
@@ -136,9 +143,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 //        hud.handle(actions2);
 
         status.put(SpaceGame.SCORES,new Pair<>(0f,null));
-        //Below Test only
-/*        status.put(SpaceGame.NUM_LIVES,new Pair<>(Float.valueOf(1),null));//TODO:Bug: LIVEMAX Doesnt work
-        updateStatus(status);*/
+       // hud.updateMessage("TEST");
 
 
     }
@@ -250,6 +255,9 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public void gameover() {
     }
 
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{

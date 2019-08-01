@@ -1,5 +1,10 @@
 package com.nike.spaceinvaders;
 
+/*
+- Display the Menu when the game is paused or not started yet
+ */
+
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -5,14 +5,11 @@ package com.nike.spaceinvaders;
 - Has 3 lives
 - Able to shoot missle when user touch the middle screen on the screen
  */
+
+
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.graphics.PointF;
-import android.util.ArraySet;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -24,9 +21,6 @@ import java.util.Set;
 
 import android.os.Handler;
 
-import org.ejml.data.Matrix;
-import org.ejml.equation.Equation;
-import org.ejml.simple.SimpleMatrix;
 
 
 class LaserBase extends AnimatedObject<ImageView> {
@@ -108,16 +102,15 @@ class LaserBase extends AnimatedObject<ImageView> {
                 if (!this.running){
                     return;
                 }
-//                if(lastMissile != null && lastMissile.isAlive())
-//                    return;
+
                 AnimatedObject missile = getSpaceGame().missilePool.getMissile();
                 SparseArray<Float> values = new SparseArray<>();
                 values.put(SpaceGame.X_COORDINATE, (this.getWidth() - 25) / 2 + this.getX());
                 values.put(SpaceGame.Y_COORDINATE, (this.getY()));
                 values.put(SpaceGame.MOVE_DIRECTION, 1f);
                 actions.put(SpaceGame.FIRE, new Pair<>(this, values));
+
                 if (missile != null) {
-//                    lastMissile = (Missile) missile;
                     ((Missile) missile).setMissileForm(new LaserBaseMissileForm
                             ((Context) this.getResources().get(SpaceGame.CONTEXT)));
                     missile.handle(actions, SpaceGame.FIRE);
@@ -160,6 +153,7 @@ class LaserBase extends AnimatedObject<ImageView> {
         this.setVisibility(View.INVISIBLE);
         actions.put(SpaceGame.MISSILE_GONE, null);
         missile.handle(actions, SpaceGame.MISSILE_GONE);
+        this.getSoundEngine().playlaserBaseDeath();
         notifySpaceGame();
     }
 

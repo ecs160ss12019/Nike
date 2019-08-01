@@ -11,18 +11,18 @@ interface MissileForm {
 }
 
 
-class InvaderAMissileForm implements MissileForm
+class YellowInvaderMissileForm implements MissileForm
 {
     private SoundEngine se;
 
-    public InvaderAMissileForm(Context context)
+    public YellowInvaderMissileForm(Context context)
     {
         se = SoundEngine.getInstance(context);
     }
 
     public void playMissileSound()
     {
-        se.playInvaderMissile1();
+        se.playYellowInvaderMissile();
     }
 
     public void setMissileImage(Missile missile, Resources resources)
@@ -35,18 +35,18 @@ class InvaderAMissileForm implements MissileForm
 
 
 
-class InvaderBMissileForm implements MissileForm
+class BlueInvaderMissileForm implements MissileForm
 {
     private SoundEngine se;
 
-    public InvaderBMissileForm(Context context)
+    public BlueInvaderMissileForm(Context context)
     {
         se = SoundEngine.getInstance(context);
     }
 
     public void playMissileSound()
     {
-        se.playInvaderMissile2();
+        se.playBlueInvaderMissile();
     }
 
     public void setMissileImage(Missile missile, Resources resources)
@@ -61,18 +61,18 @@ class InvaderBMissileForm implements MissileForm
 
 
 
-class InvaderCMissileForm implements MissileForm
+class OrangeInvaderMissileForm implements MissileForm
 {
     private SoundEngine se;
 
-    public InvaderCMissileForm(Context context)
+    public OrangeInvaderMissileForm(Context context)
     {
         se = SoundEngine.getInstance(context);
     }
 
     public void playMissileSound()
     {
-        se.playInvaderMissile3();
+        se.playOrangeInvaderMissile();
     }
 
     public void setMissileImage(Missile missile, Resources resources)

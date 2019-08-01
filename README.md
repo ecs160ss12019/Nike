@@ -104,6 +104,35 @@ Weili Yin,    CharlesYWL
 |  - A member in the HUD class that keeps track of the remaining number of lives  <br> - Manage the animation of live icons appearing on the top right corner of the screen |  HUD <br> SpaceGame |
 
 
+| SoundEngine | |
+|---|---|
+|  - Set up the sound pool  <br> - Plays different kinds of sound |  Missile <br> SpaceGame |
+
+
+
+
+| MissileForm | |
+|---|---|
+|  - Missile has two features that determine its form: Sound and Image  <br> - Set the form of Missile |  Missile |
+
+
+
+| UFO | |
+|---|---|
+|  - A class derives from invader  <br> - Not able to shoot but give user bonus points |  SpaceGame <br> Missile |
+
+
+
+
+| StartMenu | |
+|---|---|
+|  - Display the Menu when the game is paused or not staated yet |  HUD <br> SpaceGame |
+
+
+| Pop | |
+|---|---|
+|  - Handle the pop-up window |  HUD <br> SpaceGame |
+
 ## Screenshot
 
 ![A](https://github.com/ecs160ss12019/Nike/blob/master/screenshot/sprint2A.png)

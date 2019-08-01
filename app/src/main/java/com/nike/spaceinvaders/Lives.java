@@ -7,13 +7,17 @@ package com.nike.spaceinvaders;
  */
 
 
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import java.util.HashMap;
@@ -23,6 +27,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
 
     private int lives;
     private View[] livesViews;
+    Context mainContext;
 
     Lives(ConstraintLayout view, SpaceGame.Resources resources, SpaceGame spaceGame, SpaceGame.Status status, Handler mainHandler, Handler processHandler, int lives,SoundEngine soundEngine) {
         super(null, view, resources, spaceGame, status, mainHandler, processHandler,soundEngine);
@@ -31,6 +36,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         for (int index = 0; index < this.getChildCount(); index++) {
             this.livesViews[index] = this.getChildAt(index);
         }
+        mainContext = (Context) getResources().get(SpaceGame.CONTEXT);
         updateLives();
     }
 
@@ -73,7 +79,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
     private void hurt(Actions actions) {
         if (this.lives < 1) {
             //pass GAMEOVER to Game
-            //getSpaceGame().gameover();
+            getSpaceGame().gameover();
             return;
         }
         this.livesViews[lives - 1].setVisibility(View.INVISIBLE);
@@ -98,6 +104,10 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         for (int i = 0; i < livenum; i++) {
             livesViews[i].setVisibility(View.VISIBLE);
         }
+
+        Animation shake = AnimationUtils.loadAnimation(mainContext, R.anim.shake);
+        livesViews[0].startAnimation(shake);
+
     }
 
 
