@@ -152,12 +152,13 @@ class BaseShelter extends AnimatedObject<ImageView> {
         assert resources != null;
         Drawable damage = resources.getDrawable(R.drawable.explode, null);
 
-        float padding = 30;
+        float xPadding = 30;
+        float yPadding = 20;
         if(missileUp)
         {
             // LaserBase is shooting
-            x = x - padding;
-            y = y - padding;
+            x = x - xPadding;
+            y = y - yPadding;
         }
         else
         {
