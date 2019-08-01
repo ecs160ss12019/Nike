@@ -38,7 +38,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
             this.livesViews[index] = this.getChildAt(index);
         }
         mainContext = (Context) getResources().get(SpaceGame.CONTEXT);
-        updateLives();
+        //updateLives();
     }
 
     /**
@@ -83,7 +83,11 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
             getSpaceGame().gameover();
             return;
         }
-        this.livesViews[lives - 1].setVisibility(View.INVISIBLE);
+        //shake the live and disappear after 1s
+        for (int i=0;i<3;i++) {
+            Animation shake = AnimationUtils.loadAnimation(mainContext, R.anim.shake);
+            livesViews[i].startAnimation(shake);
+        }
         this.lives--;
     }
 
@@ -97,6 +101,7 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         return lives;
     }
 
+    //it just show the correct lives
     private void updateLives() {
         int livenum = this.lives;
         livesViews[0].setVisibility(View.INVISIBLE);
@@ -106,8 +111,8 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
             livesViews[i].setVisibility(View.VISIBLE);
         }
 
-        Animation shake = AnimationUtils.loadAnimation(mainContext, R.anim.shake);
-        livesViews[0].startAnimation(shake);
+/*        Animation shake = AnimationUtils.loadAnimation(mainContext, R.anim.shake);
+        livesViews[0].startAnimation(shake);*/
 
 
     }
