@@ -19,7 +19,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
     private TextView score;
     private Lives liveLayout;
     private int lives;
-    private static int LIVEMAX=3;
+    protected static int LIVEMAX=3;
 
 
     @IdRes
@@ -38,7 +38,9 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
 
     @Override
     protected void initialize() {
-
+        score.setText("0");
+        liveLayout.initialize();
+        this.lives=LIVEMAX;
     }
 
     @Override

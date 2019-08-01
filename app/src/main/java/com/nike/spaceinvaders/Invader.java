@@ -21,7 +21,6 @@ import android.os.Handler;
 
 
 public class Invader extends AnimatedObject<ImageView> {
-    public boolean alive = true;
     private Missile missile;
     private int abstractionLevel = 10;
     private int index;
@@ -52,7 +51,7 @@ public class Invader extends AnimatedObject<ImageView> {
     }
 
     protected void kill(Actions actions, AnimatedObject missile) {
-        alive = false;
+        this.setAlive(false);
         this.setVisibility(View.INVISIBLE);
         actions.put(SpaceGame.MISSILE_GONE, null);
         actions.put(SpaceGame.HIT, new Pair<>(this, null));
@@ -72,7 +71,8 @@ public class Invader extends AnimatedObject<ImageView> {
 
     @Override
     protected void initialize() {
-
+        this.setAlive(true);
+        this.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class Invader extends AnimatedObject<ImageView> {
         switch (key) {
             case SpaceGame.STRIKE:
                 assert value != null;
-                if (this.alive && hitDetection(value.first)) {
+                if (this.isAlive() && hitDetection(value.first)) {
                     playDeathSound(); //Sound effect for invader being destroyed
                     kill(actions, value.first);
                 }
@@ -194,12 +194,6 @@ public class Invader extends AnimatedObject<ImageView> {
 
     public void setIndex(int index) {
         this.index = index;
-    }
-
-
-    public boolean isAlive()
-    {
-        return alive;
     }
 
     @Override

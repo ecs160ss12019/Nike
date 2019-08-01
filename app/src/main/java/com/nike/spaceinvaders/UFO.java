@@ -38,7 +38,7 @@ public class UFO extends Invader {
         duration = 1000;
         remainedFrames = 50;//kinda slow
         direction = myrand.nextBoolean();
-        alive = false;
+        this.setAlive(false);
         type = myrand.nextInt(3);
         setType(type, view);//have different looks of ufos
 
@@ -80,7 +80,7 @@ public class UFO extends Invader {
                 break;
             case SpaceGame.STRIKE:
                 assert value != null;
-                if (this.alive && hitDetection(value.first)) {
+                if (this.isAlive() && hitDetection(value.first)) {
                     kill(actions, value.first);
                 }
                 break;

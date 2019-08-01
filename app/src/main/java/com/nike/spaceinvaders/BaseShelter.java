@@ -30,7 +30,6 @@ import java.util.Objects;
  * It holds and manages an {@link ImageView} object that holds the image of the BaseShelter.
  */
 class BaseShelter extends AnimatedObject<ImageView> {
-    private boolean status=true;
     int[] oldHitBox;
     // number of cols and rows of hitBoxes
     private int numRow, numCol;
@@ -54,18 +53,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         numRow = this.getHeight() / boxSize;
         numCol = this.getWidth() / boxSize;
 
-        Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
-        this.bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), conf); // this creates a MUTABLE bitmap
-
-        this.canvas = new Canvas(this.bitmap);
-        this.oldHitBox = new int[this.getHeight() * this.getWidth()];
-        Drawable shelter = this.getDrawable();
-        shelter.setBounds(shelter.copyBounds());
-        shelter.setBounds(0, 0, this.getWidth(), this.getHeight());
-        // shelter.setAlpha(255);
-        shelter.draw(this.canvas);
-        this.bitmap.getPixels(this.oldHitBox, 0, this.getWidth(), 0, 0, this.getWidth(), this.getHeight());
-        removePaddingHitBox();
+        initialize();
     }
 
 
@@ -84,13 +72,25 @@ class BaseShelter extends AnimatedObject<ImageView> {
     private void killSelf(){
         this.setAlive(false);
         this.setVisibility(View.INVISIBLE);
-        this.status=false;
     }
 
 
     @Override
     protected void initialize() {
+        this.setAlive(true);
+        this.setVisibility(View.VISIBLE);
+        Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
+        this.bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), conf); // this creates a MUTABLE bitmap
 
+        this.canvas = new Canvas(this.bitmap);
+        this.oldHitBox = new int[this.getHeight() * this.getWidth()];
+        Drawable shelter = this.getDrawable();
+        shelter.setBounds(shelter.copyBounds());
+        shelter.setBounds(0, 0, this.getWidth(), this.getHeight());
+        // shelter.setAlpha(255);
+        shelter.draw(this.canvas);
+        this.bitmap.getPixels(this.oldHitBox, 0, this.getWidth(), 0, 0, this.getWidth(), this.getHeight());
+        removePaddingHitBox();
     }
 
     /*
@@ -107,7 +107,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
                 break;
 
             case SpaceGame.STRIKE:
-                if (!this.status){
+                if (!this.isAlive()){
                     break;
                 }
                 //    SparseArray<Float> data = Objects.requireNonNull(actions.get(SpaceGame.STRIKE)).second;

@@ -91,7 +91,8 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
     @Override
     protected void initialize() {
-
+        for(Invader invader: invaders)
+            invader.initialize();
     }
 
     @Override

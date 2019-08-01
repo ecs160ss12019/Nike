@@ -31,7 +31,10 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
 
     @Override
     protected void initialize() {
-
+        for(View view:livesViews){
+            view.setVisibility(View.VISIBLE);
+        }
+        this.lives=HUD.LIVEMAX;
     }
 
     /**
