@@ -62,4 +62,12 @@ public class StartMenu extends AppCompatActivity {
         //TODO: delete following test after finishing
         Toast.makeText(getApplicationContext(),"AiLevel: "+String.valueOf(this.AiLevel)+" Gravity: "+String.valueOf(this.GravityFlag),Toast.LENGTH_LONG).show();
     }
+
+    public void leaderboard(View view) {
+        Intent intent = new Intent();
+        intent.setClass(StartMenu.this, LeaderboardPage.class);//Jump from this to leaderboard
+        startActivity(intent);
+        //Animation of xml on transition
+        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//android.anim.fade_in
+    }
 }

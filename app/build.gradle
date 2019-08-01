@@ -36,4 +36,5 @@ dependencies {
     implementation group: 'org.ejml', name: 'ejml-all', version: '0.38'
     //blur thing
     implementation 'jp.wasabeef:blurry:3.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
 }

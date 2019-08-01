@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="175sp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="193sp"
         android:clickable="true"
         android:fontFamily="@font/arcadeclassic"
@@ -58,11 +58,29 @@
         app:layout_constraintTop_toBottomOf="@id/text_invader" />
 
     <TextView
+        android:id="@+id/leaderboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="175sp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="193sp"
+        android:clickable="true"
+        android:fontFamily="@font/arcadeclassic"
+        android:onClick="leaderboard"
+        android:text="LEADERBOARD"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.406"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start" />
+
+    <TextView
         android:id="@+id/setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="175sp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="193sp"
         android:clickable="true"
         android:fontFamily="@font/arcadeclassic"
@@ -73,6 +91,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.406"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/start" />
+        app:layout_constraintTop_toBottomOf="@id/leaderboard" />
 
 </android.support.constraint.ConstraintLayout>
