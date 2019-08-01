@@ -176,9 +176,11 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                         this.setState(new PausedGame());
                     }
                     break;
-
+                case SpaceGame.LIFE_GONE:
+                    //when lose 1 live, will pause game for seconds and respawn laserbase
+                    lifeGone();
+                    break;
                 case SpaceGame.GAME_OVER:
-                    // TODO: NEEDS TO BE DONE BY Weili
                     gameover();
                     break;
 
@@ -190,6 +192,20 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         for (AnimatedObject object:this.animatedObjects.values()){
             object.updateStatus(status);
         }
+    }
+
+    private void lifeGone() {
+        //pause the game
+            setState(new SpaceGame.PausedGame());
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                setState(new SpaceGame.RunningGame());
+            }
+        }, 1000);   //1 seconds
+
+
     }
 
     public void setState(State state) {
@@ -279,7 +295,6 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         Intent i = new Intent(context,Pop.class);
         i.putExtra("insignal","gameover");
         ((Activity) context).startActivityForResult(i,0);
-
     }
 
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{
