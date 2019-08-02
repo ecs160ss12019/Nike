@@ -26,6 +26,7 @@ public class StartMenu extends AppCompatActivity {
     }
     //invoked once start button has been pressed
     public void startgame(View view) {
+        SoundEngine.getInstance(getApplicationContext()).playMenuSelect();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SpaceActivity.class);//Jump from this to SpaceActivity
         //input parameter to spaceActivity
@@ -39,6 +40,7 @@ public class StartMenu extends AppCompatActivity {
     }
 
     public void settingpage(View view){
+        SoundEngine.getInstance(getApplicationContext()).playMenuSelect();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SettingPage.class);//Jump from this to SpaceActivity
         Bundle bundle=new Bundle();
@@ -62,4 +64,14 @@ public class StartMenu extends AppCompatActivity {
         //TODO: delete following test after finishing
         Toast.makeText(getApplicationContext(),"AiLevel: "+String.valueOf(this.AiLevel)+" Gravity: "+String.valueOf(this.GravityFlag),Toast.LENGTH_LONG).show();
     }
+
+    public void leaderboard(View view) {
+        SoundEngine.getInstance(getApplicationContext()).playMenuSelect();
+        Intent intent = new Intent();
+        intent.setClass(StartMenu.this, LeaderboardPage.class);//Jump from this to leaderboard
+        startActivity(intent);
+        //Animation of xml on transition
+        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//android.anim.fade_in
+    }
+
 }

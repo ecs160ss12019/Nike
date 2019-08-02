@@ -103,6 +103,9 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         final SpaceGame.Status status=new SpaceGame.Status();
         status.put(SpaceGame.NUM_LIVES,new Pair<>(3f,0f));
         status.put(SpaceGame.SCORES, new Pair<>(0f, 0f));
+        //bundle get from startMenu
+        Bundle bundle=getIntent().getExtras();
+
         mainHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -111,7 +114,8 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
                     return;
                 }
                 mSpaceGame=new SpaceGame( new LaserBase( (ImageView) laserBase,resources,mSpaceGame,status,mainHandler,processHandler,se),new BaseShelterGroup((ConstraintLayout) baseShelterGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),new InvaderGroup((ConstraintLayout) invaderGroup,resources,mSpaceGame,status,mainHandler,processHandler,se),null,new UFO(0,null,(ImageView) ufo,resources,mSpaceGame,status,mainHandler,processHandler,se), new HUD((ConstraintLayout) hud,resources,mSpaceGame,status,mainHandler,processHandler,se),resources,status,mainLayout,mainHandler,processHandler, se);
-
+                //get Setting
+                mSpaceGame.setSetting(bundle);
             }
         },0);
     }

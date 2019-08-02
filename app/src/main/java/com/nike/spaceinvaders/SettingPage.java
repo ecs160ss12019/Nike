@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -76,6 +77,14 @@ public class SettingPage extends AppCompatActivity {
         this.setResult(Activity.RESULT_OK, intent);
         this.finish();
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//slide_right
+    }
+    //this will ban back button in bottom
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return false;
     }
 
 }
