@@ -24,7 +24,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import jp.wasabeef.blurry.Blurry;
 
@@ -197,7 +196,6 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         super.onActivityResult(requestCode, resultCode, data);
         Bundle bundle=data.getExtras();
         String str = bundle.getString("signal");
-        Toast.makeText(getApplicationContext(),bundle.getString("signal"),Toast.LENGTH_SHORT).show();
         removeblurEffect();
         switch (str){
             case "resume":
@@ -208,13 +206,11 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
                 }
                 break;
             case "restart":
-                Toast.makeText(getApplicationContext(),"restartgame",Toast.LENGTH_SHORT).show();
                 finish();
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 break;
             case "backtotitle":
                 //situation when click back button
-                Toast.makeText(getApplicationContext(),"backtotitle",Toast.LENGTH_SHORT).show();
                 finish();
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 break;

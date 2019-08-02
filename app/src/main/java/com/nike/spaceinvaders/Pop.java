@@ -6,6 +6,7 @@ package com.nike.spaceinvaders;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +14,19 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 
 public class Pop extends AppCompatActivity {
+    private static final Object TAG = "POP";
     public String str;//store signal
+    public int ScoreRecord=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +42,8 @@ public class Pop extends AppCompatActivity {
                 break;
             case "gameover":
                 setContentView(R.layout.pop_gameover);
+                ScoreRecord =(int)i.getFloatExtra("score",0);
+                RecordScore(ScoreRecord);
                 break;
             default:
                 break;
@@ -47,6 +57,18 @@ public class Pop extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.5),(int)(height*.5));
 
+
+
+    }
+    public void RecordScore(int scoreRecord) {
+        Context context = getApplicationContext();
+        try {
+            FileWriter out = new FileWriter(new File(context.getFilesDir(),"leaderboard.txt" ),true);
+            out.write(String.valueOf(scoreRecord)+" ");
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //resume button pressed

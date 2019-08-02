@@ -32,7 +32,6 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
     public static int LIVEMAX=3;
     public SpaceGame spaceGame;
 
-
     @IdRes
     private final int scoreId=R.id.score;
     @IdRes
@@ -159,5 +158,8 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
         this.lives=lives;
     }
 
+    public int getScore(){
+        return Integer.valueOf(score.getText().toString());
+    }
 
 }

@@ -22,6 +22,13 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Objects;
@@ -83,6 +90,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int DIFFICULITY=0b0000010;
     public static final int a=0b0000100;
     public static final int ds=0b0001000;
+    private static final String TAG = "SpaceGame";
 
     /* State Flags */
     public static final int RUNNING_STATE=0b0000001;
@@ -350,6 +358,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         //start popup window
         Intent i = new Intent(context,Pop.class);
         i.putExtra("insignal","gameover");
+        i.putExtra("score",this.status.get(SpaceGame.SCORES).first);
         ((Activity) context).startActivityForResult(i,0);
     }
 
