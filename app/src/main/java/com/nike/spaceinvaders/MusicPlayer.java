@@ -11,6 +11,11 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
 
+/*
+    Credits for Sound Effects go to OpenGameArt.org
+    Credits for Background Music go to "The Visitors" by Trevor Lentz
+*/
+
 
 public class MusicPlayer extends Service implements MediaPlayer.OnErrorListener {
 

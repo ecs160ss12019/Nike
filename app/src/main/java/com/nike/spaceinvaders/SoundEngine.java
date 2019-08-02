@@ -9,9 +9,8 @@ import android.media.SoundPool;
 /*
     Credits for Sound Effects go to OpenGameArt.org
     Credits for Background Music go to "The Visitors" by Trevor Lentz
-/*
-
  */
+
 import java.io.IOException;
 
 class SoundEngine {
