@@ -374,7 +374,6 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     public void gameover() {
         Context context = (Context)this.resources.get(CONTEXT);
-        Toast.makeText(context,"Entered gameover",Toast.LENGTH_LONG).show();
         //pause the game
         //start popup window
         blurEffect();

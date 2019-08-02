@@ -20,13 +20,13 @@
                     android:text="WASTED"
                     android:textColor="@color/white"
                     android:textSize="46sp"
-                    android:layout_marginTop="40sp"></TextView>
+                    android:layout_marginTop="30sp"></TextView>
 
                 <ImageView
                     android:id="@+id/resume_button"
                     android:layout_width="60sp"
                     android:layout_height="60sp"
-                    android:layout_marginTop="50sp"
+                    android:layout_marginTop="30sp"
                     android:clickable="true"
                     android:onClick="retry"
                     app:srcCompat="@android:drawable/ic_menu_rotate" />
@@ -37,8 +37,8 @@
                     android:fontFamily="@font/arcadeclassic"
                     android:text="BACK  TO  TITLE"
                     android:textColor="@color/white"
-                    android:textSize="26sp"
-                    android:layout_marginTop="40sp"
+                    android:textSize="22sp"
+                    android:layout_marginTop="30sp"
                     android:clickable="true"
                     android:onClick="backToTitle"></TextView>
         </LinearLayout>

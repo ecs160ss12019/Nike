@@ -148,7 +148,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
         int score=scoreTemp.intValue();
         this.score.setText(String.valueOf(score));
 
-        //Test only
+        //only showed when score up
         if(scoreTemp>initScore)
             updateMessage("+"+(weaponUpgraded?"UPGRADED":"")+(nextLevel?"NEW LEV "+level:""));
     }
