@@ -174,7 +174,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                     newValue=status.get(key);
                     oldValue=this.status.get(key);
 
+                    assert oldValue != null;
+                    assert newValue != null;
                     if (newValue.first<oldValue.first){
+                        this.status.put(key,new Pair<>(newValue.first,null));
 
                     }
                     break;
@@ -186,12 +189,25 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                     assert newValue != null;
                     assert oldValue != null;
                     if (newValue.first<oldValue.first){
-                        lifeGone();
+                        if (newValue.first<=0){
+                            gameover();
+                        }else {
+                            lifeGone();
+                        }
+                        this.status.put(key,new Pair<>(newValue.first,null));
                     }
-                    this.status.put(key,new Pair<>(newValue.first,null));
+
+
                     break;
                 case SpaceGame.SCORES:
-                    hud.updateStatus(status);
+                    newValue=status.get(key);
+                    oldValue=this.status.get(key);
+
+                    assert newValue != null;
+                    assert oldValue != null;
+                    if (!newValue.first.equals(oldValue.first)){
+                        this.status.put(key,new Pair<>(newValue.first,null));
+                    }
                     break;
                 case SpaceGame.STATE:
                     if (Objects.requireNonNull(status.get(key)).first==1f){
