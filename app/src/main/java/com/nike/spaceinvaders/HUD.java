@@ -79,20 +79,20 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
         Set<Integer> keys=status.keySet();
         Pair<Float,Float> newValue;
         Pair<Float,Float> oldValue;
+        boolean weaponUpgraded=false;
+        boolean moreScores=false;
         for (Integer key:keys){
             switch (key){
                 case SpaceGame.NUM_LIVES:
                     updateLives(status);
                     break;
                 case SpaceGame.SCORES:
-                    updateScores(status);
+                    moreScores=true;
                     break;
                 case SpaceGame.LEVEL:
                     newValue=status.get(key);
                     oldValue=this.getStatus().get(key);
                     assert newValue != null;
-                    Log.d("LevelValue", String.valueOf(oldValue));
-                    Log.d("LevelValue", String.valueOf(newValue));
                     if (!newValue.equals(oldValue)) {
                         updateMessage("NEW LEVEL - " + newValue.first.intValue());
                         this.getStatus().put(key,new Pair<>(newValue.first,null));
@@ -102,8 +102,10 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
                     newValue=status.get(key);
                     oldValue=this.getStatus().get(key);
                     assert newValue != null;
+                    Log.d("LevelValue", String.valueOf(oldValue));
+                    Log.d("LevelValue", String.valueOf(newValue));
                     if (!newValue.equals(oldValue)) {
-                        updateMessage("WEAPON UPGRADED" );
+                        weaponUpgraded=true;
                         this.getStatus().put(key,new Pair<>(newValue.first,null));
                     }
                     break;
@@ -111,6 +113,8 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
                     break;
             }
         }
+        if (moreScores)
+            updateScores(status,weaponUpgraded);
 
     }
 
@@ -134,7 +138,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
 
     }
 
-    private void updateScores(SpaceGame.Status status) {
+    private void updateScores(SpaceGame.Status status,boolean weaponUpgraded) {
         int initScore= Integer.valueOf(score.getText().toString());
         Float scoreTemp=(Objects.requireNonNull(status.get(SpaceGame.SCORES)).first);
         int score=scoreTemp.intValue();
@@ -142,7 +146,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
 
         //Test only
         if(scoreTemp>initScore)
-            updateMessage("+");
+            updateMessage("+"+(weaponUpgraded?" UPGRADED":""));
     }
     private void updateLives(SpaceGame.Status status) {
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);

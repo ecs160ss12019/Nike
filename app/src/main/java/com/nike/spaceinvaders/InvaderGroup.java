@@ -384,8 +384,6 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
                 case SpaceGame.LEVEL:
                     assert newValue != null;
                     assert oldValue != null;
-                    Log.d("NewValue1", String.valueOf(newValue));
-                    Log.d("OldValue1", String.valueOf(oldValue));
                     if (newValue.first > oldValue.first) {
                         this.getStatus().put(key,new Pair<>(newValue.first,null));
                         this.initialize();

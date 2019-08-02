@@ -73,9 +73,9 @@ public class AI {
                     }
                     return speed;
                 case InvaderGroup.RATE_OF_MISSILE:
-                    float rate= (float) (800*(1-(getScale()-1)*0.1));
+                    float rate= (float) (2000*(1-(getScale()-1)*0.1));
                     if (rate<0||getScale()>7){
-                        rate= (float) (800*(1-7*0.1));
+                        rate= (float) (2000*(1-7*0.1));
                     }
                     return rate;
             }

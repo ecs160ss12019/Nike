@@ -78,7 +78,6 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
 
     @Override
     protected void initialize() {
-        Log.d("BaseShelterIni","wef");
         for (int i = 0; i < numShelters; i++) {
             shelters.get(i).initialize();
         }
