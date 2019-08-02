@@ -90,14 +90,11 @@ public class Lives extends AnimatedObject<ConstraintLayout> {
         this.lives--;
         if (this.lives < 1) {
             SpaceGame.Status newStatus = new SpaceGame.Status();
-            newStatus.put(SpaceGame.GAME_OVER, new Pair<>(null, null));
-            getSpaceGame().updateStatus(newStatus);
+//            newStatus.put(SpaceGame.GAME_OVER, new Pair<>(null, null));
+//            getSpaceGame().updateStatus(newStatus);
+            getSpaceGame().setState(SpaceGame.ENDED_STATE);
             return;
         }
-        //pause game
-        SpaceGame.Status newStatus = new SpaceGame.Status();
-        newStatus.put(SpaceGame.LIFE_GONE, new Pair<>(null, null));
-        getSpaceGame().updateStatus(newStatus);
         //shake the live and disappear after 1s
         for (int i=0;i<this.lives;i++) {
             Animation shake = AnimationUtils.loadAnimation(mainContext, R.anim.shake);

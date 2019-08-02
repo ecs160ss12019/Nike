@@ -18,7 +18,7 @@ public class AI {
         switch (classType){
             case SpaceGame.INVADER_GROUP:
                 float level= Objects.requireNonNull(status.get(SpaceGame.LEVEL)).first;
-                key+="-Level1";
+                key+="-Level"+level;
                 if ((evaluator=cache.get(key))==null){
                     Evaluator tempEvaluator=new InvaderEvaluator();
                     cache.put(key,tempEvaluator);
@@ -28,7 +28,7 @@ public class AI {
                 return evaluator;
             case SpaceGame.LASER_BASE:
                 float perksOfLaserBase= Objects.requireNonNull(status.get(SpaceGame.PERKS_OF_LASERBASE)).first;
-                key+="-Level1";
+                key+="-Level"+perksOfLaserBase;
                 if ((evaluator=cache.get(key))==null){
                     Evaluator tempEvaluator=new LaserBaseEvaluator();
                     cache.put(key,tempEvaluator);
@@ -42,12 +42,12 @@ public class AI {
     }
 
     static class LaserBaseEvaluator extends Evaluator{
-        private int initialMissileInterval=500;
+        private int initialMissileInterval=0;
         @Override
         float evaluate(int type) {
             switch (type){
                 case LaserBase.RATE_OF_MISSILE:
-                    float speed=initialMissileInterval-this.getScale()*70;
+                    float speed=initialMissileInterval-(this.getScale()-1)*70;
                     if (speed<0){
                         speed=0;
                     }
@@ -67,7 +67,17 @@ public class AI {
 
             switch (type){
                 case InvaderGroup.VELOCITY:
-                    return (float) ((1+(getScale()-1)*0.2)*0.000013);
+                    float speed= (float) ((1+(getScale()-1)*0.1)*0.000013);
+                    if (getScale()>7){
+                        speed= (float) ((1+(7)*0.1)*0.000013);
+                    }
+                    return speed;
+                case InvaderGroup.RATE_OF_MISSILE:
+                    float rate= (float) (800*(1-(getScale()-1)*0.1));
+                    if (rate<0||getScale()>7){
+                        rate= (float) (800*(1-7*0.1));
+                    }
+                    return rate;
             }
             return 0;
         }

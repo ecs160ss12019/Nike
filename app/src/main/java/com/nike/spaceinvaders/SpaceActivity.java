@@ -156,7 +156,7 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
             //mSpaceGame.setState(new SpaceGame.RunningGame());
         }else {
-            mSpaceGame.setState(new SpaceGame.PausedGame());
+            mSpaceGame.setState(SpaceGame.PAUSED_STATE);
         }
         //start popup window
         Intent i = new Intent(SpaceActivity.this,Pop.class);
@@ -200,9 +200,9 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
         switch (str){
             case "resume":
                 if (mSpaceGame.getState() instanceof SpaceGame.PausedGame){
-                    mSpaceGame.setState(new SpaceGame.RunningGame());
+                    mSpaceGame.setState(SpaceGame.RUNNING_STATE);
                 }else {
-                    mSpaceGame.setState(new SpaceGame.PausedGame());
+                    mSpaceGame.setState(SpaceGame.PAUSED_STATE);
                 }
                 break;
             case "restart":
