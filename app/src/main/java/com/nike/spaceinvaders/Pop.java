@@ -8,6 +8,7 @@ package com.nike.spaceinvaders;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,8 +32,8 @@ public class Pop extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().hide();
-
+//        getSupportActionBar().hide();
+//        getWindow().getDecorView().setBackgroundResource((R.drawable.round_corner_rect));
         Intent i = getIntent();
         String sig = i.getStringExtra("insignal");//in-signal differ from signal that will be output
         this.str=sig;
