@@ -197,14 +197,17 @@ public class Invader extends AnimatedObject<ImageView> {
         switch(row)
         {
             case 0:
-                this.getSoundEngine().playYellowInvaderDeath();
+                this.getSoundEngine().playOrangeInvaderDeath();
                 break;
 
             case 1:
-                this.getSoundEngine().playBlueInvaderDeath();
+                this.getSoundEngine().playYellowInvaderDeath();
                 break;
 
             case 2:
+                this.getSoundEngine().playBlueInvaderDeath();
+                break;
+            case 3:
                 this.getSoundEngine().playOrangeInvaderDeath();
                 break;
         }
