@@ -73,10 +73,10 @@ class SoundEngine {
             descriptor = assetManager.openFd("laserBaseDeath.wav");
             mlaserBaseDeath_ID = mSP.load(descriptor, 0);
 
-            descriptor = assetManager.openFd("menuSelect.wav");
+            descriptor = assetManager.openFd("startgame.wav");
             mMenuStart_ID = mSP.load(descriptor, 0);
 
-            descriptor = assetManager.openFd("Venus.wav");
+            descriptor = assetManager.openFd("startleaderboard.wav");
             mMenuLeaderboard = mSP.load(descriptor, 0);
 
         } catch (IOException e) {

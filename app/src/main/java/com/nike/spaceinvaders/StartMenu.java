@@ -66,7 +66,7 @@ public class StartMenu extends AppCompatActivity {
     }
 
     public void leaderboard(View view) {
-        SoundEngine.getInstance(getApplicationContext()).playMenuStart();
+        SoundEngine.getInstance(getApplicationContext()).playMenuLeaderboard();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, LeaderboardPage.class);//Jump from this to leaderboard
         startActivity(intent);
