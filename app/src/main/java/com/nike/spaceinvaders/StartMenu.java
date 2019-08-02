@@ -23,6 +23,7 @@ import java.io.IOException;
 public class StartMenu extends AppCompatActivity {
 
     private static final String TAG = "StartMenu";
+    SoundEngine SoundEng;
     //two parameter will send to spacegame
     private int AiLevel;
     private boolean GravityFlag;
@@ -30,13 +31,14 @@ public class StartMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_menu);
+        SoundEng = SoundEngine.getInstance(getApplicationContext());
         //init
         AiLevel=0;
         GravityFlag=true;
     }
     //invoked once start button has been pressed
     public void startgame(View view) {
-        SoundEngine.getInstance(getApplicationContext()).playMenuStart();
+        SoundEng.playMenuStart();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SpaceActivity.class);//Jump from this to SpaceActivity
         //input parameter to spaceActivity
@@ -50,7 +52,7 @@ public class StartMenu extends AppCompatActivity {
     }
 
     public void settingpage(View view){
-        SoundEngine.getInstance(getApplicationContext()).playMenuStart();
+        SoundEng.playMenuStart();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SettingPage.class);//Jump from this to SpaceActivity
         Bundle bundle=new Bundle();
@@ -74,7 +76,7 @@ public class StartMenu extends AppCompatActivity {
     }
 
     public void leaderboard(View view) {
-        SoundEngine.getInstance(getApplicationContext()).playMenuLeaderboard();
+        SoundEng.playMenuLeaderboard();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, LeaderboardPage.class);//Jump from this to leaderboard
         startActivity(intent);
