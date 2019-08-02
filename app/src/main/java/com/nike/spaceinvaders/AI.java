@@ -67,7 +67,7 @@ public class AI {
 
             switch (type){
                 case InvaderGroup.VELOCITY:
-                    return getScale()*100;
+                    return (float) ((1+(getScale()-1)*0.2)*0.000013);
             }
             return 0;
         }

@@ -10,6 +10,7 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 
 import android.os.Handler;
 
+import java.util.Set;
 
 
 class LaserBase extends AnimatedObject<ImageView> {
@@ -45,8 +47,10 @@ class LaserBase extends AnimatedObject<ImageView> {
         this.getMainHandler().postDelayed(()->{
             Point size = (Point) this.getResources().get(SpaceGame.WINDOW_SIZE);
             assert size != null;
-            this.setX(size.x/2f);
+            this.setX(size.x/2f-this.getWidth()/2f);
+            this.setVisibility(View.VISIBLE);
         },1000);
+
     }
 
     /**
@@ -172,6 +176,7 @@ class LaserBase extends AnimatedObject<ImageView> {
         missile.handle(actions, SpaceGame.MISSILE_GONE);
         this.getSoundEngine().playlaserBaseDeath();
         notifySpaceGame();
+        this.initialize();
     }
 
     /*
@@ -222,12 +227,6 @@ class LaserBase extends AnimatedObject<ImageView> {
     }
 
 
-    public void spawn() {
-        this.setVisibility(View.VISIBLE);
-        return;
-    }
-
-
     public float getDelta() {
         return delta;
     }
@@ -238,6 +237,26 @@ class LaserBase extends AnimatedObject<ImageView> {
 
     @Override
     public void updateStatus(SpaceGame.Status status) {
+        Set<Integer> keys=status.keySet();
+        Pair<Float,Float> newValue;
+        Pair<Float,Float> oldValue;
+        for (Integer key:keys) {
+            switch (key) {
+                case SpaceGame.NUM_LIVES:
+                    // laserBase loses one life
+                    newValue = status.get(key);
+                    oldValue = this.getStatus().get(key);
 
+                    assert newValue != null;
+                    assert oldValue != null;
+                    Log.d("NewValue", String.valueOf(newValue));
+                    Log.d("OldValue", String.valueOf(oldValue));
+                    if (newValue.first < oldValue.first) {
+                        this.initialize();
+                        this.getStatus().put(SpaceGame.NUM_LIVES,new Pair<>(newValue.first,null));
+                    }
+                    break;
+            }
+        }
     }
 }

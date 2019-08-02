@@ -77,6 +77,8 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
     @Override
     public void updateStatus(SpaceGame.Status status) {
         Set<Integer> keys=status.keySet();
+        Pair<Float,Float> newValue;
+        Pair<Float,Float> oldValue;
         for (Integer key:keys){
             switch (key){
                 case SpaceGame.NUM_LIVES:
@@ -85,6 +87,10 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
                 case SpaceGame.SCORES:
                     updateScores(status);
                     break;
+                case SpaceGame.LEVEL:
+                    newValue=status.get(key);
+                    oldValue=this.getStatus().get(key);
+                    updateMessage("NEW LEVEL - "+newValue);
                 default:
                     break;
             }
