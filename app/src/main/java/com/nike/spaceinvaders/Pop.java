@@ -42,7 +42,7 @@ public class Pop extends AppCompatActivity {
                 break;
             case "gameover":
                 setContentView(R.layout.pop_gameover);
-                ScoreRecord = Integer.valueOf(i.getStringExtra("score"));
+                ScoreRecord =(int)i.getFloatExtra("score",0);
                 RecordScore(ScoreRecord);
                 break;
             default:
@@ -60,12 +60,11 @@ public class Pop extends AppCompatActivity {
 
 
     }
-
-    private void RecordScore(int scoreRecord) {
+    public void RecordScore(int scoreRecord) {
         Context context = getApplicationContext();
         try {
-            FileWriter out = new FileWriter(new File(context.getFilesDir(), "leaderboard.txt"));
-            out.write(String.valueOf(scoreRecord));
+            FileWriter out = new FileWriter(new File(context.getFilesDir(),"leaderboard.txt" ),true);
+            out.write(String.valueOf(scoreRecord)+" ");
             out.close();
         } catch (IOException e) {
             e.printStackTrace();

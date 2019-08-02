@@ -38,7 +38,7 @@ public class LeaderboardPage extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        String[] myDataset = readFileAsString("leaderboard.txt").split("\\n");
+        String[] myDataset = readFileAsString("leaderboard.txt").split(" ");
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);
@@ -54,7 +54,7 @@ public class LeaderboardPage extends AppCompatActivity {
     }
 
     public String readFileAsString(String fileName) {
-        Context context = this;
+        Context context = getApplicationContext();
         StringBuilder stringBuilder = new StringBuilder();
         String line;
         BufferedReader in = null;

@@ -15,12 +15,20 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Objects;
@@ -81,6 +89,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int DIFFICULITY=0b0000010;
     public static final int a=0b0000100;
     public static final int ds=0b0001000;
+    private static final String TAG = "SpaceGame";
 
     final AnimatedObject laserBase;
     final AnimatedObject baseShelterGroup;

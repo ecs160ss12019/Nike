@@ -5,14 +5,25 @@ package com.nike.spaceinvaders;
  */
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class StartMenu extends AppCompatActivity {
 
+    private static final String TAG = "StartMenu";
     //two parameter will send to spacegame
     private int AiLevel;
     private boolean GravityFlag;
@@ -73,5 +84,6 @@ public class StartMenu extends AppCompatActivity {
         //Animation of xml on transition
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//android.anim.fade_in
     }
+
 
 }
