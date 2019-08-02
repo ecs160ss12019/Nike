@@ -332,6 +332,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         //start popup window
         Intent i = new Intent(context,Pop.class);
         i.putExtra("insignal","gameover");
+        i.putExtra("score",this.status.get(SpaceGame.SCORES).first);
         ((Activity) context).startActivityForResult(i,0);
     }
 
