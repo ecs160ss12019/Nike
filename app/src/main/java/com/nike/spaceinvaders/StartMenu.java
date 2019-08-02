@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -72,8 +71,6 @@ public class StartMenu extends AppCompatActivity {
 
         this.AiLevel=AiLevel;
         this.GravityFlag=(GravityFlag);
-        //TODO: delete following test after finishing
-        Toast.makeText(getApplicationContext(),"AiLevel: "+String.valueOf(this.AiLevel)+" Gravity: "+String.valueOf(this.GravityFlag),Toast.LENGTH_LONG).show();
     }
 
     public void leaderboard(View view) {

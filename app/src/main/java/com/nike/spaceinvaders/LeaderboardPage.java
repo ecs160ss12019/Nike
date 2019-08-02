@@ -50,7 +50,8 @@ public class LeaderboardPage extends AppCompatActivity {
         int[] temp = new int[1000];
         int num = tempDate.length;
         for (int i=0; i < tempDate.length;i++){
-            temp[i]=Integer.valueOf(tempDate[i]);
+            if (tempDate[i] !="")
+                temp[i]=Integer.valueOf(tempDate[i]);
         }
         java.util.Arrays.sort(temp);
         String[] rt = new String[1000];
