@@ -63,21 +63,21 @@
 
         <TextView
             android:id="@+id/ailevel"
-            android:layout_width="90dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16sp"
             android:layout_weight="1"
             android:fontFamily="@font/arcadeclassic"
-            android:text="HARDNESS"
+            android:text="DIFFICULTY"
             android:textColor="#FDFDFE"
             android:textSize="34sp" />
 
         <SeekBar
             android:id="@+id/ailevelbar"
-            android:layout_width="64sp"
+            android:layout_width="70sp"
             android:layout_height="34sp"
             android:layout_weight="1"
-            android:max="3"
+            android:max="2"
             android:progress="0"
             style="@android:style/Widget.Holo.SeekBar"/>
 

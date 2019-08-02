@@ -70,4 +70,5 @@ public class StartMenu extends AppCompatActivity {
         //Animation of xml on transition
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//android.anim.fade_in
     }
+
 }
