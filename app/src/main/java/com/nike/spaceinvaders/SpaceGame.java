@@ -78,7 +78,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     /* Setting Flags */
     public static final int GRAVITY_SETTING=0b0000001;
-    public static final int d=0b0000010;
+    public static final int DIFFICULITY=0b0000010;
     public static final int a=0b0000100;
     public static final int ds=0b0001000;
 

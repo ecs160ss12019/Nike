@@ -71,8 +71,8 @@ public class SettingPage extends AppCompatActivity {
         Intent intent=this.getIntent();
         Bundle bundle=new Bundle();
         //Test only
-        bundle.putInt("AiLevel",ailevel);
-        bundle.putBoolean("GravityFlag",gravityflag);
+        bundle.putInt(String.valueOf(SpaceGame.DIFFICULITY),ailevel);
+        bundle.putBoolean(String.valueOf(SpaceGame.GRAVITY_SETTING),gravityflag);
         intent.putExtras(bundle);
         this.setResult(Activity.RESULT_OK, intent);
         this.finish();
