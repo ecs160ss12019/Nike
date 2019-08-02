@@ -129,9 +129,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         this.animatedObjects.put(SpaceGame.INVADER_GROUP,this.invaderGroup);
         this.animatedObjects.put(SpaceGame.UFO_INVADER,this.ufo);
 
-        for (AnimatedObject object:this.animatedObjects.values()){
-            object.setStatus((Status) status.clone());
-        }
+
 
         (this.hud).setSpaceGame(this);
 
@@ -139,7 +137,9 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         this.status=status;
         status.put(SpaceGame.LEVEL,new Pair<>(0f,null));
         status.put(SpaceGame.PERKS_OF_LASERBASE,new Pair<>(0f,null));
-
+        for (AnimatedObject object:this.animatedObjects.values()){
+            object.setStatus((Status) status.clone());
+        }
         AnimatedObject.Actions actions=new AnimatedObject.Actions();
         actions.put(GAME_START,new Pair<AnimatedObject, SparseArray<Float>>(null,null));
         invaderGroup.handle(actions);
