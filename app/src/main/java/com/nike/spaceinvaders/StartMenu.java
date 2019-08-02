@@ -31,8 +31,8 @@ public class StartMenu extends AppCompatActivity {
         intent.setClass(StartMenu.this, SpaceActivity.class);//Jump from this to SpaceActivity
         //input parameter to spaceActivity
         Bundle bundle=new Bundle();
-        bundle.putBoolean("GravityFlag",this.GravityFlag);
-        bundle.putInt("AiLevel",this.AiLevel);
+        bundle.putBoolean(String.valueOf(SpaceGame.GRAVITY_SETTING),this.GravityFlag);
+        bundle.putInt(String.valueOf(SpaceGame.DIFFICULITY),this.AiLevel);
         intent.putExtras(bundle);
         this.startActivity(intent);
         //Animation of xml on transition
@@ -56,8 +56,8 @@ public class StartMenu extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Bundle bundle=data.getExtras();
         //get setting from setting page
-        int AiLevel = bundle.getInt("AiLevel");
-        Boolean GravityFlag = bundle.getBoolean("GravityFlag");
+        int AiLevel = bundle.getInt(String.valueOf(SpaceGame.DIFFICULITY));
+        Boolean GravityFlag = bundle.getBoolean(String.valueOf(SpaceGame.GRAVITY_SETTING));
 
         this.AiLevel=AiLevel;
         this.GravityFlag=(GravityFlag);

@@ -20,7 +20,7 @@ public class LeaderboardPage extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboard);
         recyclerView = (RecyclerView) findViewById(R.id.leaderlist);
 
-/*        // use this setting to improve performance if you know that changes
+        // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
 
@@ -28,9 +28,13 @@ public class LeaderboardPage extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        String[] myDataset= new String[10];
+        myDataset[0]="1";
+        myDataset[1]="2";
+        myDataset[2]="3";
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);
-        recyclerView.setAdapter(mAdapter);*/
+        recyclerView.setAdapter(mAdapter);
     }
     public void back(View view){
         this.finish();
