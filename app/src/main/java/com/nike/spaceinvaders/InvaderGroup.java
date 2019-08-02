@@ -26,7 +26,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     private float velocity =  0.000033f;
     private int horizontalTimes = 20;
     private PointF initialCoordinates;
-    private int numCol = 5;
+    private int numCol = 6;
 
     private boolean hit[][];
     private SparseArray<SpaceGame.MutablePair<Integer, Integer>> hitStatus;

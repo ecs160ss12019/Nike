@@ -114,7 +114,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     private State state;
 
     private int LIVEMAX=3;
-    private int MAXINVADER=20;
+    private int MAXINVADER=24;
 
     public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject ufo, AnimatedObject hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
         this.laserBase=laserBase;
