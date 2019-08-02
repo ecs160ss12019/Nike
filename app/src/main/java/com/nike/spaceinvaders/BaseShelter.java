@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
@@ -73,13 +74,20 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
     private void killSelf(){
         this.setAlive(false);
-        //this.view.setBackgroundResource(R.drawable.shelter_death);
-        //AnimationDrawable frameAnimation =  (AnimationDrawable) view.getBackground();
-        //if(frameAnimation!=null){
-            //Log.d("in baseshelter kill self","should be playing animation");
-            //frameAnimation.start();
-        //}
-        this.setVisibility(View.INVISIBLE);
+        this.setBackgroundResource(R.drawable.shelter_death);
+        AnimationDrawable frameAnimation =  (AnimationDrawable) getBackground();
+        if(frameAnimation!=null){
+//            //Log.d("in baseshelter kill self","should be playing animation");
+            frameAnimation.start();
+        }
+
+//        Resources resources = (Resources) this.getResources().get(SpaceGame.RESOURCES);
+//        assert resources != null;
+//        Drawable shelterDeath = resources.getDrawable(R.drawable.shelter_death, null);
+//        this.setDrawable(shelterDeath);
+//        this.getMainHandler().postDelayed(()->{
+//            this.setVisibility(View.INVISIBLE);
+//        },600);
     }
 
 
@@ -92,7 +100,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
         this.canvas = new Canvas(this.bitmap);
         this.oldHitBox = new int[this.getHeight() * this.getWidth()];
-        Drawable shelter = this.getDrawable();
+        Drawable shelter = this.getBackground();
         shelter.setBounds(shelter.copyBounds());
         shelter.setBounds(0, 0, this.getWidth(), this.getHeight());
         // shelter.setAlpha(255);
@@ -178,7 +186,10 @@ class BaseShelter extends AnimatedObject<ImageView> {
         damage.setBounds((int) x, (int) y, 70 + (int) x, 70 + (int) y);
         // damage.setAlpha(255);
         damage.draw(this.canvas);
-        this.setBitmap(this.bitmap);
+
+        Drawable newpic = new BitmapDrawable(this.bitmap);
+        this.setBackground(newpic);
+
         this.bitmap.getPixels(this.oldHitBox, 0, this.getWidth(), 0, 0, this.getWidth(), this.getHeight());
         removePaddingHitBox();
 
