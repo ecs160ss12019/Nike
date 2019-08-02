@@ -42,7 +42,7 @@ public class AI {
     }
 
     static class LaserBaseEvaluator extends Evaluator{
-        private int initialMissileInterval=0;
+        private int initialMissileInterval=400;
         @Override
         float evaluate(int type) {
             switch (type){
@@ -67,9 +67,9 @@ public class AI {
 
             switch (type){
                 case InvaderGroup.VELOCITY:
-                    float speed= (float) ((1+(getScale()-1)*0.1)*0.000013);
+                    float speed= (float) ((1+(getScale()-1)*0.1)*0.000007);
                     if (getScale()>7){
-                        speed= (float) ((1+(7)*0.1)*0.000013);
+                        speed= (float) ((1+(7)*0.1)*0.000007);
                     }
                     return speed;
                 case InvaderGroup.RATE_OF_MISSILE:

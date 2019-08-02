@@ -119,6 +119,7 @@ class LaserBase extends AnimatedObject<ImageView> {
                 }
                 AI.Evaluator evaluator= AI.getAI(SpaceGame.LASER_BASE,this.getStatus());
                 float interval=evaluator.evaluate(LaserBase.RATE_OF_MISSILE);
+                Log.d("FireRateAI", String.valueOf(interval));
                 if (System.currentTimeMillis()-this.timeStamp<interval){
                     return;
                 }

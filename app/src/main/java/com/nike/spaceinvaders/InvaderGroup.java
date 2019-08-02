@@ -279,7 +279,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 if (initialCoordinates == null) {
-                    initialCoordinates = new PointF(that.getAbsoluteX(), that.getAbsoluteY());
+                    initialCoordinates = new PointF(that.getAbsoluteX(), that.getAbsoluteY()-100);
                 }
 
                 if (width == 0) {

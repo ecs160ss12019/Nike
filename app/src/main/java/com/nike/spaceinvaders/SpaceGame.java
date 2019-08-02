@@ -19,6 +19,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -235,6 +236,17 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                     }
                     break;
 
+                case SpaceGame.PERKS_OF_LASERBASE:
+                    newValue=status.get(key);
+                    oldValue=this.status.get(key);
+
+                    assert newValue != null;
+                    assert oldValue != null;
+                    if (!newValue.first.equals(oldValue.first)){
+                        this.status.put(key,new Pair<>(newValue.first,null));
+                    }
+                    break;
+
                 default:
                     break;
             }
@@ -426,6 +438,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
             }
             pool.pauseMissiles();
             gameover();
+            laserBase.setVisibility(View.INVISIBLE);
         }
     }
 

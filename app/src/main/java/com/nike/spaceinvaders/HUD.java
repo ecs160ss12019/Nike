@@ -94,10 +94,19 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
                     Log.d("LevelValue", String.valueOf(oldValue));
                     Log.d("LevelValue", String.valueOf(newValue));
                     if (!newValue.equals(oldValue)) {
-                        updateMessage("NEW LEVEL - " + newValue.first);
+                        updateMessage("NEW LEVEL - " + newValue.first.intValue());
                         this.getStatus().put(key,new Pair<>(newValue.first,null));
                     }
-
+                    break;
+                case SpaceGame.PERKS_OF_LASERBASE:
+                    newValue=status.get(key);
+                    oldValue=this.getStatus().get(key);
+                    assert newValue != null;
+                    if (!newValue.equals(oldValue)) {
+                        updateMessage("WEAPON UPGRADED" );
+                        this.getStatus().put(key,new Pair<>(newValue.first,null));
+                    }
+                    break;
                 default:
                     break;
             }
