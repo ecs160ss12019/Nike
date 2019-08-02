@@ -78,6 +78,7 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
 
     @Override
     protected void initialize() {
+        Log.d("BaseShelterIni","wef");
         for (int i = 0; i < numShelters; i++) {
             shelters.get(i).initialize();
         }
@@ -111,31 +112,31 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
 
     @Override
     public void updateStatus(SpaceGame.Status status) {
-//        Set<Integer> keys=status.keySet();
-//        Pair<Float,Float> newValue;
-//        Pair<Float,Float> oldValue;
-//        for (Integer key:keys) {
-//            newValue = status.get(key);
-//            oldValue = this.getStatus().get(key);
-//            boolean flag=true;
-//            switch (key) {
-//                case SpaceGame.LEVEL:
-//                    flag=false;
-//                    assert newValue != null;
-//                    assert oldValue != null;
-//                    Log.d("NewValue", String.valueOf(newValue));
-//                    Log.d("OldValue", String.valueOf(oldValue));
-//                    if (newValue.first > oldValue.first) {
-//                        this.initialize();
-//                        this.getStatus().put(key,new Pair<>(newValue.first,null));
-//                        continue;
-//                    }
-//                    break;
-//            }
-//            if (flag){
-//                this.getStatus().put(key,newValue);
-//            }
-//
-//        }
+        Set<Integer> keys=status.keySet();
+        Pair<Float,Float> newValue;
+        Pair<Float,Float> oldValue;
+        for (Integer key:keys) {
+            newValue = status.get(key);
+            oldValue = this.getStatus().get(key);
+            boolean flag=true;
+            switch (key) {
+                case SpaceGame.LEVEL:
+                    flag=false;
+                    assert newValue != null;
+                    assert oldValue != null;
+                    Log.d("NewValue", String.valueOf(newValue));
+                    Log.d("OldValue", String.valueOf(oldValue));
+                    if (newValue.first > oldValue.first) {
+                        this.initialize();
+                        this.getStatus().put(key,new Pair<>(newValue.first,null));
+                        continue;
+                    }
+                    break;
+            }
+            if (flag){
+                this.getStatus().put(key,newValue);
+            }
+
+        }
     }
 }

@@ -122,7 +122,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
         AI.Evaluator evaluator= AI.getAI(SpaceGame.INVADER_GROUP,this.getStatus());
         assert evaluator != null;
         this.velocity=evaluator.evaluate(InvaderGroup.VELOCITY);
-        Log.d("ValueVelocity", String.valueOf(this.velocity));
+        Log.d("ValueVelocityAI", String.valueOf(this.velocity));
         this.duration= (int) (1/this.velocity);
         if (this.getAnimator()==null){
             this.setAnimator(new ValueAnimator());
@@ -405,7 +405,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
          float screenY = screenSize.y;
 
          float padding = invader.getHeight();
-         if(invader.getAbsoluteY() + padding >= screenY)
+         if(invader.getAbsoluteY() + padding >= screenY-150)
              return true;
 
          return false;

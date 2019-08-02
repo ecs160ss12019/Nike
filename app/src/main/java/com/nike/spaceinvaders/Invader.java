@@ -134,6 +134,7 @@ public class Invader extends AnimatedObject<ImageView> {
     public boolean toShoot() {
         AI.Evaluator evaluator= AI.getAI(SpaceGame.INVADER_GROUP,this.getStatus());
         float rate=evaluator.evaluate(InvaderGroup.RATE_OF_MISSILE);
+        Log.d("RateAI", String.valueOf(rate));
         int randNum = rand.nextInt((int) rate);
 
         if (randNum == 0) // chance is 1/2000
