@@ -16,7 +16,7 @@ import android.util.SparseArray;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
-
+import java.util.Set;
 
 
 class InvaderGroup extends AnimatedObject<ConstraintLayout> {
@@ -94,6 +94,23 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     protected void initialize() {
         for(Invader invader: invaders)
             invader.initialize();
+        AI.Evaluator evaluator= AI.getAI(SpaceGame.INVADER_GROUP,this.getStatus());
+        assert evaluator != null;
+        this.velocity=evaluator.evaluate(InvaderGroup.VELOCITY);
+        Log.d("ValueVelocity", String.valueOf(this.velocity));
+        this.duration= (int) (1/this.velocity);
+        if (this.getAnimator()==null){
+            this.setAnimator(new ValueAnimator());
+            this.getAnimator().setInterpolator(null);
+            this.getAnimator().addUpdateListener(animatorListenerConfigure());
+        }
+        if (this.getAnimator().isRunning()||this.getAnimator().isStarted()){
+            this.getAnimator().end();
+        }
+        this.getAnimator().setIntValues(1, 100);
+        Log.d("ValueDuration", String.valueOf(this.duration));
+        this.getAnimator().setDuration(this.duration);
+        this.getAnimator().start();
     }
 
     @Override
@@ -101,16 +118,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
         Pair<AnimatedObject, SparseArray<Float>> value = actions.get(key);
         switch (key) {
             case SpaceGame.GAME_START:
-                if (this.getAnimator() == null) {
-                    this.setAnimator(new ValueAnimator());
-                    this.getAnimator().setIntValues(1, 100);
-                    this.getAnimator().setDuration(this.duration);
-                    this.getAnimator().setRepeatCount(ValueAnimator.INFINITE);
-                    this.getAnimator().setRepeatMode(ValueAnimator.RESTART);
-                    this.getAnimator().setInterpolator(null);
-                    this.getAnimator().addUpdateListener(animatorListenerConfigure());
-                    this.getAnimator().start();
-                }
+                initialize();
 
                 break;
             case SpaceGame.STRIKE:
@@ -250,16 +258,11 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
                     initialCoordinates = new PointF(that.getAbsoluteX(), that.getAbsoluteY());
                 }
 
-                AI.Evaluator evaluator= AI.getAI(SpaceGame.INVADER_GROUP,that.getStatus());
-                assert evaluator != null;
-                that.velocity=evaluator.evaluate(InvaderGroup.VELOCITY);
-                that.duration= (int) (1/that.velocity);
                 if (width == 0) {
                     width = that.getWidth();
                     deltaX = that.getDeltaX();
                 }
                 float fraction = animation.getAnimatedFraction();
-
                 Point size = (Point) that.getResources().get(SpaceGame.WINDOW_SIZE);
                 assert size != null;
                 int deltaY = 100;
@@ -347,7 +350,20 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
     @Override
     public void updateStatus(SpaceGame.Status status) {
+        Set<Integer> keys=status.keySet();
+        Pair<Float,Float> newValue;
+        Pair<Float,Float> oldValue;
+        for (Integer key:keys) {
+            switch (key) {
+                case SpaceGame.NUM_INVADER:
+                    newValue=status.get(key);
+                    oldValue=this.getStatus().get(key);
 
+                    assert oldValue != null;
+                    assert newValue != null;
+//                    if (newValue)
+            }
+        }
     }
 
 

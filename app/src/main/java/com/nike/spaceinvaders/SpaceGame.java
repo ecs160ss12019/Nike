@@ -137,6 +137,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         this.status=status;
         status.put(SpaceGame.LEVEL,new Pair<>(0f,null));
         status.put(SpaceGame.PERKS_OF_LASERBASE,new Pair<>(0f,null));
+        status.put(SpaceGame.NUM_LIVES,new Pair<>((float)HUD.LIVEMAX,null));
         for (AnimatedObject object:this.animatedObjects.values()){
             object.setStatus((Status) status.clone());
         }
@@ -178,7 +179,6 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                     assert newValue != null;
                     if (newValue.first<oldValue.first){
                         this.status.put(key,new Pair<>(newValue.first,null));
-
                     }
                     break;
                 case SpaceGame.NUM_LIVES:
@@ -293,9 +293,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
 //        boolean gravitySetting=this.setting.getBoolean(String.valueOf(SpaceGame.GRAVITY));
-//        if (!gravitySetting){
-//            return;
-//        }
+        Bundle setting=this.setting;
+        if (setting.getBoolean(String.valueOf(SpaceGame.GRAVITY_SETTING))){
+            return;
+        }
         float gravity=event.values[1];
         float gravityX=event.values[0];
         float fraction=gravityX>7?(1):(gravityX<-7?-1:gravityX/7);
