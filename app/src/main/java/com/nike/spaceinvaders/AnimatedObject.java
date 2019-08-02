@@ -89,6 +89,18 @@ public abstract class  AnimatedObject <View extends android.view.View> implement
         }
     }
 
+    public void setBackgroundResource(int resid){
+        this.view.setBackgroundResource(resid);
+    }
+
+    public void setBackground(Drawable drawable){
+        this.view.setBackground(drawable);
+    }
+
+    public Drawable getBackground(){
+        return this.view.getBackground();
+    }
+
     public void setDrawable(Drawable drawable){
         if (this.view instanceof ImageView){
             ImageView imageView=(ImageView)this.view;
