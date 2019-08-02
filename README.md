@@ -143,4 +143,7 @@ Weili Yin,    CharlesYWL
 
 ## Reference:
 Wasabeef, 2018, https://github.com/wasabeef/Blurry
+
+Sounds: OPENGAMEART.ORG
+Background music: "The Visitors" by Trevor Lentz
 }
