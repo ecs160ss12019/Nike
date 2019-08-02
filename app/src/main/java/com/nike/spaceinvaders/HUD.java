@@ -81,6 +81,8 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
         Pair<Float,Float> oldValue;
         boolean weaponUpgraded=false;
         boolean moreScores=false;
+        boolean newLevel=false;
+        Integer level=null;
         for (Integer key:keys){
             switch (key){
                 case SpaceGame.NUM_LIVES:
@@ -95,7 +97,9 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
                     assert newValue != null;
                     if (!newValue.equals(oldValue)) {
                         updateMessage("NEW LEVEL - " + newValue.first.intValue());
+                        newLevel=true;
                         this.getStatus().put(key,new Pair<>(newValue.first,null));
+                        level=newValue.first.intValue();
                     }
                     break;
                 case SpaceGame.PERKS_OF_LASERBASE:
@@ -114,7 +118,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
             }
         }
         if (moreScores)
-            updateScores(status,weaponUpgraded);
+            updateScores(status,weaponUpgraded,newLevel,level);
 
     }
 
@@ -138,7 +142,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
 
     }
 
-    private void updateScores(SpaceGame.Status status,boolean weaponUpgraded) {
+    private void updateScores(SpaceGame.Status status,boolean weaponUpgraded,boolean nextLevel,Integer level) {
         int initScore= Integer.valueOf(score.getText().toString());
         Float scoreTemp=(Objects.requireNonNull(status.get(SpaceGame.SCORES)).first);
         int score=scoreTemp.intValue();
@@ -146,7 +150,7 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
 
         //Test only
         if(scoreTemp>initScore)
-            updateMessage("+"+(weaponUpgraded?" UPGRADED":""));
+            updateMessage("+"+(weaponUpgraded?"UPGRADED":"")+(nextLevel?"NEW LEV "+level:""));
     }
     private void updateLives(SpaceGame.Status status) {
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);
