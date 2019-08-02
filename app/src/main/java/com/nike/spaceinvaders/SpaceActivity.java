@@ -91,6 +91,8 @@ public class SpaceActivity extends AppCompatActivity implements SensorEventListe
 
         resources.put(SpaceGame.CONTEXT, this);
 
+        resources.put(SpaceGame.APP_CONTEXT, this.getApplicationContext());
+
         SoundEngine se = SoundEngine.getInstance(this);
 
         final View laserBase= findViewById(R.id.laserBase);

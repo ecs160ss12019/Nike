@@ -35,6 +35,8 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
+import jp.wasabeef.blurry.Blurry;
+
 //Adding two flags at l46 and l47
 class SpaceGame  implements StatusManager, SensorEventListener {
     /* Action Flags */
@@ -69,6 +71,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int Y_COORDINATE=0b0010000;
     public static final int MOVE_DIRECTION=0b10000000;
     public static final int GRAVITY=0b100000000;
+    public static final int APP_CONTEXT = 0b1000000000;
 
     /* Status Flags */
     public static final int NUM_INVADER=            0b0000001;
@@ -98,11 +101,15 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int PAUSED_STATE=0b0000010;
     public static final int ENDED_STATE=0b0000100;
 
+    final ViewGroup mainLayout;
+
     final AnimatedObject laserBase;
     final AnimatedObject baseShelterGroup;
     final AnimatedObject invaderGroup;
     final AnimatedObject ufo;
     final AnimatedObject hud;
+
+    final SoundEngine se;
 
     final AnimatedObjectBox animatedObjects;
 
@@ -118,6 +125,8 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     private int MAXINVADER=24;
 
     public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject ufo, AnimatedObject hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
+        this.mainLayout=layout;
+
         this.laserBase=laserBase;
         this.baseShelterGroup=baseShelterGroup;
         this.invaderGroup=invaderGroup;
@@ -136,6 +145,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         this.ufo.setHitDetection(UFO.HIT_DETECTION,new NormalHitDetection());
         this.hud.setSpaceGame(this);
 
+        this.se=se;
 
         this.invaderGroup.setSpaceGame(this);
         this.ufo.setSpaceGame(this);
@@ -367,10 +377,18 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         Toast.makeText(context,"Entered gameover",Toast.LENGTH_LONG).show();
         //pause the game
         //start popup window
+        blurEffect();
         Intent i = new Intent(context,Pop.class);
         i.putExtra("insignal","gameover");
         i.putExtra("score",this.status.get(SpaceGame.SCORES).first);
         ((Activity) context).startActivityForResult(i,0);
+        this.se.playlaserBaseDeath();
+    }
+
+    private void blurEffect() {
+        ViewGroup rootView = this.mainLayout;
+        Context context= (Context) this.resources.get(SpaceGame.APP_CONTEXT);
+        Blurry.with(context).radius(25).sampling(2).onto(rootView);
     }
 
     static class Status extends  HashMap<Integer, Pair<Float,Float>>{
@@ -384,6 +402,8 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     private static class AnimatedObjectBox extends HashMap<Integer, AnimatedObject>{
 
     }
+
+
 
     static class MutablePair <T,K> {
         public T first;
