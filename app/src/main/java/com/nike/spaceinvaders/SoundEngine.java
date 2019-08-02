@@ -20,7 +20,7 @@ class SoundEngine {
     private int mInvaderDeath2_ID = -1;
     private int mInvaderDeath3_ID = -1;
     private  int mlaserBaseDeath_ID = -1;
-    private  int mMenuSelect_ID = -1;
+    private  int mMenuStart_ID = -1;
     private  int mBackgroundMusic_ID = -1;
 
 
@@ -74,7 +74,7 @@ class SoundEngine {
             mlaserBaseDeath_ID = mSP.load(descriptor, 0);
 
             descriptor = assetManager.openFd("menuSelect.wav");
-            mMenuSelect_ID = mSP.load(descriptor, 0);
+            mMenuStart_ID = mSP.load(descriptor, 0);
 
             descriptor = assetManager.openFd("Venus.wav");
             mBackgroundMusic_ID = mSP.load(descriptor, 0);
@@ -117,8 +117,8 @@ class SoundEngine {
         mSP.play(mlaserBaseDeath_ID,1, 1, 0, 0, 1);
     }
 
-    public void playMenuSelect() {
-        mSP.play(mMenuSelect_ID, 1, 1, 0, 0, 1);
+    public void playMenuStart() {
+        mSP.play(mMenuStart_ID, 1, 1, 0, 0, 1);
     }
 
     public void playBackGroundMusic() {
