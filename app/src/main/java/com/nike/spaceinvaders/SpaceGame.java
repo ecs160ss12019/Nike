@@ -164,19 +164,18 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         invaderGroup.handle(actions);
         ufo.handle(actions);
 
-/*      TEST for shake animation of Live Gone
-        status.put(SpaceGame.NUM_LIVES,new Pair<>((float)2,null));
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                hud.updateStatus(status);
-            }
-        }, 5000);   //5 seconds*/
 
     }
 
     public void setSetting(Bundle setting) {
         this.setting = setting;
+        this.LIVEMAX-=setting.getInt(String.valueOf(SpaceGame.DIFFICULITY));
+        Float lives=this.status.get(SpaceGame.NUM_LIVES).first;
+        if (lives==null||lives>this.LIVEMAX){
+            lives=(float) this.LIVEMAX;
+        }
+        this.status.put(SpaceGame.NUM_LIVES,new Pair<>(lives,null));
+        updateStatus(status);
     }
 
     @Override

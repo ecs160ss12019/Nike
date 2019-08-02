@@ -136,8 +136,6 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
             updateMessage("+");
     }
     private void updateLives(SpaceGame.Status status) {
-        Log.d("oldLiveValue", String.valueOf(this.getStatus().get(SpaceGame.NUM_LIVES).first));
-        Log.d("oldLiveValue", String.valueOf(status.get(SpaceGame.NUM_LIVES).first));
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);
         int lives=livesTemp.intValue();
         Actions actions=new Actions();
