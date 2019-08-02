@@ -144,154 +144,198 @@
         android:layout_width="63dp"
         android:layout_height="63dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/invader_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HUD"/>
+        app:layout_constraintTop_toBottomOf="@+id/HUD" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/invader_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/UFO">
 
         <ImageView
             android:id="@+id/invader"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/invader2"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             app:layout_constraintEnd_toStartOf="@+id/invader3"
             app:layout_constraintStart_toEndOf="@+id/invader"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/invader3"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             app:layout_constraintEnd_toStartOf="@+id/invader4"
             app:layout_constraintStart_toEndOf="@+id/invader2"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/invader4"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             app:layout_constraintEnd_toStartOf="@+id/invader5"
             app:layout_constraintStart_toEndOf="@+id/invader3"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/invader5"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/invader4"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/invader10"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/invader"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader" />
 
         <ImageView
             android:id="@+id/invader7"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/invader3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/invader"
-            app:layout_constraintTop_toBottomOf="@+id/invader2"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader2" />
 
         <ImageView
             android:id="@+id/invader9"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/invader4"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/invader2"
-            app:layout_constraintTop_toBottomOf="@+id/invader3"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader3" />
 
         <ImageView
             android:id="@+id/invader11"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/invader5"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/invader3"
-            app:layout_constraintTop_toBottomOf="@+id/invader4"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader4" />
 
         <ImageView
             android:id="@+id/invader12"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/invader4"
-            app:layout_constraintTop_toBottomOf="@+id/invader5"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader5" />
 
         <ImageView
             android:id="@+id/invader25"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/invader10"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader10" />
 
         <ImageView
             android:id="@+id/invader26"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/invader3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/invader"
-            app:layout_constraintTop_toBottomOf="@+id/invader7"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader7" />
 
         <ImageView
             android:id="@+id/invader27"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/invader4"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/invader2"
-            app:layout_constraintTop_toBottomOf="@+id/invader9"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader9" />
 
         <ImageView
             android:id="@+id/invader28"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/invader5"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/invader3"
-            app:layout_constraintTop_toBottomOf="@+id/invader11"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader11" />
 
         <ImageView
             android:id="@+id/invader29"
-            android:layout_width="63dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/invader4"
-            app:layout_constraintTop_toBottomOf="@+id/invader12"/>
+            app:layout_constraintTop_toBottomOf="@+id/invader12" />
+        <ImageView
+            android:id="@+id/invader251"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/invader25" />
+
+        <ImageView
+            android:id="@+id/invader262"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader"
+            app:layout_constraintTop_toBottomOf="@+id/invader26" />
+
+        <ImageView
+            android:id="@+id/invader273"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader4"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader2"
+            app:layout_constraintTop_toBottomOf="@+id/invader27" />
+
+        <ImageView
+            android:id="@+id/invader284"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/invader5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/invader3"
+            app:layout_constraintTop_toBottomOf="@+id/invader28" />
+
+        <ImageView
+            android:id="@+id/invader295"
+            android:layout_width="@dimen/invader_size"
+            android:layout_height="@dimen/invader_size"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/invader4"
+            app:layout_constraintTop_toBottomOf="@+id/invader29" />
 
     </android.support.constraint.ConstraintLayout>
 

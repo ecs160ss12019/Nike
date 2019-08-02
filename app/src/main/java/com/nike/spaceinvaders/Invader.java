@@ -43,7 +43,8 @@ public class Invader extends AnimatedObject<ImageView> {
             view.setBackgroundResource(R.drawable.yellowinvader);
         }else if(row==2){
             view.setBackgroundResource(R.drawable.blueinvader);
-        }else{
+        }else if (row==3){
+            view.setBackgroundResource(R.drawable.orangeinvader);
         }
         AnimationDrawable frameAnimation =  (AnimationDrawable) view.getBackground();
         if(frameAnimation!=null){
@@ -178,6 +179,10 @@ public class Invader extends AnimatedObject<ImageView> {
                 break;
             case 2:
                 this.missileForm = new BlueInvaderMissileForm(
+                        (Context) this.getResources().get(SpaceGame.CONTEXT));
+                break;
+            case 3:
+                this.missileForm = new OrangeInvaderMissileForm(
                         (Context) this.getResources().get(SpaceGame.CONTEXT));
                 break;
         }

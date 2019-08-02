@@ -221,7 +221,7 @@ class BaseShelter extends AnimatedObject<ImageView> {
         top = this.getAbsoluteY();
         bottom = top + this.getHeight();
         right = left + this.getWidth() - padding;
-        if ((x+hittingObjectWidth >= left && x <= right &&  y+hittingObject.getHeight()+80 >= top) || ((x + hittingObjectWidth) >= left && (x + hittingObjectWidth) <= right && y <= bottom && y >= top)) {
+        if ((x+hittingObjectWidth >= left && x <= right &&  y+hittingObject.getHeight()+30 >= top) || ((x + hittingObjectWidth) >= left && (x + hittingObjectWidth) <= right && y <= bottom && y >= top)) {
             return true;
         } else {
             return false;
