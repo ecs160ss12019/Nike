@@ -119,6 +119,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         this.ufo.setHitDetection(UFO.HIT_DETECTION,new NormalHitDetection());
         this.hud.setSpaceGame(this);
 
+
         this.invaderGroup.setSpaceGame(this);
         this.ufo.setSpaceGame(this);
 
@@ -128,6 +129,9 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         this.animatedObjects.put(SpaceGame.INVADER_GROUP,this.invaderGroup);
         this.animatedObjects.put(SpaceGame.UFO_INVADER,this.ufo);
 
+        for (AnimatedObject object:this.animatedObjects.values()){
+            object.setStatus((Status) status.clone());
+        }
 
         (this.hud).setSpaceGame(this);
 
@@ -159,16 +163,32 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     @Override
     public void updateStatus(Status status){
         Set<Integer> keys=status.keySet();
+        Pair<Float,Float> newValue;
+        Pair<Float,Float> oldValue;
+        for (AnimatedObject object:this.animatedObjects.values()){
+            object.updateStatus(status);
+        }
         for (Integer key:keys){
             switch (key){
                 case SpaceGame.NUM_INVADER:
+                    newValue=status.get(key);
+                    oldValue=this.status.get(key);
+
+                    if (newValue.first<oldValue.first){
+
+                    }
                     break;
                 case SpaceGame.NUM_LIVES:
                     // laserBase loses one life
-                    hud.updateStatus(status);
-                    ((LaserBase)laserBase).spawn();
-                    // TODO: pause the game for 3 seconds when an laserbase dies
-                    // TODO: NEEDS TO BE DONE BY Weili
+                    newValue=status.get(key);
+                    oldValue=this.status.get(key);
+
+                    assert newValue != null;
+                    assert oldValue != null;
+                    if (newValue.first<oldValue.first){
+                        lifeGone();
+                    }
+                    this.status.put(key,new Pair<>(newValue.first,null));
                     break;
                 case SpaceGame.SCORES:
                     hud.updateStatus(status);

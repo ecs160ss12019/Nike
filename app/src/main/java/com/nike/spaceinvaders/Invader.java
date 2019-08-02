@@ -57,18 +57,18 @@ public class Invader extends AnimatedObject<ImageView> {
         actions.put(SpaceGame.HIT, new Pair<>(this, null));
         missile.handle(actions, SpaceGame.MISSILE_GONE);
         this.getSpaceGame().invaderGroup.handle(actions, SpaceGame.HIT);
-        notifySpaceGame();
+        this.getSpaceGame().updateStatus(updateStatusSelf());
+
     }
 
-    protected void notifySpaceGame() {
+    protected SpaceGame.Status updateStatusSelf() {
         SpaceGame.Status status = getStatus();
-        Pair<Float, Float> value = status.get(SpaceGame.SCORES);
-        assert value != null;
-        float newScore = value.first + 10;
-
+        Pair<Float, Float> score = status.get(SpaceGame.SCORES);
+        assert score != null;
+        float newScore = score.first + 10;
         // Overwrite the old status value
         status.put(SpaceGame.SCORES, new Pair<>(newScore, null));
-        getSpaceGame().updateStatus(status);
+        return status;
     }
 
 

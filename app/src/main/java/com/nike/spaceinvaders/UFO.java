@@ -9,6 +9,7 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -82,6 +83,7 @@ public class UFO extends Invader {
                 assert value != null;
                 if (this.isAlive() && hitDetection(value.first)) {
                     kill(actions, value.first);
+
                 }
                 break;
             case SpaceGame.GAME_PAUSE:
@@ -99,6 +101,16 @@ public class UFO extends Invader {
     }
 
 
+    @Override
+    protected SpaceGame.Status updateStatusSelf() {
+        SpaceGame.Status status=super.updateStatusSelf();
+        Pair<Float, Float> perks = status.get(SpaceGame.PERKS_OF_LASERBASE);
+        assert perks != null;
+        float newPerks = perks.first + 1;
+        status.put(SpaceGame.PERKS_OF_LASERBASE,new Pair<>(newPerks,null));
+        Log.d("UFO", String.valueOf(newPerks));
+        return status;
+    }
 
     @Override
     ValueAnimator.AnimatorUpdateListener animatorListenerConfigure() {

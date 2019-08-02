@@ -116,7 +116,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
             case SpaceGame.STRIKE:
                 strikeInvaders(actions, SpaceGame.STRIKE);
                 break;
-            case SpaceGame.HIT:
+            case SpaceGame.HIT://Callback from member invader that one of them was destroyed.
                 Invader invader = (Invader) actions.get(SpaceGame.HIT).first;
                 int index = invader.getIndex();
                 this.hit[index / this.numCol][index % this.numCol] = false;
@@ -138,6 +138,25 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
         }
 
 
+    }
+
+    private SpaceGame.Status updateStatusSelf(){
+        SpaceGame.Status status=getStatus();
+        if (whetherNextLevel()){
+
+            Pair<Float,Float> level=status.get(SpaceGame.LEVEL);
+            assert level != null;
+            status.put(SpaceGame.LEVEL,new Pair<>(level.first+1,null));
+        }
+        return status;
+    }
+
+    private boolean whetherNextLevel(){
+        int numOfAliveInvaders=0;
+        for (int index=0;index<this.hitStatus.size();index++){
+            numOfAliveInvaders+=this.hitStatus.get(index).first;
+        }
+        return numOfAliveInvaders <= 0;
     }
 
     public void setDetection(boolean detection) {

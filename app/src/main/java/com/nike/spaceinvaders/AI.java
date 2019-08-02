@@ -34,7 +34,7 @@ public class AI {
                     cache.put(key,tempEvaluator);
                     evaluator=tempEvaluator;
                 }
-                evaluator.setScale(perksOfLaserBase/10);
+                evaluator.setScale(perksOfLaserBase);
                 return evaluator;
         }
         return null;
@@ -42,12 +42,16 @@ public class AI {
     }
 
     static class LaserBaseEvaluator extends Evaluator{
-
+        private int initialMissileInterval=500;
         @Override
         float evaluate(int type) {
             switch (type){
                 case LaserBase.RATE_OF_MISSILE:
-                    return this.getScale()*10;
+                    float speed=initialMissileInterval-this.getScale()*70;
+                    if (speed<0){
+                        speed=0;
+                    }
+                    return speed;
                 case LaserBase.RATE_OF_MOVEMENT:
                     return this.getScale()*5;
                 default:
