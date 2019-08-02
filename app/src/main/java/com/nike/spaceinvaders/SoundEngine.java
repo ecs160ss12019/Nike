@@ -21,7 +21,7 @@ class SoundEngine {
     private int mInvaderDeath3_ID = -1;
     private  int mlaserBaseDeath_ID = -1;
     private  int mMenuStart_ID = -1;
-    private  int mBackgroundMusic_ID = -1;
+    private  int mMenuLeaderboard = -1;
 
 
     private static SoundEngine ourInstance;
@@ -77,7 +77,7 @@ class SoundEngine {
             mMenuStart_ID = mSP.load(descriptor, 0);
 
             descriptor = assetManager.openFd("Venus.wav");
-            mBackgroundMusic_ID = mSP.load(descriptor, 0);
+            mMenuLeaderboard = mSP.load(descriptor, 0);
 
         } catch (IOException e) {
             // Error
@@ -121,8 +121,8 @@ class SoundEngine {
         mSP.play(mMenuStart_ID, 1, 1, 0, 0, 1);
     }
 
-    public void playBackGroundMusic() {
-        mSP.play(mBackgroundMusic_ID, 1, 1, 0, 0, 1);
+    public void playMenuLeaderboard() {
+        mSP.play(mMenuLeaderboard, 1, 1, 0, 0, 1);
     }
 
 
