@@ -11,6 +11,7 @@ import android.graphics.PointF;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -90,7 +91,14 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
                 case SpaceGame.LEVEL:
                     newValue=status.get(key);
                     oldValue=this.getStatus().get(key);
-                    updateMessage("NEW LEVEL - "+newValue);
+                    assert newValue != null;
+                    Log.d("LevelValue", String.valueOf(oldValue));
+                    Log.d("LevelValue", String.valueOf(newValue));
+                    if (!newValue.equals(oldValue)) {
+                        updateMessage("NEW LEVEL - " + newValue.first);
+                        this.getStatus().put(key,new Pair<>(newValue.first,null));
+                    }
+
                 default:
                     break;
             }
@@ -129,6 +137,8 @@ public class HUD extends AnimatedObject <ConstraintLayout> {
             updateMessage("+");
     }
     private void updateLives(SpaceGame.Status status) {
+        Log.d("oldLiveValue", String.valueOf(this.getStatus().get(SpaceGame.NUM_LIVES).first));
+        Log.d("oldLiveValue", String.valueOf(status.get(SpaceGame.NUM_LIVES).first));
         Float livesTemp=(Objects.requireNonNull(status.get(SpaceGame.NUM_LIVES)).first);
         int lives=livesTemp.intValue();
         Actions actions=new Actions();

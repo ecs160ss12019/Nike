@@ -95,6 +95,30 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
     protected void initialize() {
         for(Invader invader: invaders)
             invader.initialize();
+        if (this.initialCoordinates!=null){
+            this.setX(this.initialCoordinates.x);
+            this.setY(this.initialCoordinates.y);
+        }
+        for (int i = 0; i < this.getChildCount(); i++) {
+            ImageView invaderView = (ImageView) this.getChildAt(i);
+            this.invaderWidth = invaderView.getWidth();
+            this.invaderHeight = invaderView.getHeight();
+            hit[i / this.numCol][i % this.numCol] = true;
+            SpaceGame.MutablePair<Integer, Integer> value = this.hitStatus.get(i / this.numCol);
+            if (value == null) {
+                value = new SpaceGame.MutablePair<>(this.numCol, null);
+                this.hitStatus.put(i / this.numCol, value);
+            } else {
+                value.first = this.numCol;
+            }
+            SpaceGame.MutablePair<Integer, Integer> value2 = this.hitStatus.get(i % this.numCol);
+            if (value2 == null) {
+                value2 = new SpaceGame.MutablePair<>(null, (int) Math.ceil(this.getChildCount() / (float) this.numCol));
+                this.hitStatus.put(i % this.numCol, value2);
+            } else {
+                value2.second = (int) Math.ceil(this.getChildCount() / (float) this.numCol);
+            }
+        }
         AI.Evaluator evaluator= AI.getAI(SpaceGame.INVADER_GROUP,this.getStatus());
         assert evaluator != null;
         this.velocity=evaluator.evaluate(InvaderGroup.VELOCITY);
@@ -354,15 +378,22 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
         Pair<Float,Float> newValue;
         Pair<Float,Float> oldValue;
         for (Integer key:keys) {
+            newValue = status.get(key);
+            oldValue = this.getStatus().get(key);
             switch (key) {
-                case SpaceGame.NUM_INVADER:
-                    newValue=status.get(key);
-                    oldValue=this.getStatus().get(key);
-
-                    assert oldValue != null;
+                case SpaceGame.LEVEL:
                     assert newValue != null;
-                    Log.d("InvaderValue", String.valueOf(newValue));
+                    assert oldValue != null;
+                    Log.d("NewValue1", String.valueOf(newValue));
+                    Log.d("OldValue1", String.valueOf(oldValue));
+                    if (newValue.first > oldValue.first) {
+                        this.getStatus().put(key,new Pair<>(newValue.first,null));
+                        this.initialize();
+                        continue;
+                    }
+                    break;
             }
+            this.getStatus().put(key,newValue);
         }
     }
 
@@ -373,21 +404,28 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
          Point screenSize = (Point)this.getResources().get(SpaceGame.WINDOW_SIZE);
          float screenY = screenSize.y;
 
-         if(invader.getAbsoluteY() >= screenY)
+         float padding = invader.getHeight();
+         if(invader.getAbsoluteY() + padding >= screenY)
              return true;
 
          return false;
     }
 
+    @Override
+    public void setStatus(SpaceGame.Status status) {
+
+        super.setStatus(status);
+        for(Invader invader: invaders)
+            invader.setStatus(status);
+
+    }
 
     /*
-    Notify the spaceGame that the game is over
-     */
+        Notify the spaceGame that the game is over
+         */
     public void notifyGameOver()
     {
-        SpaceGame.Status newStatus = new SpaceGame.Status();
-        newStatus.put(SpaceGame.GAME_OVER, new Pair<>(null, null));
-        getSpaceGame().updateStatus(newStatus);
+        getSpaceGame().setState(SpaceGame.ENDED_STATE);
     }
 
 }

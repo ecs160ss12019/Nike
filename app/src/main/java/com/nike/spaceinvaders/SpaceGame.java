@@ -15,6 +15,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -75,12 +76,18 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public static final int BASE_SHELTER_GROUP=0b0000010;
     public static final int INVADER_GROUP=0b0000100;
     public static final int UFO_INVADER=0b0001000;
+    public static final int HUD=0b0010000;
 
     /* Setting Flags */
     public static final int GRAVITY_SETTING=0b0000001;
     public static final int DIFFICULITY=0b0000010;
     public static final int a=0b0000100;
     public static final int ds=0b0001000;
+
+    /* State Flags */
+    public static final int RUNNING_STATE=0b0000001;
+    public static final int PAUSED_STATE=0b0000010;
+    public static final int ENDED_STATE=0b0000100;
 
     final AnimatedObject laserBase;
     final AnimatedObject baseShelterGroup;
@@ -98,7 +105,8 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     private State state;
 
-
+    private int LIVEMAX=3;
+    private int MAXINVADER=15;
 
     public SpaceGame (AnimatedObject laserBase, AnimatedObject baseShelterGroup, AnimatedObject invaderGroup, AnimatedObject missile, AnimatedObject ufo, AnimatedObject hud, Resources resources, Status status, ViewGroup layout, Handler mainHandler, Handler processThread, SoundEngine se){
         this.laserBase=laserBase;
@@ -128,6 +136,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         this.animatedObjects.put(SpaceGame.BASE_SHELTER_GROUP,this.baseShelterGroup);
         this.animatedObjects.put(SpaceGame.INVADER_GROUP,this.invaderGroup);
         this.animatedObjects.put(SpaceGame.UFO_INVADER,this.ufo);
+        this.animatedObjects.put(SpaceGame.HUD,this.hud);
 
 
 
@@ -137,7 +146,8 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         this.status=status;
         status.put(SpaceGame.LEVEL,new Pair<>(1f,null));
         status.put(SpaceGame.PERKS_OF_LASERBASE,new Pair<>(0f,null));
-        status.put(SpaceGame.NUM_LIVES,new Pair<>((float)HUD.LIVEMAX,null));
+        status.put(SpaceGame.NUM_LIVES,new Pair<>((float)this.LIVEMAX,null));
+        status.put(SpaceGame.NUM_INVADER,new Pair<>((float) this.MAXINVADER,null));
         for (AnimatedObject object:this.animatedObjects.values()){
             object.setStatus((Status) status.clone());
         }
@@ -174,8 +184,20 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
                     assert oldValue != null;
                     assert newValue != null;
+//                    Log.d("Num_Invader_2_raw", String.valueOf(this.status.toString()));
+                    Log.d("Num_Invader_2", String.valueOf(newValue));
+                    Log.d("Num_Invader_2_old", String.valueOf(oldValue));
                     if (newValue.first<oldValue.first){
-                        this.status.put(key,new Pair<>(newValue.first,null));
+                        Log.d("Num_Invader_8", String.valueOf(newValue));
+                        if(newValue.first<=0){
+                            Log.d("Num_Invader_9", String.valueOf(newValue));
+                            float level= Objects.requireNonNull(this.status.get(SpaceGame.LEVEL)).first;
+                            this.status.put(SpaceGame.LEVEL,new Pair<>(level+1,null));
+                            this.status.put(key,new Pair<>((float) this.MAXINVADER,null));
+                        }else {
+                            this.status.put(key,new Pair<>(newValue.first,null));
+                        }
+
                     }
                     break;
                 case SpaceGame.NUM_LIVES:
@@ -187,7 +209,6 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                     assert oldValue != null;
                     if (newValue.first<oldValue.first){
                         if (newValue.first<=0){
-                            gameover();
                         }else {
                             lifeGone();
                         }
@@ -206,18 +227,6 @@ class SpaceGame  implements StatusManager, SensorEventListener {
                         this.status.put(key,new Pair<>(newValue.first,null));
                     }
                     break;
-                case SpaceGame.STATE:
-                    if (Objects.requireNonNull(status.get(key)).first==1f){
-                        this.setState(new PausedGame());
-                    }
-                    break;
-                case SpaceGame.LIFE_GONE:
-                    //when lose 1 live, will pause game for seconds and respawn laserbase
-                    lifeGone();
-                    break;
-                case SpaceGame.GAME_OVER:
-                    gameover();
-                    break;
 
                 default:
                     break;
@@ -225,7 +234,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         }
         //Notify all the AnimatedObjects.
         for (AnimatedObject object:this.animatedObjects.values()){
-            object.updateStatus(status);
+            object.updateStatus(this.status);
         }
     }
 
@@ -243,8 +252,24 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
     }
 
-    public void setState(State state) {
+    private void setState(State state) {
         this.state = state;
+        this.state.notifyState(this.animatedObjects,this.missilePool);
+    }
+
+    public void setState(int flag) {
+        switch (flag){
+            case RUNNING_STATE:
+                this.state=new RunningGame();
+                break;
+            case PAUSED_STATE:
+                this.state=new PausedGame();
+                break;
+            case ENDED_STATE:
+                this.state=new EndedGame();
+                break;
+        }
+
         this.state.notifyState(this.animatedObjects,this.missilePool);
     }
 
@@ -322,11 +347,6 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         Context context = (Context)this.resources.get(CONTEXT);
         Toast.makeText(context,"Entered gameover",Toast.LENGTH_LONG).show();
         //pause the game
-        if (getState() instanceof SpaceGame.PausedGame){
-            //setState(new SpaceGame.RunningGame());
-        }else {
-            setState(new SpaceGame.PausedGame());
-        }
         //start popup window
         Intent i = new Intent(context,Pop.class);
         i.putExtra("insignal","gameover");
@@ -394,8 +414,10 @@ class SpaceGame  implements StatusManager, SensorEventListener {
             AnimatedObject.Actions actions=new AnimatedObject.Actions();
             actions.put(SpaceGame.GAME_PAUSE,null);
             for (AnimatedObject object:objects){
-                object.handle(actions,SpaceGame.GAME_STOP);
+                object.handle(actions,SpaceGame.GAME_PAUSE);
             }
+            pool.pauseMissiles();
+            gameover();
         }
     }
 

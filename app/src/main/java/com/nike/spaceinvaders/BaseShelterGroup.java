@@ -8,11 +8,13 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
+import android.util.Pair;
 import android.util.SparseArray;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
-
+import java.util.Set;
 
 
 /**
@@ -57,6 +59,14 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
         }
     }
 
+    @Override
+    public void setStatus(SpaceGame.Status status) {
+
+        super.setStatus(status);
+        for(BaseShelter baseShelter: shelters)
+            baseShelter.setStatus(status);
+
+    }
 
     @Override
     public void setSpaceGame(SpaceGame spaceGame) {
@@ -101,6 +111,31 @@ public class BaseShelterGroup extends AnimatedObject<ConstraintLayout> {
 
     @Override
     public void updateStatus(SpaceGame.Status status) {
-
+//        Set<Integer> keys=status.keySet();
+//        Pair<Float,Float> newValue;
+//        Pair<Float,Float> oldValue;
+//        for (Integer key:keys) {
+//            newValue = status.get(key);
+//            oldValue = this.getStatus().get(key);
+//            boolean flag=true;
+//            switch (key) {
+//                case SpaceGame.LEVEL:
+//                    flag=false;
+//                    assert newValue != null;
+//                    assert oldValue != null;
+//                    Log.d("NewValue", String.valueOf(newValue));
+//                    Log.d("OldValue", String.valueOf(oldValue));
+//                    if (newValue.first > oldValue.first) {
+//                        this.initialize();
+//                        this.getStatus().put(key,new Pair<>(newValue.first,null));
+//                        continue;
+//                    }
+//                    break;
+//            }
+//            if (flag){
+//                this.getStatus().put(key,newValue);
+//            }
+//
+//        }
     }
 }

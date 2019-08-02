@@ -65,18 +65,27 @@ public class Invader extends AnimatedObject<ImageView> {
     protected SpaceGame.Status updateStatusSelf() {
         SpaceGame.Status status = getStatus();
         Pair<Float, Float> score = status.get(SpaceGame.SCORES);
+        Pair<Float, Float> numOfInvaders = status.get(SpaceGame.NUM_INVADER);
         assert score != null;
         float newScore = score.first + 10;
+        assert numOfInvaders != null;
+        float newNumOfInvader=numOfInvaders.first-1;
         // Overwrite the old status value
         status.put(SpaceGame.SCORES, new Pair<>(newScore, null));
+        status.put(SpaceGame.NUM_INVADER, new Pair<>(newNumOfInvader, null));
+//        Log.d("Num_Invader_raw", String.valueOf(status.toString()));
         Log.d("Score", String.valueOf(newScore));
+        Log.d("Num_Invader", String.valueOf(newNumOfInvader));
         return status;
     }
 
 
     @Override
     protected void initialize() {
-        this.setAlive(true);
+        this.getMainHandler().postDelayed(()->{
+            this.setAlive(true);
+        },500);
+
         this.setVisibility(View.VISIBLE);
     }
 
@@ -125,7 +134,6 @@ public class Invader extends AnimatedObject<ImageView> {
     public boolean toShoot() {
         AI.Evaluator evaluator= AI.getAI(SpaceGame.INVADER_GROUP,this.getStatus());
         float rate=evaluator.evaluate(InvaderGroup.RATE_OF_MISSILE);
-        Log.d("ValueMissile", String.valueOf(rate));
         int randNum = rand.nextInt((int) rate);
 
         if (randNum == 0) // chance is 1/2000

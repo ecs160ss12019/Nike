@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Random;
+import java.util.Set;
+
 import android.os.Handler;
 
 
@@ -100,15 +102,49 @@ public class UFO extends Invader {
 
     }
 
+    @Override
+    protected void kill(Actions actions, AnimatedObject missile) {
+        this.setAlive(false);
+        this.setVisibility(View.INVISIBLE);
+        actions.put(SpaceGame.MISSILE_GONE, null);
+        missile.handle(actions, SpaceGame.MISSILE_GONE);
+        this.getSpaceGame().updateStatus(updateStatusSelf());
+    }
+
+    @Override
+    public void updateStatus(SpaceGame.Status status) {
+        Set<Integer> keys=status.keySet();
+        Pair<Float,Float> newValue;
+        Pair<Float,Float> oldValue;
+        for (Integer key:keys) {
+            newValue = status.get(key);
+            oldValue = this.getStatus().get(key);
+            switch (key) {
+                case SpaceGame.LEVEL:
+                    assert newValue != null;
+                    assert oldValue != null;
+                    if (newValue.first > oldValue.first) {
+                        this.getStatus().put(key,new Pair<>(newValue.first,null));
+                        this.initialize();
+                        continue;
+                    }
+                    break;
+            }
+            this.getStatus().put(key,newValue);
+        }
+    }
 
     @Override
     protected SpaceGame.Status updateStatusSelf() {
-        SpaceGame.Status status=super.updateStatusSelf();
+        SpaceGame.Status status=this.getStatus();
         Pair<Float, Float> perks = status.get(SpaceGame.PERKS_OF_LASERBASE);
+        Pair<Float, Float> score = status.get(SpaceGame.SCORES);
+        assert score != null;
+        float newScore = score.first + 50;
         assert perks != null;
         float newPerks = perks.first + 1;
         status.put(SpaceGame.PERKS_OF_LASERBASE,new Pair<>(newPerks,null));
-        Log.d("UFO", String.valueOf(newPerks));
+        status.put(SpaceGame.SCORES, new Pair<>(newScore, null));
         return status;
     }
 
