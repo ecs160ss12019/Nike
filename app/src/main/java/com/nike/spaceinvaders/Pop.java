@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 public class Pop extends AppCompatActivity {
     private static final Object TAG = "POP";
     public String str;//store signal
-    public int ScoreRecord;
+    public int ScoreRecord=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,6 @@ public class Pop extends AppCompatActivity {
 
         Intent i = getIntent();
         String sig = i.getStringExtra("insignal");//in-signal differ from signal that will be output
-        ScoreRecord = Integer.valueOf(i.getStringExtra("score"));
         this.str=sig;
         switch (sig){
             case "pause":
@@ -43,6 +42,7 @@ public class Pop extends AppCompatActivity {
                 break;
             case "gameover":
                 setContentView(R.layout.pop_gameover);
+                ScoreRecord = Integer.valueOf(i.getStringExtra("score"));
                 RecordScore(ScoreRecord);
                 break;
             default:
