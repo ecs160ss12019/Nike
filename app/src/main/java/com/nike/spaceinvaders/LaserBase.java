@@ -241,11 +241,12 @@ class LaserBase extends AnimatedObject<ImageView> {
         Pair<Float,Float> newValue;
         Pair<Float,Float> oldValue;
         for (Integer key:keys) {
+            newValue = status.get(key);
+            oldValue = this.getStatus().get(key);
             switch (key) {
                 case SpaceGame.NUM_LIVES:
                     // laserBase loses one life
-                    newValue = status.get(key);
-                    oldValue = this.getStatus().get(key);
+
 
                     assert newValue != null;
                     assert oldValue != null;
@@ -253,10 +254,12 @@ class LaserBase extends AnimatedObject<ImageView> {
                     Log.d("OldValue", String.valueOf(oldValue));
                     if (newValue.first < oldValue.first) {
                         this.initialize();
-                        this.getStatus().put(SpaceGame.NUM_LIVES,new Pair<>(newValue.first,null));
+                        this.getStatus().put(SpaceGame.NUM_LIVES,newValue);
+                        continue;
                     }
                     break;
             }
+            this.getStatus().put(key,newValue);
         }
     }
 }

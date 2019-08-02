@@ -10,6 +10,7 @@ package com.nike.spaceinvaders;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
@@ -68,6 +69,7 @@ public class Invader extends AnimatedObject<ImageView> {
         float newScore = score.first + 10;
         // Overwrite the old status value
         status.put(SpaceGame.SCORES, new Pair<>(newScore, null));
+        Log.d("Score", String.valueOf(newScore));
         return status;
     }
 
@@ -121,6 +123,7 @@ public class Invader extends AnimatedObject<ImageView> {
     will shoot in this frame
      */
     public boolean toShoot() {
+
         int randNum = rand.nextInt(200);
 
         if (randNum == 100) // chance is 1/2000

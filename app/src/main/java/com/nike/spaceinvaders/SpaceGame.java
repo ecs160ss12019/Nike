@@ -166,9 +166,6 @@ class SpaceGame  implements StatusManager, SensorEventListener {
         Set<Integer> keys=status.keySet();
         Pair<Float,Float> newValue;
         Pair<Float,Float> oldValue;
-        for (AnimatedObject object:this.animatedObjects.values()){
-            object.updateStatus(status);
-        }
         for (Integer key:keys){
             switch (key){
                 case SpaceGame.NUM_INVADER:
