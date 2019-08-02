@@ -11,5 +11,8 @@
     <item
         android:drawable="@drawable/shelterdeath_3"
         android:duration="200" />
+    <item
+        android:drawable="@drawable/shelterdeath_4"
+        android:duration="200" />
 
 </animation-list>
