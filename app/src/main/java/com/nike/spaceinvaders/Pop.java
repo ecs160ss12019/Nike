@@ -42,7 +42,7 @@ public class Pop extends AppCompatActivity {
                 break;
             case "gameover":
                 setContentView(R.layout.pop_gameover);
-                //ScoreRecord =(int)i.getFloatExtra("score",0);
+                ScoreRecord =(int)i.getFloatExtra("score",0);
                 RecordScore(ScoreRecord);
                 break;
             default:
