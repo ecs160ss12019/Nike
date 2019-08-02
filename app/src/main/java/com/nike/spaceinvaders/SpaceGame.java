@@ -135,7 +135,7 @@ class SpaceGame  implements StatusManager, SensorEventListener {
 
         this.resources=resources;
         this.status=status;
-        status.put(SpaceGame.LEVEL,new Pair<>(0f,null));
+        status.put(SpaceGame.LEVEL,new Pair<>(1f,null));
         status.put(SpaceGame.PERKS_OF_LASERBASE,new Pair<>(0f,null));
         status.put(SpaceGame.NUM_LIVES,new Pair<>((float)HUD.LIVEMAX,null));
         for (AnimatedObject object:this.animatedObjects.values()){

@@ -38,6 +38,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
     /* Invader Setting Flags */
     public final static int VELOCITY=0b1;
+    public final static int RATE_OF_MISSILE=0b10;
 
 
 
@@ -119,7 +120,6 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
         switch (key) {
             case SpaceGame.GAME_START:
                 initialize();
-
                 break;
             case SpaceGame.STRIKE:
                 strikeInvaders(actions, SpaceGame.STRIKE);
@@ -361,7 +361,7 @@ class InvaderGroup extends AnimatedObject<ConstraintLayout> {
 
                     assert oldValue != null;
                     assert newValue != null;
-//                    if (newValue)
+                    Log.d("InvaderValue", String.valueOf(newValue));
             }
         }
     }
