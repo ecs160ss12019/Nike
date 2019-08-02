@@ -9,9 +9,9 @@ import java.util.Objects;
  * This class is an AI class that would give the configuration to the game that set the difficulty of the game.
  */
 public class AI {
-    private static AI instance;
     private static HashMap<String,Evaluator> cache=new HashMap<>();
 
+    private AI(){}
     public static Evaluator getAI(int classType,SpaceGame.Status status){
         String key=String.valueOf(classType);
         Evaluator evaluator;
