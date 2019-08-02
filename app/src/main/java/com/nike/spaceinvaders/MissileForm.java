@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 interface MissileForm {
     void playMissileSound();
     void setMissileImage(Missile missile, Resources resources);
+    void setMissileSpeed(Missile missile);
 }
 
 
@@ -29,6 +30,11 @@ class YellowInvaderMissileForm implements MissileForm
         assert resources != null;
         Drawable drawable = resources.getDrawable(R.drawable.bananamissile, null);
         missile.setDrawable(drawable);
+    }
+
+    @Override
+    public void setMissileSpeed(Missile missile) {
+        missile.setSpeed(900);
     }
 }
 
@@ -53,6 +59,12 @@ class BlueInvaderMissileForm implements MissileForm
         assert resources != null;
         Drawable drawable = resources.getDrawable(R.drawable.greenmissile, null);
         missile.setDrawable(drawable);
+
+    }
+
+    @Override
+    public void setMissileSpeed(Missile missile) {
+        missile.setSpeed(400);
     }
 
 }
@@ -80,6 +92,11 @@ class OrangeInvaderMissileForm implements MissileForm
         Drawable drawable = resources.getDrawable(R.drawable.chompermissile, null);
         missile.setDrawable(drawable);
     }
+
+    @Override
+    public void setMissileSpeed(Missile missile) {
+        missile.setSpeed(600);
+    }
 }
 
 
@@ -102,5 +119,10 @@ class LaserBaseMissileForm implements MissileForm
     public void setMissileImage(Missile missile, Resources resources)
     {
         return;
+    }
+
+    @Override
+    public void setMissileSpeed(Missile missile) {
+        missile.setSpeed(600);
     }
 }

@@ -222,9 +222,13 @@ class Missile extends AnimatedObject<ImageView> {
     {
         missileForm.playMissileSound();
         Resources resources = (Resources) this.getResources().get(SpaceGame.RESOURCES);
+        missileForm.setMissileSpeed(this);
         missileForm.setMissileImage(this, resources);
     }
 
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
 
     private void setStartXY(float x, float y)
     {
