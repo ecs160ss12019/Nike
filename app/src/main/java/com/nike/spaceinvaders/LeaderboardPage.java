@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 public class LeaderboardPage extends AppCompatActivity {
@@ -38,11 +39,27 @@ public class LeaderboardPage extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        String[] myDataset = readFileAsString("leaderboard.txt").split(" ");
+        String[] tempDate= readFileAsString("leaderboard.txt").split(" ");
+        String[] myDataset = sortData(tempDate);
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);
     }
+//sort String
+    private String[] sortData(String[] tempDate) {
+        int[] temp = new int[1000];
+        int num = tempDate.length;
+        for (int i=0; i < tempDate.length;i++){
+            temp[i]=Integer.valueOf(tempDate[i]);
+        }
+        java.util.Arrays.sort(temp);
+        String[] rt = new String[1000];
+        for (int i=num-1; i >= 0;i--){
+            rt[num-1-i]=String.valueOf(temp[i]);
+        }
+        return rt;
+    }
+
     public void back(View view){
         this.finish();
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);//slide_right
