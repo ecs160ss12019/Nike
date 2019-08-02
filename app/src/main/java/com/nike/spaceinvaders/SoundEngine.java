@@ -22,6 +22,7 @@ class SoundEngine {
     private  int mlaserBaseDeath_ID = -1;
     private  int mMenuStart_ID = -1;
     private  int mMenuLeaderboard = -1;
+    private  int mMenuSetting = -1;
 
 
     private static SoundEngine ourInstance;
@@ -79,6 +80,9 @@ class SoundEngine {
             descriptor = assetManager.openFd("startleaderboard.wav");
             mMenuLeaderboard = mSP.load(descriptor, 0);
 
+            descriptor = assetManager.openFd("startSetting.wav");
+            mMenuSetting = mSP.load(descriptor, 0);
+
         } catch (IOException e) {
             // Error
         }
@@ -125,6 +129,8 @@ class SoundEngine {
         mSP.play(mMenuLeaderboard, 1, 1, 0, 0, 1);
     }
 
-
+    public void playMenuSetting() {
+        mSP.play(mMenuSetting, 1, 1, 0, 0, 1);
+    }
 
 }

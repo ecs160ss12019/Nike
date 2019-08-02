@@ -52,7 +52,7 @@ public class StartMenu extends AppCompatActivity {
     }
 
     public void settingpage(View view){
-        SoundEng.playMenuStart();
+        SoundEng.playMenuSetting();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SettingPage.class);//Jump from this to SpaceActivity
         Bundle bundle=new Bundle();
