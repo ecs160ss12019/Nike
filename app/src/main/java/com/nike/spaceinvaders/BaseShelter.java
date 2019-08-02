@@ -100,12 +100,15 @@ class BaseShelter extends AnimatedObject<ImageView> {
 
         this.canvas = new Canvas(this.bitmap);
         this.oldHitBox = new int[this.getHeight() * this.getWidth()];
-        Drawable shelter = this.getBackground();
+        Resources resources= (Resources) this.getResources().get(SpaceGame.RESOURCES);
+        Drawable shelter = resources.getDrawable(R.drawable.shelter);
         shelter.setBounds(shelter.copyBounds());
         shelter.setBounds(0, 0, this.getWidth(), this.getHeight());
         // shelter.setAlpha(255);
         shelter.draw(this.canvas);
         this.bitmap.getPixels(this.oldHitBox, 0, this.getWidth(), 0, 0, this.getWidth(), this.getHeight());
+        Drawable newpic = new BitmapDrawable(this.bitmap);
+        this.setBackground(newpic);
         removePaddingHitBox();
     }
 
@@ -206,10 +209,29 @@ class BaseShelter extends AnimatedObject<ImageView> {
     }
 
 
+    @Override
+    protected boolean hitDetection(AnimatedObject hittingObject) {
+        float x = hittingObject.getAbsoluteX();
+        float y = hittingObject.getAbsoluteY();
+
+        int hittingObjectWidth = hittingObject.getWidth();
+        float left, top, bottom, right;
+        float padding = 20;
+        left = this.getAbsoluteX() + padding;
+        top = this.getAbsoluteY();
+        bottom = top + this.getHeight();
+        right = left + this.getWidth() - padding;
+        if ((x+hittingObjectWidth >= left && x <= right &&  y+hittingObject.getHeight()+80 >= top) || ((x + hittingObjectWidth) >= left && (x + hittingObjectWidth) <= right && y <= bottom && y >= top)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /*
-    Return the hitting point location if it hits
-    Otherwise return null
-     */
+        Return the hitting point location if it hits
+        Otherwise return null
+         */
     private Point hitDetection(PointF position, Size size) {
 
         int width = this.getWidth();

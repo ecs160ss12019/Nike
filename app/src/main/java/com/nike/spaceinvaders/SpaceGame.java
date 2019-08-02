@@ -324,9 +324,9 @@ class SpaceGame  implements StatusManager, SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
 //        boolean gravitySetting=this.setting.getBoolean(String.valueOf(SpaceGame.GRAVITY));
         Bundle setting=this.setting;
-        if (setting.getBoolean(String.valueOf(SpaceGame.GRAVITY_SETTING))){
-            return;
-        }
+//        if (setting.getBoolean(String.valueOf(SpaceGame.GRAVITY_SETTING))){
+//            return;
+//        }
         float gravity=event.values[1];
         float gravityX=event.values[0];
         float fraction=gravityX>7?(1):(gravityX<-7?-1:gravityX/7);

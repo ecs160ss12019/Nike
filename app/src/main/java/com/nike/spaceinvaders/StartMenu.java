@@ -36,7 +36,7 @@ public class StartMenu extends AppCompatActivity {
     }
     //invoked once start button has been pressed
     public void startgame(View view) {
-        SoundEngine.getInstance(getApplicationContext()).playMenuSelect();
+        SoundEngine.getInstance(getApplicationContext()).playMenuStart();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SpaceActivity.class);//Jump from this to SpaceActivity
         //input parameter to spaceActivity
@@ -50,7 +50,7 @@ public class StartMenu extends AppCompatActivity {
     }
 
     public void settingpage(View view){
-        SoundEngine.getInstance(getApplicationContext()).playMenuSelect();
+        SoundEngine.getInstance(getApplicationContext()).playMenuStart();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, SettingPage.class);//Jump from this to SpaceActivity
         Bundle bundle=new Bundle();
@@ -74,7 +74,7 @@ public class StartMenu extends AppCompatActivity {
     }
 
     public void leaderboard(View view) {
-        SoundEngine.getInstance(getApplicationContext()).playMenuSelect();
+        SoundEngine.getInstance(getApplicationContext()).playMenuLeaderboard();
         Intent intent = new Intent();
         intent.setClass(StartMenu.this, LeaderboardPage.class);//Jump from this to leaderboard
         startActivity(intent);
